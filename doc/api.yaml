@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: WASAText - OpenAPI 3.0
+  title: WASAText - OpenAPI 3.0.3
   description: |-
     Connect with your friends effortlessly using WASAText! Send and receive messages, whether one-on-one
     or in groups, all from the convenience of your PC. Enjoy seamless conversations with text or GIFs and
