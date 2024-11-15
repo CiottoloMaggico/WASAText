@@ -10,7 +10,10 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.0.11
+  version: 1.0.0
+servers:
+  - url: https://api.wasatext.com/api/v1
+    description: Production server
 tags:
   - name: conversations
   - name: groups
@@ -86,10 +89,8 @@ paths:
           description: Sort messages
           schema:
             type: string
-            default: -sent
-            enum:
-              - sent
-              - -sent
+            default: "sent_desc"
+            enum: [ "sent", "sent_desc" ]
       responses:
         "200":
           description: Successful operation
@@ -110,114 +111,14 @@ paths:
         default:
           $ref: "#/components/responses/default"
 
-  /groups/{group_id}/name:
-    put:
-      tags:
-        - groups
-      summary: change or set group name
-      operationId: setGroupName
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-      responses:
-        "200":
-          description: Successful operation
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
-  /groups/{group_id}/photo:
-    put:
-      tags:
-        - groups
-      summary: change or set group photo
-      operationId: setGroupPhoto
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                imageId:
-                  type: integer
-                  minimum: 0
-      responses:
-        "200":
-          description: Successful operation
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
   /groups/{group_id}/participants:
     parameters:
       - $ref: "#/components/parameters/groupId"
-    put:
-      tags:
-        - groups
-      summary: add participants to the group
-      operationId: addToGroup
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                participants:
-                  type: array
-                  items:
-                    type: string
-                  minimum: 1
-                  maximum: 100
-      responses:
-        "200":
-          description: Users added correctly
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
     get:
       tags:
         - groups
       summary: get the lists of all group participants
-      operationId: listParticipants
+      operationId: getParticipants
       responses:
         "200":
           description: Succesful operation
@@ -227,7 +128,7 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/User"
-                minimum: 1
+                minItems: 1
         "401":
           $ref: "#/components/responses/401"
         "403":
@@ -243,7 +144,7 @@ paths:
 
   /session:
     post:
-      tags: ["login"]
+      tags: [ "login" ]
       summary: Logs in the user
       description: |-
         If the user does not exist, it will be created,
@@ -305,6 +206,8 @@ paths:
         - user
       summary: Set or change the username
       operationId: setMyUserName
+      parameters:
+        - $ref: "#/components/parameters/userId"
       requestBody:
         content:
           application/json:
@@ -335,6 +238,8 @@ paths:
         - user
       summary: Set or change the user photo
       operationId: setMyPhoto
+      parameters:
+        - $ref: "#/components/parameters/userId"
       requestBody:
         content:
           application/json:
@@ -342,8 +247,7 @@ paths:
               type: object
               properties:
                 imageId:
-                  type: integer
-                  minimum: 0
+                  $ref: "#/components/schemas/Idgrez64"
       responses:
         "200":
           description: Successful operation
@@ -363,13 +267,12 @@ paths:
   /user/{user_id}/conversations:
     parameters:
       - $ref: "#/components/parameters/userId"
-    put:
+    get:
       tags:
         - conversations
-      summary: retrieve all the conversations of the given user
+      summary: retrieve all the user conversations.
       description: |
-        This method returns all the conversations of the given user
-        and, in the same time, mark all the undelivered messages as delivered to the given user.
+        This method returns all the conversations of the user either groups or one to one chats
       operationId: getMyConversations
       parameters:
         - $ref: "#/components/parameters/pageOffset"
@@ -378,10 +281,8 @@ paths:
           in: query
           schema:
             type: string
-            default: read
-            enum:
-              - read
-              - -read
+            default: "read"
+            enum: [ "read", "read_desc" ]
       responses:
         "200":
           description: Succesful operation
@@ -391,8 +292,35 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Conversation"
-                minimum: 0
-                maximum: 20
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "406":
+          $ref: "#/components/responses/406"
+        "429":
+          $ref: "#/components/responses/429"
+        default:
+          $ref: "#/components/responses/default"
+
+    put:
+      tags:
+        - conversations
+      summary: set all undelivered message as delivered
+      description: |
+        This method is used to set all the undelivered messages from all user conversations as delivered.
+      operationId: setDelivered
+      responses:
+        "200":
+          description: Succesful operation
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
         "404":
           $ref: "#/components/responses/404"
         "406":
@@ -440,18 +368,45 @@ paths:
           $ref: "#/components/responses/429"
         default:
           $ref: "#/components/responses/default"
-
     put:
       tags:
         - messages
-      summary: retrieve all the conversation messages
+      summary: set all unseen messages to seen
       description: |
-        This method returns all the message in the given conversation
-        and, in the same time, mark all the undelivered/delivered messages as seen by the given user.
+        This method marks all the undelivered/delivered messages as seen by the given user.
+      operationId: setSeen
+      responses:
+        "200":
+          description: Succesful operation
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "406":
+          $ref: "#/components/responses/406"
+        "429":
+          $ref: "#/components/responses/429"
+        default:
+          $ref: "#/components/responses/default"
+    get:
+      tags:
+        - messages
+      summary: retrieve all messages from the conversation
+      description: |
+        This methods returns the list of all messages of the conversation, by default sorted by descending send date-time
       operationId: getConversationMessages
       parameters:
         - $ref: "#/components/parameters/pageOffset"
         - $ref: "#/components/parameters/pageNumber"
+        - name: sort
+          in: query
+          description: Sort messages
+          schema:
+            type: string
+            default: "sent_desc"
+            enum: [ "sent", "sent_desc" ]
       responses:
         "200":
           description: Succesful operation
@@ -461,8 +416,6 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Message"
-                minimum: 0
-                maximum: 20
         "401":
           $ref: "#/components/responses/401"
         "403":
@@ -545,7 +498,8 @@ paths:
               properties:
                 comment:
                   type: string
-                  format: emoji
+                  minLength: 1
+                  maxLength: 1
       responses:
         "200":
           description: "Successful operation"
@@ -585,7 +539,7 @@ paths:
         default:
           $ref: "#/components/responses/default"
 
-  /user/{user_id}/conversations/{conv_id}/messages/{mess_id}/forward:
+  /users/{user_id}/conversations/{conv_id}/messages/{mess_id}/forward:
     parameters:
       - $ref: "#/components/parameters/userId"
       - $ref: "#/components/parameters/conversationId"
@@ -602,7 +556,7 @@ paths:
               type: object
               properties:
                 conversationId:
-                  type: integer
+                  $ref: "#/components/schemas/Idgrez64"
       responses:
         "200":
           description: "Successful operation"
@@ -620,7 +574,6 @@ paths:
           $ref: "#/components/responses/429"
         default:
           $ref: "#/components/responses/default"
-
   /users/{user_id}/conversations/groups:
     parameters:
       - $ref: "#/components/parameters/userId"
@@ -628,6 +581,8 @@ paths:
       tags:
         - groups
       summary: Create a new group chat
+      description: |
+        This methods allows the user to create a new group chat
       operationId: createGroup
       requestBody:
         content:
@@ -636,15 +591,16 @@ paths:
               type: object
               properties:
                 photoId:
-                  type: integer
+                  $ref: "#/components/schemas/Idgrez64"
                 name:
                   type: string
                 participants:
                   type: array
                   items:
                     type: string
-                  minimum: 0
-                  maximum: 100
+                  uniqueItems: true
+                  minItems: 0
+                  maxItems: 100
       responses:
         "201":
           description: Group created
@@ -654,7 +610,7 @@ paths:
                 type: object
                 properties:
                   id:
-                    type: integer
+                    $ref: "#/components/schemas/Idgrez64"
         "400":
           $ref: "#/components/responses/400"
         "401":
@@ -674,10 +630,49 @@ paths:
     parameters:
       - $ref: "#/components/parameters/userId"
       - $ref: "#/components/parameters/groupId"
+    put:
+      tags:
+        - groups
+      summary: Add a new user to the group
+      description: |
+        This method allows the user to add one or more new member in the group
+      operationId: addToGroup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                participants:
+                  type: array
+                  items:
+                    type: string
+                  uniqueItems: true
+                  minItems: 1
+                  maxItems: 100
+      responses:
+        "200":
+          description: Users added correctly
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "406":
+          $ref: "#/components/responses/406"
+        "429":
+          $ref: "#/components/responses/429"
+        default:
+          $ref: "#/components/responses/default"
     delete:
       tags:
         - groups
       summary: Leave the group
+      description: |
+        This method removes the user from the participants of the group specified in the parameters
       operationId: leaveGroup
       responses:
         "200":
@@ -695,13 +690,95 @@ paths:
         default:
           $ref: "#/components/responses/default"
 
-  /user/{user_id}/conversations/chats:
+  /users/{user_id}/conversations/groups/{group_id}/name:
+    parameters:
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/groupId"
+    put:
+      tags:
+        - groups
+      summary: change or set group name
+      description: |
+        This method allows participants to update the group name
+      operationId: setGroupName
+      parameters:
+        - $ref: "#/components/parameters/groupId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 16
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "406":
+          $ref: "#/components/responses/406"
+        "429":
+          $ref: "#/components/responses/429"
+        default:
+          $ref: "#/components/responses/default"
+
+  /users/{user_id}/conversations/groups/{group_id}/photo:
+    parameters:
+      - $ref: "#/components/parameters/userId"
+      - $ref: "#/components/parameters/groupId"
+    put:
+      tags:
+        - groups
+      summary: change or set group photo
+      description: |
+        This method allows participants to update the group photo
+      operationId: setGroupPhoto
+      parameters:
+        - $ref: "#/components/parameters/groupId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                imageId:
+                  $ref: "#/components/schemas/Idgrez64"
+      responses:
+        "200":
+          description: Successful operation
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "403":
+          $ref: "#/components/responses/403"
+        "404":
+          $ref: "#/components/responses/404"
+        "406":
+          $ref: "#/components/responses/406"
+        "429":
+          $ref: "#/components/responses/429"
+        default:
+          $ref: "#/components/responses/default"
+
+  /users/{user_id}/conversations/chats:
     parameters:
       - $ref: "#/components/parameters/userId"
     post:
       tags:
         - chats
       summary: Create a new one-to-one chat
+      description: |
+        This method is used to create a new one to one chat with another user of WASAText
       operationId: createChat
       requestBody:
         content:
@@ -710,7 +787,8 @@ paths:
               type: object
               properties:
                 userId:
-                  type: integer
+                  $ref: "#/components/schemas/Idgrez64"
+
       responses:
         "201":
           description: Chat created
@@ -770,75 +848,90 @@ paths:
 
 components:
   schemas:
+    Idgrez64:
+      type: integer
+      format: int64
+      minimum: 0
+      maximum: 9007199254740991
+      readOnly: true
+    Idgrez32:
+      type: integer
+      format: int32
+      minimum: 0
+      maximum: 2147483647
+      readOnly: true
     Image:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          readOnly: true
+          $ref: "#/components/schemas/Idgrez64"
         width:
-          type: integer
-          format: int32
-          readOnly: true
+          $ref: "#/components/schemas/Idgrez32"
         height:
-          type: integer
-          format: int32
-          readOnly: true
+          $ref: "#/components/schemas/Idgrez32"
         fullUrl:
           type: string
           readOnly: true
-          format: uri
+          format: url
 
     Message:
       type: object
+      required:
+        - id
+        - conversationId
+        - authorId
+        - sendAt
+        - status
       properties:
         id:
-          type: integer
-          format: int64
-          readOnly: true
+          $ref: "#/components/schemas/Idgrez64"
         conversationId:
-          type: integer
-          format: int64
-          readOnly: true
+          $ref: "#/components/schemas/Idgrez64"
         authorId:
-          type: integer
-          format: int64
-          readOnly: true
+          $ref: "#/components/schemas/Idgrez64"
         sendAt:
           type: string
           format: date-time
           readOnly: true
         status:
           type: string
-          enum: ["sent", "delivered", "read"]
+          enum: [ "sent", "delivered", "read" ]
         repliedMessageId:
           type: integer
           format: int64
+          minimum: 0
+          maximum: 9007199254740991
+          readOnly: true
           nullable: true
         attachmentUrl:
           type: string
-          format: uri
+          format: url
+          nullable: true
         content:
           type: string
+          nullable: true
     Conversation:
       type: object
+      required:
+        - id
+        - name
+        - photo
+        - type
       properties:
         id:
-          type: integer
-          format: int64
-          readOnly: true
+          $ref: "#/components/schemas/Idgrez64"
         name:
           type: string
+          minLength: 1
+          maxLength: 16
         photo:
           $ref: "#/components/schemas/Image"
         type:
           type: string
-          enum: ["group", "oneToOne"]
+          enum: [ "group", "one_to_one" ]
           readOnly: true
         latestMessage:
           $ref: "#/components/schemas/Message"
-          readOnly: true
     ConversationDetail:
       type: object
       allOf:
@@ -852,7 +945,7 @@ components:
               readOnly: true
               items:
                 type: string
-                format: username
+                format: identifier
     Conversations:
       type: array
       items:
@@ -861,26 +954,21 @@ components:
       type: object
       properties:
         id:
-          type: integer
-          format: int64
-          readOnly: true
+          $ref: "#/components/schemas/Idgrez64"
         messageId:
-          type: integer
-          format: int64
-          readOnly: true
+          $ref: "#/components/schemas/Idgrez64"
         authorId:
-          type: integer
-          format: int64
-          readOnly: true
+          $ref: "#/components/schemas/Idgrez64"
         content:
           type: string
-          format: emoji
     User:
       type: object
       properties:
         username:
           type: string
-          format: username
+          format: identifier
+          minLength: 1
+          maxLength: 16
         photo:
           $ref: "#/components/schemas/Image"
     HttpError:
@@ -902,8 +990,7 @@ components:
       type: object
       properties:
         code:
-          type: integer
-          format: int32
+          $ref: "#/components/schemas/Idgrez32"
         message:
           type: string
         errors:
@@ -914,8 +1001,7 @@ components:
       type: object
       properties:
         code:
-          type: integer
-          format: int32
+          $ref: "#/components/schemas/Idgrez32"
         field:
           type: string
         message:
@@ -938,18 +1024,14 @@ components:
       description: Numeric id of the user
       required: true
       schema:
-        type: integer
-        format: int64
-        minimum: 0
+        $ref: "#/components/schemas/Idgrez64"
     conversationId:
       name: conv_id
       in: path
       description: Numeric id of the conversation
       required: true
       schema:
-        type: integer
-        format: int64
-        minimum: 0
+        $ref: "#/components/schemas/Idgrez64"
 
     groupId:
       name: group_id
@@ -957,9 +1039,7 @@ components:
       required: true
       description: Numeric id of the group
       schema:
-        type: integer
-        format: int64
-        minimum: 0
+        $ref: "#/components/schemas/Idgrez64"
 
     messageId:
       name: mess_id
@@ -967,9 +1047,7 @@ components:
       required: true
       description: Numeric id of the group
       schema:
-        type: integer
-        format: int64
-        minimum: 0
+        $ref: "#/components/schemas/Idgrez64"
 
     pageOffset:
       name: size
@@ -991,6 +1069,7 @@ components:
         type: integer
         format: int32
         minimum: 0
+        maximum: 2147483647
   responses:
     "400":
       description: Bad request
@@ -1069,7 +1148,7 @@ components:
         name: PaoloCannone07
         photo:
           $ref: "#/components/schemas/Image"
-        type: oneToOne
+        type: one_to_one
         latestMessage:
 
   securitySchemes:
@@ -1079,4 +1158,4 @@ components:
       bearerFormat: JWT
 
 security:
-  - bearerAuth: []
+  - bearerAuth: [ ]
