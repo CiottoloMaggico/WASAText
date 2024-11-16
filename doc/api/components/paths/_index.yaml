@@ -49,11 +49,17 @@
           application/json:
             schema:
               type: object
+              required: ["users"]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
                 users:
-                  $ref: "../schemas/_index.yaml#/User"
+                  type: array
+                  minItems: 0
+                  maxItems: 9007199254740991
+                  uniqueItems: true
+                  items:
+                    $ref: "../schemas/_index.yaml#/User"
       "400":
         $ref: "../responses/_index.yaml#/400"
       "401":
@@ -68,7 +74,7 @@
   parameters:
     - $ref: "../parameters/_index.yaml#/userId"
   get:
-    tags: [ "user" ]
+    tags: [ "users" ]
     summary: Get detailed information about an user
     description: |
       Returns detailed information about the user
@@ -95,7 +101,7 @@
     - $ref: "../parameters/_index.yaml#/userId"
   put:
     tags:
-      - user
+      - users
     summary: Change the username
     description: |
       Change the username of the given user
@@ -127,7 +133,7 @@
     - $ref: "../parameters/_index.yaml#/userId"
   put:
     tags:
-      - user
+      - users
     summary: Change the user photo
     description: |
       Change the photo of the given user
@@ -371,11 +377,17 @@
           application/json:
             schema:
               type: object
+              required: ["conversations"]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
                 conversations:
-                  $ref: "../schemas/_index.yaml#/Conversation"
+                  type: array
+                  minItems: 0
+                  maxItems: 9007199254740991
+                  uniqueItems: true
+                  items:
+                    $ref: "../schemas/_index.yaml#/Conversation"
       "400":
         $ref: "../responses/_index.yaml#/400"
       "401":
@@ -515,11 +527,17 @@
           application/json:
             schema:
               type: object
+              required: ["messages"]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
-                conversations:
-                  $ref: "../schemas/_index.yaml#/Message"
+                messages:
+                  type: array
+                  minItems: 0
+                  maxItems: 9007199254740991
+                  uniqueItems: true
+                  items:
+                    $ref: "../schemas/_index.yaml#/Message"
       "401":
         $ref: "../responses/_index.yaml#/401"
       "403":

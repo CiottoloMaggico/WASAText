@@ -19,7 +19,7 @@ tags:
   - name: groups
   - name: chats
   - name: messages
-  - name: user
+  - name: users
   - name: login
 security:
   - bearerAuth: []
@@ -77,11 +77,18 @@ paths:
             application/json:
               schema:
                 type: object
+                required:
+                  - users
                 properties:
                   pagination:
                     $ref: '#/components/schemas/Pagination'
                   users:
-                    $ref: '#/components/schemas/User'
+                    type: array
+                    minItems: 0
+                    maxItems: 9007199254740991
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/User'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -97,7 +104,7 @@ paths:
       - $ref: '#/components/parameters/userId'
     get:
       tags:
-        - user
+        - users
       summary: Get detailed information about an user
       description: |
         Returns detailed information about the user
@@ -124,7 +131,7 @@ paths:
       - $ref: '#/components/parameters/userId'
     put:
       tags:
-        - user
+        - users
       summary: Change the username
       description: |
         Change the username of the given user
@@ -155,7 +162,7 @@ paths:
       - $ref: '#/components/parameters/userId'
     put:
       tags:
-        - user
+        - users
       summary: Change the user photo
       description: |
         Change the photo of the given user
@@ -397,11 +404,18 @@ paths:
             application/json:
               schema:
                 type: object
+                required:
+                  - conversations
                 properties:
                   pagination:
                     $ref: '#/components/schemas/Pagination'
                   conversations:
-                    $ref: '#/components/schemas/Conversation'
+                    type: array
+                    minItems: 0
+                    maxItems: 9007199254740991
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/Conversation'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -542,11 +556,18 @@ paths:
             application/json:
               schema:
                 type: object
+                required:
+                  - messages
                 properties:
                   pagination:
                     $ref: '#/components/schemas/Pagination'
-                  conversations:
-                    $ref: '#/components/schemas/Message'
+                  messages:
+                    type: array
+                    minItems: 0
+                    maxItems: 9007199254740991
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/Message'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -703,47 +724,56 @@ paths:
 components:
   schemas:
     CustomInt64:
+      description: Custom integer64 type to avoid minimum and maximum error
       type: integer
       format: int64
       minimum: 0
       maximum: 9007199254740991
     CustomInt32:
+      description: Custom integer32 type to avoid minimum and maximum error
       type: integer
       format: int32
       minimum: 0
       maximum: 2147483647
     ReadOnlyInt64:
+      description: Custom integer64 readonly type to avoid minimum and maximum error
       type: integer
       format: int64
       minimum: 0
       maximum: 9007199254740991
       readOnly: true
     ReadOnlyInt32:
+      description: Custom integer32 readonly type to avoid minimum and maximum error
       type: integer
       format: int32
       minimum: 0
       maximum: 2147483647
       readOnly: true
     ReadOnlyUrl:
+      description: Custom string type to use for urls
       type: string
       format: url
       readOnly: true
     Username:
+      description: users "Username" field type
       type: string
       format: identifier
       minLength: 1
       maxLength: 16
     ConversationName:
+      description: conversations "name" field type
       type: string
       minLength: 1
       maxLength: 16
     ConversationType:
+      description: conversations type to specify its type
       type: string
       enum:
         - group
         - one_to_one
       readOnly: true
     MessageStatus:
+      description: list of possible statuses of a message
       type: string
       enum:
         - sent
@@ -751,18 +781,21 @@ components:
         - read
       default: sent
     HttpStatusCode:
+      description: http status code type
       type: integer
       format: int32
       minimum: 100
       maximum: 599
       readOnly: true
     PaginationOffset:
+      description: used to specify how many items per page are displayed in paginated responses
       type: integer
       format: int32
       minimum: 0
       maximum: 20
       default: 20
     User:
+      description: User type
       type: object
       properties:
         username:
@@ -770,6 +803,7 @@ components:
         photo:
           $ref: '#/components/schemas/Image'
     Image:
+      description: Image type
       type: object
       properties:
         id:
@@ -781,6 +815,7 @@ components:
         fullUrl:
           $ref: '#/components/schemas/ReadOnlyUrl'
     Conversation:
+      description: Conversation type
       type: object
       required:
         - id
@@ -799,6 +834,7 @@ components:
         latestMessage:
           $ref: '#/components/schemas/Message'
     ConversationDetail:
+      description: Conversation type for detailed info about a conversation
       type: object
       required:
         - participants
@@ -807,14 +843,18 @@ components:
           type: array
           readOnly: true
           uniqueItems: true
+          minItems: 1
+          maxItems: 200
           items:
-            $ref: '#/components/schemas/ConversationName'
+            $ref: '#/components/schemas/Username'
     ConversationDetailMerge:
+      description: Merge type between Conversation and ConversationDetail
       type: object
       allOf:
         - $ref: '#/components/schemas/Conversation'
         - $ref: '#/components/schemas/ConversationDetail'
     Message:
+      description: Message type
       type: object
       required:
         - id
@@ -842,6 +882,7 @@ components:
         content:
           type: string
     Comment:
+      description: Comment type
       type: object
       properties:
         id:
@@ -853,6 +894,7 @@ components:
         content:
           type: string
     HttpStatus:
+      description: Blueprint for responses without content or http errors
       type: object
       required:
         - code
@@ -865,6 +907,7 @@ components:
         description:
           type: string
     Pagination:
+      description: Blueprint used in paginated responses
       type: object
       required:
         - page
@@ -991,7 +1034,7 @@ components:
                 type: string
                 minLength: 1
                 maxLength: 16
-              photo:
+              image:
                 type: string
                 format: binary
               participants:

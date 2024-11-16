@@ -19,7 +19,7 @@ tags:
   - name: groups
   - name: chats
   - name: messages
-  - name: user
+  - name: users
   - name: login
 security:
   - bearerAuth: []
