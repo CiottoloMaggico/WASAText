@@ -713,7 +713,7 @@ type EventPort struct {
 	fds   map[uintptr]*fileObjCookie
 	paths map[string]*fileObjCookie
 	// The user cookie presents an interesting challenge from a memory management perspective.
-	// There are two paths by which we can discover that it is no longer in use:
+	// There are two resources by which we can discover that it is no longer in use:
 	// 1. The user calls port_dissociate before any events fire
 	// 2. An event fires and we return it to the user
 	// The tricky situation is if the event has fired in the kernel but
@@ -944,7 +944,7 @@ func (e *EventPort) peIntToExt(peInt *portEvent, peExt *PortEvent) error {
 	case PORT_SOURCE_FILE:
 		peExt.fobj = fCookie.fobj
 		peExt.Path = BytePtrToString((*byte)(unsafe.Pointer(peExt.fobj.Name)))
-		// Only remove the paths entry if it exists and this cookie matches
+		// Only remove the resources entry if it exists and this cookie matches
 		if fobj, ok := e.paths[peExt.Path]; ok {
 			if fobj == fCookie {
 				delete(e.paths, peExt.Path)

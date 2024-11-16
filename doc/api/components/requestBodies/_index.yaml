@@ -1,0 +1,122 @@
+ChangeGroupPhoto:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          image:
+            type: string
+            format: binary
+
+ChangeUserPhoto:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          image:
+            type: string
+            format: binary
+
+ChangeGroupName:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          name:
+            $ref: "../schemas/_index.yaml#/ConversationName"
+
+ChangeUsername:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          name:
+            $ref: "../schemas/_index.yaml#/Username"
+
+GroupCreation:
+  content:
+    application/json:
+      schema:
+        type: object
+        required: [ "name" ]
+        properties:
+          name:
+            type: string
+            minLength: 1
+            maxLength: 16
+          photo:
+            type: string
+            format: binary
+          participants:
+            type: array
+            minItems: 0
+            maxItems: 100
+            uniqueItems: true
+            items:
+              $ref: "../schemas/_index.yaml#/Username"
+
+AddUserToGroup:
+  content:
+      application/json:
+        schema:
+          type: object
+          required: [ "participants" ]
+          properties:
+            participants:
+              type: array
+              minItems: 0
+              maxItems: 100
+              uniqueItems: true
+              items:
+                $ref: "../schemas/_index.yaml#/Username"
+
+ChatCreation:
+  content:
+    application/json:
+      schema:
+        type: object
+        required: [ "recipientUsername" ]
+        properties:
+          recipientUsername:
+            $ref: "../schemas/_index.yaml#/Username"
+
+MessageCreation:
+  content:
+    application/json:
+      schema:
+        type: object
+        minProperties: 1
+        properties:
+          content:
+            oneOf:
+              - type: string
+              - type: string
+                format: binary
+          repliedMessageId:
+            $ref: "../schemas/_index.yaml#/CustomInt64"
+
+CommentCreation:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          comment:
+            type: string
+            minLength: 1
+            maxLength: 1
+
+ForwardMessage:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          destConversationId:
+            $ref: "../schemas/_index.yaml#/CustomInt64"
+
+
+

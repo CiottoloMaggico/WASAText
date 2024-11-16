@@ -1,0 +1,80 @@
+"200":
+  description: Successful operation
+  content:
+    application/json:
+      schema:
+        $ref: "../schemas/_index.yaml#/HttpStatus"
+      example:
+        code: 200
+        message: Ok
+        description: All the operations went fine
+"400":
+  description: Bad request
+  content:
+    application/json:
+      schema:
+        $ref: "../schemas/_index.yaml#/HttpStatus"
+      example:
+        code: 400
+        message: Bad request
+        description: The request contains wrong parameters
+"401":
+  description: Unauthorized
+  content:
+    application/json:
+      schema:
+        $ref: "../schemas/_index.yaml#/HttpStatus"
+      example:
+        code: 401
+        message: Unauthorized
+        description: You must do login to see your conversations
+"403":
+  description: Forbidden
+  content:
+    application/json:
+      schema:
+        $ref: "../schemas/_index.yaml#/HttpStatus"
+      example:
+        code: 403
+        message: Forbidden
+        description: You can't add a user to a group where you're not a participant
+"404":
+  description: Not found
+  content:
+    application/json:
+      schema:
+        $ref: "../schemas/_index.yaml#/HttpStatus"
+      example:
+        code: 404
+        message: Not found
+        description: The provided conversation id isn't in your conversations list
+"406":
+  description: Not acceptable
+  content:
+    application/json:
+      schema:
+        $ref: "../schemas/_index.yaml#/HttpStatus"
+      example:
+        code: 406
+        message: Not acceptable
+        description: (list of available resources representation)
+"429":
+  description: Too many requests
+  content:
+    application/json:
+      schema:
+        $ref: "../schemas/_index.yaml#/HttpStatus"
+      example:
+        code: 429
+        message: Too many request
+        description: Too many request, please try again later
+default:
+  description: Unexpected error
+  content:
+    application/json:
+      schema:
+        $ref: "../schemas/_index.yaml#/HttpStatus"
+      example:
+        code: 500
+        message: Internal server error
+        description: Unexpected error

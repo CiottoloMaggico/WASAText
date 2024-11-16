@@ -1,0 +1,681 @@
+/session:
+  post:
+    tags: [ "login" ]
+    summary: Logs in the user
+    description: |-
+      If the user does not exist, it will be created,
+      and an identifier is returned.
+      If the user exists, the user identifier is returned.
+    operationId: doLogin
+    requestBody:
+      description: User details
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: Maria
+                pattern: "^.*?$"
+                minLength: 3
+                maxLength: 16
+    responses:
+      "201":
+        description: User log-in action successful
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                identifier:
+                  type: string
+                  example: "abcdef012345"
+/users:
+  get:
+    tags: [ "users" ]
+    summary: Retrieve the list of all users of WASAText
+    description: |
+      Return a paginated list of all users registered to WASAText
+    operationId: getUsers
+    parameters:
+      - $ref: "../parameters/_index.yaml#/pageOffset"
+      - $ref: "../parameters/_index.yaml#/pageNumber"
+      - $ref: "../parameters/_index.yaml#/filterUsers"
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pagination:
+                  $ref: "../schemas/_index.yaml#/Pagination"
+                users:
+                  $ref: "../schemas/_index.yaml#/User"
+      "400":
+        $ref: "../responses/_index.yaml#/400"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+/users/{user_id}:
+  parameters:
+    - $ref: "../parameters/_index.yaml#/userId"
+  get:
+    tags: [ "user" ]
+    summary: Get detailed information about an user
+    description: |
+      Returns detailed information about the user
+    operationId: getUser
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yaml#/User"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+/user/{user_id}/username:
+  parameters:
+    - $ref: "../parameters/_index.yaml#/userId"
+  put:
+    tags:
+      - user
+    summary: Change the username
+    description: |
+      Change the username of the given user
+    operationId: setMyUserName
+    requestBody:
+      $ref: "../requestBodies/_index.yaml#/ChangeUsername"
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yaml#/User"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+
+/user/{user_id}/photo:
+  parameters:
+    - $ref: "../parameters/_index.yaml#/userId"
+  put:
+    tags:
+      - user
+    summary: Change the user photo
+    description: |
+      Change the photo of the given user
+    operationId: setMyPhoto
+    requestBody:
+      $ref: "../requestBodies/_index.yaml#/ChangeUserPhoto"
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yaml#/User"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+/users/{user_id}/chats:
+  parameters:
+    - $ref: "../parameters/_index.yaml#/userId"
+  post:
+    tags:
+      - chats
+    summary: Create a new one-to-one chat
+    description: |
+      This method is used to create a new one to one chat with another user of WASAText
+    operationId: createChat
+    requestBody:
+      $ref: "../requestBodies/_index.yaml#/ChatCreation"
+    responses:
+      "201":
+        description: Chat created
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yaml#/Conversation"
+            examples:
+              chatExample:
+                $ref: "../examples/_index.yaml#/chatExample"
+      "400":
+        $ref: "../responses/_index.yaml#/400"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+
+/users/{user_id}/groups:
+  parameters:
+    - $ref: "../parameters/_index.yaml#/userId"
+  post:
+    tags:
+      - groups
+    summary: Create a new group chat
+    description: |
+      This methods allows the user to create a new group chat
+    operationId: createGroup
+    requestBody:
+      $ref: "../requestBodies/_index.yaml#/GroupCreation"
+    responses:
+      "201":
+        description: Group created
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yaml#/Conversation"
+      "400":
+        $ref: "../responses/_index.yaml#/400"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+/users/{user_id}/groups/{group_id}:
+  parameters:
+    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/groupId"
+  put:
+    tags:
+      - groups
+    summary: Add a new user to the group
+    description: |
+      This method allows the user to add one or more (up to 100) new member in the group
+    operationId: addToGroup
+    requestBody:
+      $ref: "../requestBodies/_index.yaml#/AddUserToGroup"
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yaml#/ConversationDetailMerge"
+      "400":
+        $ref: "../responses/_index.yaml#/400"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+  delete:
+    tags:
+      - groups
+    summary: Leave the group
+    description: |
+      This method removes the user from the participants of the group specified in the parameters
+    operationId: leaveGroup
+    responses:
+      "200":
+        $ref: "../responses/_index.yaml#/200"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+/users/{user_id}/groups/{group_id}/name:
+  parameters:
+    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/groupId"
+  put:
+    tags:
+      - groups
+    summary: change or set group name
+    description: |
+      This method allows participants to update the group name
+    operationId: setGroupName
+    requestBody:
+      $ref: "../requestBodies/_index.yaml#/ChangeGroupName"
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yaml#/ConversationDetailMerge"
+      "400":
+        $ref: "../responses/_index.yaml#/400"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+
+/users/{user_id}/groups/{group_id}/photo:
+  parameters:
+    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/groupId"
+  put:
+    tags:
+      - groups
+    summary: change or set group photo
+    description: |
+      This method allows participants to update the group photo
+    operationId: setGroupPhoto
+    parameters:
+      - $ref: "../parameters/_index.yaml#/groupId"
+    requestBody:
+      $ref: "../requestBodies/_index.yaml#/ChangeGroupPhoto"
+    responses:
+      "200":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yaml#/ConversationDetailMerge"
+      "400":
+        $ref: "../responses/_index.yaml#/400"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+/users/{user_id}/conversations:
+  parameters:
+    - $ref: "../parameters/_index.yaml#/userId"
+  get:
+    tags:
+      - conversations
+    summary: retrieve all the user conversations
+    description: |
+      This method returns a paginated list of all the conversations of the user either groups or one to one chats
+    operationId: getMyConversations
+    parameters:
+      - $ref: "../parameters/_index.yaml#/pageOffset"
+      - $ref: "../parameters/_index.yaml#/pageNumber"
+      - $ref: "../parameters/_index.yaml#/sortConversations"
+    responses:
+      "200":
+        description: Succesful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pagination:
+                  $ref: "../schemas/_index.yaml#/Pagination"
+                conversations:
+                  $ref: "../schemas/_index.yaml#/Conversation"
+      "400":
+        $ref: "../responses/_index.yaml#/400"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+  put:
+    tags:
+      - conversations
+    summary: set all undelivered message as delivered
+    description: |
+      This method is used to set all the undelivered messages from all user conversations as delivered.
+    operationId: setDelivered
+    responses:
+      "200":
+        $ref: "../responses/_index.yaml#/200"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+/users/{user_id}/conversations/{conv_id}:
+  parameters:
+    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/conversationId"
+  get:
+    tags: [ "conversations" ]
+    summary: Retrieve the detail of a conversation
+    description: |
+      Returns detailed informations about the conversation provided
+    operationId: getConversation
+    responses:
+      "200":
+        description: Succesful operation
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yaml#/ConversationDetailMerge"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+/users/{user_id}/conversations/{conv_id}/messages:
+  parameters:
+    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/conversationId"
+  post:
+    tags:
+      - messages
+    summary: send a new message to the conversation
+    description: |
+      send a new message to the conversation, you can send image files, text and reply to other messages
+    operationId: sendMessage
+    requestBody:
+      $ref: "../requestBodies/_index.yaml#/MessageCreation"
+    responses:
+      "201":
+        description: Successful operation
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yaml#/Message"
+      "400":
+        $ref: "../responses/_index.yaml#/400"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+  put:
+    tags:
+      - messages
+    summary: set all unseen messages to seen
+    description: |
+      This method marks all the undelivered/delivered messages as seen by the given user.
+    operationId: setSeen
+    responses:
+      "200":
+        $ref: "../responses/_index.yaml#/200"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+  get:
+    tags:
+      - messages
+    summary: retrieve all messages from the conversation
+    description: |
+      This methods returns the list of all messages of the conversation, by default sorted by descending send date-time
+    operationId: getConversationMessages
+    parameters:
+      - $ref: "../parameters/_index.yaml#/pageOffset"
+      - $ref: "../parameters/_index.yaml#/pageNumber"
+      - $ref: "../parameters/_index.yaml#/sortMessages"
+    responses:
+      "200":
+        description: Succesful operation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pagination:
+                  $ref: "../schemas/_index.yaml#/Pagination"
+                conversations:
+                  $ref: "../schemas/_index.yaml#/Message"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+
+/users/{user_id}/conversations/{conv_id}/messages/{mess_id}:
+  parameters:
+    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/conversationId"
+    - $ref: "../parameters/_index.yaml#/messageId"
+  get:
+    tags:
+      - messages
+    summary: Retrieve detailed information about the message
+    description: |
+      Returns detailed informations about the message
+    operationId: messageDetail
+    responses:
+      "200":
+        description: "Successful operation"
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yaml#/Message"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+
+  delete:
+    tags:
+      - messages
+    summary: Delete the message from the conversation
+    description: |
+      Delete the message from the conversation
+    operationId: deleteMessage
+    responses:
+      "200":
+        $ref: "../responses/_index.yaml#/200"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+/users/{user_id}/conversations/{conv_id}/messages/{mess_id}/comments:
+  parameters:
+    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/conversationId"
+    - $ref: "../parameters/_index.yaml#/messageId"
+  put:
+    tags:
+      - messages
+    summary: set a comment for the given message
+    description: |
+      Create or update the comment for the given message
+    operationId: commentMessage
+    requestBody:
+      $ref: "../requestBodies/_index.yaml#/CommentCreation"
+    responses:
+      "201":
+        description: "Comment created"
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yaml#/Comment"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+
+  delete:
+    tags:
+      - messages
+    summary: delete the comment
+    description:
+      Delete the user comment for the given message
+    operationId: uncommentMessage
+    responses:
+      "200":
+        $ref: "../responses/_index.yaml#/200"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"
+
+/users/{user_id}/conversations/{conv_id}/messages/{mess_id}/forward:
+  parameters:
+    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/conversationId"
+    - $ref: "../parameters/_index.yaml#/messageId"
+  post:
+    tags:
+      - messages
+    summary: forward the message to another conversation
+    description:
+      Make a copy of the content of the given message and forward it to another conversation
+    operationId: forwardMessage
+    requestBody:
+      $ref: "../requestBodies/_index.yaml#/ForwardMessage"
+    responses:
+      "201":
+        description: Message forwarded
+        content:
+          application/json:
+            schema:
+              $ref: "../schemas/_index.yaml#/Message"
+      "400":
+        $ref: "../responses/_index.yaml#/400"
+      "401":
+        $ref: "../responses/_index.yaml#/401"
+      "403":
+        $ref: "../responses/_index.yaml#/403"
+      "404":
+        $ref: "../responses/_index.yaml#/404"
+      "406":
+        $ref: "../responses/_index.yaml#/406"
+      "429":
+        $ref: "../responses/_index.yaml#/429"
+      default:
+        $ref: "../responses/_index.yaml#/default"

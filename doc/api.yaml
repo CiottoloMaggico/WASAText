@@ -9,10 +9,10 @@ info:
     email: fantozzi.2047034@studenti.uniroma1.it
   license:
     name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
   version: 1.0.0
 servers:
-  - url: https://api.wasatext.com/api/v1
+  - url: 'https://api.wasatext.com/api/v1'
     description: Production server
 tags:
   - name: conversations
@@ -20,131 +20,14 @@ tags:
   - name: chats
   - name: messages
   - name: user
+  - name: login
+security:
+  - bearerAuth: []
 paths:
-  /conversations:
-    get:
-      tags:
-        - conversations
-      summary: Get the list of all conversations
-      operationId: getConversations
-      parameters:
-        - $ref: "#/components/parameters/pageOffset"
-        - $ref: "#/components/parameters/pageNumber"
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Conversations"
-        "400":
-          $ref: "#/components/responses/400"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
-  /conversations/{conv_id}:
-    get:
-      tags:
-        - conversations
-      summary: Get the detail of a particular conversation
-      operationId: getConversation
-      parameters:
-        - $ref: "#/components/parameters/conversationId"
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ConversationDetail"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
-  /conversation/{conv_id}/messages:
-    get:
-      tags:
-        - messages
-      summary: Get all messages of a particular conversation
-      operationId: getMessages
-      parameters:
-        - $ref: "#/components/parameters/conversationId"
-        - $ref: "#/components/parameters/pageOffset"
-        - $ref: "#/components/parameters/pageNumber"
-        - name: sort
-          in: query
-          description: Sort messages
-          schema:
-            type: string
-            default: "sent_desc"
-            enum: [ "sent", "sent_desc" ]
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Message"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
-  /groups/{group_id}/participants:
-    parameters:
-      - $ref: "#/components/parameters/groupId"
-    get:
-      tags:
-        - groups
-      summary: get the lists of all group participants
-      operationId: getParticipants
-      responses:
-        "200":
-          description: Succesful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/User"
-                minItems: 1
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
   /session:
     post:
-      tags: [ "login" ]
+      tags:
+        - login
       summary: Logs in the user
       description: |-
         If the user does not exist, it will be created,
@@ -161,11 +44,11 @@ paths:
                 name:
                   type: string
                   example: Maria
-                  pattern: "ˆ.*?$"
+                  pattern: ^.*?$
                   minLength: 3
                   maxLength: 16
       responses:
-        "201":
+        '201':
           description: User log-in action successful
           content:
             application/json:
@@ -174,605 +57,133 @@ paths:
                 properties:
                   identifier:
                     type: string
-                    example: "abcdef012345"
-
-  /user/{user_id}:
+                    example: abcdef012345
+  /users:
     get:
       tags:
-        - user
-      summary: retrieve specific user informations
-      operationId: getUserInfo
+        - users
+      summary: Retrieve the list of all users of WASAText
+      description: |
+        Return a paginated list of all users registered to WASAText
+      operationId: getUsers
       parameters:
-        - $ref: "#/components/parameters/userId"
+        - $ref: '#/components/parameters/pageOffset'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/filterUsers'
       responses:
-        "200":
-          description: Succesful operation
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
-  /user/{user_id}/name:
-    put:
-      tags:
-        - user
-      summary: Set or change the username
-      operationId: setMyUserName
-      parameters:
-        - $ref: "#/components/parameters/userId"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-      responses:
-        "200":
+        '200':
           description: Successful operation
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
-  /user/{user_id}/photo:
-    put:
-      tags:
-        - user
-      summary: Set or change the user photo
-      operationId: setMyPhoto
-      parameters:
-        - $ref: "#/components/parameters/userId"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                imageId:
-                  $ref: "#/components/schemas/Idgrez64"
-      responses:
-        "200":
-          description: Successful operation
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
-  /user/{user_id}/conversations:
-    parameters:
-      - $ref: "#/components/parameters/userId"
-    get:
-      tags:
-        - conversations
-      summary: retrieve all the user conversations.
-      description: |
-        This method returns all the conversations of the user either groups or one to one chats
-      operationId: getMyConversations
-      parameters:
-        - $ref: "#/components/parameters/pageOffset"
-        - $ref: "#/components/parameters/pageNumber"
-        - name: sort
-          in: query
-          schema:
-            type: string
-            default: "read"
-            enum: [ "read", "read_desc" ]
-      responses:
-        "200":
-          description: Succesful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Conversation"
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
-    put:
-      tags:
-        - conversations
-      summary: set all undelivered message as delivered
-      description: |
-        This method is used to set all the undelivered messages from all user conversations as delivered.
-      operationId: setDelivered
-      responses:
-        "200":
-          description: Succesful operation
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
-  /users/{user_id}/conversations/{conv_id}/messages:
-    parameters:
-      - $ref: "#/components/parameters/userId"
-      - $ref: "#/components/parameters/conversationId"
-    post:
-      tags:
-        - messages
-      summary: send a new message to the conversation
-      operationId: sendMessage
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                content:
-                  type: string
-                attachmentUrl:
-                  # allow only backend domain
-                  type: string
-                  format: url
-      responses:
-        "201":
-          description: message sent
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-    put:
-      tags:
-        - messages
-      summary: set all unseen messages to seen
-      description: |
-        This method marks all the undelivered/delivered messages as seen by the given user.
-      operationId: setSeen
-      responses:
-        "200":
-          description: Succesful operation
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-    get:
-      tags:
-        - messages
-      summary: retrieve all messages from the conversation
-      description: |
-        This methods returns the list of all messages of the conversation, by default sorted by descending send date-time
-      operationId: getConversationMessages
-      parameters:
-        - $ref: "#/components/parameters/pageOffset"
-        - $ref: "#/components/parameters/pageNumber"
-        - name: sort
-          in: query
-          description: Sort messages
-          schema:
-            type: string
-            default: "sent_desc"
-            enum: [ "sent", "sent_desc" ]
-      responses:
-        "200":
-          description: Succesful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Message"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
-  /users/{user_id}/conversations/{conv_id}/messages/{mess_id}:
-    parameters:
-      - $ref: "#/components/parameters/userId"
-      - $ref: "#/components/parameters/conversationId"
-      - $ref: "#/components/parameters/messageId"
-    get:
-      tags:
-        - messages
-      summary: Retrieve detailed information about the message
-      operationId: messageDetail
-      responses:
-        "200":
-          description: "Successful operation"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Message"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
-    delete:
-      tags:
-        - messages
-      summary: Delete the message from the conversation
-      operationId: deleteMessage
-      responses:
-        "200":
-          description: "Successful operation"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
-  /users/{user_id}/conversations/{conv_id}/messages/{mess_id}/comments:
-    parameters:
-      - $ref: "#/components/parameters/userId"
-      - $ref: "#/components/parameters/conversationId"
-      - $ref: "#/components/parameters/messageId"
-    put:
-      tags:
-        - messages
-      summary: set a comment for the given message
-      operationId: commentMessage
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                comment:
-                  type: string
-                  minLength: 1
-                  maxLength: 1
-      responses:
-        "200":
-          description: "Successful operation"
-        "201":
-          description: "Comment created"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
-    delete:
-      tags:
-        - messages
-      summary: delete the comment
-      operationId: uncommentMessage
-      responses:
-        "200":
-          description: "Successful operation"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
-  /users/{user_id}/conversations/{conv_id}/messages/{mess_id}/forward:
-    parameters:
-      - $ref: "#/components/parameters/userId"
-      - $ref: "#/components/parameters/conversationId"
-      - $ref: "#/components/parameters/messageId"
-    post:
-      tags:
-        - messages
-      summary: forward the message to another conversation
-      operationId: forwardMessage
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                conversationId:
-                  $ref: "#/components/schemas/Idgrez64"
-      responses:
-        "200":
-          description: "Successful operation"
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-  /users/{user_id}/conversations/groups:
-    parameters:
-      - $ref: "#/components/parameters/userId"
-    post:
-      tags:
-        - groups
-      summary: Create a new group chat
-      description: |
-        This methods allows the user to create a new group chat
-      operationId: createGroup
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                photoId:
-                  $ref: "#/components/schemas/Idgrez64"
-                name:
-                  type: string
-                participants:
-                  type: array
-                  items:
-                    type: string
-                  uniqueItems: true
-                  minItems: 0
-                  maxItems: 100
-      responses:
-        "201":
-          description: Group created
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  id:
-                    $ref: "#/components/schemas/Idgrez64"
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  users:
+                    $ref: '#/components/schemas/User'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
         default:
-          $ref: "#/components/responses/default"
-
-  /users/{user_id}/conversations/groups/{group_id}:
+          $ref: '#/components/responses/default'
+  '/users/{user_id}':
     parameters:
-      - $ref: "#/components/parameters/userId"
-      - $ref: "#/components/parameters/groupId"
-    put:
+      - $ref: '#/components/parameters/userId'
+    get:
       tags:
-        - groups
-      summary: Add a new user to the group
+        - user
+      summary: Get detailed information about an user
       description: |
-        This method allows the user to add one or more new member in the group
-      operationId: addToGroup
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                participants:
-                  type: array
-                  items:
-                    type: string
-                  uniqueItems: true
-                  minItems: 1
-                  maxItems: 100
+        Returns detailed information about the user
+      operationId: getUser
       responses:
-        "200":
-          description: Users added correctly
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-    delete:
-      tags:
-        - groups
-      summary: Leave the group
-      description: |
-        This method removes the user from the participants of the group specified in the parameters
-      operationId: leaveGroup
-      responses:
-        "200":
-          description: Succesful operation
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
-        default:
-          $ref: "#/components/responses/default"
-
-  /users/{user_id}/conversations/groups/{group_id}/name:
-    parameters:
-      - $ref: "#/components/parameters/userId"
-      - $ref: "#/components/parameters/groupId"
-    put:
-      tags:
-        - groups
-      summary: change or set group name
-      description: |
-        This method allows participants to update the group name
-      operationId: setGroupName
-      parameters:
-        - $ref: "#/components/parameters/groupId"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  minLength: 1
-                  maxLength: 16
-      responses:
-        "200":
+        '200':
           description: Successful operation
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
         default:
-          $ref: "#/components/responses/default"
-
-  /users/{user_id}/conversations/groups/{group_id}/photo:
+          $ref: '#/components/responses/default'
+  '/user/{user_id}/username':
     parameters:
-      - $ref: "#/components/parameters/userId"
-      - $ref: "#/components/parameters/groupId"
+      - $ref: '#/components/parameters/userId'
     put:
       tags:
-        - groups
-      summary: change or set group photo
+        - user
+      summary: Change the username
       description: |
-        This method allows participants to update the group photo
-      operationId: setGroupPhoto
-      parameters:
-        - $ref: "#/components/parameters/groupId"
+        Change the username of the given user
+      operationId: setMyUserName
       requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                imageId:
-                  $ref: "#/components/schemas/Idgrez64"
+        $ref: '#/components/requestBodies/ChangeUsername'
       responses:
-        "200":
+        '200':
           description: Successful operation
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
         default:
-          $ref: "#/components/responses/default"
-
-  /users/{user_id}/conversations/chats:
+          $ref: '#/components/responses/default'
+  '/user/{user_id}/photo':
     parameters:
-      - $ref: "#/components/parameters/userId"
+      - $ref: '#/components/parameters/userId'
+    put:
+      tags:
+        - user
+      summary: Change the user photo
+      description: |
+        Change the photo of the given user
+      operationId: setMyPhoto
+      requestBody:
+        $ref: '#/components/requestBodies/ChangeUserPhoto'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+  '/users/{user_id}/chats':
+    parameters:
+      - $ref: '#/components/parameters/userId'
     post:
       tags:
         - chats
@@ -781,99 +192,628 @@ paths:
         This method is used to create a new one to one chat with another user of WASAText
       operationId: createChat
       requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                userId:
-                  $ref: "#/components/schemas/Idgrez64"
-
+        $ref: '#/components/requestBodies/ChatCreation'
       responses:
-        "201":
+        '201':
           description: Chat created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Conversation"
+                $ref: '#/components/schemas/Conversation'
               examples:
                 chatExample:
-                  $ref: "#/components/examples/chatExample"
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "404":
-          $ref: "#/components/responses/404"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
+                  $ref: '#/components/examples/chatExample'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
         default:
-          $ref: "#/components/responses/default"
-
-  /images:
+          $ref: '#/components/responses/default'
+  '/users/{user_id}/groups':
+    parameters:
+      - $ref: '#/components/parameters/userId'
     post:
       tags:
-        - images
-      summary: Upload an image in the system
-      operationId: uploadImage
+        - groups
+      summary: Create a new group chat
+      description: |
+        This methods allows the user to create a new group chat
+      operationId: createGroup
       requestBody:
-        content:
-          image/*:
-            schema:
-              type: string
-              format: binary
+        $ref: '#/components/requestBodies/GroupCreation'
       responses:
-        "200":
+        '201':
+          description: Group created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Conversation'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+  '/users/{user_id}/groups/{group_id}':
+    parameters:
+      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/groupId'
+    put:
+      tags:
+        - groups
+      summary: Add a new user to the group
+      description: |
+        This method allows the user to add one or more (up to 100) new member in the group
+      operationId: addToGroup
+      requestBody:
+        $ref: '#/components/requestBodies/AddUserToGroup'
+      responses:
+        '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Image"
-        "400":
-          $ref: "#/components/responses/400"
-        "401":
-          $ref: "#/components/responses/401"
-        "403":
-          $ref: "#/components/responses/403"
-        "406":
-          $ref: "#/components/responses/406"
-        "429":
-          $ref: "#/components/responses/429"
+                $ref: '#/components/schemas/ConversationDetailMerge'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
         default:
-          $ref: "#/components/responses/default"
-
+          $ref: '#/components/responses/default'
+    delete:
+      tags:
+        - groups
+      summary: Leave the group
+      description: |
+        This method removes the user from the participants of the group specified in the parameters
+      operationId: leaveGroup
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+  '/users/{user_id}/groups/{group_id}/name':
+    parameters:
+      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/groupId'
+    put:
+      tags:
+        - groups
+      summary: change or set group name
+      description: |
+        This method allows participants to update the group name
+      operationId: setGroupName
+      requestBody:
+        $ref: '#/components/requestBodies/ChangeGroupName'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationDetailMerge'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+  '/users/{user_id}/groups/{group_id}/photo':
+    parameters:
+      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/groupId'
+    put:
+      tags:
+        - groups
+      summary: change or set group photo
+      description: |
+        This method allows participants to update the group photo
+      operationId: setGroupPhoto
+      parameters:
+        - $ref: '#/components/parameters/groupId'
+      requestBody:
+        $ref: '#/components/requestBodies/ChangeGroupPhoto'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationDetailMerge'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+  '/users/{user_id}/conversations':
+    parameters:
+      - $ref: '#/components/parameters/userId'
+    get:
+      tags:
+        - conversations
+      summary: retrieve all the user conversations
+      description: |
+        This method returns a paginated list of all the conversations of the user either groups or one to one chats
+      operationId: getMyConversations
+      parameters:
+        - $ref: '#/components/parameters/pageOffset'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sortConversations'
+      responses:
+        '200':
+          description: Succesful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  conversations:
+                    $ref: '#/components/schemas/Conversation'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+    put:
+      tags:
+        - conversations
+      summary: set all undelivered message as delivered
+      description: |
+        This method is used to set all the undelivered messages from all user conversations as delivered.
+      operationId: setDelivered
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+  '/users/{user_id}/conversations/{conv_id}':
+    parameters:
+      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/conversationId'
+    get:
+      tags:
+        - conversations
+      summary: Retrieve the detail of a conversation
+      description: |
+        Returns detailed informations about the conversation provided
+      operationId: getConversation
+      responses:
+        '200':
+          description: Succesful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationDetailMerge'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+  '/users/{user_id}/conversations/{conv_id}/messages':
+    parameters:
+      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/conversationId'
+    post:
+      tags:
+        - messages
+      summary: send a new message to the conversation
+      description: |
+        send a new message to the conversation, you can send image files, text and reply to other messages
+      operationId: sendMessage
+      requestBody:
+        $ref: '#/components/requestBodies/MessageCreation'
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+    put:
+      tags:
+        - messages
+      summary: set all unseen messages to seen
+      description: |
+        This method marks all the undelivered/delivered messages as seen by the given user.
+      operationId: setSeen
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+    get:
+      tags:
+        - messages
+      summary: retrieve all messages from the conversation
+      description: |
+        This methods returns the list of all messages of the conversation, by default sorted by descending send date-time
+      operationId: getConversationMessages
+      parameters:
+        - $ref: '#/components/parameters/pageOffset'
+        - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/sortMessages'
+      responses:
+        '200':
+          description: Succesful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  conversations:
+                    $ref: '#/components/schemas/Message'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+  '/users/{user_id}/conversations/{conv_id}/messages/{mess_id}':
+    parameters:
+      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/conversationId'
+      - $ref: '#/components/parameters/messageId'
+    get:
+      tags:
+        - messages
+      summary: Retrieve detailed information about the message
+      description: |
+        Returns detailed informations about the message
+      operationId: messageDetail
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+    delete:
+      tags:
+        - messages
+      summary: Delete the message from the conversation
+      description: |
+        Delete the message from the conversation
+      operationId: deleteMessage
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+  '/users/{user_id}/conversations/{conv_id}/messages/{mess_id}/comments':
+    parameters:
+      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/conversationId'
+      - $ref: '#/components/parameters/messageId'
+    put:
+      tags:
+        - messages
+      summary: set a comment for the given message
+      description: |
+        Create or update the comment for the given message
+      operationId: commentMessage
+      requestBody:
+        $ref: '#/components/requestBodies/CommentCreation'
+      responses:
+        '201':
+          description: Comment created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+    delete:
+      tags:
+        - messages
+      summary: delete the comment
+      description: Delete the user comment for the given message
+      operationId: uncommentMessage
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
+  '/users/{user_id}/conversations/{conv_id}/messages/{mess_id}/forward':
+    parameters:
+      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/conversationId'
+      - $ref: '#/components/parameters/messageId'
+    post:
+      tags:
+        - messages
+      summary: forward the message to another conversation
+      description: Make a copy of the content of the given message and forward it to another conversation
+      operationId: forwardMessage
+      requestBody:
+        $ref: '#/components/requestBodies/ForwardMessage'
+      responses:
+        '201':
+          description: Message forwarded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '403':
+          $ref: '#/components/responses/403'
+        '404':
+          $ref: '#/components/responses/404'
+        '406':
+          $ref: '#/components/responses/406'
+        '429':
+          $ref: '#/components/responses/429'
+        default:
+          $ref: '#/components/responses/default'
 components:
   schemas:
-    Idgrez64:
+    CustomInt64:
+      type: integer
+      format: int64
+      minimum: 0
+      maximum: 9007199254740991
+    CustomInt32:
+      type: integer
+      format: int32
+      minimum: 0
+      maximum: 2147483647
+    ReadOnlyInt64:
       type: integer
       format: int64
       minimum: 0
       maximum: 9007199254740991
       readOnly: true
-    Idgrez32:
+    ReadOnlyInt32:
       type: integer
       format: int32
       minimum: 0
       maximum: 2147483647
       readOnly: true
+    ReadOnlyUrl:
+      type: string
+      format: url
+      readOnly: true
+    Username:
+      type: string
+      format: identifier
+      minLength: 1
+      maxLength: 16
+    ConversationName:
+      type: string
+      minLength: 1
+      maxLength: 16
+    ConversationType:
+      type: string
+      enum:
+        - group
+        - one_to_one
+      readOnly: true
+    MessageStatus:
+      type: string
+      enum:
+        - sent
+        - delivered
+        - read
+      default: sent
+    HttpStatusCode:
+      type: integer
+      format: int32
+      minimum: 100
+      maximum: 599
+      readOnly: true
+    PaginationOffset:
+      type: integer
+      format: int32
+      minimum: 0
+      maximum: 20
+      default: 20
+    User:
+      type: object
+      properties:
+        username:
+          $ref: '#/components/schemas/Username'
+        photo:
+          $ref: '#/components/schemas/Image'
     Image:
       type: object
       properties:
         id:
-          $ref: "#/components/schemas/Idgrez64"
+          $ref: '#/components/schemas/CustomInt64'
         width:
-          $ref: "#/components/schemas/Idgrez32"
+          $ref: '#/components/schemas/CustomInt32'
         height:
-          $ref: "#/components/schemas/Idgrez32"
+          $ref: '#/components/schemas/CustomInt32'
         fullUrl:
-          type: string
+          $ref: '#/components/schemas/ReadOnlyUrl'
+    Conversation:
+      type: object
+      required:
+        - id
+        - name
+        - photo
+        - type
+      properties:
+        id:
+          $ref: '#/components/schemas/CustomInt64'
+        name:
+          $ref: '#/components/schemas/ConversationName'
+        photo:
+          $ref: '#/components/schemas/Image'
+        type:
+          $ref: '#/components/schemas/ConversationType'
+        latestMessage:
+          $ref: '#/components/schemas/Message'
+    ConversationDetail:
+      type: object
+      required:
+        - participants
+      properties:
+        participants:
+          type: array
           readOnly: true
-          format: url
-
+          uniqueItems: true
+          items:
+            $ref: '#/components/schemas/ConversationName'
+    ConversationDetailMerge:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Conversation'
+        - $ref: '#/components/schemas/ConversationDetail'
     Message:
       type: object
       required:
@@ -884,139 +824,57 @@ components:
         - status
       properties:
         id:
-          $ref: "#/components/schemas/Idgrez64"
+          $ref: '#/components/schemas/CustomInt64'
         conversationId:
-          $ref: "#/components/schemas/Idgrez64"
+          $ref: '#/components/schemas/CustomInt64'
         authorId:
-          $ref: "#/components/schemas/Idgrez64"
+          $ref: '#/components/schemas/CustomInt64'
         sendAt:
           type: string
           format: date-time
           readOnly: true
         status:
-          type: string
-          enum: [ "sent", "delivered", "read" ]
+          $ref: '#/components/schemas/MessageStatus'
         repliedMessageId:
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 9007199254740991
-          readOnly: true
-          nullable: true
+          $ref: '#/components/schemas/CustomInt64'
         attachmentUrl:
-          type: string
-          format: url
-          nullable: true
+          $ref: '#/components/schemas/ReadOnlyUrl'
         content:
           type: string
-          nullable: true
-    Conversation:
+    Comment:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/CustomInt64'
+        messageId:
+          $ref: '#/components/schemas/CustomInt64'
+        authorId:
+          $ref: '#/components/schemas/CustomInt64'
+        content:
+          type: string
+    HttpStatus:
       type: object
       required:
-        - id
-        - name
-        - photo
-        - type
-      properties:
-        id:
-          $ref: "#/components/schemas/Idgrez64"
-        name:
-          type: string
-          minLength: 1
-          maxLength: 16
-        photo:
-          $ref: "#/components/schemas/Image"
-        type:
-          type: string
-          enum: [ "group", "one_to_one" ]
-          readOnly: true
-        latestMessage:
-          $ref: "#/components/schemas/Message"
-    ConversationDetail:
-      type: object
-      allOf:
-        - $ref: "#/components/schemas/Conversation"
-        - type: object
-          required:
-            - participants
-          properties:
-            participants:
-              type: array
-              readOnly: true
-              items:
-                type: string
-                format: identifier
-    Conversations:
-      type: array
-      items:
-        $ref: "#/components/schemas/Conversation"
-    Comments:
-      type: object
-      properties:
-        id:
-          $ref: "#/components/schemas/Idgrez64"
-        messageId:
-          $ref: "#/components/schemas/Idgrez64"
-        authorId:
-          $ref: "#/components/schemas/Idgrez64"
-        content:
-          type: string
-    User:
-      type: object
-      properties:
-        username:
-          type: string
-          format: identifier
-          minLength: 1
-          maxLength: 16
-        photo:
-          $ref: "#/components/schemas/Image"
-    HttpError:
-      type: object
+        - code
+        - message
       properties:
         code:
-          type: integer
-          format: int32
-          minimum: 100
-          maximum: 599
+          $ref: '#/components/schemas/HttpStatusCode'
         message:
           type: string
         description:
           type: string
-      required:
-        - code
-        - message
-    ValidationError:
+    Pagination:
       type: object
-      properties:
-        code:
-          $ref: "#/components/schemas/Idgrez32"
-        message:
-          type: string
-        errors:
-          type: array
-          items:
-            $ref: "#/components/schemas/FieldValidationError"
-    FieldValidationError:
-      type: object
-      properties:
-        code:
-          $ref: "#/components/schemas/Idgrez32"
-        field:
-          type: string
-        message:
-          type: string
       required:
-        - code
-        - field
-  requestBodies:
-    Conversation:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/Conversation"
-
+        - page
+      properties:
+        page:
+          $ref: '#/components/schemas/ReadOnlyInt32'
+        nextPage:
+          $ref: '#/components/schemas/ReadOnlyUrl'
+        previousPage:
+          $ref: '#/components/schemas/ReadOnlyUrl'
   parameters:
     userId:
       name: user_id
@@ -1024,119 +882,259 @@ components:
       description: Numeric id of the user
       required: true
       schema:
-        $ref: "#/components/schemas/Idgrez64"
+        $ref: '#/components/schemas/ReadOnlyInt64'
     conversationId:
       name: conv_id
       in: path
       description: Numeric id of the conversation
       required: true
       schema:
-        $ref: "#/components/schemas/Idgrez64"
-
+        $ref: '#/components/schemas/ReadOnlyInt64'
     groupId:
       name: group_id
       in: path
       required: true
       description: Numeric id of the group
       schema:
-        $ref: "#/components/schemas/Idgrez64"
-
+        $ref: '#/components/schemas/ReadOnlyInt64'
     messageId:
       name: mess_id
       in: path
       required: true
       description: Numeric id of the group
       schema:
-        $ref: "#/components/schemas/Idgrez64"
-
+        $ref: '#/components/schemas/ReadOnlyInt64'
     pageOffset:
       name: size
       in: query
       description: Number of returned elements per page
       required: false
       schema:
-        type: integer
-        format: int32
-        minimum: 0
-        maximum: 20
-        default: 20
+        $ref: '#/components/schemas/PaginationOffset'
     pageNumber:
       name: page
       in: query
       description: Page number
       required: false
       schema:
-        type: integer
-        format: int32
-        minimum: 0
-        maximum: 2147483647
+        $ref: '#/components/schemas/CustomInt32'
+    sortConversations:
+      name: sort
+      description: 'sort the returned set by read/unread property, first unread then read or otherwise'
+      in: query
+      schema:
+        type: string
+        default: read
+        enum:
+          - read
+          - read_desc
+    sortMessages:
+      name: sort
+      in: query
+      description: Sort messages
+      schema:
+        type: string
+        default: sent_desc
+        enum:
+          - sent
+          - sent_desc
+    filterUsers:
+      name: filter
+      in: query
+      description: Filter users by username
+      schema:
+        $ref: '#/components/schemas/Username'
+  requestBodies:
+    ChangeGroupPhoto:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              image:
+                type: string
+                format: binary
+    ChangeUserPhoto:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              image:
+                type: string
+                format: binary
+    ChangeGroupName:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                $ref: '#/components/schemas/ConversationName'
+    ChangeUsername:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                $ref: '#/components/schemas/Username'
+    GroupCreation:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - name
+            properties:
+              name:
+                type: string
+                minLength: 1
+                maxLength: 16
+              photo:
+                type: string
+                format: binary
+              participants:
+                type: array
+                minItems: 0
+                maxItems: 100
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/Username'
+    AddUserToGroup:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - participants
+            properties:
+              participants:
+                type: array
+                minItems: 0
+                maxItems: 100
+                uniqueItems: true
+                items:
+                  $ref: '#/components/schemas/Username'
+    ChatCreation:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - recipientUsername
+            properties:
+              recipientUsername:
+                $ref: '#/components/schemas/Username'
+    MessageCreation:
+      content:
+        application/json:
+          schema:
+            type: object
+            minProperties: 1
+            properties:
+              content:
+                oneOf:
+                  - type: string
+                  - type: string
+                    format: binary
+              repliedMessageId:
+                $ref: '#/components/schemas/CustomInt64'
+    CommentCreation:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              comment:
+                type: string
+                minLength: 1
+                maxLength: 1
+    ForwardMessage:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              destConversationId:
+                $ref: '#/components/schemas/CustomInt64'
   responses:
-    "400":
+    '200':
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/HttpStatus'
+          example:
+            code: 200
+            message: Ok
+            description: All the operations went fine
+    '400':
       description: Bad request
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/HttpError"
+            $ref: '#/components/schemas/HttpStatus'
           example:
             code: 400
             message: Bad request
             description: The request contains wrong parameters
-    "401":
+    '401':
       description: Unauthorized
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/HttpError"
+            $ref: '#/components/schemas/HttpStatus'
           example:
             code: 401
             message: Unauthorized
             description: You must do login to see your conversations
-    "403":
+    '403':
       description: Forbidden
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/HttpError"
+            $ref: '#/components/schemas/HttpStatus'
           example:
             code: 403
             message: Forbidden
             description: You can't add a user to a group where you're not a participant
-    "404":
+    '404':
       description: Not found
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/HttpError"
+            $ref: '#/components/schemas/HttpStatus'
           example:
             code: 404
             message: Not found
             description: The provided conversation id isn't in your conversations list
-    "406":
+    '406':
       description: Not acceptable
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/HttpError"
+            $ref: '#/components/schemas/HttpStatus'
           example:
             code: 406
             message: Not acceptable
             description: (list of available resources representation)
-    "429":
+    '429':
       description: Too many requests
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/HttpError"
+            $ref: '#/components/schemas/HttpStatus'
           example:
             code: 429
             message: Too many request
-            description:
+            description: 'Too many request, please try again later'
     default:
-      description: Unexpected HttpError
+      description: Unexpected error
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/HttpError"
+            $ref: '#/components/schemas/HttpStatus'
           example:
             code: 500
             message: Internal server error
@@ -1147,15 +1145,10 @@ components:
         id: 0
         name: PaoloCannone07
         photo:
-          $ref: "#/components/schemas/Image"
+          $ref: '#/components/schemas/Image'
         type: one_to_one
-        latestMessage:
-
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: JWT
-
-security:
-  - bearerAuth: [ ]

@@ -1,0 +1,73 @@
+userId:
+  name: user_id
+  in: path
+  description: Numeric id of the user
+  required: true
+  schema:
+    $ref: "../schemas/_index.yaml#/ReadOnlyInt64"
+
+conversationId:
+  name: conv_id
+  in: path
+  description: Numeric id of the conversation
+  required: true
+  schema:
+    $ref: "../schemas/_index.yaml#/ReadOnlyInt64"
+
+groupId:
+  name: group_id
+  in: path
+  required: true
+  description: Numeric id of the group
+  schema:
+    $ref: "../schemas/_index.yaml#/ReadOnlyInt64"
+
+messageId:
+  name: mess_id
+  in: path
+  required: true
+  description: Numeric id of the group
+  schema:
+    $ref: "../schemas/_index.yaml#/ReadOnlyInt64"
+
+pageOffset:
+  name: size
+  in: query
+  description: Number of returned elements per page
+  required: false
+  schema:
+    $ref: "../schemas/_index.yaml#/PaginationOffset"
+
+pageNumber:
+  name: page
+  in: query
+  description: Page number
+  required: false
+  schema:
+    $ref: "../schemas/_index.yaml#/CustomInt32"
+
+sortConversations:
+  name: sort
+  description: sort the returned set by read/unread property, first unread then read or otherwise
+  in: query
+  schema:
+    type: string
+    default: "read"
+    enum: [ "read", "read_desc" ]
+
+sortMessages:
+  name: sort
+  in: query
+  description: Sort messages
+  schema:
+    type: string
+    default: "sent_desc"
+    enum: [ "sent", "sent_desc" ]
+
+filterUsers:
+  name: filter
+  in: query
+  description: Filter users by username
+  schema:
+    $ref: "../schemas/_index.yaml#/Username"
+

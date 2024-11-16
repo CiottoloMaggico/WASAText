@@ -1,0 +1,174 @@
+CustomInt64:
+  type: integer
+  format: int64
+  minimum: 0
+  maximum: 9007199254740991
+
+CustomInt32:
+  type: integer
+  format: int32
+  minimum: 0
+  maximum: 2147483647
+
+ReadOnlyInt64:
+  type: integer
+  format: int64
+  minimum: 0
+  maximum: 9007199254740991
+  readOnly: true
+
+ReadOnlyInt32:
+  type: integer
+  format: int32
+  minimum: 0
+  maximum: 2147483647
+  readOnly: true
+
+ReadOnlyUrl:
+  type: string
+  format: url
+  readOnly: true
+
+Username:
+  type: string
+  format: identifier
+  minLength: 1
+  maxLength: 16
+
+ConversationName:
+  type: string
+  minLength: 1
+  maxLength: 16
+
+ConversationType:
+  type: string
+  enum: [ "group", "one_to_one" ]
+  readOnly: true
+
+MessageStatus:
+  type: string
+  enum: [ "sent", "delivered", "read" ]
+  default: "sent"
+
+HttpStatusCode:
+  type: integer
+  format: int32
+  minimum: 100
+  maximum: 599
+  readOnly: true
+
+PaginationOffset:
+  type: integer
+  format: int32
+  minimum: 0
+  maximum: 20
+  default: 20
+
+User:
+  type: object
+  properties:
+    username:
+      $ref: "#/Username"
+    photo:
+      $ref: "#/Image"
+
+Image:
+  type: object
+  properties:
+    id:
+      $ref: "#/CustomInt64"
+    width:
+      $ref: "#/CustomInt32"
+    height:
+      $ref: "#/CustomInt32"
+    fullUrl:
+      $ref: "#/ReadOnlyUrl"
+
+Conversation:
+  type: object
+  required: [ "id", "name", "photo", "type" ]
+  properties:
+    id:
+      $ref: "#/CustomInt64"
+    name:
+      $ref: "#/ConversationName"
+    photo:
+      $ref: "#/Image"
+    type:
+      $ref: "#/ConversationType"
+    latestMessage:
+      $ref: "#/Message"
+
+ConversationDetail:
+  type: object
+  required: [ "participants" ]
+  properties:
+    participants:
+      type: array
+      readOnly: true
+      uniqueItems: true
+      items:
+        $ref: "#/ConversationName"
+
+ConversationDetailMerge:
+  type: object
+  allOf:
+    - $ref: "#/Conversation"
+    - $ref: "#/ConversationDetail"
+
+Message:
+  type: object
+  required: [ "id", "conversationId", "authorId", "sendAt", "status" ]
+  properties:
+    id:
+      $ref: "#/CustomInt64"
+    conversationId:
+      $ref: "#/CustomInt64"
+    authorId:
+      $ref: "#/CustomInt64"
+    sendAt:
+      type: string
+      format: date-time
+      readOnly: true
+    status:
+      $ref: "#/MessageStatus"
+    repliedMessageId:
+      $ref: "#/CustomInt64"
+    attachmentUrl:
+      $ref: "#/ReadOnlyUrl"
+    content:
+      type: string
+
+Comment:
+  type: object
+  properties:
+    id:
+      $ref: "#/CustomInt64"
+    messageId:
+      $ref: "#/CustomInt64"
+    authorId:
+      $ref: "#/CustomInt64"
+    content:
+      type: string
+
+HttpStatus:
+  type: object
+  required: [ "code", "message" ]
+  properties:
+    code:
+      $ref: "#/HttpStatusCode"
+    message:
+      type: string
+    description:
+      type: string
+
+Pagination:
+  type: object
+  required: [ "page" ]
+  properties:
+    page:
+      $ref: "#/ReadOnlyInt32"
+    nextPage:
+      $ref: "#/ReadOnlyUrl"
+    previousPage:
+      $ref: "#/ReadOnlyUrl"

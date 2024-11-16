@@ -1,0 +1,7 @@
+chatExample:
+  value:
+    id: 0
+    name: PaoloCannone07
+    photo:
+      $ref: "../schemas/_index.yaml#/Image"
+    type: one_to_one

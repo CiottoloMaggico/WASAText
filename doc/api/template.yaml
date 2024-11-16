@@ -1,0 +1,41 @@
+openapi: 3.0.3
+info:
+  title: WASAText - OpenAPI 3.0.3
+  description: |-
+    Connect with your friends effortlessly using WASAText! Send and receive messages, whether one-on-one
+    or in groups, all from the convenience of your PC. Enjoy seamless conversations with text or GIFs and
+    easily stay in touch through your private chats or group discussions.
+  contact:
+    email: fantozzi.2047034@studenti.uniroma1.it
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: https://api.wasatext.com/api/v1
+    description: Production server
+tags:
+  - name: conversations
+  - name: groups
+  - name: chats
+  - name: messages
+  - name: user
+  - name: login
+security:
+  - bearerAuth: []
+paths:
+  $ref: "./components/paths/_index.yaml"
+components:
+  schemas:
+    $ref: "./components/schemas/_index.yaml"
+  parameters:
+    $ref: "./components/parameters/_index.yaml"
+  requestBodies:
+    $ref: "./components/requestBodies/_index.yaml"
+  responses:
+    $ref: "./components/responses/_index.yaml"
+  examples:
+    $ref: "./components/examples/_index.yaml"
+  securitySchemes:
+    $ref: "./components/securitySchemes/_index.yaml"
+
