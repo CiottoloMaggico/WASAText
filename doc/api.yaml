@@ -39,25 +39,18 @@ paths:
         content:
           application/json:
             schema:
+              description: Input schema used to login a user
               type: object
               properties:
                 name:
-                  type: string
-                  example: Maria
-                  pattern: ^.*?$
-                  minLength: 3
-                  maxLength: 16
+                  $ref: '#/components/schemas/Username'
       responses:
         '201':
           description: User log-in action successful
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  identifier:
-                    type: string
-                    example: abcdef012345
+                $ref: '#/components/schemas/User'
   /users:
     get:
       tags:
@@ -76,6 +69,7 @@ paths:
           content:
             application/json:
               schema:
+                description: Returns a paginated list of WASAText users
                 type: object
                 required:
                   - users
@@ -83,6 +77,7 @@ paths:
                   pagination:
                     $ref: '#/components/schemas/Pagination'
                   users:
+                    description: List of all WASAText users
                     type: array
                     minItems: 0
                     maxItems: 9007199254740991
@@ -116,6 +111,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                userExample:
+                  $ref: '#/components/examples/userExample'
         '401':
           $ref: '#/components/responses/401'
         '404':
@@ -145,6 +143,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                userExample:
+                  $ref: '#/components/examples/userExample'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -176,6 +177,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples:
+                userExample:
+                  $ref: '#/components/examples/userExample'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -276,7 +280,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ConversationDetailMerge'
+                $ref: '#/components/schemas/Conversation'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -332,7 +336,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ConversationDetailMerge'
+                $ref: '#/components/schemas/Conversation'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -368,7 +372,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ConversationDetailMerge'
+                $ref: '#/components/schemas/Conversation'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -403,6 +407,7 @@ paths:
           content:
             application/json:
               schema:
+                description: Returns a paginated list of user conversations
                 type: object
                 required:
                   - conversations
@@ -410,12 +415,13 @@ paths:
                   pagination:
                     $ref: '#/components/schemas/Pagination'
                   conversations:
+                    description: List of all user conversations
                     type: array
                     minItems: 0
                     maxItems: 9007199254740991
                     uniqueItems: true
                     items:
-                      $ref: '#/components/schemas/Conversation'
+                      $ref: '#/components/schemas/ConversationSummary'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -439,7 +445,25 @@ paths:
       operationId: setDelivered
       responses:
         '200':
-          $ref: '#/components/responses/200'
+          description: Succesful operation
+          content:
+            application/json:
+              schema:
+                description: Returns a paginated list of user conversations
+                type: object
+                required:
+                  - conversations
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  conversations:
+                    description: List of all user conversations
+                    type: array
+                    minItems: 0
+                    maxItems: 9007199254740991
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/ConversationSummary'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -469,7 +493,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ConversationDetailMerge'
+                $ref: '#/components/schemas/Conversation'
+              examples:
+                chatExample:
+                  $ref: '#/components/examples/chatExample'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -502,6 +529,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
+              examples:
+                messageExample:
+                  $ref: '#/components/examples/messageExample'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -525,7 +555,25 @@ paths:
       operationId: setSeen
       responses:
         '200':
-          $ref: '#/components/responses/200'
+          description: Succesful operation
+          content:
+            application/json:
+              schema:
+                description: Returns a paginated list of conversation messages
+                type: object
+                required:
+                  - messages
+                properties:
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+                  messages:
+                    description: list of all the conversation messages
+                    type: array
+                    minItems: 0
+                    maxItems: 9007199254740991
+                    uniqueItems: true
+                    items:
+                      $ref: '#/components/schemas/Message'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -555,6 +603,7 @@ paths:
           content:
             application/json:
               schema:
+                description: Returns a paginated list of conversation messages
                 type: object
                 required:
                   - messages
@@ -562,6 +611,7 @@ paths:
                   pagination:
                     $ref: '#/components/schemas/Pagination'
                   messages:
+                    description: list of all the conversation messages
                     type: array
                     minItems: 0
                     maxItems: 9007199254740991
@@ -599,6 +649,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
+              examples:
+                messageExample:
+                  $ref: '#/components/examples/messageExample'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -654,6 +707,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Comment'
+              examples:
+                commentExample:
+                  $ref: '#/components/examples/commentExample'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -707,6 +763,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
+              examples:
+                messageExample:
+                  $ref: '#/components/examples/messageExample'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -754,17 +813,20 @@ components:
       type: string
       format: url
       readOnly: true
+      maxLength: 500
     Username:
       description: users "Username" field type
       type: string
       format: identifier
-      minLength: 1
+      minLength: 3
       maxLength: 16
+      pattern: ^.*?$
     ConversationName:
       description: conversations "name" field type
       type: string
-      minLength: 1
+      minLength: 3
       maxLength: 16
+      pattern: ^.*?$
     ConversationType:
       description: conversations type to specify its type
       type: string
@@ -794,6 +856,12 @@ components:
       minimum: 0
       maximum: 20
       default: 20
+    ImageType:
+      description: Image data type for request bodies
+      type: string
+      format: binary
+      minLength: 1
+      maxLength: 4096
     User:
       description: User type
       type: object
@@ -814,8 +882,8 @@ components:
           $ref: '#/components/schemas/CustomInt32'
         fullUrl:
           $ref: '#/components/schemas/ReadOnlyUrl'
-    Conversation:
-      description: Conversation type
+    ConversationSummary:
+      description: Type used to return less detailed informations about a conversation
       type: object
       required:
         - id
@@ -833,13 +901,28 @@ components:
           $ref: '#/components/schemas/ConversationType'
         latestMessage:
           $ref: '#/components/schemas/Message'
-    ConversationDetail:
+    Conversation:
       description: Conversation type for detailed info about a conversation
       type: object
       required:
+        - id
+        - name
+        - photo
+        - type
         - participants
       properties:
+        id:
+          $ref: '#/components/schemas/CustomInt64'
+        name:
+          $ref: '#/components/schemas/ConversationName'
+        photo:
+          $ref: '#/components/schemas/Image'
+        type:
+          $ref: '#/components/schemas/ConversationType'
+        latestMessage:
+          $ref: '#/components/schemas/Message'
         participants:
+          description: List of group participants usernames
           type: array
           readOnly: true
           uniqueItems: true
@@ -847,12 +930,6 @@ components:
           maxItems: 200
           items:
             $ref: '#/components/schemas/Username'
-    ConversationDetailMerge:
-      description: Merge type between Conversation and ConversationDetail
-      type: object
-      allOf:
-        - $ref: '#/components/schemas/Conversation'
-        - $ref: '#/components/schemas/ConversationDetail'
     Message:
       description: Message type
       type: object
@@ -870,9 +947,12 @@ components:
         authorId:
           $ref: '#/components/schemas/CustomInt64'
         sendAt:
+          description: timestamp of when the message was sent
           type: string
           format: date-time
           readOnly: true
+          minLength: 1
+          maxLength: 100
         status:
           $ref: '#/components/schemas/MessageStatus'
         repliedMessageId:
@@ -880,7 +960,11 @@ components:
         attachmentUrl:
           $ref: '#/components/schemas/ReadOnlyUrl'
         content:
+          description: text content of the message
           type: string
+          minLength: 1
+          maxLength: 4096
+          pattern: ^.*?$
     Comment:
       description: Comment type
       type: object
@@ -892,7 +976,11 @@ components:
         authorId:
           $ref: '#/components/schemas/CustomInt64'
         content:
+          description: A 1 emoji comment
           type: string
+          minLength: 1
+          maxLength: 1
+          pattern: ^.*?$
     HttpStatus:
       description: Blueprint for responses without content or http errors
       type: object
@@ -903,9 +991,17 @@ components:
         code:
           $ref: '#/components/schemas/HttpStatusCode'
         message:
+          description: Text description of the error that occurred
           type: string
+          minLength: 1
+          maxLength: 200
+          pattern: ^.*?$
         description:
+          description: Detailed description of the status code and possibly why it was raised
           type: string
+          minLength: 0
+          maxLength: 1024
+          pattern: ^.*?$
     Pagination:
       description: Blueprint used in paginated responses
       type: object
@@ -992,24 +1088,25 @@ components:
       content:
         application/json:
           schema:
+            description: Input schema used to change the photo of a group
             type: object
             properties:
               image:
-                type: string
-                format: binary
+                $ref: '#/components/schemas/ImageType'
     ChangeUserPhoto:
       content:
         application/json:
           schema:
+            description: Input schema used to change the profile photo of the signed in user
             type: object
             properties:
               image:
-                type: string
-                format: binary
+                $ref: '#/components/schemas/ImageType'
     ChangeGroupName:
       content:
         application/json:
           schema:
+            description: Input schema used to change the name of a group
             type: object
             properties:
               name:
@@ -1018,26 +1115,27 @@ components:
       content:
         application/json:
           schema:
+            description: Input schema used to change the username of the signed-in user
             type: object
             properties:
               name:
                 $ref: '#/components/schemas/Username'
     GroupCreation:
+      required: true
       content:
         application/json:
           schema:
+            description: Input schema used to create a new group by the signed-in user
             type: object
             required:
               - name
             properties:
               name:
-                type: string
-                minLength: 1
-                maxLength: 16
+                $ref: '#/components/schemas/ConversationName'
               image:
-                type: string
-                format: binary
+                $ref: '#/components/schemas/ImageType'
               participants:
+                description: List of usernames to add in the group
                 type: array
                 minItems: 0
                 maxItems: 100
@@ -1045,14 +1143,17 @@ components:
                 items:
                   $ref: '#/components/schemas/Username'
     AddUserToGroup:
+      required: true
       content:
         application/json:
           schema:
+            description: Input schema used to add new participants to a group
             type: object
             required:
               - participants
             properties:
               participants:
+                description: List of usernames to add in the group
                 type: array
                 minItems: 0
                 maxItems: 100
@@ -1060,9 +1161,11 @@ components:
                 items:
                   $ref: '#/components/schemas/Username'
     ChatCreation:
+      required: true
       content:
         application/json:
           schema:
+            description: Input schema used to create a new chat by the signed-in user
             type: object
             required:
               - recipientUsername
@@ -1073,30 +1176,38 @@ components:
       content:
         application/json:
           schema:
+            description: Input schema used to send a message by the signed-in user
             type: object
             minProperties: 1
             properties:
+              attachment:
+                $ref: '#/components/schemas/ImageType'
               content:
-                oneOf:
-                  - type: string
-                  - type: string
-                    format: binary
+                pattern: ^.*?$
+                description: Text content of the message
+                type: string
+                minLength: 1
+                maxLength: 4096
               repliedMessageId:
                 $ref: '#/components/schemas/CustomInt64'
     CommentCreation:
       content:
         application/json:
           schema:
+            description: Input schema used to set or update the user comment for a message
             type: object
             properties:
               comment:
+                description: A 1 emoji comment
                 type: string
                 minLength: 1
                 maxLength: 1
+                pattern: ^.*?$
     ForwardMessage:
       content:
         application/json:
           schema:
+            description: Input schema used to forward a message to another conversation
             type: object
             properties:
               destConversationId:
@@ -1190,6 +1301,33 @@ components:
         photo:
           $ref: '#/components/schemas/Image'
         type: one_to_one
+        participants:
+          - PaoloCannone07
+          - GiorgioSpek
+    messageExample:
+      value:
+        id: 12
+        conversationId: 1
+        authorId: 12
+        sendAt: '2024-11-18T14:42:08.062Z'
+        status: sent
+        repliedMessageId: 11
+        attachmentUrl: 'https://www.wasatext.com/images/123'
+        content: ciao come va
+    commentExample:
+      value:
+        id: 20
+        messageId: 12
+        authorId: 12
+        content: "\U0001F601"
+    userExample:
+      value:
+        username: PaoloCannone07
+        photo:
+          id: 532
+          width: 1024
+          height: 1024
+          fullUrl: 'https://wasatext.com/images/532'
   securitySchemes:
     bearerAuth:
       type: http

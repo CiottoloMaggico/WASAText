@@ -33,19 +33,22 @@ ReadOnlyUrl:
   type: string
   format: url
   readOnly: true
+  maxLength: 500
 
 Username:
   description: users "Username" field type
   type: string
   format: identifier
-  minLength: 1
+  minLength: 3
   maxLength: 16
+  pattern: "^.*?$"
 
 ConversationName:
   description: conversations "name" field type
   type: string
-  minLength: 1
+  minLength: 3
   maxLength: 16
+  pattern: "^.*?$"
 
 ConversationType:
   description: conversations type to specify its type
@@ -75,6 +78,13 @@ PaginationOffset:
   maximum: 20
   default: 20
 
+ImageType:
+  description: Image data type for request bodies
+  type: string
+  format: binary
+  minLength: 1
+  maxLength: 4096
+
 User:
   description: User type
   type: object
@@ -97,8 +107,8 @@ Image:
     fullUrl:
       $ref: "#/ReadOnlyUrl"
 
-Conversation:
-  description: Conversation type
+ConversationSummary:
+  description: Type used to return less detailed informations about a conversation
   type: object
   required: [ "id", "name", "photo", "type" ]
   properties:
@@ -113,12 +123,23 @@ Conversation:
     latestMessage:
       $ref: "#/Message"
 
-ConversationDetail:
+Conversation:
   description: Conversation type for detailed info about a conversation
   type: object
-  required: [ "participants" ]
+  required: [ "id", "name", "photo", "type", "participants" ]
   properties:
+    id:
+      $ref: "#/CustomInt64"
+    name:
+      $ref: "#/ConversationName"
+    photo:
+      $ref: "#/Image"
+    type:
+      $ref: "#/ConversationType"
+    latestMessage:
+      $ref: "#/Message"
     participants:
+      description: List of group participants usernames
       type: array
       readOnly: true
       uniqueItems: true
@@ -126,13 +147,6 @@ ConversationDetail:
       maxItems: 200
       items:
         $ref: "#/Username"
-
-ConversationDetailMerge:
-  description: Merge type between Conversation and ConversationDetail
-  type: object
-  allOf:
-    - $ref: "#/Conversation"
-    - $ref: "#/ConversationDetail"
 
 Message:
   description: Message type
@@ -146,9 +160,12 @@ Message:
     authorId:
       $ref: "#/CustomInt64"
     sendAt:
+      description: timestamp of when the message was sent
       type: string
       format: date-time
       readOnly: true
+      minLength: 1
+      maxLength: 100
     status:
       $ref: "#/MessageStatus"
     repliedMessageId:
@@ -156,7 +173,11 @@ Message:
     attachmentUrl:
       $ref: "#/ReadOnlyUrl"
     content:
+      description: text content of the message
       type: string
+      minLength: 1
+      maxLength: 4096
+      pattern: "^.*?$"
 
 Comment:
   description: Comment type
@@ -169,7 +190,11 @@ Comment:
     authorId:
       $ref: "#/CustomInt64"
     content:
+      description: A 1 emoji comment
       type: string
+      minLength: 1
+      maxLength: 1
+      pattern: "^.*?$"
 
 HttpStatus:
   description: Blueprint for responses without content or http errors
@@ -179,9 +204,17 @@ HttpStatus:
     code:
       $ref: "#/HttpStatusCode"
     message:
+      description: Text description of the error that occurred
       type: string
+      minLength: 1
+      maxLength: 200
+      pattern: "^.*?$"
     description:
+      description: Detailed description of the status code and possibly why it was raised
       type: string
+      minLength: 0
+      maxLength: 1024
+      pattern: "^.*?$"
 
 Pagination:
   description: Blueprint used in paginated responses

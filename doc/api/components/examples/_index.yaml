@@ -5,3 +5,28 @@ chatExample:
     photo:
       $ref: "../schemas/_index.yaml#/Image"
     type: one_to_one
+    participants: ["PaoloCannone07", "GiorgioSpek"]
+messageExample:
+  value:
+    id: 12
+    conversationId: 1
+    authorId: 12
+    sendAt: "2024-11-18T14:42:08.062Z"
+    status: "sent"
+    repliedMessageId: 11
+    attachmentUrl: "https://www.wasatext.com/images/123"
+    content: "ciao come va"
+commentExample:
+  value:
+    id : 20
+    messageId: 12
+    authorId: 12
+    content: "😁"
+userExample:
+  value:
+    username: "PaoloCannone07"
+    photo:
+      id: 532
+      width: 1024
+      height: 1024
+      fullUrl: "https://wasatext.com/images/532"

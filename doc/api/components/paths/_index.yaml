@@ -12,25 +12,18 @@
       content:
         application/json:
           schema:
+            description: Input schema used to login a user
             type: object
             properties:
               name:
-                type: string
-                example: Maria
-                pattern: "^.*?$"
-                minLength: 3
-                maxLength: 16
+                $ref: "../schemas/_index.yaml#/Username"
     responses:
       "201":
         description: User log-in action successful
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                identifier:
-                  type: string
-                  example: "abcdef012345"
+              $ref: "../schemas/_index.yaml#/User"
 /users:
   get:
     tags: [ "users" ]
@@ -48,12 +41,14 @@
         content:
           application/json:
             schema:
+              description: Returns a paginated list of WASAText users
               type: object
-              required: ["users"]
+              required: [ "users" ]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
                 users:
+                  description: List of all WASAText users
                   type: array
                   minItems: 0
                   maxItems: 9007199254740991
@@ -86,6 +81,9 @@
           application/json:
             schema:
               $ref: "../schemas/_index.yaml#/User"
+            examples:
+              userExample:
+                $ref: "../examples/_index.yaml#/userExample"
       "401":
         $ref: "../responses/_index.yaml#/401"
       "404":
@@ -115,6 +113,9 @@
           application/json:
             schema:
               $ref: "../schemas/_index.yaml#/User"
+            examples:
+              userExample:
+                $ref: "../examples/_index.yaml#/userExample"
       "401":
         $ref: "../responses/_index.yaml#/401"
       "403":
@@ -147,6 +148,9 @@
           application/json:
             schema:
               $ref: "../schemas/_index.yaml#/User"
+            examples:
+              userExample:
+                $ref: "../examples/_index.yaml#/userExample"
       "401":
         $ref: "../responses/_index.yaml#/401"
       "403":
@@ -248,7 +252,7 @@
         content:
           application/json:
             schema:
-              $ref: "../schemas/_index.yaml#/ConversationDetailMerge"
+              $ref: "../schemas/_index.yaml#/Conversation"
       "400":
         $ref: "../responses/_index.yaml#/400"
       "401":
@@ -304,7 +308,7 @@
         content:
           application/json:
             schema:
-              $ref: "../schemas/_index.yaml#/ConversationDetailMerge"
+              $ref: "../schemas/_index.yaml#/Conversation"
       "400":
         $ref: "../responses/_index.yaml#/400"
       "401":
@@ -341,7 +345,7 @@
         content:
           application/json:
             schema:
-              $ref: "../schemas/_index.yaml#/ConversationDetailMerge"
+              $ref: "../schemas/_index.yaml#/Conversation"
       "400":
         $ref: "../responses/_index.yaml#/400"
       "401":
@@ -376,18 +380,20 @@
         content:
           application/json:
             schema:
+              description: Returns a paginated list of user conversations
               type: object
-              required: ["conversations"]
+              required: [ "conversations" ]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
                 conversations:
+                  description: List of all user conversations
                   type: array
                   minItems: 0
                   maxItems: 9007199254740991
                   uniqueItems: true
                   items:
-                    $ref: "../schemas/_index.yaml#/Conversation"
+                    $ref: "../schemas/_index.yaml#/ConversationSummary"
       "400":
         $ref: "../responses/_index.yaml#/400"
       "401":
@@ -411,7 +417,24 @@
     operationId: setDelivered
     responses:
       "200":
-        $ref: "../responses/_index.yaml#/200"
+        description: Succesful operation
+        content:
+          application/json:
+            schema:
+              description: Returns a paginated list of user conversations
+              type: object
+              required: [ "conversations" ]
+              properties:
+                pagination:
+                  $ref: "../schemas/_index.yaml#/Pagination"
+                conversations:
+                  description: List of all user conversations
+                  type: array
+                  minItems: 0
+                  maxItems: 9007199254740991
+                  uniqueItems: true
+                  items:
+                    $ref: "../schemas/_index.yaml#/ConversationSummary"
       "401":
         $ref: "../responses/_index.yaml#/401"
       "403":
@@ -440,7 +463,10 @@
         content:
           application/json:
             schema:
-              $ref: "../schemas/_index.yaml#/ConversationDetailMerge"
+              $ref: "../schemas/_index.yaml#/Conversation"
+            examples:
+              chatExample:
+                $ref: "../examples/_index.yaml#/chatExample"
       "401":
         $ref: "../responses/_index.yaml#/401"
       "403":
@@ -473,6 +499,9 @@
           application/json:
             schema:
               $ref: "../schemas/_index.yaml#/Message"
+            examples:
+              messageExample:
+                $ref: "../examples/_index.yaml#/messageExample"
       "400":
         $ref: "../responses/_index.yaml#/400"
       "401":
@@ -496,7 +525,24 @@
     operationId: setSeen
     responses:
       "200":
-        $ref: "../responses/_index.yaml#/200"
+        description: Succesful operation
+        content:
+          application/json:
+            schema:
+              description: Returns a paginated list of conversation messages
+              type: object
+              required: [ "messages" ]
+              properties:
+                pagination:
+                  $ref: "../schemas/_index.yaml#/Pagination"
+                messages:
+                  description: list of all the conversation messages
+                  type: array
+                  minItems: 0
+                  maxItems: 9007199254740991
+                  uniqueItems: true
+                  items:
+                    $ref: "../schemas/_index.yaml#/Message"
       "401":
         $ref: "../responses/_index.yaml#/401"
       "403":
@@ -526,12 +572,14 @@
         content:
           application/json:
             schema:
+              description: Returns a paginated list of conversation messages
               type: object
-              required: ["messages"]
+              required: [ "messages" ]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
                 messages:
+                  description: list of all the conversation messages
                   type: array
                   minItems: 0
                   maxItems: 9007199254740991
@@ -570,6 +618,9 @@
           application/json:
             schema:
               $ref: "../schemas/_index.yaml#/Message"
+            examples:
+              messageExample:
+                $ref: "../examples/_index.yaml#/messageExample"
       "401":
         $ref: "../responses/_index.yaml#/401"
       "403":
@@ -626,6 +677,9 @@
           application/json:
             schema:
               $ref: "../schemas/_index.yaml#/Comment"
+            examples:
+              commentExample:
+                $ref: "../examples/_index.yaml#/commentExample"
       "401":
         $ref: "../responses/_index.yaml#/401"
       "403":
@@ -683,6 +737,9 @@
           application/json:
             schema:
               $ref: "../schemas/_index.yaml#/Message"
+            examples:
+              messageExample:
+                $ref: "../examples/_index.yaml#/messageExample"
       "400":
         $ref: "../responses/_index.yaml#/400"
       "401":

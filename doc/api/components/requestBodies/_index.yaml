@@ -2,26 +2,27 @@ ChangeGroupPhoto:
   content:
     application/json:
       schema:
+        description: Input schema used to change the photo of a group
         type: object
         properties:
           image:
-            type: string
-            format: binary
+            $ref: "../schemas/_index.yaml#/ImageType"
 
 ChangeUserPhoto:
   content:
     application/json:
       schema:
+        description: Input schema used to change the profile photo of the signed in user
         type: object
         properties:
           image:
-            type: string
-            format: binary
+            $ref: "../schemas/_index.yaml#/ImageType"
 
 ChangeGroupName:
   content:
     application/json:
       schema:
+        description: Input schema used to change the name of a group
         type: object
         properties:
           name:
@@ -31,26 +32,27 @@ ChangeUsername:
   content:
     application/json:
       schema:
+        description: Input schema used to change the username of the signed-in user
         type: object
         properties:
           name:
             $ref: "../schemas/_index.yaml#/Username"
 
 GroupCreation:
+  required: true
   content:
     application/json:
       schema:
+        description: Input schema used to create a new group by the signed-in user
         type: object
         required: [ "name" ]
         properties:
           name:
-            type: string
-            minLength: 1
-            maxLength: 16
+            $ref: "../schemas/_index.yaml#/ConversationName"
           image:
-            type: string
-            format: binary
+            $ref: "../schemas/_index.yaml#/ImageType"
           participants:
+            description: List of usernames to add in the group
             type: array
             minItems: 0
             maxItems: 100
@@ -59,24 +61,29 @@ GroupCreation:
               $ref: "../schemas/_index.yaml#/Username"
 
 AddUserToGroup:
-  content:
-      application/json:
-        schema:
-          type: object
-          required: [ "participants" ]
-          properties:
-            participants:
-              type: array
-              minItems: 0
-              maxItems: 100
-              uniqueItems: true
-              items:
-                $ref: "../schemas/_index.yaml#/Username"
-
-ChatCreation:
+  required: true
   content:
     application/json:
       schema:
+        description: Input schema used to add new participants to a group
+        type: object
+        required: [ "participants" ]
+        properties:
+          participants:
+            description: List of usernames to add in the group
+            type: array
+            minItems: 0
+            maxItems: 100
+            uniqueItems: true
+            items:
+              $ref: "../schemas/_index.yaml#/Username"
+
+ChatCreation:
+  required: true
+  content:
+    application/json:
+      schema:
+        description: Input schema used to create a new chat by the signed-in user
         type: object
         required: [ "recipientUsername" ]
         properties:
@@ -87,14 +94,18 @@ MessageCreation:
   content:
     application/json:
       schema:
+        description: Input schema used to send a message by the signed-in user
         type: object
         minProperties: 1
         properties:
+          attachment:
+            $ref: "../schemas/_index.yaml#/ImageType"
           content:
-            oneOf:
-              - type: string
-              - type: string
-                format: binary
+            pattern: "^.*?$"
+            description: Text content of the message
+            type: string
+            minLength: 1
+            maxLength: 4096
           repliedMessageId:
             $ref: "../schemas/_index.yaml#/CustomInt64"
 
@@ -102,17 +113,21 @@ CommentCreation:
   content:
     application/json:
       schema:
+        description: Input schema used to set or update the user comment for a message
         type: object
         properties:
           comment:
+            description: A 1 emoji comment
             type: string
             minLength: 1
             maxLength: 1
+            pattern: "^.*?$"
 
 ForwardMessage:
   content:
     application/json:
       schema:
+        description: Input schema used to forward a message to another conversation
         type: object
         properties:
           destConversationId:
