@@ -38,9 +38,13 @@ import (
 
 // AppDatabase is the high level interface for the DB
 type AppDatabase interface {
-	GetName() (string, error)
-	SetName(name string) error
-
+	GetUser(username string) (*User, error)
+	GetUsers(pageSize int, pageNumber int) ([]User, error)
+	GetUserByUUID(UUID string) (*User, error)
+	UsersCount() (int, error)
+	//SetUser(username string) (*User, error)
+	//GetUsersCount() (int, error)
+	//UpdateUsername(oldUsername string, newUsername string) (*User, error)
 	Ping() error
 }
 
@@ -57,13 +61,26 @@ func New(db *sql.DB) (AppDatabase, error) {
 
 	// Check if table exists. If not, the database is empty, and we need to create the structure
 	var tableName string
-	err := db.QueryRow(`SELECT name FROM sqlite_master WHERE type='table' AND name='example_table';`).Scan(&tableName)
-	if errors.Is(err, sql.ErrNoRows) {
-		sqlStmt := `CREATE TABLE example_table (id INTEGER NOT NULL PRIMARY KEY, name TEXT);`
-		_, err = db.Exec(sqlStmt)
-		if err != nil {
-			return nil, fmt.Errorf("error creating database structure: %w", err)
+	tx, err := db.Begin()
+	if err != nil {
+		return nil, fmt.Errorf("could not start transaction: %w", err)
+	}
+	for key, value := range tables {
+		err := tx.QueryRow(`SELECT name FROM sqlite_master WHERE type='table' AND name=?;`, key).Scan(&tableName)
+		if errors.Is(err, sql.ErrNoRows) {
+			completeQuery := fmt.Sprintf("%s\n%s", value, initializers[key])
+			_, err = tx.Exec(completeQuery)
+			if err != nil {
+				if rollbackErr := tx.Rollback(); rollbackErr != nil {
+					return nil, fmt.Errorf("could not rollback transaction: %w", rollbackErr)
+				}
+				return nil, fmt.Errorf("error creating database structure, rolled back to initial state: %w", err)
+			}
 		}
+	}
+
+	if commitErr := tx.Commit(); commitErr != nil {
+		return nil, fmt.Errorf("could not commit transaction: %w", commitErr)
 	}
 
 	return &appdbimpl{
