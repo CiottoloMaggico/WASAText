@@ -34,7 +34,6 @@
     parameters:
       - $ref: "../parameters/_index.yaml#/pageOffset"
       - $ref: "../parameters/_index.yaml#/pageNumber"
-      - $ref: "../parameters/_index.yaml#/filterUsers"
     responses:
       "200":
         description: Successful operation

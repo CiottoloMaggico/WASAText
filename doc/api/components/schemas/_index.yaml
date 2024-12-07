@@ -35,6 +35,15 @@ ReadOnlyUrl:
   readOnly: true
   maxLength: 500
 
+Uuid:
+  description: Unique identifier in version 4 format
+  type: string
+  format: uuid
+  pattern: ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$
+  minLength: 36
+  maxLength: 36
+
+
 Username:
   description: users "Username" field type
   type: string
@@ -89,6 +98,8 @@ User:
   description: User type
   type: object
   properties:
+    uuid:
+      $ref: "#/Uuid"
     username:
       $ref: "#/Username"
     photo:
@@ -98,8 +109,8 @@ Image:
   description: Image type
   type: object
   properties:
-    id:
-      $ref: "#/CustomInt64"
+    uuid:
+      $ref: "#/Uuid"
     width:
       $ref: "#/CustomInt32"
     height:
@@ -199,16 +210,10 @@ Comment:
 HttpStatus:
   description: Blueprint for responses without content or http errors
   type: object
-  required: [ "code", "message" ]
+  required: [ "code"]
   properties:
     code:
       $ref: "#/HttpStatusCode"
-    message:
-      description: Text description of the error that occurred
-      type: string
-      minLength: 1
-      maxLength: 200
-      pattern: "^.*?$"
     description:
       description: Detailed description of the status code and possibly why it was raised
       type: string

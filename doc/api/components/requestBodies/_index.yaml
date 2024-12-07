@@ -85,10 +85,10 @@ ChatCreation:
       schema:
         description: Input schema used to create a new chat by the signed-in user
         type: object
-        required: [ "recipientUsername" ]
+        required: [ "recipient" ]
         properties:
-          recipientUsername:
-            $ref: "../schemas/_index.yaml#/Username"
+          recipient:
+            $ref: "../schemas/_index.yaml#/Uuid"
 
 MessageCreation:
   content:

@@ -10,6 +10,8 @@ var initializers = map[string]string{
 	"GroupMessageRecipients": "",
 	"Chat":                   "",
 	"ChatMessage":            "",
+	"ViewUsers":              "",
+	"ViewLatestMessages":     "",
 }
 
 const qSetupMessageStatus = `
@@ -17,7 +19,7 @@ const qSetupMessageStatus = `
 `
 
 const qSetupDefaultImages = `
-	INSERT INTO Image (filename, size, owner, width, height)
-	VALUES ('default_group_image.jpg', 135950, NULL, 840, 880),
-	       ('default_user_image.jpg', 1470000, NULL, 8000, 8000);
+	INSERT INTO Image (uuid, extension)
+	VALUES ('default_group_image', '.jpg'),
+	       ('default_user_image', '.jpg');
 `

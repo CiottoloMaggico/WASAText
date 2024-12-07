@@ -62,7 +62,6 @@ paths:
       parameters:
         - $ref: '#/components/parameters/pageOffset'
         - $ref: '#/components/parameters/pageNumber'
-        - $ref: '#/components/parameters/filterUsers'
       responses:
         '200':
           description: Successful operation
@@ -814,6 +813,13 @@ components:
       format: url
       readOnly: true
       maxLength: 500
+    Uuid:
+      description: Unique identifier in version 4 format
+      type: string
+      format: uuid
+      pattern: '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+      minLength: 36
+      maxLength: 36
     Username:
       description: users "Username" field type
       type: string
@@ -866,6 +872,8 @@ components:
       description: User type
       type: object
       properties:
+        uuid:
+          $ref: '#/components/schemas/Uuid'
         username:
           $ref: '#/components/schemas/Username'
         photo:
@@ -874,8 +882,8 @@ components:
       description: Image type
       type: object
       properties:
-        id:
-          $ref: '#/components/schemas/CustomInt64'
+        uuid:
+          $ref: '#/components/schemas/Uuid'
         width:
           $ref: '#/components/schemas/CustomInt32'
         height:
@@ -986,16 +994,9 @@ components:
       type: object
       required:
         - code
-        - message
       properties:
         code:
           $ref: '#/components/schemas/HttpStatusCode'
-        message:
-          description: Text description of the error that occurred
-          type: string
-          minLength: 1
-          maxLength: 200
-          pattern: ^.*?$
         description:
           description: Detailed description of the status code and possibly why it was raised
           type: string
@@ -1077,12 +1078,6 @@ components:
         enum:
           - sent
           - sent_desc
-    filterUsers:
-      name: filter
-      in: query
-      description: Filter users by username
-      schema:
-        $ref: '#/components/schemas/Username'
   requestBodies:
     ChangeGroupPhoto:
       content:
@@ -1168,10 +1163,10 @@ components:
             description: Input schema used to create a new chat by the signed-in user
             type: object
             required:
-              - recipientUsername
+              - recipient
             properties:
-              recipientUsername:
-                $ref: '#/components/schemas/Username'
+              recipient:
+                $ref: '#/components/schemas/Uuid'
     MessageCreation:
       content:
         application/json:
@@ -1221,7 +1216,6 @@ components:
             $ref: '#/components/schemas/HttpStatus'
           example:
             code: 200
-            message: Ok
             description: All the operations went fine
     '400':
       description: Bad request
@@ -1231,7 +1225,6 @@ components:
             $ref: '#/components/schemas/HttpStatus'
           example:
             code: 400
-            message: Bad request
             description: The request contains wrong parameters
     '401':
       description: Unauthorized
@@ -1241,7 +1234,6 @@ components:
             $ref: '#/components/schemas/HttpStatus'
           example:
             code: 401
-            message: Unauthorized
             description: You must do login to see your conversations
     '403':
       description: Forbidden
@@ -1251,7 +1243,6 @@ components:
             $ref: '#/components/schemas/HttpStatus'
           example:
             code: 403
-            message: Forbidden
             description: You can't add a user to a group where you're not a participant
     '404':
       description: Not found
@@ -1261,7 +1252,6 @@ components:
             $ref: '#/components/schemas/HttpStatus'
           example:
             code: 404
-            message: Not found
             description: The provided conversation id isn't in your conversations list
     '406':
       description: Not acceptable
@@ -1271,7 +1261,6 @@ components:
             $ref: '#/components/schemas/HttpStatus'
           example:
             code: 406
-            message: Not acceptable
             description: (list of available resources representation)
     '429':
       description: Too many requests
@@ -1281,7 +1270,6 @@ components:
             $ref: '#/components/schemas/HttpStatus'
           example:
             code: 429
-            message: Too many request
             description: 'Too many request, please try again later'
     default:
       description: Unexpected error
@@ -1291,7 +1279,6 @@ components:
             $ref: '#/components/schemas/HttpStatus'
           example:
             code: 500
-            message: Internal server error
             description: Unexpected error
   examples:
     chatExample:
@@ -1322,6 +1309,7 @@ components:
         content: "\U0001F601"
     userExample:
       value:
+        uuid: ea43ab1d-5ec4-423e-b371-42fc05eae46e
         username: PaoloCannone07
         photo:
           id: 532

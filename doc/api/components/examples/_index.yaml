@@ -24,6 +24,7 @@ commentExample:
     content: "😁"
 userExample:
   value:
+    uuid: "ea43ab1d-5ec4-423e-b371-42fc05eae46e"
     username: "PaoloCannone07"
     photo:
       id: 532

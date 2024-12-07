@@ -34,20 +34,25 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"mime/multipart"
+	"net/http"
 )
 
 // AppDatabase is the high level interface for the DB
 type AppDatabase interface {
-	GetUser(username string) (*User, error)
-	GetUsers(pageSize int, pageNumber int) ([]User, error)
+	NewUser(username string) (*User, error)
+	GetUserByUsername(username string) (*User, error)
 	GetUserByUUID(UUID string) (*User, error)
+	GetAuthenticatedUser(r *http.Request) (*User, error)
+	GetUsers(pageSize int, pageNumber int) ([]User, error)
 	UsersCount() (int, error)
-	//SetUser(username string) (*User, error)
-	//GetUsersCount() (int, error)
-	//UpdateUsername(oldUsername string, newUsername string) (*User, error)
+	NewImage(fileHeader multipart.FileHeader, file multipart.File) (*Image, error)
+	GetImage(UUID string) (*Image, error)
+
+	NewGroup(name string, photo Image, author User) (*GroupConversation, error)
+	NewChat(author *User, recipient *User) (*ChatConversation, error)
 	Ping() error
 }
-
 type appdbimpl struct {
 	c *sql.DB
 }
@@ -69,8 +74,7 @@ func New(db *sql.DB) (AppDatabase, error) {
 		err := tx.QueryRow(`SELECT name FROM sqlite_master WHERE type='table' AND name=?;`, key).Scan(&tableName)
 		if errors.Is(err, sql.ErrNoRows) {
 			completeQuery := fmt.Sprintf("%s\n%s", value, initializers[key])
-			_, err = tx.Exec(completeQuery)
-			if err != nil {
+			if _, err = tx.Exec(completeQuery); err != nil {
 				if rollbackErr := tx.Rollback(); rollbackErr != nil {
 					return nil, fmt.Errorf("could not rollback transaction: %w", rollbackErr)
 				}
@@ -79,6 +83,11 @@ func New(db *sql.DB) (AppDatabase, error) {
 		}
 	}
 
+	for _, trigger := range triggers {
+		if _, err := tx.Exec(trigger); err != nil {
+			return nil, fmt.Errorf("could not create trigger: %w", err)
+		}
+	}
 	if commitErr := tx.Commit(); commitErr != nil {
 		return nil, fmt.Errorf("could not commit transaction: %w", commitErr)
 	}

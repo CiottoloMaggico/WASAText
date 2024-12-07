@@ -1,18 +1,28 @@
 package database
 
 const qCreateMessage = `
-	INSERT INTO Message (conversation, author, sendAt, replyTo, content, attachmentFilename)
-	VALUES (?, ?, ?, ?, ?, ?) RETURNING id;
-`
-const qCreateUser_Message = `
-	INSERT INTO User_Message (message, user, status)
-	VALUES (?, ?, ?);
+	INSERT INTO Message (conversation, author, replyTo, content, attachment)
+	VALUES (?, ?, ?, ?, ?)
+	RETURNING id, sendAt;
 `
 
-const qGetMessages = `
-	SELECT *
-	FROM Message
+const qDeleteMessage = `
+	DELETE FROM Message WHERE id = ?;
+`
+const qGetConversationMessageById = `
+	SELECT
+		id, sendAt, deliveredAt, seenAt, replyTo, content, attachment, attachmentExt, uUuid, username, iUuid, extension
+	FROM ViewMessages
+	WHERE id = ? AND conversation = ?;
+`
+
+const qGetConversationMessagesPaginated = `
+	SELECT
+		id, sendAt, deliveredAt, seenAt, replyTo, content, attachment, attachmentExt, uUuid, username, iUuid, extension
+	FROM ViewMessages
 	WHERE conversation = ?
+	ORDER BY sendAt DESC
+	LIMIT ? OFFSET ?;
 `
 
 const qGetUnseenMessages = `
@@ -29,10 +39,6 @@ const qSetSeen = `
 	SET status = 3
 	FROM UnSeenMessages usm
 	WHERE usm.id = id
-`
-
-const qDeleteMessage = `
-	DELETE FROM Message WHERE id = ?;
 `
 
 const qCommentMessage = `

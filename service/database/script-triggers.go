@@ -1,96 +1,91 @@
 package database
 
 var triggers = [...]string{
-	tInsertOnGroupConversationDisjoint,
-	tUpdateOnGroupConversationDisjoint,
-	tInsertOnChatDisjoint,
-	tUpdateOnChatDisjoint,
-	tInsertOnConversationComplete,
-	tDeleteOnChat,
-	tDeleteOnGroupConversation,
-	tInsertOnChat,
-	tInsertOnMessage,
+	bindParticipantsToMessage,
+	addChatToUsersConversation,
+	addGroupToAuthorConversation,
+	setMessageStatusToDelivered,
+	setMessageStatusToSeen,
 }
 
-// If the inserted or updated row breaks the disjoint property between chat and group chat raise an error
-const tbInsertOrUpdateOnGroupConversationOrChat = `
+const bindParticipantsToMessage = `
+	CREATE TRIGGER IF NOT EXISTS bind_participants_to_message AFTER INSERT ON Message
 	BEGIN
-		SELECT
-			CASE
-				WHEN EXISTS(SELECT * FROM Chat AS c, GroupConversation AS g WHERE new.id = c.id AND new.id = g.id)
-				THEN RAISE(ABORT, "Conversation type must be disjoint")
-			END;
+		INSERT INTO User_Message (message, user, status)
+			SELECT
+				new.id,
+				uc.user,
+				CASE
+					WHEN uc.user = new.author THEN 3
+					ELSE 1
+				END
+			FROM User_Conversation uc
+			WHERE new.conversation = uc.conversation;
 	END;
 `
 
-const tInsertOnGroupConversationDisjoint = `
-	CREATE TRIGGER IF NOT EXISTS disjoint_type_of_conversation_group_conversation_insert AFTER INSERT ON GroupConversation FOR EACH ROW
-` + tbInsertOrUpdateOnGroupConversationOrChat
-
-const tUpdateOnGroupConversationDisjoint = `
-	CREATE TRIGGER IF NOT EXISTS disjoint_type_of_conversation_group_conversation_update AFTER UPDATE ON GroupConversation FOR EACH ROW
-` + tbInsertOrUpdateOnGroupConversationOrChat
-
-const tInsertOnChatDisjoint = `
-	CREATE TRIGGER IF NOT EXISTS disjoint_type_of_conversation_chat_insert AFTER INSERT ON Chat FOR EACH ROW
-` + tbInsertOrUpdateOnGroupConversationOrChat
-
-const tUpdateOnChatDisjoint = `
-	CREATE TRIGGER IF NOT EXISTS disjoint_type_of_conversation_chat_update AFTER UPDATE ON Chat FOR EACH ROW
-` + tbInsertOrUpdateOnGroupConversationOrChat
-
-// If the inserted row breaks the complete property between chat and group chat raise an error
-const tbInsertOnConversation = `
+const addChatToUsersConversation = `
+	CREATE TRIGGER IF NOT EXISTS add_chat_to_users AFTER INSERT ON Chat
 	BEGIN
-		SELECT
-			CASE
-				WHEN NOT EXISTS(
-						SELECT c.id FROM Chat AS c WHERE new.id = c.id
-						UNION
-						SELECT g.id FROM GroupConversation AS g WHERE new.id = g.id
-					)
-				THEN RAISE(ABORT, "Conversation type must be complete")
-			END;
+		INSERT INTO User_Conversation
+		VALUES 	(new.user1, new.id),
+				(new.user2, new.id);
 	END;
 `
 
-const tInsertOnConversationComplete = `
-	CREATE TRIGGER IF NOT EXISTS complete_conversation_type AFTER INSERT ON Conversation FOR EACH ROW
-` + tbInsertOnConversation
-
-// After the cancellation of a chat or a group chat always delete also the conversation
-const tbDeleteOnChatOrGroupConversation = `
+const addGroupToAuthorConversation = `
+	CREATE TRIGGER IF NOT EXISTS add_group_to_author AFTER INSERT ON GroupConversation
 	BEGIN
-		DELETE FROM Conversation WHERE id = old.id;
+		INSERT INTO User_Conversation
+		VALUES 	(new.author, new.id);
 	END;
 `
 
-const tDeleteOnChat = `
-	CREATE TRIGGER IF NOT EXISTS delete_on_chat AFTER DELETE ON Chat FOR EACH ROW
-` + tbDeleteOnChatOrGroupConversation
-
-const tDeleteOnGroupConversation = `
-	CREATE TRIGGER IF NOT EXISTS delete_on_group_conversation AFTER DELETE ON GroupConversation FOR EACH ROW
-` + tbDeleteOnChatOrGroupConversation
-
-// After the insertion of a new chat always add the chat to the conversation list of both users
-const tbInsertOnChat = `
+const setMessageStatusToDelivered = `
+	CREATE TRIGGER IF NOT EXISTS set_message_status_to_delivered
+	AFTER UPDATE OF status ON User_Message
+	WHEN
+		NOT EXISTS (
+			SELECT um.message, um.user
+			FROM User_Message um
+			WHERE um.message = new.message AND status = 1
+		)
+			AND
+		EXISTS (
+			SELECT m.id
+			FROM Message m
+			WHERE m.id = new.message AND deliveredAt IS NULL
+		)
 	BEGIN
-		INSERT INTO User_Conversation VALUES (new.user1, new.id), (new.user2, new.id);
+		UPDATE Message SET deliveredAt = current_timestamp WHERE id = new.message;
 	END;
 `
 
-const tInsertOnChat = `
-	CREATE TRIGGER IF NOT EXISTS insert_on_chat AFTER INSERT ON Chat FOR EACH ROW
-` + tbInsertOnChat
-
-// After the insertion of a new message always add the author of the message to the User_Message table
-const tbInsertOnMessage = `
+const setMessageStatusToSeen = `
+	CREATE TRIGGER IF NOT EXISTS set_message_status_to_seen
+	AFTER UPDATE OF status ON User_Message
+	WHEN
+		NOT EXISTS (
+			SELECT um.message, um.user
+			FROM User_Message um
+			WHERE um.message = new.message AND (status = 1 OR status = 2)
+		)
+			AND
+		EXISTS (
+			SELECT m.id
+			FROM Message m
+			WHERE m.id = new.message AND seenAt IS NULL
+		)
 	BEGIN
-		INSERT INTO User_Message VALUES (new.id, new.author, 'seen', NULL);
+		UPDATE Message SET seenAt = current_timestamp WHERE id = new.message;
 	END;
 `
 
-const tInsertOnMessage = `
-	CREATE TRIGGER IF NOT EXISTS insert_on_message AFTER INSERT ON Message FOR EACH ROW
-` + tbInsertOnMessage
+const groupParticipantsLimit = `
+	CREATE TRIGGER IF NOT EXISTS group_participants_limit BEFORE INSERT ON User_Conversation
+	WHEN
+		(SELECT COUNT(*) FROM User_Conversation WHERE conversation = new.conversation) >= 200
+	BEGIN
+		RAISE (ABORT, "groups can handle at most 200 participants");
+	END;
+`

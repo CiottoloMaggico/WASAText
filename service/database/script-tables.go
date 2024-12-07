@@ -1,16 +1,23 @@
 package database
 
 var tables = map[string]string{
-	"MessageStatus":     qCreateTableMessageStatus,
-	"Image":             qCreateTableImage,
-	"User":              qCreateTableUser,
-	"Conversation":      qCreateTableConversation,
-	"User_Conversation": qCreateTableUser_Conversation,
-	"GroupConversation": qCreateTableGroupConversation,
-	"Chat":              qCreateTableChat,
-	"Message":           qCreateTableMessage,
-	"User_Message":      qCreateTableUser_Message,
+	"ForeignKey":         qEnableForeignKeyConstraints,
+	"MessageStatus":      qCreateTableMessageStatus,
+	"Image":              qCreateTableImage,
+	"User":               qCreateTableUser,
+	"Conversation":       qCreateTableConversation,
+	"User_Conversation":  qCreateTableUser_Conversation,
+	"GroupConversation":  qCreateTableGroupConversation,
+	"Chat":               qCreateTableChat,
+	"Message":            qCreateTableMessage,
+	"User_Message":       qCreateTableUser_Message,
+	"ViewUsers":          qCreateViewUsers,
+	"ViewMessages":       qCreateViewMessages,
+	"ViewLatestMessages": qCreateViewLatestMessages,
+	"ViewConversations":  qCreateViewConversation,
 }
+
+const qEnableForeignKeyConstraints = `PRAGMA foreign_keys = ON;`
 
 const qCreateTableMessageStatus = `
 	CREATE TABLE IF NOT EXISTS MessageStatus (
@@ -22,14 +29,9 @@ const qCreateTableMessageStatus = `
 const qCreateTableImage = `
 	CREATE TABLE IF NOT EXISTS Image
 	(
-		filename varchar PRIMARY KEY,
-		size     integer NOT NULL,
-		owner    varchar,
-		width    integer,
-		height   integer,
-		FOREIGN KEY (owner) REFERENCES User(uuid) ON DELETE CASCADE,
-		CHECK (length(filename) >= 4 AND length(filename) <= 50),
-		CHECK (size > 0 AND size <= 4096000000)
+		uuid  PRIMARY KEY,
+		extension varchar NOT NULL,
+		uploadedAt datetime NOT NULL DEFAULT current_timestamp
 	);
 `
 
@@ -38,9 +40,9 @@ const qCreateTableUser = `
 	(
 		uuid varchar PRIMARY KEY NOT NULL, -- random uuid
 		username      varchar NOT NULL,
-		photoFilename varchar NOT NULL DEFAULT 'default_user_image.jpg',
+		photo varchar NOT NULL DEFAULT 'default_user_image',
 		UNIQUE (username),
-		FOREIGN KEY (photoFilename) REFERENCES Image (filename)
+		FOREIGN KEY (photo) REFERENCES Image (uuid)
 			ON DELETE RESTRICT,
 		CHECK (length(username) >= 3 AND length(username) <= 16)
 	);
@@ -82,9 +84,11 @@ const qCreateTableGroupConversation = `
 	CREATE TABLE IF NOT EXISTS GroupConversation (
 		id integer PRIMARY KEY NOT NULL,
 		name varchar NOT NULL,
-		photoFilename varchar NOT NULL DEFAULT 'default_group_image.jpg',
+		author varchar NOT NULL,
+		photo varchar NOT NULL DEFAULT 'default_group_image',
 		FOREIGN KEY (id) REFERENCES Conversation(id) ON DELETE CASCADE,
-		FOREIGN KEY (photoFilename) REFERENCES Image(filename) ON DELETE RESTRICT,
+		FOREIGN KEY (author) REFERENCES User(uuid),
+		FOREIGN KEY (photo) REFERENCES Image(uuid) ON DELETE RESTRICT,
 		CHECK (length(name) >= 3 AND length(name) <= 16)
 	);
 `
@@ -94,16 +98,18 @@ const qCreateTableMessage = `
 		id INTEGER PRIMARY KEY,
 		conversation integer NOT NULL,
 		author varchar NOT NULL,
-		sendAt datetime NOT NULL,
+		sendAt datetime NOT NULL DEFAULT current_timestamp,
+		deliveredAt datetime,
+		seenAt datetime,
 		replyTo integer,
 		content varchar,
-		attachmentFilename varchar,
+		attachment varchar,
 		FOREIGN KEY (id) REFERENCES User_Message(message),
 		FOREIGN KEY (conversation) REFERENCES Conversation(id) ON DELETE CASCADE,
 		FOREIGN KEY (author) REFERENCES User(uuid) ON DELETE CASCADE,
 		FOREIGN KEY (replyTo) REFERENCES Message(id) ON DELETE SET NULL,
-		FOREIGN KEY (attachmentFilename) REFERENCES Image(filename) ON DELETE RESTRICT,
-		CHECK (content IS NOT NULL OR attachmentFilename IS NOT NULL),
+		FOREIGN KEY (attachment) REFERENCES Image(uuid) ON DELETE RESTRICT,
+		CHECK (content IS NOT NULL OR attachment IS NOT NULL),
 	    CHECK ((length(content) >= 1 AND length(content) <= 4096) OR content IS NULL)
 	);
 `
@@ -112,7 +118,7 @@ const qCreateTableUser_Message = `
 	CREATE TABLE IF NOT EXISTS User_Message (
 		message integer NOT NULL,
 		user varchar NOT NULL,
-		status integer NOT NULL,
+		status integer NOT NULL DEFAULT 1,
 		comment varchar,
 		PRIMARY KEY (message, user),
 		FOREIGN KEY (message) REFERENCES Message(id) ON DELETE CASCADE,
@@ -122,16 +128,51 @@ const qCreateTableUser_Message = `
 	);
 `
 
+const qCreateViewUsers = `
+	CREATE VIEW IF NOT EXISTS ViewUsers AS
+		SELECT User.uuid AS uUuid, username, Image.uuid AS iUuid, extension
+		FROM User, Image
+		WHERE User.photo = Image.uuid;
+`
+
+const qCreateViewMessages = `
+	CREATE VIEW IF NOT EXISTS ViewMessages AS
+		SELECT
+			m.id, m.conversation, m.sendAt, m.deliveredAt, m.seenAt, m.replyTo, m.content, m.attachment, i.extension attachmentExt,
+			u.*
+		FROM Message m, ViewUsers u
+		LEFT OUTER JOIN Image i ON i.uuid = m.attachment
+		WHERE
+			m.author = u.uUuid;
+`
+
 const qCreateViewLatestMessages = `
 	CREATE VIEW IF NOT EXISTS ViewLatestMessages AS
 		SELECT
-			id,
-			conversation,
-			author,
-			MAX(sendAt) as sendAt,
-			replyTo,
-			content,
-			attachmentFilename
-		FROM Message,
-		GROUP BY conversation;
+			c.id,
+			vm.id messageId,
+			MAX(vm.sendAt) sendAt,
+			deliveredAt,
+			seenAt,
+			vm.replyTo,
+			vm.content,
+			vm.attachment,
+			vm.attachmentExt,
+			vm.uUuid, vm.username, vm.iUuid, vm.extension
+		FROM Conversation c
+		LEFT OUTER JOIN ViewMessages vm ON vm.conversation = c.id
+		GROUP BY c.id;
+`
+
+const qCreateViewConversation = `
+	CREATE VIEW IF NOT EXISTS ViewConversations AS
+	SELECT
+		Conversation.id id,
+		vc.user1,
+		vc.user2,
+		vg.name,
+		vg.photo
+	FROM Conversation
+	LEFT OUTER JOIN Chat vc ON (vc.id = Conversation.id)
+    LEFT OUTER JOIN GroupConversation vg ON (vg.id = Conversation.id)
 `

@@ -64,10 +64,3 @@ sortMessages:
     default: "sent_desc"
     enum: [ "sent", "sent_desc" ]
 
-filterUsers:
-  name: filter
-  in: query
-  description: Filter users by username
-  schema:
-    $ref: "../schemas/_index.yaml#/Username"
-

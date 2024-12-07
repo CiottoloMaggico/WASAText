@@ -17,8 +17,8 @@ type Paginator interface {
 type Page struct {
 	Page         int     `json:"page"`
 	finalPage    int     `json:"-"`
+	CurrPage     string  `json:"-"`
 	NextPage     *string `json:"nextPage"`
-	CurrPage     string  `json:"currPage"`
 	PreviousPage *string `json:"previousPage"`
 }
 
