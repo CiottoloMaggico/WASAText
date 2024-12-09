@@ -1,85 +1,89 @@
 package database
 
 import (
+	"context"
 	"database/sql"
-	"encoding/json"
 	"github.com/ciottolomaggico/wasatext/service/utils/validators"
 )
 
 type Message struct {
-	Id          uint64
-	Conv        Conversation
-	Author      User
-	SendAt      string
-	DeliveredAt sql.NullString
-	SeenAt      sql.NullString
-	ReplyTo     *uint64
-	Attachment  *Image
-	Content     sql.NullString
+	id           uint64
+	conversation uint64
+	author       User
+	sendAt       string
+	deliveredAt  sql.NullString
+	seenAt       sql.NullString
+	replyTo      *uint64
+	attachment   *Image
+	content      sql.NullString
 
-	db *appdbimpl
+	context context.Context
+	db      *appdbimpl
 }
 
-func (m Message) Status() string {
-	if m.SeenAt.Valid {
-		return "Seen"
-	} else if m.DeliveredAt.Valid {
-		return "Delivered"
-	}
-	return "Sent"
+func (m Message) GetId() uint64 {
+	return m.id
 }
 
-func (m Message) Validate() error {
-	if err := m.Conv.Validate(); err != nil {
-		return err
+func (m Message) GetConversation() (BaseConversation, error) {
+	authedUser := m.context.Value("authedUser").(User)
+	return authedUser.GetConversation(m.conversation, m.context)
+}
+
+func (m Message) GetAuthor() User {
+	return m.author
+}
+
+func (m Message) GetTimestamps() (sendAt string, deliveredAt *string, seenAt *string) {
+	sendAt = m.sendAt
+
+	if m.deliveredAt.Valid {
+		deliveredAt = &m.deliveredAt.String
 	}
-	if err := m.Author.Validate(); err != nil {
-		return err
+	if m.seenAt.Valid {
+		seenAt = &m.seenAt.String
 	}
-	if m.Content.Valid {
-		if ok, err := validators.MessageContentValidator(m.Content.String); !ok {
-			return err
-		}
+
+	return
+}
+
+func (m Message) GetRepliedMessage() (*Message, error) {
+	if m.replyTo == nil {
+		return nil, nil
 	}
-	if m.Attachment != nil {
-		if err := m.Attachment.Validate(); err != nil {
-			return err
-		}
+	return m.db.GetMessage(*m.replyTo, m.context)
+}
+
+func (m Message) GetAttachment() *Image {
+	return m.attachment
+}
+
+func (m Message) GetContent() *string {
+	if m.content.Valid {
+		return &m.content.String
 	}
 	return nil
 }
 
-func (m *Message) MarshalJSON() ([]byte, error) {
-	var content *string = &m.Content.String
-	if !m.Content.Valid {
-		content = nil
+func (m Message) ReadByUser() (bool, error) {
+	requestIssuer := m.context.Value("authedUser").(User)
+	var read bool
+	if err := m.db.c.QueryRow(qMessageIsRead, requestIssuer.GetUUID(), m.id).Scan(&read); err != nil {
+		return false, err
 	}
-	return json.Marshal(&SerializedMessage{
-		m.Id,
-		m.Conv.GetId(),
-		m.Author,
-		m.Status(),
-		m.ReplyTo,
-		m.Attachment,
-		content,
-	})
+	return read, nil
 }
 
-func (db *appdbimpl) NewMessage(conv Conversation, author User, replyTo *uint64, attachment *Image, content *string) (*Message, error) {
+func (m Message) Delete() error {
+	if _, err := m.db.c.Exec(qDeleteMessage, m.id); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (db *appdbimpl) NewMessage(conv Conversation, replyTo *uint64, attachment *Image, content *string, ctx context.Context) (*Message, error) {
 	if err := conv.Validate(); err != nil {
 		return nil, err
-	}
-	if err := author.Validate(); err != nil {
-		return nil, err
-	}
-
-	finalContent := sql.NullString{Valid: false}
-	if content != nil {
-		if ok, err := validators.MessageContentValidator(*content); !ok {
-			return nil, err
-		}
-		finalContent.Valid = true
-		finalContent.String = *content
 	}
 	if attachment != nil {
 		if err := attachment.Validate(); err != nil {
@@ -87,40 +91,70 @@ func (db *appdbimpl) NewMessage(conv Conversation, author User, replyTo *uint64,
 		}
 	}
 
+	messageContent := sql.NullString{Valid: false}
+	if content != nil {
+		if ok, err := validators.MessageContentValidator(*content); !ok {
+			return nil, err
+		}
+		messageContent.Valid, messageContent.String = true, *content
+	}
+	author := ctx.Value("authedUser").(User)
+
 	var messageId uint64
 	var sendAt string
 	if err := db.c.QueryRow(
 		qCreateMessage,
 		conv.GetId(),
-		author.Uuid,
+		author.GetUUID(),
 		replyTo,
 		content,
-		attachment.Uuid,
+		attachment.GetUUID(),
 	).Scan(&messageId, &sendAt); err != nil {
 		return nil, err
 	}
 
 	return &Message{
 		messageId,
-		conv,
+		conv.GetId(),
 		author,
 		sendAt,
 		sql.NullString{Valid: false},
 		sql.NullString{Valid: false},
 		replyTo,
 		attachment,
-		finalContent,
+		messageContent,
+		ctx,
 		db,
 	}, nil
 }
 
-func (m Message) Delete() error {
-	if err := m.Validate(); err != nil {
-		return err
+func (db *appdbimpl) GetMessage(messageId uint64, ctx context.Context) (*Message, error) {
+	message := Message{author: User{image: Image{}}, context: ctx, db: db}
+	author := &message.author
+	authorImage := &message.author.image
+	var attachmentUUID, attachmentExt sql.NullString
+	if err := db.c.QueryRow(
+		qGetMessage, messageId,
+	).Scan(
+		&message.id,
+		&message.conversation,
+		&message.sendAt,
+		&message.deliveredAt,
+		&message.seenAt,
+		&message.replyTo,
+		&attachmentUUID,
+		&attachmentExt,
+		&author.uuid,
+		&author.username,
+		&authorImage.uuid,
+		&authorImage.extension,
+	); err != nil {
+		return nil, err
 	}
 
-	if _, err := m.db.c.Exec(qDeleteMessage, m.Id); err != nil {
-		return err
+	if attachmentUUID.Valid {
+		message.attachment = &Image{attachmentUUID.String, attachmentExt.String, db}
 	}
-	return nil
+
+	return &message, nil
 }

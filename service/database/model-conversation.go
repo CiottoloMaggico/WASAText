@@ -1,121 +1,47 @@
 package database
 
 import (
+	"context"
 	"database/sql"
-	"encoding/json"
 	"errors"
 )
 
-type SerializedConversationSummary struct {
-	Id            uint64   `json:"id"`
-	Name          string   `json:"name"`
-	Photo         Image    `json:"photo"`
-	ChatType      string   `json:"chatType"`
-	LatestMessage *Message `json:"latestMessage"`
-	Seen          bool     `json:"read"`
-}
-
-type SerializedConversation struct {
-	Id           uint64   `json:"id"`
-	Name         string   `json:"name"`
-	Photo        Image    `json:"photo"`
-	ChatType     string   `json:"chatType"`
-	Participants []string `json:"participants"`
-}
-
-// TODO: change request issuer with context
-type Conversation interface {
+type BaseConversation interface {
 	GetId() uint64
 	GetName() string
 	GetPhoto() Image
-	GetRequestIssuer() User
+	GetType() string
+	GetContext() context.Context
 	GetDB() *appdbimpl
-	Type() string
+	GetParticipants() ([]User, error)
 	Validate() error
 }
 
-type DefaultConversation struct {
-	Conversation
+type GroupConversation interface {
+	BaseConversation
+	GetAuthor() User
+	AddParticipant(user User) error
+	RemoveParticipant(user User) error
 }
 
-func (dc *DefaultConversation) MarshalJSON() ([]byte, error) {
-	latestMessage, read, err := dc.GetLatestMessage()
-	if err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(&SerializedConversationSummary{
-		dc.GetId(),
-		dc.GetName(),
-		dc.GetPhoto(),
-		dc.Type(),
-		latestMessage,
-		read,
-	})
+type Conversation struct {
+	BaseConversation
 }
 
-func (dc *DefaultConversation) MarshalDetailedJSON() ([]byte, error) {
-	participants, err := dc.GetParticipants()
-	if err != nil {
-		return nil, err
-	}
-	participantsUUIDList := make([]string, 0, 200)
-	for _, participant := range participants {
-		participantsUUIDList = append(participantsUUIDList, participant.Uuid)
-	}
-	return json.Marshal(&SerializedConversation{
-		dc.GetId(),
-		dc.GetName(),
-		dc.GetPhoto(),
-		dc.Type(),
-		participantsUUIDList,
-	})
+func (c Conversation) SendMessage(replyTo *uint64, attachment *Image, content *string) (*Message, error) {
+	return c.GetDB().NewMessage(c, replyTo, attachment, content, c.GetContext())
 }
 
-func (dc *DefaultConversation) GetParticipants() ([]User, error) {
-	rows, err := dc.GetDB().c.Query(
-		qGetConversationParticipants, dc.GetId(),
-	)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	users := make([]User, 0, 100)
-	for rows.Next() {
-		user := User{}
-		user.ProfileImage = Image{}
-		image := &user.ProfileImage
-
-		if err := rows.Scan(
-			&user.Uuid,
-			&user.Username,
-			&image.Uuid,
-			&image.Extension,
-		); err != nil {
-			return nil, err
-		}
-
-		users = append(users, user)
-	}
-
-	if err := rows.Close(); err != nil {
-		return nil, err
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return users, nil
+func (c Conversation) GetMessage(messageId uint64) (*Message, error) {
+	return c.GetDB().GetMessage(messageId, c.GetContext())
 }
 
-func (dc *DefaultConversation) SendMessage(author User, replyTo *uint64, attachment *Image, content *string) (*Message, error) {
-	return dc.GetDB().NewMessage(dc, author, replyTo, attachment, content)
-}
-
-func (dc *DefaultConversation) GetMessages(pageSize int, pageNumber int) ([]Message, error) {
-	rows, err := dc.GetDB().c.Query(
+func (dc *Conversation) GetMessages(pageSize int, pageNumber int) ([]Message, error) {
+	conversationId, db, ctx := dc.GetId(), dc.GetDB(), dc.GetContext()
+	rows, err := db.c.Query(
 		qGetConversationMessagesPaginated,
-		dc.GetId(), dc.GetRequestIssuer().Uuid, pageSize, pageNumber*pageSize)
+		dc.GetId(), pageSize, pageNumber*pageSize,
+	)
 	if err != nil {
 		return nil, err
 	}
@@ -123,31 +49,36 @@ func (dc *DefaultConversation) GetMessages(pageSize int, pageNumber int) ([]Mess
 
 	messages := make([]Message, 0, pageSize)
 	for rows.Next() {
-		var message Message
-		message.Author = User{ProfileImage: Image{}}
+		message := Message{
+			conversation: conversationId,
+			author:       User{image: Image{}},
+			context:      ctx,
+			db:           db,
+		}
+		author := &message.author
+		authorImage := &message.author.image
 		var attachmentUUID, attachmentExt sql.NullString
 		if err := rows.Scan(
-			&message.Id,
-			&message.SendAt,
-			&message.DeliveredAt,
-			&message.SeenAt,
-			&message.ReplyTo,
-			&message.Content,
+			&message.id,
+			&message.sendAt,
+			&message.deliveredAt,
+			&message.seenAt,
+			&message.replyTo,
+			&message.content,
 			&attachmentUUID,
 			&attachmentExt,
-			&message.Author.Uuid,
-			&message.Author.Username,
-			&message.Author.ProfileImage.Uuid,
-			&message.Author.ProfileImage.Extension,
+			&author.uuid,
+			&author.username,
+			&authorImage.uuid,
+			&authorImage.extension,
 		); err != nil {
 			return nil, err
 		}
 
 		if attachmentUUID.Valid {
-			message.Attachment = &Image{attachmentUUID.String, attachmentExt.String, dc.GetDB()}
+			message.attachment = &Image{attachmentUUID.String, attachmentExt.String, db}
 		}
 
-		message.Conv, message.db = dc, dc.GetDB()
 		messages = append(messages, message)
 	}
 
@@ -163,64 +94,40 @@ func (dc *DefaultConversation) GetMessages(pageSize int, pageNumber int) ([]Mess
 	return messages, nil
 }
 
-func (dc *DefaultConversation) GetMessage(messageId uint64) (*Message, error) {
-	var message Message
-	message.Author = User{ProfileImage: Image{}}
+func (dc *Conversation) GetLatestMessage() (*Message, error) {
+	conversationId, db, ctx := dc.GetId(), dc.GetDB(), dc.GetContext()
+	message := Message{
+		conversation: conversationId,
+		author:       User{image: Image{}},
+		context:      ctx,
+		db:           db,
+	}
+	author := &message.author
+	authorImage := &message.author.image
 	var attachmentUUID, attachmentExt sql.NullString
-	if err := dc.GetDB().c.QueryRow(qGetConversationMessageById, messageId, dc.GetId()).Scan(
-		&message.Id,
-		&message.SendAt,
-		&message.DeliveredAt,
-		&message.SeenAt,
-		&message.ReplyTo,
-		&message.Content,
+	if err := db.c.QueryRow(qGetLatestMessage, conversationId).Scan(
+		&message.id,
+		&message.sendAt,
+		&message.deliveredAt,
+		&message.seenAt,
+		&message.replyTo,
+		&message.content,
 		&attachmentUUID,
 		&attachmentExt,
-		&message.Author.Uuid,
-		&message.Author.Username,
-		&message.Author.ProfileImage.Uuid,
-		&message.Author.ProfileImage.Extension,
-	); err != nil {
+		&author.uuid,
+		&author.username,
+		&authorImage.uuid,
+		&authorImage.extension,
+	); errors.Is(err, sql.ErrNoRows) {
+		return nil, nil
+	} else if err != nil {
 		return nil, err
 	}
 
 	if attachmentUUID.Valid {
-		message.Attachment = &Image{attachmentUUID.String, attachmentExt.String, dc.GetDB()}
+		message.attachment = &Image{attachmentUUID.String, attachmentExt.String, db}
 	}
-
-	message.Conv, message.db = dc, dc.GetDB()
 	return &message, nil
 }
 
-func (dc *DefaultConversation) GetLatestMessage() (*Message, bool, error) {
-	var tmpAttachmentUUID, tmpAttachmentExt sql.NullString
-	var seen bool
-	message := Message{Author: User{ProfileImage: Image{}}, Conv: Conversation(dc)}
-	author := &message.Author
-
-	if err := dc.GetDB().c.QueryRow(qGetLatestMessage, dc.GetId(), dc.GetRequestIssuer().Uuid).Scan(
-		&message.Id,
-		&message.SendAt,
-		&message.DeliveredAt,
-		&message.SeenAt,
-		&message.ReplyTo,
-		&message.Content,
-		&tmpAttachmentUUID,
-		&tmpAttachmentExt,
-		&author.Uuid,
-		&author.Username,
-		&author.ProfileImage.Uuid,
-		&author.ProfileImage.Extension,
-		&seen,
-	); errors.Is(err, sql.ErrNoRows) {
-		return nil, true, nil
-	} else if err != nil {
-		return nil, false, err
-	}
-
-	if tmpAttachmentUUID.Valid {
-		message.Attachment = &Image{tmpAttachmentUUID.String, tmpAttachmentExt.String, dc.GetDB()}
-	}
-
-	return &message, seen, nil
-}
+// set message as seen

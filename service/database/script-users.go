@@ -3,8 +3,12 @@ package database
 const qCreateUser = `
 	INSERT INTO User (uuid, username, photo)  VALUES (?, ?, ?);
 `
-const qUpdateUser = `
-	UPDATE User SET username = ?, photo = ? WHERE uuid = ?;
+const qSetUsername = `
+	UPDATE User SET username = ? WHERE uuid = ?;
+`
+
+const qSetPhoto = `
+	UPDATE User SET photo = ? WHERE uuid = ?;
 `
 
 const qGetUserByUsername = `

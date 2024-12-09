@@ -9,20 +9,19 @@ const qCreateMessage = `
 const qDeleteMessage = `
 	DELETE FROM Message WHERE id = ?;
 `
-const qGetConversationMessageById = `
+
+const qGetMessage = `
 	SELECT
-		id, sendAt, deliveredAt, seenAt, replyTo, content, attachment, attachmentExt, uUuid, username, iUuid, extension
+		id, conversation, sendAt, deliveredAt, seenAt, replyTo, content, attachment, attachmentExt, uUuid, username, iUuid, extension
 	FROM ViewMessages
-	WHERE id = ? AND conversation = ?;
+	WHERE id = ?;
 `
 
-const qGetConversationMessagesPaginated = `
+const qMessageIsRead = `
 	SELECT
-		id, sendAt, deliveredAt, seenAt, replyTo, content, attachment, attachmentExt, uUuid, username, iUuid, extension
-	FROM ViewMessages
-	WHERE conversation = ?
-	ORDER BY sendAt DESC
-	LIMIT ? OFFSET ?;
+		CASE WHEN um.status = 3 THEN true ELSE false END status
+	FROM User_Message um
+	WHERE um.user = ? AND um.message = ?;
 `
 
 const qGetUnseenMessages = `

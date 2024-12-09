@@ -1,11 +1,27 @@
 package database
 
-const getUserConversationsPaginated = `
+const qLinkUserToConversation = `
+	INSERT INTO User_Conversation VALUES (?, ?);
+`
+
+const qUnLinkUserToConversation = `
+	DELETE FROM User_Conversation WHERE user = ? AND conversation = ?;
+`
+
+const qGetConversationMessagesPaginated = `
 	SELECT
-		vc.*
-	FROM ViewConversations vc, User_Conversation uc
-	WHERE uc.conversation = vc.id AND uc.user = ?
+		id, sendAt, deliveredAt, seenAt, replyTo, content, attachment, attachmentExt, uUuid, username, iUuid, extension
+	FROM ViewMessages
+	WHERE conversation = ?
+	ORDER BY sendAt DESC
 	LIMIT ? OFFSET ?;
+`
+
+const qGetLatestMessage = `
+	SELECT
+		id, MAX(sendAt) sendAt, deliveredAt, seenAt, replyTo, content, attachment, attachmentExt, uUuid, username, iUuid, extension
+	FROM ViewMessages
+	WHERE conversation = ?;
 `
 
 const qGetConversation = `
@@ -13,6 +29,48 @@ const qGetConversation = `
 		vc.*
 	FROM ViewConversations vc, User_Conversation uc
 	WHERE uc.conversation = vc.id AND vc.id = ? AND uc.user = ?;
+`
+
+const qGetGroup = `
+	SELECT
+		id,
+	    name,
+	    vu.uUuid,
+	    vu.username,
+	    vu.iUuid,
+	    vu.extension,
+		photo,
+		Image.extension
+	FROM GroupConversation,
+	     ViewUsers vu,
+	     Image
+	WHERE id = ? AND photo = Image.uuid AND vu.uUuid = author;
+`
+
+const qGetChat = `
+	SELECT
+		c.id,
+		user1.uUuid uuid1,
+		user1.username username1,
+		user1.iUuid image1,
+		user1.extension extension1,
+		user2.uUuid uuid2,
+		user2.username username2,
+		user2.iUuid image2,
+		user2.extension extension2
+	FROM Chat c, ViewUsers user1, ViewUsers user2
+	WHERE c.user1 = user1.uUuid AND c.user2 = user2.uUuid;
+
+`
+
+//OLD
+
+const getUserConversationsPaginated = `
+	SELECT
+		vc.*
+	FROM ViewConversations vc, User_Conversation uc
+	WHERE uc.conversation = vc.id AND uc.user = ?
+	LIMIT ? OFFSET ?;
 `
 
 const qGetConversationParticipants = `
@@ -28,10 +86,6 @@ const qCreateChat = `
 
 const qAddChatToConversation = `
 	INSERT INTO User_Conversation VALUES (?, ?), (?, ?);
-`
-
-const qAddGroupToConversation = `
-	INSERT INTO User_Conversation VALUES (?, ?);
 `
 
 const qGetGroupId = `
@@ -57,26 +111,6 @@ const qUpdateGroup = `
 	UPDATE GroupConversation SET name = ?, photo = ? WHERE id = ?;
 `
 
-const qGetGroup = `
-	SELECT id, name, author, photo, Image.extension FROM GroupConversation, Image WHERE id = ? AND photo = Image.uuid;
-`
-
 const qGetParticipant = `
 	SELECT uc.user FROM User_Conversation uc WHERE uc.user = ? AND uc.conversation = ?;
-`
-
-const qGetLatestMessage = `
-	SELECT
-		vlm.messageId,
-		vlm.sendAt,
-		vlm.deliveredAt,
-		vlm.seenAt,
-		vlm.replyTo,
-		vlm.content,
-		vlm.attachment,
-		vlm.attachmentExt,
-		vlm.uUuid, vlm.username, vlm.iUuid, vlm.extension,
-		CASE WHEN um.status = 3 THEN true ELSE false END status
-	FROM ViewLatestMessages vlm, User_Message um
-	WHERE vlm.messageId = um.message AND vlm.id = ? AND um.user = ?;
 `

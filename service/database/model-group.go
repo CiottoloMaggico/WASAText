@@ -1,10 +1,10 @@
 package database
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"github.com/ciottolomaggico/wasatext/service/utils/validators"
-	"github.com/google/uuid"
 )
 
 const MAX_GROUP_SIZE = 200
@@ -14,65 +14,132 @@ var NotMember = errors.New("this user isn't a group member")
 var ExceedMaxGroupSize = fmt.Errorf("groups can handle at most %i participants", MAX_GROUP_SIZE)
 
 // TODO: update request issuer with context
-type GroupConversation struct {
-	Id    uint64 `json:"id"`
-	Name  string `json:"name"`
-	Photo Image  `json:"photo"`
+type Group struct {
+	id     uint64
+	name   string
+	photo  Image
+	author User
 
-	requestIssuer User
-	db            *appdbimpl
+	context context.Context
+	db      *appdbimpl
 }
 
-type UpdateGroupParams struct {
-	Name  string
-	Photo Image
+func (g Group) GetId() uint64 {
+	return g.id
 }
 
-func (gp UpdateGroupParams) Validate() error {
-	if ok, err := validators.GroupNameIsValid(gp.Name); !ok {
+func (g Group) GetName() string {
+	return g.name
+}
+
+func (g Group) SetName(name string) error {
+	if ok, err := validators.GroupNameIsValid(name); !ok {
 		return err
 	}
-	if err := gp.Photo.Validate(); err != nil {
+
+	if _, err := g.db.c.Exec(qSetGroupName, name, g.id); err != nil {
 		return err
 	}
+
+	g.name = name
 	return nil
 }
 
-func (g GroupConversation) GetId() uint64 {
-	return g.Id
+func (g Group) GetPhoto() Image {
+	return g.photo
 }
 
-func (g GroupConversation) GetName() string {
-	return g.Name
+func (g Group) SetPhoto(photo Image) error {
+	if _, err := g.db.c.Exec(qSetGroupPhoto, photo.GetUUID(), g.id); err != nil {
+		return err
+	}
+
+	g.photo = photo
+	return nil
 }
 
-func (g GroupConversation) GetPhoto() Image {
-	return g.Photo
-}
-
-func (g GroupConversation) GetDB() *appdbimpl {
-	return g.db
-}
-
-func (g GroupConversation) GetRequestIssuer() User {
-	return g.requestIssuer
-}
-
-func (g GroupConversation) Type() string {
+func (g Group) GetType() string {
 	return "group"
 }
 
-func (g GroupConversation) Validate() error {
-	if ok, err := validators.GroupNameIsValid(g.Name); !ok {
+func (g Group) GetAuthor() User {
+	return g.author
+}
+
+func (g Group) GetContext() context.Context {
+	return g.context
+}
+
+func (g Group) GetDB() *appdbimpl {
+	return g.db
+}
+
+func (g Group) Validate() error {
+	if ok, err := validators.GroupNameIsValid(g.name); !ok {
 		return err
 	}
-	if err := g.Photo.Validate(); err != nil {
+	if err := g.photo.Validate(); err != nil {
+		return err
+	}
+	if err := g.author.Validate(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (g Group) GetParticipants() ([]User, error) {
+	rows, err := g.db.c.Query(
+		qGetConversationParticipants, g.GetId(),
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	users := make([]User, 0, MAX_GROUP_SIZE)
+	for rows.Next() {
+		user := User{image: Image{}, db: g.db}
+		image := &user.image
+
+		if err := rows.Scan(
+			&user.uuid,
+			&user.username,
+			&image.uuid,
+			&image.extension,
+		); err != nil {
+			return nil, err
+		}
+
+		users = append(users, user)
+	}
+
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return users, nil
+}
+
+func (g Group) AddParticipant(user User) error {
+	if _, err := g.db.c.Exec(qLinkUserToConversation, user.GetUUID(), g.id); err != nil {
 		return err
 	}
 	return nil
 }
 
-func (db *appdbimpl) NewGroup(name string, photo Image, author User) (*GroupConversation, error) {
+func (g Group) RemoveParticipant(user User) error {
+	if _, err := g.db.c.Exec(qUnLinkUserToConversation, user.GetUUID(), g.id); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (db *appdbimpl) NewGroup(name string, photo Image, ctx context.Context) (*Group, error) {
 	// TODO: remove the feature to add participants in the same request of group creation, rather handle it with different requests in frontend
 	if ok, err := validators.GroupNameIsValid(name); !ok {
 		return nil, err
@@ -80,9 +147,8 @@ func (db *appdbimpl) NewGroup(name string, photo Image, author User) (*GroupConv
 	if err := photo.Validate(); err != nil {
 		return nil, err
 	}
-	if err := author.Validate(); err != nil {
-		return nil, err
-	}
+
+	author := ctx.Value("authedUser").(User)
 
 	tx, err := db.c.Begin()
 	if err != nil {
@@ -97,7 +163,7 @@ func (db *appdbimpl) NewGroup(name string, photo Image, author User) (*GroupConv
 	}
 
 	// Create a new group with the same id of the conversation
-	if _, err := tx.Exec(qCreateGroup, conversationId, name, author.Uuid, photo.Uuid); err != nil {
+	if _, err := tx.Exec(qCreateGroup, conversationId, name, author.GetUUID(), photo.GetUUID()); err != nil {
 		tx.Rollback()
 		return nil, err
 	}
@@ -106,94 +172,33 @@ func (db *appdbimpl) NewGroup(name string, photo Image, author User) (*GroupConv
 		return nil, err
 	}
 
-	group := &GroupConversation{
-		conversationId, name, photo, author, db,
-	}
-
-	return group, nil
-}
-
-func (g *GroupConversation) Update(params UpdateGroupParams) error {
-	if err := g.Validate(); err != nil {
-		return err
-	}
-	if err := params.Validate(); err != nil {
-		return err
-	}
-
-	if _, err := g.db.c.Exec(qUpdateGroup, params.Name, params.Photo.Uuid, g.Id); err != nil {
-		return err
-	}
-
-	g.Name, g.Photo = params.Name, params.Photo
-	return nil
-}
-
-func (g GroupConversation) AddParticipant(userUUID string) error {
-	if _, err := uuid.Parse(userUUID); err != nil {
-		return fmt.Errorf("invalid uuid: %w", err)
-	}
-
-	if _, err := g.db.c.Exec(qAddGroupToConversation, userUUID, g.Id); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (g GroupConversation) AddParticipants(participants []string) error {
-	tx, err := g.db.c.Begin()
-	if err != nil {
-		return err
-	}
-
-	for _, participant := range participants {
-		if err := g.AddParticipant(participant); err != nil {
-			tx.Rollback()
-			return err
-		}
-	}
-
-	if err := tx.Commit(); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (g GroupConversation) RemoveParticipant(userUUID string) error {
-	if ok := g.IsParticipant(userUUID); !ok {
-		return NotMember
-	}
-
-	if _, err := g.db.c.Exec(qRemoveParticipant, userUUID, g.Id); err != nil {
-		return err
-	}
-	return nil
-}
-
-func (g GroupConversation) IsParticipant(userUUID string) bool {
-	if _, err := uuid.Parse(userUUID); err != nil {
-		return false
-	}
-	var tmpUuid string
-	if err := g.db.c.QueryRow(qGetParticipant, userUUID, g.Id).Scan(&tmpUuid); err != nil {
-		return false
-	}
-	return true
-}
-
-func (db *appdbimpl) GetGroup(id uint64) (*GroupConversation, error) {
-	if id < 0 {
-		return nil, InvalidId
-	}
-
-	group := GroupConversation{}
-	group.Photo = Image{}
-	image := &group.Photo
-
-	if err := db.c.QueryRow(qGetGroup, id).Scan(&group.Id, &group.Name, &image.Uuid, &image.Extension); err != nil {
-		return nil, err
+	group := Group{
+		conversationId, name, photo, author, ctx, db,
 	}
 
 	return &group, nil
+}
 
+func (db *appdbimpl) GetGroup(conversationId uint64, ctx context.Context) (GroupConversation, error) {
+	group := Group{
+		photo:   Image{db: db},
+		author:  User{image: Image{}, db: db},
+		context: ctx,
+		db:      db,
+	}
+
+	if err := db.c.QueryRow(qGetGroup, conversationId).Scan(
+		&group.id,
+		&group.name,
+		&group.author.uuid,
+		&group.author.username,
+		&group.author.image.uuid,
+		&group.author.image.extension,
+		&group.photo.uuid,
+		&group.photo.extension,
+	); err != nil {
+		return nil, err
+	}
+
+	return group, nil
 }

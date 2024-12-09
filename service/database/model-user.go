@@ -1,6 +1,7 @@
 package database
 
 import (
+	"context"
 	"database/sql"
 	"errors"
 	"fmt"
@@ -13,36 +14,134 @@ import (
 const defaultUserImage = "default_user_image"
 
 type User struct {
-	Uuid         string `json:"uuid"`
-	Username     string `json:"username"`
-	ProfileImage Image  `json:"photo"`
+	uuid     string
+	username string
+	image    Image
 
 	db *appdbimpl
 }
 
-type UpdateUserParams struct {
-	Username     string
-	ProfileImage Image
+func (u User) GetUUID() string {
+	return u.uuid
 }
 
-func (up UpdateUserParams) Validate() error {
-	if ok, err := validators.UsernameIsValid(up.Username); !ok {
+func (u User) GetUsername() string {
+	return u.username
+}
+
+func (u User) GetImage() Image {
+	return u.image
+}
+
+func (u User) SetUsername(username string) error {
+	if ok, err := validators.UsernameIsValid(username); !ok {
 		return err
 	}
-	if err := up.ProfileImage.Validate(); err != nil {
+
+	if _, err := u.db.c.Exec(qSetUsername, username, u.uuid); err != nil {
 		return err
 	}
+
+	u.username = username
+	return nil
+}
+
+func (u User) SetImage(image Image) error {
+	if err := image.Validate(); err != nil {
+		return err
+	}
+
+	if _, err := u.db.c.Exec(qSetPhoto, image.GetUUID(), u.uuid); err != nil {
+		return err
+	}
+
+	u.image = image
 	return nil
 }
 
 func (u User) Validate() error {
-	if ok, err := validators.UsernameIsValid(u.Username); !ok {
+	if ok, err := validators.UsernameIsValid(u.username); !ok {
 		return err
 	}
-	if err := u.ProfileImage.Validate(); err != nil {
+	if err := u.image.Validate(); err != nil {
 		return err
 	}
 	return nil
+}
+
+func (u User) GetConversation(conversationId uint64, ctx context.Context) (BaseConversation, error) {
+	var user1UUID, user2UUID, groupName, groupPhotoUUID sql.NullString
+	var tmpConvId uint64
+
+	if err := u.db.c.QueryRow(qGetConversation, conversationId, u.uuid).Scan(
+		&tmpConvId,
+		&user1UUID,
+		&user2UUID,
+		&groupName,
+		&groupPhotoUUID,
+	); err != nil {
+		return nil, err
+	}
+
+	if user1UUID.Valid && user2UUID.Valid {
+		return u.db.GetChat(conversationId, ctx)
+	} else {
+		return u.db.GetGroup(conversationId, ctx)
+	}
+	return nil, nil
+}
+
+func (u User) GetConversations(pageSize int, pageNumber int, ctx context.Context) ([]BaseConversation, error) {
+	rows, err := u.db.c.Query(
+		getUserConversationsPaginated,
+		u.uuid, pageSize, pageNumber*pageSize,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	chats := make([]BaseConversation, 0, pageSize)
+	for rows.Next() {
+		var convId uint64
+		var user1UUID, user2UUID, groupName, groupPhotoUUID sql.NullString
+		var chat BaseConversation
+
+		if err := rows.Scan(
+			&convId,
+			&user1UUID,
+			&user2UUID,
+			&groupName,
+			&groupPhotoUUID,
+		); err != nil {
+			return nil, err
+		}
+
+		if user1UUID.Valid && user2UUID.Valid {
+			chat, err = u.db.GetChat(convId, ctx)
+			if err != nil {
+				return nil, err
+			}
+		} else {
+			chat, err = u.db.GetGroup(convId, ctx)
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		chats = append(chats, chat)
+	}
+
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); errors.Is(err, sql.ErrNoRows) {
+		return chats, nil
+	} else if err != nil {
+		return nil, err
+	}
+
+	return chats, nil
 }
 
 func (db *appdbimpl) NewUser(username string) (*User, error) {
@@ -68,99 +167,18 @@ func (db *appdbimpl) NewUser(username string) (*User, error) {
 	return &user, nil
 }
 
-func (u *User) Update(params UpdateUserParams) error {
-	if err := u.Validate(); err != nil {
-		return err
-	}
-	if err := params.Validate(); err != nil {
-		return err
-	}
-
-	if _, err := u.db.c.Exec(
-		qUpdateUser,
-		params.Username,
-		params.ProfileImage.Uuid,
-		u.Uuid,
-	); err != nil {
-		return err
-	}
-
-	u.Username, u.ProfileImage = params.Username, params.ProfileImage
-	return nil
-}
-
-func (u *User) GetConversations(pageSize int, pageNumber int) ([]DefaultConversation, error) {
-	if err := u.Validate(); err != nil {
-		return nil, err
-	}
-	rows, err := u.db.c.Query(
-		getUserConversationsPaginated,
-		u.Uuid, pageSize, pageNumber*pageSize,
-	)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-
-	chats := make([]DefaultConversation, 0, pageSize)
-	for rows.Next() {
-		var chat Conversation
-		var groupName, groupPhoto, user1Id, user2Id sql.NullString
-		var convId uint64
-
-		if err := rows.Scan(
-			&convId,
-			&user1Id,
-			&user2Id,
-			&groupName,
-			&groupPhoto,
-		); err != nil {
-			return nil, err
-		}
-
-		if groupName.Valid {
-			photo, _ := u.db.GetImage(groupPhoto.String)
-			chat = GroupConversation{convId, groupName.String, *photo, *u, u.db}
-		} else {
-			user1, _ := u.db.GetUserByUUID(user1Id.String)
-			user2, _ := u.db.GetUserByUUID(user2Id.String)
-			switch u.Uuid {
-			case user1.Uuid:
-				chat = ChatConversation{convId, *user1, *user2, *u, u.db}
-			case user2.Uuid:
-				chat = ChatConversation{convId, *user2, *user1, *u, u.db}
-			}
-		}
-
-		chats = append(chats, DefaultConversation{chat})
-	}
-
-	if err := rows.Close(); err != nil {
-		return nil, err
-	}
-	if err := rows.Err(); errors.Is(err, sql.ErrNoRows) {
-		return chats, nil
-	} else if err != nil {
-		return nil, err
-	}
-
-	return chats, nil
-}
-
 func (db *appdbimpl) getUser(identifier string, query string) (*User, error) {
-	user := User{}
-	user.ProfileImage = Image{}
-	image := &user.ProfileImage
+	user := User{image: Image{}, db: db}
+	image := &user.image
 	if err := db.c.QueryRow(query, identifier).Scan(
-		&user.Uuid,
-		&user.Username,
-		&image.Uuid,
-		&image.Extension,
+		&user.uuid,
+		&user.username,
+		&image.uuid,
+		&image.extension,
 	); err != nil {
 		return nil, fmt.Errorf("failed to query user: %w", err)
 	}
 
-	user.db = db
 	return &user, nil
 }
 
@@ -178,6 +196,7 @@ func (db *appdbimpl) GetUserByUUID(UUID string) (*User, error) {
 	return db.getUser(UUID, qGetUserByUUID)
 }
 
+// TODO: maybe in controller?
 func (db *appdbimpl) GetAuthenticatedUser(r *http.Request) (*User, error) {
 	token := authentication.GetAuthToken(r)
 	if _, err := uuid.Parse(token); err != nil {
@@ -199,20 +218,18 @@ func (db *appdbimpl) GetUsers(pageSize int, pageNumber int) ([]User, error) {
 
 	users := make([]User, 0, pageSize)
 	for rows.Next() {
-		user := User{}
-		user.ProfileImage = Image{}
-		image := &user.ProfileImage
+		user := User{image: Image{}, db: db}
+		image := &user.image
 
 		if err := rows.Scan(
-			&user.Uuid,
-			&user.Username,
-			&image.Uuid,
-			&image.Extension,
+			&user.uuid,
+			&user.username,
+			&image.uuid,
+			&image.extension,
 		); err != nil {
 			return nil, err
 		}
 
-		user.db = db
 		users = append(users, user)
 	}
 
@@ -233,46 +250,6 @@ func (db *appdbimpl) UsersCount() (int, error) {
 		&count,
 	)
 	return count, err
-}
-
-func (u *User) GetConversation(id int64) (Conversation, error) {
-	return nil, nil
-	//// TODO: handling errors
-	//if id < 0 {
-	//	return nil, errors.New("invalid id")
-	//}
-	//
-	//var chat Conversation
-	//var groupName, groupPhoto, user1Id, user2Id sql.NullString
-	//var convId int64
-	//
-	//if err := u.db.c.QueryRow(qGetConversation, id, u.Uuid).Scan(
-	//	&convId,
-	//	&user1Id,
-	//	&user2Id,
-	//	&groupName,
-	//	&groupPhoto,
-	//); errors.Is(err, sql.ErrNoRows) {
-	//	return nil, errors.New("conversation not found")
-	//} else if err != nil {
-	//	return nil, err
-	//}
-	//
-	//if groupName.Valid {
-	//	photo, _ := u.db.GetImage(groupPhoto.String)
-	//	chat = GroupConversation{convId, groupName.String, *photo, u.db}
-	//} else {
-	//	user1, _ := u.db.GetUserByUUID(user1Id.String)
-	//	user2, _ := u.db.GetUserByUUID(user2Id.String)
-	//	switch u.Uuid {
-	//	case user1.Uuid:
-	//		chat = ChatConversation{convId, *user1, *user2, u.db}
-	//	case user2.Uuid:
-	//		chat = ChatConversation{convId, *user2, *user1, u.db}
-	//	}
-	//}
-	//
-	//return chat, nil
 }
 
 func (u *User) SetDelivered() error {
