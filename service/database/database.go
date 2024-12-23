@@ -34,27 +34,59 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"mime/multipart"
-	"net/http"
 )
 
-// AppDatabase is the high level interface for the DB
-type AppDatabase interface {
-	NewUser(username string) (*User, error)
-	GetUserByUsername(username string) (*User, error)
-	GetUserByUUID(UUID string) (*User, error)
-	GetAuthenticatedUser(r *http.Request) (*User, error)
-	GetUsers(pageSize int, pageNumber int) ([]User, error)
-	UsersCount() (int, error)
-	NewImage(fileHeader multipart.FileHeader, file multipart.File) (*Image, error)
-	GetImage(UUID string) (*Image, error)
+// TODO: simplify database package using sqlx to populate structs and then translators in controllers
 
-	NewGroup(name string, photo Image, author User) (*GroupConversation, error)
-	NewChat(author *User, recipient *User) (*ChatConversation, error)
+type AppDatabase interface {
+	QueryRowGroup(query string, params ...any) (*Group, error)
+	QueryRowImage(query string, params ...any) (*Image, error)
+	QueryMessageWithAuthorAndAttachment(query string, params ...any) (MessageWithAuthorAndAttachmentList, error)
+	QueryRowMessageWithAuthorAndAttachment(query string, params ...any) (*MessageWithAuthorAndAttachment, error)
+	QueryMessageInfo(query string, params ...any) (MessageInfoList, error)
+	QueryRowMessageInfo(query string, params ...any) (*MessageInfo, error)
+	QueryRowUserConversation(query string, params ...any) (*UserConversation, error)
+	QueryUserConversation(query string, params ...any) ([]UserConversation, error)
+	QueryRowUser(query string, params ...any) (*User, error)
+	QueryUserWithImage(query string, params ...any) (UserWithImageList, error)
+	QueryRowUserWithImage(query string, params ...any) (*UserWithImage, error)
+	QueryRowMessage(query string, params ...any) (*Message, error)
+	QueryRowChat(query string, params ...any) (*Chat, error)
+	Exec(query string, params ...any) (sql.Result, error)
+
 	Ping() error
 }
+
+type BaseDatabase interface {
+	AppDatabase
+	BeginTx() (TransactionDatabase, error)
+	Ping() error
+}
+
+type TransactionDatabase interface {
+	AppDatabase
+	Commit() error
+	Rollback() error
+}
+
+type databaseInterface interface {
+	Exec(query string, args ...any) (sql.Result, error)
+	Query(query string, args ...any) (*sql.Rows, error)
+	QueryRow(query string, args ...any) *sql.Row
+}
+
+type transactionInterface interface {
+	databaseInterface
+	Commit() error
+	Rollback() error
+}
+
 type appdbimpl struct {
-	c *sql.DB
+	c databaseInterface
+}
+
+type apptransactionimpl struct {
+	appdbimpl
 }
 
 // New returns a new instance of AppDatabase based on the SQLite connection `db`.
@@ -93,10 +125,51 @@ func New(db *sql.DB) (AppDatabase, error) {
 	}
 
 	return &appdbimpl{
-		c: db,
+		c: databaseInterface(db),
 	}, nil
 }
 
 func (db *appdbimpl) Ping() error {
-	return db.c.Ping()
+	appDb, ok := db.c.(*sql.DB)
+	if !ok {
+		return errors.New("database is not pingable")
+	}
+	return appDb.Ping()
+}
+
+func (db *appdbimpl) Exec(query string, params ...any) (sql.Result, error) {
+	return db.c.Exec(query, params...)
+}
+
+func (db *appdbimpl) BeginTx() (TransactionDatabase, error) {
+	transactionDb, ok := db.c.(*sql.DB)
+	if !ok {
+		return nil, errors.New("impossible to start transactions with this database")
+	}
+
+	tx, err := transactionDb.Begin()
+	if err != nil {
+		return nil, fmt.Errorf("could not start transaction: %w", err)
+	}
+
+	return &apptransactionimpl{
+		appdbimpl{tx},
+	}, nil
+}
+
+func (db *apptransactionimpl) Commit() error {
+	tx, ok := db.c.(*sql.Tx)
+	if !ok {
+		return errors.New("impossible to perform transaction commit with this database")
+	}
+
+	return tx.Commit()
+}
+
+func (db *apptransactionimpl) Rollback() error {
+	tx, ok := db.c.(*sql.Tx)
+	if !ok {
+		return errors.New("impossible to perform transaction rollback with this database")
+	}
+	return tx.Rollback()
 }

@@ -1,11 +1,13 @@
 package database
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/ciottolomaggico/wasatext/service/utils"
 	"github.com/ciottolomaggico/wasatext/service/utils/validators"
 	"github.com/google/uuid"
+	"image"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
@@ -24,26 +26,26 @@ var ImageNotExist = errors.New("The image doesn't exist")
 //	FullUrl string `json:"fullUrl"`
 //}
 
-//	func (i *Image) MarshalJSON() ([]byte, error) {
-//		file, err := os.Open("./media/images/" + i.Filename())
-//		if err != nil {
-//			return nil, err
-//		}
-//		defer file.Close()
-//		cfg, _, err := image.DecodeConfig(file)
-//		if err != nil {
-//			return nil, err
-//		}
-//		if err := file.Close(); err != nil {
-//			return nil, err
-//		}
-//		return json.Marshal(&SerializedImage{
-//			i.Uuid,
-//			cfg.Width,
-//			cfg.Height,
-//			i.FullUrl(),
-//		})
-//	}
+func (i *Image) MarshalJSON() ([]byte, error) {
+	file, err := os.Open("./media/images/" + i.Filename())
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+	cfg, _, err := image.DecodeConfig(file)
+	if err != nil {
+		return nil, err
+	}
+	if err := file.Close(); err != nil {
+		return nil, err
+	}
+	return json.Marshal(&SerializedImage{
+		i.Uuid,
+		cfg.Width,
+		cfg.Height,
+		i.FullUrl(),
+	})
+}
 
 type Image struct {
 	uuid      string
@@ -89,7 +91,6 @@ func (db *appdbimpl) NewImage(fileHeader multipart.FileHeader, file multipart.Fi
 	if err := validators.ImageIsValid(fileHeader, file); err != nil {
 		return nil, err
 	}
-
 	// If all the arguments are valid then set the "private" object fields (e.g. primary key)
 	rawUUID, err := uuid.NewRandom()
 	if err != nil {

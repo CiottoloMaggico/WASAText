@@ -1,0 +1,54 @@
+package storage
+
+import (
+	"io"
+	"os"
+)
+
+type FilesystemStorage struct {
+	rootDir string
+}
+
+func (fs FilesystemStorage) SaveFile(filename string, content io.Reader) (string, error) {
+	fullPath := fs.rootDir + "/" + filename
+	dst, err := os.Create(fullPath)
+	if err != nil {
+		return "", err
+	}
+
+	defer dst.Close()
+	if _, err := io.Copy(dst, content); err != nil {
+		if err := os.Remove(fullPath); err != nil {
+			return "", err
+		}
+		return "", err
+	}
+
+	if err := dst.Close(); err != nil {
+		return "", err
+	}
+
+	return fullPath, nil
+}
+
+func (fs FilesystemStorage) DeleteFile(filename string) error {
+	fullPath := fs.rootDir + "/" + filename
+	if err := os.Remove(fullPath); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (fs FilesystemStorage) GetFile(filename string) (*os.File, error) {
+	fullPath := fs.rootDir + "/" + filename
+	return os.Open(fullPath)
+}
+
+func (fs FilesystemStorage) GetFilePath(filename string) string {
+	fullPath := fs.rootDir + "/" + filename
+	return fullPath
+}
+
+func (fs FilesystemStorage) GetRoot() string {
+	return fs.rootDir
+}

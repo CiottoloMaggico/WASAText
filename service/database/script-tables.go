@@ -31,6 +31,9 @@ const qCreateTableImage = `
 	(
 		uuid  PRIMARY KEY,
 		extension varchar NOT NULL,
+		width integer NOT NULL,
+		height integer NOT NULL,
+		fullUrl varchar NOT NULL,
 		uploadedAt datetime NOT NULL DEFAULT current_timestamp
 	);
 `
@@ -130,7 +133,15 @@ const qCreateTableUser_Message = `
 
 const qCreateViewUsers = `
 	CREATE VIEW IF NOT EXISTS ViewUsers AS
-		SELECT User.uuid AS uUuid, username, Image.uuid AS iUuid, extension
+		SELECT
+			User.uuid userUUID,
+			username,
+			Image.uuid profilePicUUID,
+			extension profilePicExt,
+			width profilePicWidth,
+			height profilePicHeight,
+			fullUrl profilePicFullUrl,
+			uploadedAt profilePicUploadedAt
 		FROM User, Image
 		WHERE User.photo = Image.uuid;
 `
@@ -138,8 +149,20 @@ const qCreateViewUsers = `
 const qCreateViewMessages = `
 	CREATE VIEW IF NOT EXISTS ViewMessages AS
 		SELECT
-			m.id, m.conversation, m.sendAt, m.deliveredAt, m.seenAt, m.replyTo, m.content, m.attachment, i.extension attachmentExt,
-			u.*
+			m.id,
+			m.conversation,
+			u.*,
+			m.sendAt,
+			m.deliveredAt,
+			m.seenAt,
+			m.replyTo,
+			m.content,
+			i.uuid attachmentUUID,
+			i.extension attachmentExt,
+			i.width attachmentWidth,
+			i.height attachmentHeight,
+			i.fullUrl attachmentFullUrl,
+			i.uploadedAt attachmentUploadedAt
 		FROM Message m, ViewUsers u
 		LEFT OUTER JOIN Image i ON i.uuid = m.attachment
 		WHERE
@@ -171,6 +194,7 @@ const qCreateViewConversation = `
 		vc.user1,
 		vc.user2,
 		vg.name,
+		vg.author,
 		vg.photo
 	FROM Conversation
 	LEFT OUTER JOIN Chat vc ON (vc.id = Conversation.id)
