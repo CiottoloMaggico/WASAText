@@ -51,12 +51,12 @@ func ImageFilenameValidator(filename string, mimeType string) error {
 	return errors.New("invalid file extension")
 }
 
-func ImageIsValid(header multipart.FileHeader, file multipart.File) error {
-	mimeType, err := ImageContentValidator(header.Size, file)
+func ImageIsValid(filename string, fileSize int64, file multipart.File) error {
+	mimeType, err := ImageContentValidator(fileSize, file)
 	if err != nil {
 		return fmt.Errorf("error image content validation: %w", err)
 	}
-	if err := ImageFilenameValidator(header.Filename, mimeType); err != nil {
+	if err := ImageFilenameValidator(filename, mimeType); err != nil {
 		return fmt.Errorf("error image filename validation: %w", err)
 	}
 	if _, err := file.Seek(0, 0); err != nil {

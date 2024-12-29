@@ -9,6 +9,12 @@ type FilesystemStorage struct {
 	rootDir string
 }
 
+func NewFileSystemStorage(rootDir string) (Storage, error) {
+	return FilesystemStorage{
+		rootDir,
+	}, nil
+}
+
 func (fs FilesystemStorage) SaveFile(filename string, content io.Reader) (string, error) {
 	fullPath := fs.rootDir + "/" + filename
 	dst, err := os.Create(fullPath)

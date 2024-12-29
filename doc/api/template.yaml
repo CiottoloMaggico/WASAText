@@ -38,4 +38,3 @@ components:
     $ref: "./components/examples/_index.yaml"
   securitySchemes:
     $ref: "./components/securitySchemes/_index.yaml"
-

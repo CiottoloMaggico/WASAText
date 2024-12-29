@@ -25,13 +25,13 @@ package main
 
 import (
 	"context"
-	"database/sql"
 	"errors"
 	"fmt"
 	"github.com/ardanlabs/conf"
 	"github.com/ciottolomaggico/wasatext/service/api"
-	"github.com/ciottolomaggico/wasatext/service/database"
+	app "github.com/ciottolomaggico/wasatext/service/app"
 	"github.com/ciottolomaggico/wasatext/service/globaltime"
+	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/sirupsen/logrus"
 	"math/rand"
@@ -82,7 +82,7 @@ func run() error {
 
 	// Start Database
 	logger.Println("initializing database support")
-	dbconn, err := sql.Open("sqlite3", cfg.DB.Filename)
+	dbconn, err := sqlx.Open("sqlite3", cfg.DB.Filename)
 	if err != nil {
 		logger.WithError(err).Error("error opening SQLite DB")
 		return fmt.Errorf("opening SQLite: %w", err)
@@ -91,10 +91,11 @@ func run() error {
 		logger.Debug("database stopping")
 		_ = dbconn.Close()
 	}()
-	db, err := database.New(dbconn)
+
+	app, err := app.New(dbconn, &cfg.MediaStorage.RootDir, logger)
 	if err != nil {
-		logger.WithError(err).Error("error creating AppDatabase")
-		return fmt.Errorf("creating AppDatabase: %w", err)
+		logger.WithError(err).Error("error creating the application")
+		return fmt.Errorf("creating application: %w", err)
 	}
 
 	// Start (main) API server
@@ -110,15 +111,14 @@ func run() error {
 	serverErrors := make(chan error, 1)
 
 	// Create the API router
-	apirouter, err := api.New(api.Config{
-		Logger:   logger,
-		Database: db,
+	apirouter, err := api.New(app.CreateAuthMiddleware(), api.Config{
+		Logger: logger,
 	})
 	if err != nil {
 		logger.WithError(err).Error("error creating the API server instance")
 		return fmt.Errorf("creating the API server instance: %w", err)
 	}
-	router := apirouter.Handler()
+	router := apirouter.Handler(app.StartRouters())
 
 	router, err = registerWebUI(router)
 	if err != nil {

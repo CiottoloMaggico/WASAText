@@ -38,7 +38,9 @@ package api
 
 import (
 	"errors"
-	"github.com/ciottolomaggico/wasatext/service/database"
+	"github.com/ciottolomaggico/wasatext/service/api/routes"
+	"github.com/ciottolomaggico/wasatext/service/middlewares"
+	"github.com/ciottolomaggico/wasatext/service/routers"
 	"github.com/julienschmidt/httprouter"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -48,28 +50,31 @@ import (
 type Config struct {
 	// Logger where log entries are sent
 	Logger logrus.FieldLogger
-
-	// Database is the instance of database.AppDatabase where data are saved
-	Database database.AppDatabase
 }
 
 // Router is the package API interface representing an API handler builder
 type Router interface {
 	// Handler returns an HTTP handler for APIs provided in this package
-	Handler() http.Handler
+	Handler(routers []routers.ControllerRouter) http.Handler
+
+	// Register a new route in the router
+	Register(route routes.Route)
 
 	// Close terminates any resource used in the package
 	Close() error
 }
 
+type _router struct {
+	router         *httprouter.Router
+	authMiddleware middlewares.AuthMiddleware
+	baseLogger     logrus.FieldLogger
+}
+
 // New returns a new Router instance
-func New(cfg Config) (Router, error) {
+func New(authMiddleware middlewares.AuthMiddleware, cfg Config) (Router, error) {
 	// Check if the configuration is correct
 	if cfg.Logger == nil {
 		return nil, errors.New("logger is required")
-	}
-	if cfg.Database == nil {
-		return nil, errors.New("database is required")
 	}
 
 	// Create a new router where we will register HTTP endpoints. The server will pass requests to this router to be
@@ -79,18 +84,20 @@ func New(cfg Config) (Router, error) {
 	router.RedirectFixedPath = false
 
 	return &_router{
-		router:     router,
-		baseLogger: cfg.Logger,
-		db:         cfg.Database,
+		router:         router,
+		authMiddleware: authMiddleware,
+		baseLogger:     cfg.Logger,
 	}, nil
 }
 
-type _router struct {
-	router *httprouter.Router
+func (r *_router) Register(route routes.Route) {
+	var handler routes.Handler
+	if route.AuthenticationRequired() == true {
+		handler = r.authMiddleware.Wrap(route.GetHandler())
+	} else {
+		handler = route.GetHandler()
+	}
 
-	// baseLogger is a logger for non-requests contexts, like goroutines or background tasks not started by a request.
-	// Use context logger if available (e.g., in requests) instead of this logger.
-	baseLogger logrus.FieldLogger
-
-	db database.AppDatabase
+	r.router.Handle(route.GetMethod(), route.GetPath(), r.wrap(handler))
+	return
 }

@@ -1,6 +1,6 @@
 /session:
   post:
-    tags: [ "login" ]
+    tags: ["login"]
     summary: Logs in the user
     description: |-
       If the user does not exist, it will be created,
@@ -26,7 +26,7 @@
               $ref: "../schemas/_index.yaml#/User"
 /users:
   get:
-    tags: [ "users" ]
+    tags: ["users"]
     summary: Retrieve the list of all users of WASAText
     description: |
       Return a paginated list of all users registered to WASAText
@@ -42,7 +42,7 @@
             schema:
               description: Returns a paginated list of WASAText users
               type: object
-              required: [ "users" ]
+              required: ["users"]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
@@ -68,7 +68,7 @@
   parameters:
     - $ref: "../parameters/_index.yaml#/userId"
   get:
-    tags: [ "users" ]
+    tags: ["users"]
     summary: Get detailed information about an user
     description: |
       Returns detailed information about the user
@@ -381,7 +381,7 @@
             schema:
               description: Returns a paginated list of user conversations
               type: object
-              required: [ "conversations" ]
+              required: ["conversations"]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
@@ -422,7 +422,7 @@
             schema:
               description: Returns a paginated list of user conversations
               type: object
-              required: [ "conversations" ]
+              required: ["conversations"]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
@@ -451,7 +451,7 @@
     - $ref: "../parameters/_index.yaml#/userId"
     - $ref: "../parameters/_index.yaml#/conversationId"
   get:
-    tags: [ "conversations" ]
+    tags: ["conversations"]
     summary: Retrieve the detail of a conversation
     description: |
       Returns detailed informations about the conversation provided
@@ -530,7 +530,7 @@
             schema:
               description: Returns a paginated list of conversation messages
               type: object
-              required: [ "messages" ]
+              required: ["messages"]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
@@ -573,7 +573,7 @@
             schema:
               description: Returns a paginated list of conversation messages
               type: object
-              required: [ "messages" ]
+              required: ["messages"]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
@@ -696,8 +696,7 @@
     tags:
       - messages
     summary: delete the comment
-    description:
-      Delete the user comment for the given message
+    description: Delete the user comment for the given message
     operationId: uncommentMessage
     responses:
       "200":
@@ -724,8 +723,7 @@
     tags:
       - messages
     summary: forward the message to another conversation
-    description:
-      Make a copy of the content of the given message and forward it to another conversation
+    description: Make a copy of the content of the given message and forward it to another conversation
     operationId: forwardMessage
     requestBody:
       $ref: "../requestBodies/_index.yaml#/ForwardMessage"
