@@ -7,21 +7,21 @@ import (
 const qUserConversations = `
 	SELECT
 		id userConversation_id,
-    	vu.username             userConversation_name,
+    	vu.user_username userConversation_name,
 		'chat' userConversation_type,
-		vu.iUuid       image_uuid,
-		vu.extension        image_extension,
-		vu.profilePicWidth      image_width,
-		vu.profilePicHeight     image_height,
-		vu.profilePicFullUrl    image_fullUrl,
-		vu.profilePicUploadedAt image_uploadedAt
+		vu.image_uuid,
+		vu.image_extension,
+		vu.image_width,
+		vu.image_height,
+		vu.image_fullUrl,
+		vu.image_uploadedAt
     FROM
 		Chat c,
         User_Conversation uc,
         ViewUsers vu
 	WHERE uc.conversation = c.id
         AND uc.user = ?
-        AND (vu.uUuid != uc.user AND (vu.uUuid = c.user1 OR vu.uUuid = c.user2))
+        AND (vu.user_uuid != uc.user AND (vu.user_uuid = c.user1 OR vu.user_uuid = c.user2))
 UNION
 	SELECT
 		gc.id userConversation_id,
@@ -48,21 +48,21 @@ WITH UserConversations AS (
 )
 SELECT
     uc.*,
-    vm.id message_id,
-    MAX(vm.sendAt) sendAt message_sendAt,
-	vm.deliveredAt message_deliveredAt,
-	vm.seenAt message_seenAt,
-	vm.replyTo message_replyTo,
-	vm.content message_content,
-	vm.attachmentUUID message_attachment,
-    vm.userUUID user_uuid,
-	vm.username user_username,
-	vm.profilePicUUID user_photo,
+    vm.message_id,
+    MAX(vm.message_sendAt) message_sendAt,
+	vm.message_deliveredAt,
+	vm.message_seenAt,
+	vm.message_replyTo,
+	vm.message_content,
+	vm.attachment_uuid message_attachment,
+    vm.user_uuid,
+	vm.user_username,
+	vm.image_uuid user_image,
     CASE WHEN um.status = 3 THEN true ELSE false END message_status
 FROM UserConversations uc
-LEFT OUTER JOIN ViewMessages vm ON vm.conversation = uc.id
-LEFT OUTER JOIN User_Message um ON vm.id = um.message AND um.user = ?
-WHERE uc.id = ?;
+LEFT OUTER JOIN ViewMessages vm ON vm.message_conversation = uc.userConversation_id
+LEFT OUTER JOIN User_Message um ON vm.message_id = um.message AND um.user = ?
+WHERE uc.userConversation_id = ?;
 `
 
 const qGetUserConversations = `
@@ -71,21 +71,21 @@ WITH UserConversations AS (
 )
 SELECT
     uc.*,
-    vm.id message_id,
-    MAX(vm.sendAt) sendAt message_sendAt,
-	vm.deliveredAt message_deliveredAt,
-	vm.seenAt message_seenAt,
-	vm.replyTo message_replyTo,
-	vm.content message_content,
-	vm.attachmentUUID message_attachment,
-    vm.userUUID user_uuid,
-	vm.username user_username,
-	vm.profilePicUUID user_photo,
+    vm.message_id,
+    MAX(vm.message_sendAt) message_sendAt,
+	vm.message_deliveredAt,
+	vm.message_seenAt,
+	vm.message_replyTo,
+	vm.message_content,
+	vm.attachment_uuid message_attachment,
+    vm.user_uuid,
+	vm.user_username,
+	vm.image_uuid user_image,
     CASE WHEN um.status = 3 THEN true ELSE false END message_status
 FROM UserConversations uc
-LEFT OUTER JOIN ViewMessages vm ON vm.conversation = uc.id
-LEFT OUTER JOIN User_Message um ON vm.id = um.message AND um.user = ?
-GROUP BY uc.id
+LEFT OUTER JOIN ViewMessages vm ON vm.message_conversation = uc.userConversation_id
+LEFT OUTER JOIN User_Message um ON vm.message_id = um.message AND um.user = ?
+GROUP BY uc.userConversation_id
 ORDER BY um.status ASC
 LIMIT ? OFFSET ?;
 `
@@ -96,12 +96,13 @@ type UserConversation struct {
 	Type string `db:"userConversation_type"`
 	Read bool   `db:"message_status"`
 	Image
-	MessageWithAuthor
+	UserConversationMessagePreview
 }
 
 type UserConversationModel interface {
 	GetUserConversation(userUUID string, conversationId int64) (*UserConversation, error)
-	GetUserConversations(userUUID string, page uint, size uint) ([]UserConversation, error)
+	GetUserConversations(userUUID string, page int, size int) ([]UserConversation, error)
+	Count(userUUID string) (int, error)
 }
 
 type UserConversationModelImpl struct {
@@ -119,12 +120,22 @@ func (model UserConversationModelImpl) GetUserConversation(userUUID string, conv
 
 }
 
-func (model UserConversationModelImpl) GetUserConversations(userUUID string, page uint, size uint) ([]UserConversation, error) {
+func (model UserConversationModelImpl) GetUserConversations(userUUID string, page int, size int) ([]UserConversation, error) {
 	query := qGetUserConversations
 
-	userConversations := make([]UserConversation, size)
-	if err := model.Db.QueryStruct(&userConversations, query, userUUID, userUUID, userUUID, size, page*size); err != nil {
+	userConversations := make([]UserConversation, 0, size)
+	if err := model.Db.QueryStruct(&userConversations, query, userUUID, userUUID, userUUID, size, (page-1)*size); err != nil {
 		return nil, err
 	}
 	return userConversations, nil
+}
+
+func (model UserConversationModelImpl) Count(userUUID string) (int, error) {
+	query := `SELECT COUNT(*) FROM User_Conversation WHERE user = ?;`
+	var count int
+
+	if err := model.Db.QueryRow(query, userUUID).Scan(&count); err != nil {
+		return 0, err
+	}
+	return count, nil
 }

@@ -1,23 +1,25 @@
 package controllers
 
 import (
+	"errors"
 	"github.com/ciottolomaggico/wasatext/service/controllers/translators"
 	"github.com/ciottolomaggico/wasatext/service/models"
 	"github.com/ciottolomaggico/wasatext/service/views"
+	"github.com/ciottolomaggico/wasatext/service/views/pagination"
 	"io"
 )
 
 type MessageController interface {
-	SendMessage(conversationID int64, authorUUID string, replyToId *int64, content *string, attachmentExt *string, attachmentFile *io.Reader) (views.MessageView, error)
+	SendMessage(conversationID int64, authorUUID string, replyToId *int64, content *string, attachmentExt *string, attachmentFile io.ReadSeeker) (views.MessageView, error)
 	DeleteMessage(conversationID int64, messageId int64, requestIssuerUUID string) error
-	GetConversationMessages(conversationID int64, page uint, pageSize uint, requestIssuerUUID string) ([]views.MessageView, error)
+	GetConversationMessages(conversationID int64, requestIssuerUUID string, paginationPs pagination.PaginationParams) (pagination.PaginatedView, error)
 	GetConversationMessage(conversationID int64, messageId int64, requestIssuerUUID string) (views.MessageView, error)
 	GetComments(conversationId int64, messageId int64, requestIssuerUUID string) ([]views.CommentView, error)
 	CommentMessage(conversationId int64, messageId int64, authorUUID string, comment string) (views.CommentView, error)
 	UncommentMessage(conversationId int64, messageId int64, authorUUID string) error
 	ForwardMessage(conversationId int64, messageId int64, authorUUID string, forwardToConversationID int64) (views.MessageView, error)
-	SetAllMessageDelivered(requestIssuerUUID string) ([]views.UserConversationView, error)
-	SetConversationMessagesAsSeen(conversationId int64, requestIssuer string) ([]views.MessageView, error)
+	SetAllMessageDelivered(requestIssuerUUID string, paginationPs pagination.PaginationParams) (pagination.PaginatedView, error)
+	SetConversationMessagesAsSeen(conversationId int64, requestIssuer string, paginationPs pagination.PaginationParams) (pagination.PaginatedView, error)
 }
 
 type MessageControllerImpl struct {
@@ -28,7 +30,7 @@ type MessageControllerImpl struct {
 	ConversationModel      models.ConversationModel
 }
 
-func (controller MessageControllerImpl) SendMessage(conversationID int64, authorUUID string, replyToId *int64, content *string, attachmentExt *string, attachmentFile *io.Reader) (views.MessageView, error) {
+func (controller MessageControllerImpl) SendMessage(conversationID int64, authorUUID string, replyToId *int64, content *string, attachmentExt *string, attachmentFile io.ReadSeeker) (views.MessageView, error) {
 	if res, err := controller.ConversationModel.IsParticipant(conversationID, authorUUID); err != nil {
 		return views.MessageView{}, err
 	} else if !res {
@@ -37,7 +39,7 @@ func (controller MessageControllerImpl) SendMessage(conversationID int64, author
 
 	var attachmentUUID *string = nil
 	if attachmentExt != nil && attachmentFile != nil {
-		image, err := controller.ImageController.CreateImage(*attachmentExt, *attachmentFile)
+		image, err := controller.ImageController.CreateImage(*attachmentExt, attachmentFile)
 		if err != nil {
 			return views.MessageView{}, err
 		}
@@ -67,19 +69,24 @@ func (controller MessageControllerImpl) GetConversationMessage(conversationID in
 	return translators.MessageWithAuthorAndAttachmentToView(*message), err
 }
 
-func (controller MessageControllerImpl) GetConversationMessages(conversationID int64, page uint, pageSize uint, requestIssuerUUID string) ([]views.MessageView, error) {
+func (controller MessageControllerImpl) GetConversationMessages(conversationID int64, requestIssuerUUID string, paginationPs pagination.PaginationParams) (pagination.PaginatedView, error) {
 	if res, err := controller.ConversationModel.IsParticipant(conversationID, requestIssuerUUID); err != nil {
-		return []views.MessageView{}, err
+		return pagination.PaginatedView{}, err
 	} else if !res {
-		return []views.MessageView{}, NotParticipant
+		return pagination.PaginatedView{}, NotParticipant
 	}
 
-	messages, err := controller.MessageModel.GetConversationMessages(conversationID, page, pageSize)
+	messages, err := controller.MessageModel.GetConversationMessages(conversationID, paginationPs.Page, paginationPs.Size)
 	if err != nil {
-		return []views.MessageView{}, err
+		return pagination.PaginatedView{}, err
 	}
 
-	return translators.MessageWithAuthorAndAttachmentListToView(messages), nil
+	messagesCount, err := controller.MessageModel.Count(conversationID)
+	if err != nil {
+		return pagination.PaginatedView{}, err
+	}
+
+	return translators.ToPaginatedView(paginationPs, messagesCount, translators.MessageWithAuthorAndAttachmentListToView(messages))
 }
 
 func (controller MessageControllerImpl) DeleteMessage(conversationID int64, messageId int64, requestIssuerUUID string) error {
@@ -89,9 +96,13 @@ func (controller MessageControllerImpl) DeleteMessage(conversationID int64, mess
 		return NotParticipant
 	}
 
-	_, err := controller.MessageModel.GetConversationMessage(conversationID, messageId)
+	message, err := controller.MessageModel.GetConversationMessage(conversationID, messageId)
 	if err != nil {
 		return err
+	}
+
+	if message.UserWithImage.Uuid != requestIssuerUUID {
+		return errors.New("not author")
 	}
 
 	if err := controller.MessageModel.DeleteMessage(messageId); err != nil {
@@ -175,21 +186,21 @@ func (controller MessageControllerImpl) ForwardMessage(conversationId int64, mes
 		return views.MessageView{}, err
 	}
 
-	return controller.GetConversationMessage(conversationId, newMessage.Id, authorUUID)
+	return controller.GetConversationMessage(forwardToConversationID, newMessage.Id, authorUUID)
 }
 
-func (controller MessageControllerImpl) SetAllMessageDelivered(requestIssuerUUID string) ([]views.UserConversationView, error) {
+func (controller MessageControllerImpl) SetAllMessageDelivered(requestIssuerUUID string, paginationPs pagination.PaginationParams) (pagination.PaginatedView, error) {
 	if err := controller.MessageModel.SetMessagesAsDelivered(requestIssuerUUID); err != nil {
-		return []views.UserConversationView{}, err
+		return pagination.PaginatedView{}, err
 	}
 
-	return controller.ConversationController.GetUserConversations(requestIssuerUUID, 0, 20)
+	return controller.ConversationController.GetUserConversations(requestIssuerUUID, paginationPs)
 }
 
-func (controller MessageControllerImpl) SetConversationMessagesAsSeen(conversationId int64, requestIssuer string) ([]views.MessageView, error) {
+func (controller MessageControllerImpl) SetConversationMessagesAsSeen(conversationId int64, requestIssuer string, paginationPs pagination.PaginationParams) (pagination.PaginatedView, error) {
 	if err := controller.MessageModel.SetConversationMessagesAsSeen(conversationId, requestIssuer); err != nil {
-		return nil, err
+		return pagination.PaginatedView{}, err
 	}
 
-	return controller.GetConversationMessages(conversationId, 0, 20, requestIssuer)
+	return controller.GetConversationMessages(conversationId, requestIssuer, paginationPs)
 }

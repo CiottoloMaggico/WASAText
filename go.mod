@@ -4,14 +4,12 @@ go 1.17
 
 require (
 	github.com/ardanlabs/conf v1.5.0
-	github.com/ggicci/httpin v0.19.0
 	github.com/go-playground/validator/v10 v10.23.0
 	github.com/gofrs/uuid v4.4.0+incompatible
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/handlers v1.5.2
 	github.com/jmoiron/sqlx v1.4.0
 	github.com/julienschmidt/httprouter v1.3.0
-	github.com/justinas/alice v1.2.0
 	github.com/mattn/go-sqlite3 v1.14.23
 	github.com/sirupsen/logrus v1.9.3
 	gopkg.in/yaml.v2 v2.4.0

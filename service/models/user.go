@@ -11,7 +11,8 @@ type UserModel interface {
 	UpdateProfilePic(uuid string, newPhoto string) (*User, error)
 	GetUserWithImage(uuid string) (*UserWithImage, error)
 	GetUserWithImageByUsername(username string) (*UserWithImage, error)
-	GetUsersWithImage(page uint, size uint) ([]UserWithImage, error)
+	GetUsersWithImage(page int, size int) ([]UserWithImage, error)
+	Count() (int, error)
 }
 
 type User struct {
@@ -28,6 +29,16 @@ type UserWithImage struct {
 
 type UserModelImpl struct {
 	Db database.AppDatabase
+}
+
+func (model UserModelImpl) Count() (int, error) {
+	query := `SELECT COUNT(*) FROM User`
+	var count int
+
+	if err := model.Db.QueryRow(query).Scan(&count); err != nil {
+		return 0, err
+	}
+	return count, nil
 }
 
 func (model UserModelImpl) CreateUser(username string) (*User, error) {
@@ -104,11 +115,11 @@ func (model UserModelImpl) GetUserWithImageByUsername(username string) (*UserWit
 	return &user, nil
 }
 
-func (model UserModelImpl) GetUsersWithImage(page uint, size uint) ([]UserWithImage, error) {
-	query := `SELECT * FROM ViewUsers ORDER BY rowid LIMIT ? OFFSET ?;`
+func (model UserModelImpl) GetUsersWithImage(page int, size int) ([]UserWithImage, error) {
+	query := `SELECT * FROM ViewUsers LIMIT ? OFFSET ?;`
 
-	users := make([]UserWithImage, size)
-	if err := model.Db.QueryStruct(&users, query, size, page*size); err != nil {
+	users := make([]UserWithImage, 0, size)
+	if err := model.Db.QueryStruct(&users, query, size, (page-1)*size); err != nil {
 		return nil, err
 	}
 

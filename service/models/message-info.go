@@ -58,7 +58,7 @@ func (model MessageInfoModelImpl) SetComment(user string, message int64, comment
 	`
 
 	messageInfo := MessageInfo{}
-	if err := model.Db.QueryStructRow(&messageInfo, query, user, message); err != nil {
+	if err := model.Db.QueryStructRow(&messageInfo, query, comment, user, message); err != nil {
 		return nil, err
 	}
 	return &messageInfo, nil

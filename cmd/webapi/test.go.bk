@@ -1,0 +1,92 @@
+//package main
+//
+//import (
+//	"errors"
+//	"fmt"
+//	"mime/multipart"
+//	"reflect"
+//	"strconv"
+//)
+//
+//type NewMessageRequestBody struct {
+//	Attachment *multipart.FileHeader `in:"image" validate:"required_without=Content"`
+//	Content    *string               `in:"content" validate:"omitnil,min=0,max=4096,required_without=Attachment"`
+//	ReplyTo    *int64                `in:"replyTo" validate:"omitnil,min=0"`
+//}
+//
+//func ParseMultipartRequestBody(body *multipart.Form, res interface{}) error {
+//	underlyingType, underlyingValue := reflect.TypeOf(res).Elem(), reflect.ValueOf(res).Elem()
+//
+//	for i := 0; i < underlyingType.NumField(); i++ {
+//		var fieldValue reflect.Value
+//		field := underlyingType.Field(i)
+//		pointedType, multipartFieldName := field.Type, field.Tag.Get("in")
+//
+//		if field.Type.Kind() == reflect.Ptr {
+//			pointedType = field.Type.Elem()
+//		}
+//
+//		if val, ok := body.Value[multipartFieldName]; ok {
+//			switch pointedType.Kind() {
+//			case reflect.String:
+//				fieldValue = reflect.ValueOf(&val[0])
+//			case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+//				result, err := strconv.ParseInt(val[0], 10, 0)
+//				if err != nil {
+//					return err
+//				}
+//				fieldValue = reflect.ValueOf(&result)
+//			case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+//				result, err := strconv.ParseUint(val[0], 10, 0)
+//				if err != nil {
+//					return err
+//				}
+//				fieldValue = reflect.ValueOf(&result)
+//			case reflect.Float32, reflect.Float64:
+//				result, err := strconv.ParseFloat(val[0], 0)
+//				if err != nil {
+//					return err
+//				}
+//				fieldValue = reflect.ValueOf(&result)
+//			case reflect.Bool:
+//				result, err := strconv.ParseBool(val[0])
+//				if err != nil {
+//					return err
+//				}
+//				fieldValue = reflect.ValueOf(&result)
+//			default:
+//				return errors.New("Unsupported field type: " + field.Type.String())
+//			}
+//
+//			if field.Type.Kind() != reflect.Ptr {
+//				fieldValue = fieldValue.Elem()
+//			}
+//		} else if val, ok := body.File[multipartFieldName]; ok {
+//			fieldValue = reflect.ValueOf(val[0])
+//		} else {
+//			return fmt.Errorf("please provide the field %s", multipartFieldName)
+//		}
+//
+//		underlyingValue.Field(i).Set(fieldValue)
+//	}
+//	return nil
+//}
+//
+//func main() {
+//	rqb := NewMessageRequestBody{}
+//	form := multipart.Form{
+//		Value: make(map[string][]string),
+//		File:  make(map[string][]*multipart.FileHeader),
+//	}
+//	fileH := multipart.FileHeader{
+//		Filename: "test.txt",
+//	}
+//
+//	form.Value["content"] = append(form.Value["content"], "ciao")
+//	form.Value["replyTo"] = append(form.Value["replyTo"], "12")
+//	form.File["image"] = append(form.File["image"], &fileH)
+//	err := ParseMultipartRequestBody(&form, &rqb)
+//	fmt.Println(err)
+//	fmt.Println(*rqb.Content, *rqb.ReplyTo, rqb.Attachment)
+//
+//}

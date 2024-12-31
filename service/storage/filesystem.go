@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"fmt"
 	"io"
 	"os"
 )
@@ -16,14 +17,17 @@ func NewFileSystemStorage(rootDir string) (Storage, error) {
 }
 
 func (fs FilesystemStorage) SaveFile(filename string, content io.Reader) (string, error) {
-	fullPath := fs.rootDir + "/" + filename
+	fullPath := fs.rootDir + filename
 	dst, err := os.Create(fullPath)
 	if err != nil {
+		fmt.Println("ciao")
 		return "", err
 	}
 
-	defer dst.Close()
 	if _, err := io.Copy(dst, content); err != nil {
+		if err := dst.Close(); err != nil {
+			return "", err
+		}
 		if err := os.Remove(fullPath); err != nil {
 			return "", err
 		}
@@ -38,7 +42,7 @@ func (fs FilesystemStorage) SaveFile(filename string, content io.Reader) (string
 }
 
 func (fs FilesystemStorage) DeleteFile(filename string) error {
-	fullPath := fs.rootDir + "/" + filename
+	fullPath := fs.rootDir + filename
 	if err := os.Remove(fullPath); err != nil {
 		return err
 	}
@@ -46,12 +50,12 @@ func (fs FilesystemStorage) DeleteFile(filename string) error {
 }
 
 func (fs FilesystemStorage) GetFile(filename string) (*os.File, error) {
-	fullPath := fs.rootDir + "/" + filename
+	fullPath := fs.rootDir + filename
 	return os.Open(fullPath)
 }
 
 func (fs FilesystemStorage) GetFilePath(filename string) string {
-	fullPath := fs.rootDir + "/" + filename
+	fullPath := fs.rootDir + filename
 	return fullPath
 }
 

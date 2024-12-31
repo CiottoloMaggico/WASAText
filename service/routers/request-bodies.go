@@ -1,13 +1,15 @@
 package routers
 
-import "github.com/ggicci/httpin"
+import (
+	"mime/multipart"
+)
 
 type UsernameRequestBody struct {
 	Name string `json:"name" validate:"required,min=3,max=16"`
 }
 
 type UserPhotoRequestBody struct {
-	Photo *httpin.File `in:"form=image;required"`
+	Photo *multipart.FileHeader `in:"photo"`
 }
 
 type ConversationNameRequestBody struct {
@@ -15,7 +17,7 @@ type ConversationNameRequestBody struct {
 }
 
 type CommentRequestBody struct {
-	Comment string `json:"comment" validate:"required,length=1"`
+	Comment string `json:"comment" validate:"required"`
 }
 
 type ForwardRequestBody struct {
@@ -27,13 +29,13 @@ type NewChatRequestBody struct {
 }
 
 type NewGroupRequestBody struct {
-	Name         string       `in:"form=name;required" validate:"min=3,max=16"`
-	Photo        *httpin.File `in:"form=image"`
-	Participants []string     `in:"form=participants" validate:"min=0,max=100"`
+	Name         string                `in:"name" validate:"required,min=3,max=16"`
+	Photo        *multipart.FileHeader `in:"image"`
+	Participants []string              `in:"participants" validate:"min=0,max=100"`
 }
 
 type GroupPhotoRequestBody struct {
-	Photo *httpin.File `in:"form=image;required"`
+	Photo *multipart.FileHeader `in:"image"`
 }
 
 type AddParticipantsRequestBody struct {
@@ -41,7 +43,7 @@ type AddParticipantsRequestBody struct {
 }
 
 type NewMessageRequestBody struct {
-	Attachment *httpin.File `in:"form=attachment" validate:"required_without=Content"`
-	Content    *string      `in:"form=content" validate:"omitnil,min=0,max=4096,required_without=Attachment"`
-	ReplyTo    *int64       `in:"form=repliedMessageId" validate:"omitnil,min=0"`
+	Attachment *multipart.FileHeader `in:"attachment" validate:"required_without=Content"`
+	Content    *string               `in:"content" validate:"omitnil,min=0,max=4096,required_without=Attachment"`
+	ReplyTo    *int64                `in:"repliedMessageId" validate:"omitnil,min=0"`
 }

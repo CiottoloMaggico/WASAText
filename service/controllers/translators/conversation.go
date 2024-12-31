@@ -12,14 +12,14 @@ func UserConversationToView(userConversation models.UserConversation) views.User
 		ImageToView(userConversation.Image),
 		userConversation.Type,
 		userConversation.Read,
-		MessageWithAuthorToView(userConversation.MessageWithAuthor),
+		UserConversationMessagePreviewToView(userConversation.UserConversationMessagePreview),
 	}
 }
 
 func UserConversationListToView(userConversations []models.UserConversation) []views.UserConversationView {
-	var res = make([]views.UserConversationView, len(userConversations))
-	for _, message := range userConversations {
-		res = append(res, UserConversationToView(message))
+	var res = make([]views.UserConversationView, 0, cap(userConversations))
+	for _, conv := range userConversations {
+		res = append(res, UserConversationToView(conv))
 	}
 	return res
 }

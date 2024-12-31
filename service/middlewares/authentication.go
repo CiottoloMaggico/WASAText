@@ -27,7 +27,6 @@ func (m AuthMiddleware) Wrap(next routes.Handler) routes.Handler {
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
-
 		context.IssuerUUID = &authedUser.Uuid
 		next(w, r, params, context)
 	})

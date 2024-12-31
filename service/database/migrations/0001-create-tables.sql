@@ -111,8 +111,7 @@ CREATE TABLE IF NOT EXISTS User_Message
 	PRIMARY KEY (message, user),
 	FOREIGN KEY (message) REFERENCES Message (id) ON DELETE CASCADE,
 	FOREIGN KEY (user) REFERENCES User (uuid) ON DELETE CASCADE,
-	FOREIGN KEY (status) REFERENCES MessageStatus (id),
-	CHECK (length(comment) == 1 OR comment IS NULL)
+	FOREIGN KEY (status) REFERENCES MessageStatus (id)
 );
 
 
@@ -159,6 +158,6 @@ SELECT m.id           message_id,
 FROM Message m,
 	 ViewUsers u
 		 LEFT OUTER JOIN Image i ON i.uuid = m.attachment
-WHERE m.author = u.uUuid;
+WHERE m.author = u.user_uuid;
 
 

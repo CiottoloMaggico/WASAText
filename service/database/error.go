@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"github.com/mattn/go-sqlite3"
 )
 
@@ -12,6 +13,7 @@ var UniqueConstraint = errors.New("unique constraint violation")
 var UnexpectedError = errors.New("unexpected error")
 
 func HandleSqlError(err error) error {
+	fmt.Println(err)
 	var sqlErr sqlite3.Error
 	if !errors.As(err, &sqlErr) {
 		if errors.Is(err, sql.ErrNoRows) {

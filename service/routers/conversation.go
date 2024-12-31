@@ -5,7 +5,6 @@ import (
 	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
 	"github.com/ciottolomaggico/wasatext/service/utils/validators"
 	"github.com/ciottolomaggico/wasatext/service/views"
-	"github.com/ggicci/httpin"
 	"github.com/julienschmidt/httprouter"
 	"io"
 	"net/http"
@@ -20,55 +19,55 @@ type ConversationRouter struct {
 func (router ConversationRouter) ListRoutes() []routes.Route {
 	return []routes.Route{
 		routes.New(
-			"/user/:UserUUID/conversations",
+			"/users/:UserUUID/conversations",
 			http.MethodGet,
 			router.GetMyConversations,
 			true,
 		),
 		routes.New(
-			"/user/:UserUUID/conversations",
+			"/users/:UserUUID/conversations",
 			http.MethodPut,
 			router.SetDelivered,
 			true,
 		),
 		routes.New(
-			"/user/:UserUUID/conversation/:ConversationId",
+			"/users/:UserUUID/conversations/:ConversationId",
 			http.MethodGet,
 			router.GetConversation,
 			true,
 		),
 		routes.New(
-			"/user/:UserUUID/groups",
+			"/users/:UserUUID/groups",
 			http.MethodPost,
 			router.CreateGroup,
 			true,
 		),
 		routes.New(
-			"/user/:UserUUID/groups/:ConversationId",
+			"/users/:UserUUID/groups/:ConversationId",
 			http.MethodPut,
 			router.AddToGroup,
 			true,
 		),
 		routes.New(
-			"/user/:UserUUID/groups/:ConversationId",
+			"/users/:UserUUID/groups/:ConversationId",
 			http.MethodDelete,
 			router.LeaveGroup,
 			true,
 		),
 		routes.New(
-			"/user/:UserUUID/groups/:ConversationId/name",
+			"/users/:UserUUID/groups/:ConversationId/name",
 			http.MethodPut,
 			router.SetGroupName,
 			true,
 		),
 		routes.New(
-			"/user/:UserUUID/groups/:ConversationId/photo",
+			"/users/:UserUUID/groups/:ConversationId/photo",
 			http.MethodPut,
 			router.SetGroupPhoto,
 			true,
 		),
 		routes.New(
-			"/user/:UserUUID/chats",
+			"/users/:UserUUID/chats",
 			http.MethodPost,
 			router.CreateChat,
 			true,
@@ -83,7 +82,7 @@ func (router ConversationRouter) GetMyConversations(w http.ResponseWriter, r *ht
 		return
 	}
 
-	queryParams, err := ParseAndValidatePaginationParams(r.URL.Query())
+	paginationParams, err := ParseAndValidatePaginationParams(r.URL)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -95,7 +94,7 @@ func (router ConversationRouter) GetMyConversations(w http.ResponseWriter, r *ht
 		return
 	}
 
-	conversations, err := router.ControllerConv.GetUserConversations(authedUserUUID, queryParams.Page, queryParams.Size)
+	conversations, err := router.ControllerConv.GetUserConversations(authedUserUUID, paginationParams)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -111,8 +110,7 @@ func (router ConversationRouter) SetDelivered(w http.ResponseWriter, r *http.Req
 		return
 	}
 
-	// TODO: same as set message as seen
-	_, err := ParseAndValidatePaginationParams(r.URL.Query())
+	paginationParams, err := ParseAndValidatePaginationParams(r.URL)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -124,7 +122,7 @@ func (router ConversationRouter) SetDelivered(w http.ResponseWriter, r *http.Req
 		return
 	}
 
-	conversations, err := router.ControllerMess.SetAllMessageDelivered(authedUserUUID)
+	conversations, err := router.ControllerMess.SetAllMessageDelivered(authedUserUUID, paginationParams)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -168,32 +166,33 @@ func (router ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	requestBody := r.Context().Value(httpin.Input).(*NewGroupRequestBody)
-	if err := validate.Struct(requestBody); err != nil {
+	requestBody := NewGroupRequestBody{}
+	if err := ParseAndValidateMultipartRequestBody(r, &requestBody); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	var file *io.Reader = nil
-	var fileExt *string = nil
 
+	var fileReader io.ReadSeeker
+	var fileExt *string = nil
 	if requestBody.Photo != nil {
 		file, err := requestBody.Photo.Open()
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
+			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 		defer file.Close()
 
-		if err := validators.ImageIsValid(requestBody.Photo.Filename(), requestBody.Photo.Size(), file); err != nil {
+		if err := validators.ImageIsValid(requestBody.Photo.Filename, requestBody.Photo.Size, file); err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
 
-		tmpExt := filepath.Ext(requestBody.Photo.Filename())
+		fileReader = file
+		tmpExt := filepath.Ext(requestBody.Photo.Filename)
 		fileExt = &tmpExt
 	}
 
-	conversation, err := router.ControllerConv.CreateGroup(requestBody.Name, authedUserUUID, fileExt, file)
+	conversation, err := router.ControllerConv.CreateGroup(requestBody.Name, authedUserUUID, fileExt, fileReader)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -298,20 +297,24 @@ func (router ConversationRouter) SetGroupPhoto(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	requestBody := r.Context().Value(httpin.Input).(*GroupPhotoRequestBody)
+	requestBody := GroupPhotoRequestBody{}
+	if err := ParseAndValidateMultipartRequestBody(r, &requestBody); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
 	file, err := requestBody.Photo.Open()
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 	defer file.Close()
 
-	if err := validators.ImageIsValid(requestBody.Photo.Filename(), requestBody.Photo.Size(), file); err != nil {
+	if err := validators.ImageIsValid(requestBody.Photo.Filename, requestBody.Photo.Size, file); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	conversation, err := router.ControllerConv.ChangeGroupPhoto(urlParams.ConversationId, authedUserUUID, filepath.Ext(requestBody.Photo.Filename()), file)
+	conversation, err := router.ControllerConv.ChangeGroupPhoto(urlParams.ConversationId, authedUserUUID, filepath.Ext(requestBody.Photo.Filename), file)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return

@@ -4,7 +4,18 @@ import (
 	"github.com/ciottolomaggico/wasatext/service/database"
 )
 
-// TODO: modify query returning values column labels
+type UserConversationMessagePreview struct {
+	Id          *int64  `db:"message_id"`
+	SendAt      *string `db:"message_sendAt"`
+	DeliveredAt *string `db:"message_deliveredAt"`
+	SeenAt      *string `db:"message_seenAt"`
+	ReplyTo     *int64  `db:"message_replyTo"`
+	Content     *string `db:"message_content"`
+	Attachment  *string `db:"message_attachment"`
+	Uuid        *string `db:"user_uuid"`
+	Username    *string `db:"user_username"`
+	Photo       *string `db:"user_image"`
+}
 
 type Message struct {
 	Id           int64   `db:"message_id"`
@@ -57,9 +68,10 @@ type MessageModel interface {
 	) (*Message, error)
 	DeleteMessage(id int64) error
 	GetConversationMessage(messageId int64, conversationId int64) (*MessageWithAuthorAndAttachment, error)
-	GetConversationMessages(conversationId int64, page uint, size uint) ([]MessageWithAuthorAndAttachment, error)
+	GetConversationMessages(conversationId int64, page int, size int) ([]MessageWithAuthorAndAttachment, error)
 	SetMessagesAsDelivered(user string) error
 	SetConversationMessagesAsSeen(conversationId int64, user string) error
+	Count(conversationId int64) (int, error)
 }
 
 type MessageModelImpl struct {
@@ -129,7 +141,7 @@ func (model MessageModelImpl) DeleteMessage(id int64) error {
 }
 
 func (model MessageModelImpl) GetConversationMessage(messageId int64, conversationId int64) (*MessageWithAuthorAndAttachment, error) {
-	query := `SELECT * FROM ViewMessages WHERE id = ? AND conversation = ?;`
+	query := `SELECT * FROM ViewMessages WHERE message_id = ? AND message_conversation = ?;`
 
 	message := MessageWithAuthorAndAttachment{}
 	if err := model.Db.QueryStructRow(&message, query, messageId, conversationId); err != nil {
@@ -139,11 +151,11 @@ func (model MessageModelImpl) GetConversationMessage(messageId int64, conversati
 	return &message, nil
 }
 
-func (model MessageModelImpl) GetConversationMessages(conversationId int64, page uint, size uint) ([]MessageWithAuthorAndAttachment, error) {
-	query := `SELECT * FROM ViewMessages WHERE conversation = ? ORDER BY sendAt DESC LIMIT ? OFFSET ?;`
+func (model MessageModelImpl) GetConversationMessages(conversationId int64, page int, size int) ([]MessageWithAuthorAndAttachment, error) {
+	query := `SELECT * FROM ViewMessages WHERE message_conversation = ? ORDER BY message_sendAt DESC LIMIT ? OFFSET ?;`
 
-	messages := make([]MessageWithAuthorAndAttachment, size)
-	if err := model.Db.QueryStruct(&messages, query, conversationId, page, page*size); err != nil {
+	messages := make([]MessageWithAuthorAndAttachment, 0, size)
+	if err := model.Db.QueryStruct(&messages, query, conversationId, page, (page-1)*size); err != nil {
 		return nil, err
 	}
 
@@ -160,14 +172,24 @@ func (model MessageModelImpl) SetMessagesAsDelivered(user string) error {
 
 func (model MessageModelImpl) SetConversationMessagesAsSeen(conversationId int64, user string) error {
 	query := `
-				UPDATE um
+				UPDATE User_Message
 				SET status = 3
 				FROM Message m, User_Message um
 				WHERE um.user = ? AND m.conversation = ?
 				  	AND um.message = m.id AND um.status < 3;
 	`
-	if _, err := model.Db.Exec(query, user); err != nil {
+	if _, err := model.Db.Exec(query, user, conversationId); err != nil {
 		return database.HandleSqlError(err)
 	}
 	return nil
+}
+
+func (model MessageModelImpl) Count(conversationId int64) (int, error) {
+	query := `SELECT COUNT(*) FROM Message WHERE conversation = ?;`
+	var count int
+
+	if err := model.Db.QueryRow(query, conversationId).Scan(&count); err != nil {
+		return 0, err
+	}
+	return count, nil
 }

@@ -4,16 +4,17 @@ import (
 	"github.com/ciottolomaggico/wasatext/service/controllers/translators"
 	"github.com/ciottolomaggico/wasatext/service/models"
 	"github.com/ciottolomaggico/wasatext/service/views"
+	"github.com/ciottolomaggico/wasatext/service/views/pagination"
 	"io"
 )
 
 type UserController interface {
 	CreateUser(username string) (views.UserView, error)
 	SetMyUsername(userUUID string, newUsername string) (views.UserView, error)
-	SetMyPhoto(userUUID string, photoExtension string, photoFile io.Reader) (views.UserView, error)
+	SetMyPhoto(userUUID string, photoExtension string, photoFile io.ReadSeeker) (views.UserView, error)
 	GetUser(userUUID string) (views.UserView, error)
 	GetUserByUsername(username string) (views.UserView, error)
-	GetUsers(page uint, pageSize uint) ([]views.UserView, error)
+	GetUsers(paginationPs pagination.PaginationParams) (pagination.PaginatedView, error)
 }
 
 type UserControllerImpl struct {
@@ -42,7 +43,7 @@ func (controller UserControllerImpl) SetMyUsername(userUUID string, newUsername 
 	return translators.UserWithImageToView(*user), nil
 }
 
-func (controller UserControllerImpl) SetMyPhoto(userUUID string, photoExtension string, photoFile io.Reader) (views.UserView, error) {
+func (controller UserControllerImpl) SetMyPhoto(userUUID string, photoExtension string, photoFile io.ReadSeeker) (views.UserView, error) {
 	image, err := controller.ImageController.CreateImage(photoExtension, photoFile)
 	if err != nil {
 		return views.UserView{}, err
@@ -77,10 +78,16 @@ func (controller UserControllerImpl) GetUserByUsername(username string) (views.U
 	return translators.UserWithImageToView(*user), nil
 }
 
-func (controller UserControllerImpl) GetUsers(page uint, pageSize uint) ([]views.UserView, error) {
-	users, err := controller.Model.GetUsersWithImage(page, pageSize)
+func (controller UserControllerImpl) GetUsers(paginationPs pagination.PaginationParams) (pagination.PaginatedView, error) {
+	users, err := controller.Model.GetUsersWithImage(paginationPs.Page, paginationPs.Size)
 	if err != nil {
-		return []views.UserView{}, err
+		return pagination.PaginatedView{}, err
 	}
-	return translators.UserWithImageListToView(users), nil
+
+	usersCount, err := controller.Model.Count()
+	if err != nil {
+		return pagination.PaginatedView{}, err
+	}
+
+	return translators.ToPaginatedView(paginationPs, usersCount, translators.UserWithImageListToView(users))
 }

@@ -6,6 +6,7 @@ import (
 	"github.com/ciottolomaggico/wasatext/service/database"
 	"github.com/ciottolomaggico/wasatext/service/models"
 	"github.com/ciottolomaggico/wasatext/service/views"
+	"github.com/ciottolomaggico/wasatext/service/views/pagination"
 	"io"
 )
 
@@ -14,13 +15,13 @@ import (
 var NotParticipant = errors.New("this user isn't a participant of this group")
 
 type ConversationController interface {
-	CreateGroup(groupName string, authorUUID string, photoExtension *string, photoFile *io.Reader) (views.UserConversationView, error)
+	CreateGroup(groupName string, authorUUID string, photoExtension *string, photoFile io.ReadSeeker) (views.UserConversationView, error)
 	LeaveGroup(groupId int64, requestIssuerUUID string) error
 	AddToGroup(groupId int64, requestIssuerUUID string, newParticipants []string) (views.UserConversationView, error)
 	ChangeGroupName(groupId int64, requestIssuerUUID string, newName string) (views.UserConversationView, error)
-	ChangeGroupPhoto(groupId int64, requestIssuerUUID string, photoExtension string, photoFile io.Reader) (views.UserConversationView, error)
+	ChangeGroupPhoto(groupId int64, requestIssuerUUID string, photoExtension string, photoFile io.ReadSeeker) (views.UserConversationView, error)
 	CreateChat(authorUUID string, recipientUUID string) (views.UserConversationView, error)
-	GetUserConversations(requestIssuerUUID string, page uint, pageSize uint) ([]views.UserConversationView, error)
+	GetUserConversations(requestIssuerUUID string, paginationPs pagination.PaginationParams) (pagination.PaginatedView, error)
 	GetUserConversation(requestIssuerUUID string, conversationId int64) (views.UserConversationView, error)
 }
 
@@ -30,11 +31,11 @@ type ConversationControllerImpl struct {
 	UserConversationModel models.UserConversationModel
 }
 
-func (controller ConversationControllerImpl) CreateGroup(groupName string, authorUUID string, photoExtension *string, photoFile *io.Reader) (views.UserConversationView, error) {
+func (controller ConversationControllerImpl) CreateGroup(groupName string, authorUUID string, photoExtension *string, photoFile io.ReadSeeker) (views.UserConversationView, error) {
 	var photoUUID *string = nil
 
 	if photoExtension != nil && photoFile != nil {
-		photo, err := controller.ImageController.CreateImage(*photoExtension, *photoFile)
+		photo, err := controller.ImageController.CreateImage(*photoExtension, photoFile)
 		if err != nil {
 			return views.UserConversationView{}, err
 		}
@@ -95,7 +96,7 @@ func (controller ConversationControllerImpl) ChangeGroupName(groupId int64, requ
 	return controller.GetUserConversation(requestIssuerUUID, groupId)
 }
 
-func (controller ConversationControllerImpl) ChangeGroupPhoto(groupId int64, requestIssuerUUID string, photoExtension string, photoFile io.Reader) (views.UserConversationView, error) {
+func (controller ConversationControllerImpl) ChangeGroupPhoto(groupId int64, requestIssuerUUID string, photoExtension string, photoFile io.ReadSeeker) (views.UserConversationView, error) {
 	if res, err := controller.ConversationModel.IsParticipant(groupId, requestIssuerUUID); err != nil {
 		return views.UserConversationView{}, err
 	} else if !res {
@@ -123,15 +124,20 @@ func (controller ConversationControllerImpl) CreateChat(authorUUID string, recip
 	return controller.GetUserConversation(authorUUID, chat.Id)
 }
 
-func (controller ConversationControllerImpl) GetUserConversations(requestIssuerUUID string, page uint, pageSize uint) ([]views.UserConversationView, error) {
-	conversations, err := controller.UserConversationModel.GetUserConversations(requestIssuerUUID, page, pageSize)
+func (controller ConversationControllerImpl) GetUserConversations(requestIssuerUUID string, paginationPs pagination.PaginationParams) (pagination.PaginatedView, error) {
+	conversations, err := controller.UserConversationModel.GetUserConversations(requestIssuerUUID, paginationPs.Page, paginationPs.Size)
 	if errors.Is(err, database.NoResult) {
-		return nil, nil
+		return pagination.PaginatedView{}, nil
 	} else if err != nil {
-		return nil, err
+		return pagination.PaginatedView{}, err
 	}
 
-	return translators.UserConversationListToView(conversations), nil
+	conversationsCount, err := controller.UserConversationModel.Count(requestIssuerUUID)
+	if err != nil {
+		return pagination.PaginatedView{}, err
+	}
+
+	return translators.ToPaginatedView(paginationPs, conversationsCount, translators.UserConversationListToView(conversations))
 }
 
 func (controller ConversationControllerImpl) GetUserConversation(requestIssuerUUID string, conversationId int64) (views.UserConversationView, error) {

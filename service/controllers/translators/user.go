@@ -14,7 +14,7 @@ func UserWithImageToView(user models.UserWithImage) views.UserView {
 }
 
 func UserWithImageListToView(users []models.UserWithImage) []views.UserView {
-	var res = make([]views.UserView, len(users))
+	var res = make([]views.UserView, 0, cap(users))
 	for _, user := range users {
 		res = append(res, UserWithImageToView(user))
 	}

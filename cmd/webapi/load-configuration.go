@@ -28,8 +28,8 @@ type WebAPIConfiguration struct {
 		Filename string `conf:"default:decaf.db"`
 	}
 	MediaStorage struct {
-		UrlPath string `conf:"default:/media/"`
-		RootDir string `conf:"default:/media/"`
+		UrlPath string `conf:"default:./media/images/"`
+		RootDir string `conf:"default:./media/images/"`
 	}
 }
 

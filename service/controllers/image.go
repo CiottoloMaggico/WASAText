@@ -8,7 +8,7 @@ import (
 )
 
 type ImageController interface {
-	CreateImage(extension string, file io.Reader) (views.ImageView, error)
+	CreateImage(extension string, file io.ReadSeeker) (views.ImageView, error)
 	DeleteImage(imageUUID string) error
 	GetImage(imageUUID string) (views.ImageView, error)
 }
@@ -17,7 +17,7 @@ type ImageControllerImpl struct {
 	Model models.ImageModel
 }
 
-func (controller ImageControllerImpl) CreateImage(extension string, file io.Reader) (views.ImageView, error) {
+func (controller ImageControllerImpl) CreateImage(extension string, file io.ReadSeeker) (views.ImageView, error) {
 	image, err := controller.Model.CreateImage(extension, file)
 	if err != nil {
 		return views.ImageView{}, err

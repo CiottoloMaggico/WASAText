@@ -5,7 +5,6 @@ import (
 	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
 	"github.com/ciottolomaggico/wasatext/service/utils/validators"
 	"github.com/ciottolomaggico/wasatext/service/views"
-	"github.com/ggicci/httpin"
 	"github.com/julienschmidt/httprouter"
 	"io"
 	"net/http"
@@ -88,33 +87,33 @@ func (router MessageRouter) SendMessage(w http.ResponseWriter, r *http.Request, 
 		return
 	}
 
-	requestBody := r.Context().Value(httpin.Input).(*NewMessageRequestBody)
-	if err := validate.Struct(requestBody); err != nil {
+	requestBody := NewMessageRequestBody{}
+	if err := ParseAndValidateMultipartRequestBody(r, &requestBody); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	var file *io.Reader = nil
+	var fileReader io.ReadSeeker
 	var fileExt *string = nil
-
 	if requestBody.Attachment != nil {
 		file, err := requestBody.Attachment.Open()
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
+			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
 		defer file.Close()
 
-		if err := validators.ImageIsValid(requestBody.Attachment.Filename(), requestBody.Attachment.Size(), file); err != nil {
+		if err := validators.ImageIsValid(requestBody.Attachment.Filename, requestBody.Attachment.Size, file); err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			return
 		}
 
-		tmpExt := filepath.Ext(requestBody.Attachment.Filename())
+		fileReader = file
+		tmpExt := filepath.Ext(requestBody.Attachment.Filename)
 		fileExt = &tmpExt
 	}
 
-	message, err := router.Controller.SendMessage(urlParams.ConversationId, authedUserUUID, requestBody.ReplyTo, requestBody.Content, fileExt, file)
+	message, err := router.Controller.SendMessage(urlParams.ConversationId, authedUserUUID, requestBody.ReplyTo, requestBody.Content, fileExt, fileReader)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -130,8 +129,7 @@ func (router MessageRouter) SetSeen(w http.ResponseWriter, r *http.Request, para
 		return
 	}
 
-	// TODO: handle pagination in SetConversationMessagesAsSeen
-	_, err := ParseAndValidatePaginationParams(r.URL.Query())
+	paginationParams, err := ParseAndValidatePaginationParams(r.URL)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -143,7 +141,7 @@ func (router MessageRouter) SetSeen(w http.ResponseWriter, r *http.Request, para
 		return
 	}
 
-	messages, err := router.Controller.SetConversationMessagesAsSeen(urlParams.ConversationId, authedUserUUID)
+	messages, err := router.Controller.SetConversationMessagesAsSeen(urlParams.ConversationId, authedUserUUID, paginationParams)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -159,7 +157,7 @@ func (router MessageRouter) GetConversationMessages(w http.ResponseWriter, r *ht
 		return
 	}
 
-	queryParams, err := ParseAndValidatePaginationParams(r.URL.Query())
+	paginationParams, err := ParseAndValidatePaginationParams(r.URL)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
@@ -171,7 +169,7 @@ func (router MessageRouter) GetConversationMessages(w http.ResponseWriter, r *ht
 		return
 	}
 
-	messages, err := router.Controller.GetConversationMessages(urlParams.ConversationId, queryParams.Page, queryParams.Size, authedUserUUID)
+	messages, err := router.Controller.GetConversationMessages(urlParams.ConversationId, authedUserUUID, paginationParams)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -215,7 +213,6 @@ func (router MessageRouter) DeleteConversationMessage(w http.ResponseWriter, r *
 		return
 	}
 
-	//TODO: add check message author is the request issuer
 	if err := router.Controller.DeleteMessage(urlParams.ConversationId, urlParams.MessageId, authedUserUUID); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return

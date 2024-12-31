@@ -1,30 +1,15 @@
 package routers
 
 import (
-	"encoding/json"
+	"fmt"
 	"github.com/ciottolomaggico/wasatext/service/api/routes"
 	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
 	"github.com/ciottolomaggico/wasatext/service/utils/validators"
 	"github.com/ciottolomaggico/wasatext/service/views"
-	"github.com/ggicci/httpin"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 	"path/filepath"
 )
-
-// TODO: pagination hint
-//type UserPaginator struct {
-//	Pagination Page            `json:"pagination"`
-//	Users      []database.User `json:"users"`
-//}
-//result := UserPaginator{
-//	Pagination: *MakePage(
-//		pageNumber,
-//		int(math.Ceil(float64(userCount/pageSize)))-1,
-//		req.URL.RequestURI(),
-//	),
-//	Users: users,
-//}
 
 type UserRouter struct {
 	Controller controllers.UserController
@@ -61,15 +46,14 @@ func (router UserRouter) ListRoutes() []routes.Route {
 
 func (router UserRouter) GetUsers(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
 	// Get query parameters and validate them
-	queryParams, err := ParseAndValidatePaginationParams(r.URL.Query())
+	paginationParams, err := ParseAndValidatePaginationParams(r.URL)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	// retrieve the list of users based on query parameters
-	// TODO: handle pagination
-	users, err := router.Controller.GetUsers(queryParams.Page, queryParams.Size)
+	users, err := router.Controller.GetUsers(paginationParams)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -97,7 +81,7 @@ func (router UserRouter) GetUser(w http.ResponseWriter, r *http.Request, params 
 	}
 
 	// serialize user and send
-	json.NewEncoder(w).Encode(user)
+	views.SendJson(w, user)
 	return
 }
 
@@ -148,21 +132,26 @@ func (router UserRouter) SetMyPhoto(w http.ResponseWriter, r *http.Request, para
 		return
 	}
 
-	requestBody := r.Context().Value(httpin.Input).(*UserPhotoRequestBody)
+	requestBody := UserPhotoRequestBody{}
+	if err := ParseAndValidateMultipartRequestBody(r, &requestBody); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
 	file, err := requestBody.Photo.Open()
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 	defer file.Close()
 
-	if err := validators.ImageIsValid(requestBody.Photo.Filename(), requestBody.Photo.Size(), file); err != nil {
+	if err := validators.ImageIsValid(requestBody.Photo.Filename, requestBody.Photo.Size, file); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	updatedUser, err := router.Controller.SetMyPhoto(authedUserUUID, filepath.Ext(requestBody.Photo.Filename()), file)
+	updatedUser, err := router.Controller.SetMyPhoto(authedUserUUID, filepath.Ext(requestBody.Photo.Filename), file)
 	if err != nil {
+		fmt.Println(err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}

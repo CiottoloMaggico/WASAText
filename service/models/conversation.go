@@ -118,7 +118,7 @@ func (model ConversationModelImpl) GetConversationParticipants(conversation int6
 	query := `
 		SELECT u.*
 		FROM ViewUsers u, User_Conversation uc
-		WHERE uc.conversation = ? AND uc.user = u.userUUID;
+		WHERE uc.conversation = ? AND uc.user = u.user_uuid;
 	`
 
 	users := make([]UserWithImage, 0)

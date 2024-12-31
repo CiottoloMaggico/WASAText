@@ -40,16 +40,24 @@ type CommentView struct {
 }
 
 type UserConversationView struct {
-	Id            int64                 `json:"id"`
-	Name          string                `json:"name"`
-	Image         ImageView             `json:"image"`
-	Type          string                `json:"type"`
-	Read          bool                  `json:"status"`
-	LatestMessage MessageWithAuthorView `json:"latestMessage"`
+	Id            int64                           `json:"id"`
+	Name          string                          `json:"name"`
+	Image         ImageView                       `json:"image"`
+	Type          string                          `json:"type"`
+	Read          bool                            `json:"read"`
+	LatestMessage *UserConversationMessagePreview `json:"latestMessage"`
 }
 
 type PlainUser struct {
 	Uuid     string `json:"uuid"`
 	Username string `json:"username"`
 	Photo    string `json:"photo"`
+}
+
+type UserConversationMessagePreview struct {
+	Id         *int64  `json:"id"`
+	SendAt     *string `json:"sendAt"`
+	Content    *string `json:"content"`
+	Attachment *string `json:"attachment"`
+	Username   *string `json:"authorUsername"`
 }
