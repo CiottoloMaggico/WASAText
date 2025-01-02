@@ -122,17 +122,6 @@ FROM User,
 	 Image
 WHERE User.photo = Image.uuid;
 
-CREATE VIEW IF NOT EXISTS ViewConversations AS
-SELECT Conversation.id,
-	   vc.user1,
-	   vc.user2,
-	   vg.name,
-	   vg.author,
-	   vg.photo
-FROM Conversation
-		 LEFT OUTER JOIN Chat vc ON (vc.id = Conversation.id)
-		 LEFT OUTER JOIN GroupConversation vg ON (vg.id = Conversation.id);
-
 CREATE VIEW IF NOT EXISTS ViewMessages AS
 SELECT m.id           message_id,
 	   m.conversation message_conversation,
