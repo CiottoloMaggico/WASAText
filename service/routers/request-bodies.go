@@ -29,9 +29,8 @@ type NewChatRequestBody struct {
 }
 
 type NewGroupRequestBody struct {
-	Name         string                `in:"name" validate:"required,min=3,max=16"`
-	Photo        *multipart.FileHeader `in:"image"`
-	Participants []string              `in:"participants" validate:"min=0,max=100"`
+	Name  string                `in:"name" validate:"required,min=3,max=16"`
+	Photo *multipart.FileHeader `in:"image"`
 }
 
 type GroupPhotoRequestBody struct {
@@ -39,7 +38,7 @@ type GroupPhotoRequestBody struct {
 }
 
 type AddParticipantsRequestBody struct {
-	Participants []string `json:"participants" validate:"required,unique,min=1,max=100"`
+	Participants []string `json:"participants" validate:"required,unique,min=1,max=200"`
 }
 
 type NewMessageRequestBody struct {

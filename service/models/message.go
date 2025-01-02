@@ -124,7 +124,7 @@ func (model MessageModelImpl) CreateMessage(
 
 	message := Message{}
 	if err := model.Db.QueryStructRow(&message, query, conversation, author, replyTo, content, attachment); err != nil {
-		return nil, err
+		return nil, database.DBError(err)
 	}
 
 	return &message, nil
@@ -135,7 +135,7 @@ func (model MessageModelImpl) DeleteMessage(id int64) error {
 		`DELETE FROM Message WHERE id = ?;`,
 		id,
 	); err != nil {
-		return database.HandleSqlError(err)
+		return database.DBError(err)
 	}
 	return nil
 }
@@ -155,7 +155,7 @@ func (model MessageModelImpl) GetConversationMessages(conversationId int64, page
 	query := `SELECT * FROM ViewMessages WHERE message_conversation = ? ORDER BY message_sendAt DESC LIMIT ? OFFSET ?;`
 
 	messages := make([]MessageWithAuthorAndAttachment, 0, size)
-	if err := model.Db.QueryStruct(&messages, query, conversationId, page, (page-1)*size); err != nil {
+	if err := model.Db.QueryStruct(&messages, query, conversationId, size, (page-1)*size); err != nil {
 		return nil, err
 	}
 
@@ -165,7 +165,7 @@ func (model MessageModelImpl) GetConversationMessages(conversationId int64, page
 func (model MessageModelImpl) SetMessagesAsDelivered(user string) error {
 	query := `UPDATE User_Message SET status = 2 WHERE user = ? AND status = 1;`
 	if _, err := model.Db.Exec(query, user); err != nil {
-		return database.HandleSqlError(err)
+		return database.DBError(err)
 	}
 	return nil
 }
@@ -179,7 +179,7 @@ func (model MessageModelImpl) SetConversationMessagesAsSeen(conversationId int64
 				  	AND um.message = m.id AND um.status < 3;
 	`
 	if _, err := model.Db.Exec(query, user, conversationId); err != nil {
-		return database.HandleSqlError(err)
+		return database.DBError(err)
 	}
 	return nil
 }

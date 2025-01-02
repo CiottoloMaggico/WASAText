@@ -1,9 +1,13 @@
 /bin/
 /pkg/
 /src/
+/linters
+/media/images/
+/doc/api
 .idea/
 *.iml
 *.exe
+*.db
 .DS_Store
 .env
 *.wiki.git
@@ -12,11 +16,9 @@ docker-compose.log
 /doc/json
 /doc/markdown
 /doc/api.yaml.old
-/doc/api
 .vscode/*
 !.vscode/extensions.json
 genApiSpec.sh
-linters
-/media/images/*
+
 
 

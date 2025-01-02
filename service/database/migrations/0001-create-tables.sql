@@ -1,6 +1,3 @@
-PRAGMA foreign_keys = ON;
-
-
 CREATE TABLE IF NOT EXISTS MessageStatus
 (
 	id   INTEGER PRIMARY KEY,
@@ -36,11 +33,8 @@ CREATE TABLE IF NOT EXISTS User
 
 CREATE TABLE IF NOT EXISTS Conversation
 (
-	id INTEGER PRIMARY KEY,
-	FOREIGN KEY (id) REFERENCES User_Conversation (conversation)
+	id INTEGER PRIMARY KEY
 );
-
-
 
 CREATE TABLE IF NOT EXISTS User_Conversation
 (
@@ -91,7 +85,6 @@ CREATE TABLE IF NOT EXISTS Message
 	replyTo      integer,
 	content      varchar,
 	attachment   varchar,
-	FOREIGN KEY (id) REFERENCES User_Message (message),
 	FOREIGN KEY (conversation) REFERENCES Conversation (id) ON DELETE CASCADE,
 	FOREIGN KEY (author) REFERENCES User (uuid) ON DELETE CASCADE,
 	FOREIGN KEY (replyTo) REFERENCES Message (id) ON DELETE SET NULL,
@@ -130,7 +123,7 @@ FROM User,
 WHERE User.photo = Image.uuid;
 
 CREATE VIEW IF NOT EXISTS ViewConversations AS
-SELECT Conversation.id id,
+SELECT Conversation.id,
 	   vc.user1,
 	   vc.user2,
 	   vg.name,

@@ -1,10 +1,8 @@
 package validators
 
 import (
-	"errors"
-	"fmt"
+	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"io"
-	"math"
 	"mime"
 	"mime/multipart"
 	"net/http"
@@ -17,8 +15,10 @@ var allowedMIMETypes = []string{
 
 func ImageContentValidator(fileSize int64, image multipart.File) (string, error) {
 	// Check file size
-	if fileSize < 1 || fileSize > 4*int64(math.Pow10(9)) {
-		return "", errors.New("image size must be between 1 and 4096 bytes")
+	if fileSize < 1 || fileSize > 1<<30 {
+		return "", api_errors.UnprocessableContent(map[string]string{
+			"image": "image file size must be between 1 byte and 1 Gb",
+		})
 	}
 	// Check if file content is actually an image
 	buffer := make([]byte, 512) // To detect content type are read at most 512 bytes from the file
@@ -32,7 +32,9 @@ func ImageContentValidator(fileSize int64, image multipart.File) (string, error)
 			return MIMEType, nil
 		}
 	}
-	return "", errors.New("MIME type is not allowed")
+	return "", api_errors.UnprocessableContent(map[string]string{
+		"image": "invalid image type, it should be one of these types: jpeg, jpg, png, gif",
+	})
 
 }
 
@@ -40,7 +42,7 @@ func ImageFilenameValidator(filename string, mimeType string) error {
 	// file extension match the mime type
 	validExtensions, err := mime.ExtensionsByType(mimeType)
 	if err != nil {
-		return fmt.Errorf("error checking extensions: %w", err)
+		return err
 	}
 	fileExtension := filepath.Ext(filename)
 	for _, extension := range validExtensions {
@@ -48,16 +50,18 @@ func ImageFilenameValidator(filename string, mimeType string) error {
 			return nil
 		}
 	}
-	return errors.New("invalid file extension")
+	return api_errors.UnprocessableContent(map[string]string{
+		"image": "invalid image extension",
+	})
 }
 
 func ImageIsValid(filename string, fileSize int64, file multipart.File) error {
 	mimeType, err := ImageContentValidator(fileSize, file)
 	if err != nil {
-		return fmt.Errorf("error image content validation: %w", err)
+		return err
 	}
 	if err := ImageFilenameValidator(filename, mimeType); err != nil {
-		return fmt.Errorf("error image filename validation: %w", err)
+		return err
 	}
 	if _, err := file.Seek(0, 0); err != nil {
 		return err

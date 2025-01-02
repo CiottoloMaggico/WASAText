@@ -25,7 +25,7 @@ type PaginatedView struct {
 	Content interface{} `json:"content"`
 }
 
-func NewPaginatedView(page Paginator, content interface{}) (PaginatedView, error) {
+func newPaginatedView(page Paginator, content interface{}) (PaginatedView, error) {
 	contentType := reflect.TypeOf(content)
 	if kind := contentType.Kind(); kind != reflect.Array && kind != reflect.Slice {
 		return PaginatedView{}, errors.New("content must be an array or slice")
@@ -35,4 +35,9 @@ func NewPaginatedView(page Paginator, content interface{}) (PaginatedView, error
 		page,
 		content,
 	}, nil
+}
+
+func ToPaginatedView(ps PaginationParams, totalEntries int, content interface{}) (PaginatedView, error) {
+	page := MakePage(ps.Page, ps.Size, totalEntries, ps.CurrentUrl)
+	return newPaginatedView(page, content)
 }

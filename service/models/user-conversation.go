@@ -58,7 +58,7 @@ SELECT
     vm.user_uuid,
 	vm.user_username,
 	vm.image_uuid user_image,
-    CASE WHEN um.status = 3 THEN true ELSE false END message_status
+    CASE WHEN (um.status = 3 OR vm.message_id IS NULL) THEN true ELSE false END message_status
 FROM UserConversations uc
 LEFT OUTER JOIN ViewMessages vm ON vm.message_conversation = uc.userConversation_id
 LEFT OUTER JOIN User_Message um ON vm.message_id = um.message AND um.user = ?
@@ -81,7 +81,7 @@ SELECT
     vm.user_uuid,
 	vm.user_username,
 	vm.image_uuid user_image,
-    CASE WHEN um.status = 3 THEN true ELSE false END message_status
+    CASE WHEN (um.status = 3 OR vm.message_id IS NULL) THEN true ELSE false END message_status
 FROM UserConversations uc
 LEFT OUTER JOIN ViewMessages vm ON vm.message_conversation = uc.userConversation_id
 LEFT OUTER JOIN User_Message um ON vm.message_id = um.message AND um.user = ?

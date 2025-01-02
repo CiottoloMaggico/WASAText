@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"github.com/ciottolomaggico/wasatext/service/api/parsers"
 	"github.com/ciottolomaggico/wasatext/service/api/routes"
 	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
 	"github.com/ciottolomaggico/wasatext/service/views"
@@ -23,18 +24,16 @@ func (router SessionRouter) ListRoutes() []routes.Route {
 	}
 }
 
-func (router SessionRouter) DoLogin(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
-	requestBody := ConversationNameRequestBody{}
-	if err := ParseAndValidateRequestBody(r, &requestBody); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+func (router SessionRouter) DoLogin(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+	requestBody := UsernameRequestBody{}
+	if err := parsers.ParseAndValidateRequestBody(r, &requestBody); err != nil {
+		return err
 	}
 
 	result, err := router.Controller.DoLogin(requestBody.Name)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+		return err
 	}
 
-	views.SendJson(w, result)
+	return views.SendJson(w, result)
 }

@@ -1,11 +1,15 @@
 package controllers
 
 import (
+	"errors"
+	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/controllers/translators"
+	"github.com/ciottolomaggico/wasatext/service/database"
 	"github.com/ciottolomaggico/wasatext/service/models"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/ciottolomaggico/wasatext/service/views/pagination"
 	"io"
+	"net/http"
 )
 
 type UserController interface {
@@ -23,24 +27,24 @@ type UserControllerImpl struct {
 }
 
 func (controller UserControllerImpl) CreateUser(username string) (views.UserView, error) {
-	if _, err := controller.Model.CreateUser(username); err != nil {
+	user, err := controller.Model.CreateUser(username)
+	if errors.Is(err, database.UniqueConstraint) {
+		return views.UserView{}, api_errors.NewApiError(http.StatusConflict, "an user with this username already exists")
+	} else if err != nil {
 		return views.UserView{}, err
 	}
 
-	return controller.GetUser(username)
+	return controller.GetUser(user.Uuid)
 }
 
 func (controller UserControllerImpl) SetMyUsername(userUUID string, newUsername string) (views.UserView, error) {
-	_, err := controller.Model.UpdateUsername(userUUID, newUsername)
-	if err != nil {
+	if _, err := controller.Model.UpdateUsername(userUUID, newUsername); errors.Is(err, database.UniqueConstraint) {
+		return views.UserView{}, api_errors.NewApiError(http.StatusConflict, "an user with this username already exists")
+	} else if err != nil {
 		return views.UserView{}, err
 	}
 
-	user, err := controller.Model.GetUserWithImage(userUUID)
-	if err != nil {
-		return views.UserView{}, err
-	}
-	return translators.UserWithImageToView(*user), nil
+	return controller.GetUser(userUUID)
 }
 
 func (controller UserControllerImpl) SetMyPhoto(userUUID string, photoExtension string, photoFile io.ReadSeeker) (views.UserView, error) {
@@ -49,21 +53,18 @@ func (controller UserControllerImpl) SetMyPhoto(userUUID string, photoExtension 
 		return views.UserView{}, err
 	}
 
-	_, err = controller.Model.UpdateProfilePic(userUUID, image.Uuid)
-	if err != nil {
+	if _, err = controller.Model.UpdateProfilePic(userUUID, image.Uuid); err != nil {
 		return views.UserView{}, err
 	}
 
-	user, err := controller.Model.GetUserWithImage(userUUID)
-	if err != nil {
-		return views.UserView{}, err
-	}
-	return translators.UserWithImageToView(*user), nil
+	return controller.GetUser(userUUID)
 }
 
 func (controller UserControllerImpl) GetUser(userUUID string) (views.UserView, error) {
 	user, err := controller.Model.GetUserWithImage(userUUID)
-	if err != nil {
+	if errors.Is(err, database.NoResult) {
+		return views.UserView{}, api_errors.ResourceNotFound()
+	} else if err != nil {
 		return views.UserView{}, err
 	}
 
@@ -72,22 +73,29 @@ func (controller UserControllerImpl) GetUser(userUUID string) (views.UserView, e
 
 func (controller UserControllerImpl) GetUserByUsername(username string) (views.UserView, error) {
 	user, err := controller.Model.GetUserWithImageByUsername(username)
-	if err != nil {
+	if errors.Is(err, database.NoResult) {
+		return views.UserView{}, api_errors.ResourceNotFound()
+	} else if err != nil {
 		return views.UserView{}, err
 	}
+
 	return translators.UserWithImageToView(*user), nil
 }
 
 func (controller UserControllerImpl) GetUsers(paginationPs pagination.PaginationParams) (pagination.PaginatedView, error) {
-	users, err := controller.Model.GetUsersWithImage(paginationPs.Page, paginationPs.Size)
-	if err != nil {
-		return pagination.PaginatedView{}, err
-	}
-
 	usersCount, err := controller.Model.Count()
 	if err != nil {
 		return pagination.PaginatedView{}, err
 	}
 
-	return translators.ToPaginatedView(paginationPs, usersCount, translators.UserWithImageListToView(users))
+	if usersCount == 0 {
+		return pagination.ToPaginatedView(paginationPs, usersCount, translators.UserWithImageListToView(make([]models.UserWithImage, 0)))
+	}
+
+	users, err := controller.Model.GetUsersWithImage(paginationPs.Page, paginationPs.Size)
+	if err != nil {
+		return pagination.PaginatedView{}, err
+	}
+
+	return pagination.ToPaginatedView(paginationPs, usersCount, translators.UserWithImageListToView(users))
 }

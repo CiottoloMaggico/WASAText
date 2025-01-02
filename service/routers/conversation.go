@@ -1,9 +1,11 @@
 package routers
 
 import (
+	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	"github.com/ciottolomaggico/wasatext/service/api/parsers"
 	"github.com/ciottolomaggico/wasatext/service/api/routes"
 	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
-	"github.com/ciottolomaggico/wasatext/service/utils/validators"
+	"github.com/ciottolomaggico/wasatext/service/validators"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/julienschmidt/httprouter"
 	"io"
@@ -19,55 +21,55 @@ type ConversationRouter struct {
 func (router ConversationRouter) ListRoutes() []routes.Route {
 	return []routes.Route{
 		routes.New(
-			"/users/:UserUUID/conversations",
+			"/users/:userUUID/conversations",
 			http.MethodGet,
 			router.GetMyConversations,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/conversations",
+			"/users/:userUUID/conversations",
 			http.MethodPut,
 			router.SetDelivered,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/conversations/:ConversationId",
+			"/users/:userUUID/conversations/:conversationId",
 			http.MethodGet,
 			router.GetConversation,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/groups",
+			"/users/:userUUID/groups",
 			http.MethodPost,
 			router.CreateGroup,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/groups/:ConversationId",
+			"/users/:userUUID/groups/:conversationId",
 			http.MethodPut,
 			router.AddToGroup,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/groups/:ConversationId",
+			"/users/:userUUID/groups/:conversationId",
 			http.MethodDelete,
 			router.LeaveGroup,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/groups/:ConversationId/name",
+			"/users/:userUUID/groups/:conversationId/name",
 			http.MethodPut,
 			router.SetGroupName,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/groups/:ConversationId/photo",
+			"/users/:userUUID/groups/:conversationId/photo",
 			http.MethodPut,
 			router.SetGroupPhoto,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/chats",
+			"/users/:userUUID/chats",
 			http.MethodPost,
 			router.CreateChat,
 			true,
@@ -75,101 +77,87 @@ func (router ConversationRouter) ListRoutes() []routes.Route {
 	}
 }
 
-func (router ConversationRouter) GetMyConversations(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router ConversationRouter) GetMyConversations(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
-	paginationParams, err := ParseAndValidatePaginationParams(r.URL)
+	paginationParams, err := parsers.ParseAndValidatePaginationParams(r.URL)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	conversations, err := router.ControllerConv.GetUserConversations(authedUserUUID, paginationParams)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	views.SendJson(w, conversations)
+	return views.SendJson(w, conversations)
 }
 
-func (router ConversationRouter) SetDelivered(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router ConversationRouter) SetDelivered(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
-	paginationParams, err := ParseAndValidatePaginationParams(r.URL)
+	paginationParams, err := parsers.ParseAndValidatePaginationParams(r.URL)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	conversations, err := router.ControllerMess.SetAllMessageDelivered(authedUserUUID, paginationParams)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	views.SendJson(w, conversations)
+	return views.SendJson(w, conversations)
 }
 
-func (router ConversationRouter) GetConversation(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router ConversationRouter) GetConversation(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	conversation, err := router.ControllerConv.GetUserConversation(authedUserUUID, urlParams.ConversationId)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	views.SendJson(w, conversation)
+	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	requestBody := NewGroupRequestBody{}
-	if err := ParseAndValidateMultipartRequestBody(r, &requestBody); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateMultipartRequestBody(r, &requestBody); err != nil {
+		return err
 	}
 
 	var fileReader io.ReadSeeker
@@ -177,14 +165,12 @@ func (router ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Requ
 	if requestBody.Photo != nil {
 		file, err := requestBody.Photo.Open()
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
+			return err
 		}
 		defer file.Close()
 
-		if err := validators.ImageIsValid(requestBody.Photo.Filename, requestBody.Photo.Size, file); err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			return
+		if err = validators.ImageIsValid(requestBody.Photo.Filename, requestBody.Photo.Size, file); err != nil {
+			return err
 		}
 
 		fileReader = file
@@ -194,159 +180,136 @@ func (router ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Requ
 
 	conversation, err := router.ControllerConv.CreateGroup(requestBody.Name, authedUserUUID, fileExt, fileReader)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	views.SendJson(w, conversation)
+	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) AddToGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router ConversationRouter) AddToGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	requestBody := AddParticipantsRequestBody{}
-	if err := ParseAndValidateRequestBody(r, &requestBody); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateRequestBody(r, &requestBody); err != nil {
+		return err
 	}
 
-	if ok, _ := validators.UsersUUIDValidator(requestBody.Participants); !ok {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if ok, err := validators.UsersUUIDValidator(requestBody.Participants); !ok {
+		return err
 	}
 
-	// TODO: add check for group participants limit in controllers
 	conversation, err := router.ControllerConv.AddToGroup(urlParams.ConversationId, authedUserUUID, requestBody.Participants)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	views.SendJson(w, conversation)
+	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) LeaveGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router ConversationRouter) LeaveGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	if err := router.ControllerConv.LeaveGroup(urlParams.ConversationId, authedUserUUID); err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusNoContent)
+	return nil
 }
 
-func (router ConversationRouter) SetGroupName(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router ConversationRouter) SetGroupName(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	requestBody := ConversationNameRequestBody{}
-	if err := ParseAndValidateRequestBody(r, &requestBody); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateRequestBody(r, &requestBody); err != nil {
+		return err
 	}
 
 	conversation, err := router.ControllerConv.ChangeGroupName(urlParams.ConversationId, authedUserUUID, requestBody.Name)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	views.SendJson(w, conversation)
+	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) SetGroupPhoto(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router ConversationRouter) SetGroupPhoto(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	requestBody := GroupPhotoRequestBody{}
-	if err := ParseAndValidateMultipartRequestBody(r, &requestBody); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateMultipartRequestBody(r, &requestBody); err != nil {
+		return err
 	}
 	file, err := requestBody.Photo.Open()
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 	defer file.Close()
 
-	if err := validators.ImageIsValid(requestBody.Photo.Filename, requestBody.Photo.Size, file); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err = validators.ImageIsValid(requestBody.Photo.Filename, requestBody.Photo.Size, file); err != nil {
+		return err
 	}
 
 	conversation, err := router.ControllerConv.ChangeGroupPhoto(urlParams.ConversationId, authedUserUUID, filepath.Ext(requestBody.Photo.Filename), file)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	views.SendJson(w, conversation)
+	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) CreateChat(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router ConversationRouter) CreateChat(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	requestBody := NewChatRequestBody{}
-	if err := ParseAndValidateRequestBody(r, &requestBody); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateRequestBody(r, &requestBody); err != nil {
+		return err
 	}
 
 	conversation, err := router.ControllerConv.CreateChat(authedUserUUID, requestBody.Recipient)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	views.SendJson(w, conversation)
+	return views.SendJson(w, conversation)
 }

@@ -39,5 +39,6 @@ func (app *App) createUserController() controllers.UserController {
 func (app *App) createSessionController() controllers.SessionController {
 	return controllers.SessionControllerImpl{
 		app.createUserModel(),
+		app.createUserController(),
 	}
 }

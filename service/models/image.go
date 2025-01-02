@@ -60,23 +60,23 @@ func (model ImageModelImpl) CreateImage(extension string, file io.ReadSeeker) (*
 
 	tx, err := model.Db.StartTx()
 	if err != nil {
-		return nil, err
+		return nil, database.DBError(err)
 	}
 
 	image := Image{}
 	if err := tx.QueryStructRow(&image, query, newUUID.String(), extension, width, height, path); err != nil {
-		return nil, err
+		return nil, database.DBError(err)
 	}
 
 	if _, err := model.Storage.SaveFile(filename, file); err != nil {
 		if err := tx.Rollback(); err != nil {
-			return nil, err
+			return nil, database.DBError(err)
 		}
 		return nil, err
 	}
 
 	if err := tx.Commit(); err != nil {
-		return nil, err
+		return nil, database.DBError(err)
 	}
 	return &image, nil
 }
@@ -89,23 +89,23 @@ func (model ImageModelImpl) DeleteImage(uuid string) (*Image, error) {
 	`
 	tx, err := model.Db.StartTx()
 	if err != nil {
-		return nil, err
+		return nil, database.DBError(err)
 	}
 
 	image := Image{}
 	if err := tx.QueryStructRow(&image, query, uuid); err != nil {
-		return nil, err
+		return nil, database.DBError(err)
 	}
 
 	if err := model.Storage.DeleteFile(image.Filename()); err != nil {
 		if err := tx.Rollback(); err != nil {
-			return nil, err
+			return nil, database.DBError(err)
 		}
 		return nil, err
 	}
 
 	if err := tx.Commit(); err != nil {
-		return nil, err
+		return nil, database.DBError(err)
 	}
 	return &image, nil
 }
@@ -119,7 +119,7 @@ func (model ImageModelImpl) GetImage(uuid string) (*Image, error) {
 
 	image := Image{}
 	if err := model.Db.QueryStructRow(&image, query, uuid); err != nil {
-		return nil, err
+		return nil, database.DBError(err)
 	}
 
 	return &image, nil

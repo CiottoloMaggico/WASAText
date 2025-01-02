@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"errors"
+	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/controllers/translators"
 	"github.com/ciottolomaggico/wasatext/service/database"
 	"github.com/ciottolomaggico/wasatext/service/models"
@@ -9,10 +10,6 @@ import (
 	"github.com/ciottolomaggico/wasatext/service/views/pagination"
 	"io"
 )
-
-// TODO: handle pagination
-
-var NotParticipant = errors.New("this user isn't a participant of this group")
 
 type ConversationController interface {
 	CreateGroup(groupName string, authorUUID string, photoExtension *string, photoFile io.ReadSeeker) (views.UserConversationView, error)
@@ -23,12 +20,22 @@ type ConversationController interface {
 	CreateChat(authorUUID string, recipientUUID string) (views.UserConversationView, error)
 	GetUserConversations(requestIssuerUUID string, paginationPs pagination.PaginationParams) (pagination.PaginatedView, error)
 	GetUserConversation(requestIssuerUUID string, conversationId int64) (views.UserConversationView, error)
+	IsParticipant(conversationId int64, userUUID string) (bool, error)
 }
 
 type ConversationControllerImpl struct {
 	ImageController       ImageController
 	ConversationModel     models.ConversationModel
 	UserConversationModel models.UserConversationModel
+}
+
+func (controller ConversationControllerImpl) IsParticipant(conversationId int64, userUUID string) (bool, error) {
+	if ok, err := controller.ConversationModel.IsParticipant(conversationId, userUUID); !ok {
+		return false, api_errors.Forbidden()
+	} else if err != nil {
+		return false, err
+	}
+	return true, nil
 }
 
 func (controller ConversationControllerImpl) CreateGroup(groupName string, authorUUID string, photoExtension *string, photoFile io.ReadSeeker) (views.UserConversationView, error) {
@@ -42,37 +49,30 @@ func (controller ConversationControllerImpl) CreateGroup(groupName string, autho
 		photoUUID = &photo.Uuid
 	}
 
-	commit := false
-	defer func(commit bool) {
-		if !commit && photoUUID != nil {
-			controller.ImageController.DeleteImage(*photoUUID)
-		}
-	}(commit)
-
 	group, err := controller.ConversationModel.CreateGroup(groupName, authorUUID, photoUUID)
 	if err != nil {
 		return views.UserConversationView{}, err
 	}
 
-	commit = true
 	return controller.GetUserConversation(authorUUID, group.Id)
 }
 
 func (controller ConversationControllerImpl) LeaveGroup(groupId int64, requestIssuerUUID string) error {
-	if res, err := controller.ConversationModel.IsParticipant(groupId, requestIssuerUUID); err != nil {
+	if conv, err := controller.GetUserConversation(requestIssuerUUID, groupId); conv.Type != "group" {
+		return api_errors.ResourceNotFound()
+	} else if err != nil {
 		return err
-	} else if !res {
-		return NotParticipant
 	}
 
 	return controller.ConversationModel.RemoveGroupParticipant(requestIssuerUUID, groupId)
+
 }
 
 func (controller ConversationControllerImpl) AddToGroup(groupId int64, requestIssuerUUID string, newParticipants []string) (views.UserConversationView, error) {
-	if res, err := controller.ConversationModel.IsParticipant(groupId, requestIssuerUUID); err != nil {
+	if conv, err := controller.GetUserConversation(requestIssuerUUID, groupId); conv.Type != "group" {
+		return views.UserConversationView{}, api_errors.ResourceNotFound()
+	} else if err != nil {
 		return views.UserConversationView{}, err
-	} else if !res {
-		return views.UserConversationView{}, NotParticipant
 	}
 
 	if err := controller.ConversationModel.AddGroupParticipants(newParticipants, groupId); err != nil {
@@ -83,10 +83,10 @@ func (controller ConversationControllerImpl) AddToGroup(groupId int64, requestIs
 }
 
 func (controller ConversationControllerImpl) ChangeGroupName(groupId int64, requestIssuerUUID string, newName string) (views.UserConversationView, error) {
-	if res, err := controller.ConversationModel.IsParticipant(groupId, requestIssuerUUID); err != nil {
+	if conv, err := controller.GetUserConversation(requestIssuerUUID, groupId); conv.Type != "group" {
+		return views.UserConversationView{}, api_errors.ResourceNotFound()
+	} else if err != nil {
 		return views.UserConversationView{}, err
-	} else if !res {
-		return views.UserConversationView{}, NotParticipant
 	}
 
 	if _, err := controller.ConversationModel.UpdateGroupName(groupId, newName); err != nil {
@@ -97,10 +97,10 @@ func (controller ConversationControllerImpl) ChangeGroupName(groupId int64, requ
 }
 
 func (controller ConversationControllerImpl) ChangeGroupPhoto(groupId int64, requestIssuerUUID string, photoExtension string, photoFile io.ReadSeeker) (views.UserConversationView, error) {
-	if res, err := controller.ConversationModel.IsParticipant(groupId, requestIssuerUUID); err != nil {
+	if conv, err := controller.GetUserConversation(requestIssuerUUID, groupId); conv.Type != "group" {
+		return views.UserConversationView{}, api_errors.ResourceNotFound()
+	} else if err != nil {
 		return views.UserConversationView{}, err
-	} else if !res {
-		return views.UserConversationView{}, NotParticipant
 	}
 
 	image, err := controller.ImageController.CreateImage(photoExtension, photoFile)
@@ -108,7 +108,10 @@ func (controller ConversationControllerImpl) ChangeGroupPhoto(groupId int64, req
 		return views.UserConversationView{}, err
 	}
 
-	if _, err := controller.ConversationModel.UpdateGroupPic(groupId, image.Uuid); err != nil {
+	if _, err = controller.ConversationModel.UpdateGroupPic(groupId, image.Uuid); err != nil {
+		if err = controller.ImageController.DeleteImage(image.Uuid); err != nil {
+			return views.UserConversationView{}, err
+		}
 		return views.UserConversationView{}, err
 	}
 
@@ -117,7 +120,9 @@ func (controller ConversationControllerImpl) ChangeGroupPhoto(groupId int64, req
 
 func (controller ConversationControllerImpl) CreateChat(authorUUID string, recipientUUID string) (views.UserConversationView, error) {
 	chat, err := controller.ConversationModel.CreateChat(authorUUID, recipientUUID)
-	if err != nil {
+	if errors.Is(err, database.UniqueConstraint) {
+		return views.UserConversationView{}, api_errors.NewApiError(409, "The chat already exists")
+	} else if err != nil {
 		return views.UserConversationView{}, err
 	}
 
@@ -125,19 +130,21 @@ func (controller ConversationControllerImpl) CreateChat(authorUUID string, recip
 }
 
 func (controller ConversationControllerImpl) GetUserConversations(requestIssuerUUID string, paginationPs pagination.PaginationParams) (pagination.PaginatedView, error) {
-	conversations, err := controller.UserConversationModel.GetUserConversations(requestIssuerUUID, paginationPs.Page, paginationPs.Size)
-	if errors.Is(err, database.NoResult) {
-		return pagination.PaginatedView{}, nil
-	} else if err != nil {
-		return pagination.PaginatedView{}, err
-	}
-
 	conversationsCount, err := controller.UserConversationModel.Count(requestIssuerUUID)
 	if err != nil {
 		return pagination.PaginatedView{}, err
 	}
 
-	return translators.ToPaginatedView(paginationPs, conversationsCount, translators.UserConversationListToView(conversations))
+	if conversationsCount == 0 {
+		return pagination.ToPaginatedView(paginationPs, conversationsCount, translators.UserConversationListToView(make([]models.UserConversation, 0)))
+	}
+
+	conversations, err := controller.UserConversationModel.GetUserConversations(requestIssuerUUID, paginationPs.Page, paginationPs.Size)
+	if err != nil {
+		return pagination.PaginatedView{}, nil
+	}
+
+	return pagination.ToPaginatedView(paginationPs, conversationsCount, translators.UserConversationListToView(conversations))
 }
 
 func (controller ConversationControllerImpl) GetUserConversation(requestIssuerUUID string, conversationId int64) (views.UserConversationView, error) {

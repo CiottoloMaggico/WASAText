@@ -16,7 +16,7 @@ type UserView struct {
 type MessageView struct {
 	Id           int64      `json:"id"`
 	Conversation int64      `json:"conversationId"`
-	AuthorUUID   UserView   `json:"authorUUID"`
+	Author       UserView   `json:"author"`
 	Status       string     `json:"status"`
 	ReplyTo      *int64     `json:"repliedMessageId"`
 	Attachment   *ImageView `json:"attachment"`
@@ -26,7 +26,7 @@ type MessageView struct {
 type MessageWithAuthorView struct {
 	Id           int64     `json:"id"`
 	Conversation int64     `json:"conversationId"`
-	AuthorUUID   PlainUser `json:"authorUUID"`
+	Author       PlainUser `json:"author"`
 	Status       string    `json:"status"`
 	ReplyTo      *int64    `json:"repliedMessageId"`
 	Attachment   *string   `json:"attachment"`
@@ -60,4 +60,10 @@ type UserConversationMessagePreview struct {
 	Content    *string `json:"content"`
 	Attachment *string `json:"attachment"`
 	Username   *string `json:"authorUsername"`
+}
+
+type HTTPStatus struct {
+	Status      int    `json:"code"`
+	Message     string `json:"message"`
+	Description string `json:"description"`
 }

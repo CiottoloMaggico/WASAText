@@ -91,7 +91,6 @@ func run() error {
 		logger.Debug("database stopping")
 		_ = dbconn.Close()
 	}()
-
 	app, err := app.New(dbconn, &cfg.MediaStorage.RootDir, logger)
 	if err != nil {
 		logger.WithError(err).Error("error creating the application")

@@ -2,7 +2,9 @@ package controllers
 
 import (
 	"errors"
+	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/controllers/translators"
+	"github.com/ciottolomaggico/wasatext/service/database"
 	"github.com/ciottolomaggico/wasatext/service/models"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/ciottolomaggico/wasatext/service/views/pagination"
@@ -31,10 +33,8 @@ type MessageControllerImpl struct {
 }
 
 func (controller MessageControllerImpl) SendMessage(conversationID int64, authorUUID string, replyToId *int64, content *string, attachmentExt *string, attachmentFile io.ReadSeeker) (views.MessageView, error) {
-	if res, err := controller.ConversationModel.IsParticipant(conversationID, authorUUID); err != nil {
+	if _, err := controller.ConversationController.IsParticipant(conversationID, authorUUID); err != nil {
 		return views.MessageView{}, err
-	} else if !res {
-		return views.MessageView{}, NotParticipant
 	}
 
 	var attachmentUUID *string = nil
@@ -52,32 +52,26 @@ func (controller MessageControllerImpl) SendMessage(conversationID int64, author
 	if err != nil {
 		return views.MessageView{}, err
 	}
+
 	return controller.GetConversationMessage(conversationID, message.Id, authorUUID)
 }
 
 func (controller MessageControllerImpl) GetConversationMessage(conversationID int64, messageId int64, requestIssuerUUID string) (views.MessageView, error) {
-	if res, err := controller.ConversationModel.IsParticipant(conversationID, requestIssuerUUID); err != nil {
+	if _, err := controller.ConversationController.IsParticipant(conversationID, requestIssuerUUID); err != nil {
 		return views.MessageView{}, err
-	} else if !res {
-		return views.MessageView{}, NotParticipant
 	}
 
 	message, err := controller.MessageModel.GetConversationMessage(messageId, conversationID)
-	if err != nil {
+	if errors.Is(err, database.NoResult) {
+		return views.MessageView{}, api_errors.ResourceNotFound()
+	} else if err != nil {
 		return views.MessageView{}, err
 	}
 	return translators.MessageWithAuthorAndAttachmentToView(*message), err
 }
 
 func (controller MessageControllerImpl) GetConversationMessages(conversationID int64, requestIssuerUUID string, paginationPs pagination.PaginationParams) (pagination.PaginatedView, error) {
-	if res, err := controller.ConversationModel.IsParticipant(conversationID, requestIssuerUUID); err != nil {
-		return pagination.PaginatedView{}, err
-	} else if !res {
-		return pagination.PaginatedView{}, NotParticipant
-	}
-
-	messages, err := controller.MessageModel.GetConversationMessages(conversationID, paginationPs.Page, paginationPs.Size)
-	if err != nil {
+	if _, err := controller.ConversationController.IsParticipant(conversationID, requestIssuerUUID); err != nil {
 		return pagination.PaginatedView{}, err
 	}
 
@@ -86,26 +80,33 @@ func (controller MessageControllerImpl) GetConversationMessages(conversationID i
 		return pagination.PaginatedView{}, err
 	}
 
-	return translators.ToPaginatedView(paginationPs, messagesCount, translators.MessageWithAuthorAndAttachmentListToView(messages))
+	if messagesCount == 0 {
+		return pagination.ToPaginatedView(
+			paginationPs,
+			messagesCount,
+			translators.MessageWithAuthorAndAttachmentListToView(make([]models.MessageWithAuthorAndAttachment, 0)),
+		)
+	}
+
+	messages, err := controller.MessageModel.GetConversationMessages(conversationID, paginationPs.Page, paginationPs.Size)
+	if err != nil {
+		return pagination.PaginatedView{}, err
+	}
+
+	return pagination.ToPaginatedView(paginationPs, messagesCount, translators.MessageWithAuthorAndAttachmentListToView(messages))
 }
 
 func (controller MessageControllerImpl) DeleteMessage(conversationID int64, messageId int64, requestIssuerUUID string) error {
-	if res, err := controller.ConversationModel.IsParticipant(conversationID, requestIssuerUUID); err != nil {
-		return err
-	} else if !res {
-		return NotParticipant
-	}
-
-	message, err := controller.MessageModel.GetConversationMessage(conversationID, messageId)
+	message, err := controller.GetConversationMessage(conversationID, messageId, requestIssuerUUID)
 	if err != nil {
 		return err
 	}
 
-	if message.UserWithImage.Uuid != requestIssuerUUID {
-		return errors.New("not author")
+	if message.Author.Uuid != requestIssuerUUID {
+		return api_errors.Forbidden()
 	}
 
-	if err := controller.MessageModel.DeleteMessage(messageId); err != nil {
+	if err := controller.MessageModel.DeleteMessage(message.Id); err != nil {
 		return err
 	}
 
@@ -118,8 +119,7 @@ func (controller MessageControllerImpl) GetComments(conversationId int64, messag
 	}
 
 	comments, err := controller.MessageInfoModel.GetMessageComments(messageId)
-
-	if err != nil {
+	if err != nil && !errors.Is(err, database.NoResult) {
 		return nil, err
 	}
 
@@ -127,12 +127,6 @@ func (controller MessageControllerImpl) GetComments(conversationId int64, messag
 }
 
 func (controller MessageControllerImpl) CommentMessage(conversationId int64, messageId int64, authorUUID string, comment string) (views.CommentView, error) {
-	if res, err := controller.ConversationModel.IsParticipant(conversationId, authorUUID); err != nil {
-		return views.CommentView{}, err
-	} else if !res {
-		return views.CommentView{}, NotParticipant
-	}
-
 	if _, err := controller.GetConversationMessage(conversationId, messageId, authorUUID); err != nil {
 		return views.CommentView{}, err
 	}
@@ -145,12 +139,6 @@ func (controller MessageControllerImpl) CommentMessage(conversationId int64, mes
 }
 
 func (controller MessageControllerImpl) UncommentMessage(conversationId int64, messageId int64, authorUUID string) error {
-	if res, err := controller.ConversationModel.IsParticipant(conversationId, authorUUID); err != nil {
-		return err
-	} else if !res {
-		return NotParticipant
-	}
-
 	if _, err := controller.GetConversationMessage(conversationId, messageId, authorUUID); err != nil {
 		return err
 	}
@@ -159,28 +147,25 @@ func (controller MessageControllerImpl) UncommentMessage(conversationId int64, m
 }
 
 func (controller MessageControllerImpl) ForwardMessage(conversationId int64, messageId int64, authorUUID string, forwardToConversationID int64) (views.MessageView, error) {
-	// Check if the author is in both conversations
-	if res, err := controller.ConversationModel.IsParticipant(conversationId, authorUUID); err != nil {
+	// check if the requestIssuer ("authorUUID") is a participant of the dest conversation
+	if _, err := controller.ConversationController.IsParticipant(forwardToConversationID, authorUUID); err != nil {
 		return views.MessageView{}, err
-	} else if !res {
-		return views.MessageView{}, NotParticipant
-	}
-
-	if res, err := controller.ConversationModel.IsParticipant(forwardToConversationID, authorUUID); err != nil {
-		return views.MessageView{}, err
-	} else if !res {
-		return views.MessageView{}, NotParticipant
 	}
 
 	// Get the message to forward
-	message, err := controller.MessageModel.GetConversationMessage(messageId, conversationId)
+	message, err := controller.GetConversationMessage(conversationId, messageId, authorUUID)
 	if err != nil {
 		return views.MessageView{}, err
 	}
 
+	var attachmentUUID *string = nil
+	if message.Attachment != nil {
+		attachmentUUID = &message.Attachment.Uuid
+	}
+
 	// Create the new message copying the previous
 	newMessage, err := controller.MessageModel.CreateMessage(
-		forwardToConversationID, authorUUID, nil, message.Content, message.AttachmentUuid,
+		forwardToConversationID, authorUUID, nil, message.Content, attachmentUUID,
 	)
 	if err != nil {
 		return views.MessageView{}, err

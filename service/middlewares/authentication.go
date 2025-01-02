@@ -1,8 +1,11 @@
 package middlewares
 
 import (
+	"errors"
+	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/routes"
 	"github.com/ciottolomaggico/wasatext/service/controllers"
+	"github.com/ciottolomaggico/wasatext/service/database"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 	"strings"
@@ -13,21 +16,20 @@ type AuthMiddleware struct {
 }
 
 func (m AuthMiddleware) Wrap(next routes.Handler) routes.Handler {
-	return routes.Handler(func(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+	return routes.Handler(func(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 		authHeader := strings.ToLower(r.Header.Get("Authorization"))
 		token := strings.TrimPrefix(authHeader, "bearer ")
 
 		if token == authHeader {
-			w.WriteHeader(400)
-			return
+			return api_errors.AuthenticationRequired()
 		}
 
 		authedUser, err := m.Controller.GetUser(token)
-		if err != nil {
-			w.WriteHeader(http.StatusUnauthorized)
-			return
+		if errors.Is(err, database.NoResult) {
+			return api_errors.AuthenticationRequired()
 		}
+
 		context.IssuerUUID = &authedUser.Uuid
-		next(w, r, params, context)
+		return next(w, r, params, context)
 	})
 }

@@ -5,10 +5,7 @@ BEGIN
 	INSERT INTO User_Message (message, user, status)
 	SELECT new.id,
 		   uc.user,
-		   CASE
-			   WHEN uc.user = new.author THEN 3
-			   ELSE 1
-			   END
+		   CASE WHEN uc.user = new.author THEN 3 ELSE 1 END
 	FROM User_Conversation uc
 	WHERE new.conversation = uc.conversation;
 END;
@@ -80,8 +77,22 @@ CREATE TRIGGER IF NOT EXISTS group_participants_limit
 	WHEN
 		(SELECT COUNT(*)
 		 FROM User_Conversation
-		 WHERE conversation = new.conversation) >= 200
+		 WHERE conversation = new.conversation
+		 ) >= 200
 BEGIN
-	SELECT RAISE(ABORT, 'groups can handle at most 200 participants');
+	SELECT RAISE(ABORT, 'TRIGGER: group participants limit reached (max: 200)');
 END;
+
+CREATE TRIGGER IF NOT EXISTS delete_empty_groups
+	AFTER DELETE
+	ON User_Conversation
+	WHEN
+		(SELECT COUNT(*)
+		 FROM User_Conversation
+		 WHERE conversation = old.conversation
+		 	AND EXISTS(SELECT * FROM GroupConversation WHERE old.conversation = GroupConversation.id)
+		 ) = 0
+	BEGIN
+		DELETE FROM Conversation WHERE id = old.conversation;
+	END;
 

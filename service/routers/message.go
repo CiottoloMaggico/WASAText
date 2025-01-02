@@ -1,9 +1,11 @@
 package routers
 
 import (
+	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	"github.com/ciottolomaggico/wasatext/service/api/parsers"
 	"github.com/ciottolomaggico/wasatext/service/api/routes"
 	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
-	"github.com/ciottolomaggico/wasatext/service/utils/validators"
+	"github.com/ciottolomaggico/wasatext/service/validators"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/julienschmidt/httprouter"
 	"io"
@@ -18,55 +20,55 @@ type MessageRouter struct {
 func (router MessageRouter) ListRoutes() []routes.Route {
 	return []routes.Route{
 		routes.New(
-			"/users/:UserUUID/conversations/:ConversationId/messages",
+			"/users/:userUUID/conversations/:conversationId/messages",
 			http.MethodPost,
 			router.SendMessage,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/conversations/:ConversationId/messages",
+			"/users/:userUUID/conversations/:conversationId/messages",
 			http.MethodPut,
 			router.SetSeen,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/conversations/:ConversationId/messages",
+			"/users/:userUUID/conversations/:conversationId/messages",
 			http.MethodGet,
 			router.GetConversationMessages,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/conversations/:ConversationId/messages/:MessageId",
+			"/users/:userUUID/conversations/:conversationId/messages/:messageId",
 			http.MethodGet,
 			router.GetConversationMessageDetail,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/conversations/:ConversationId/messages/:MessageId",
+			"/users/:userUUID/conversations/:conversationId/messages/:messageId",
 			http.MethodDelete,
 			router.DeleteConversationMessage,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/conversations/:ConversationId/messages/:MessageId/comments",
+			"/users/:userUUID/conversations/:conversationId/messages/:messageId/comments",
 			http.MethodGet,
 			router.GetMessageComments,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/conversations/:ConversationId/messages/:MessageId/comments",
+			"/users/:userUUID/conversations/:conversationId/messages/:messageId/comments",
 			http.MethodPut,
 			router.SetMessageComment,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/conversations/:ConversationId/messages/:MessageId/comments",
+			"/users/:userUUID/conversations/:conversationId/messages/:messageId/comments",
 			http.MethodDelete,
 			router.RemoveMessageComment,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/conversations/:ConversationId/messages/:MessageId/forward",
+			"/users/:userUUID/conversations/:conversationId/messages/:messageId/forward",
 			http.MethodPost,
 			router.ForwardMessage,
 			true,
@@ -74,23 +76,20 @@ func (router MessageRouter) ListRoutes() []routes.Route {
 	}
 }
 
-func (router MessageRouter) SendMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router MessageRouter) SendMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	requestBody := NewMessageRequestBody{}
-	if err := ParseAndValidateMultipartRequestBody(r, &requestBody); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateMultipartRequestBody(r, &requestBody); err != nil {
+		return err
 	}
 
 	var fileReader io.ReadSeeker
@@ -98,14 +97,12 @@ func (router MessageRouter) SendMessage(w http.ResponseWriter, r *http.Request, 
 	if requestBody.Attachment != nil {
 		file, err := requestBody.Attachment.Open()
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
+			return err
 		}
 		defer file.Close()
 
-		if err := validators.ImageIsValid(requestBody.Attachment.Filename, requestBody.Attachment.Size, file); err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			return
+		if err = validators.ImageIsValid(requestBody.Attachment.Filename, requestBody.Attachment.Size, file); err != nil {
+			return err
 		}
 
 		fileReader = file
@@ -115,207 +112,180 @@ func (router MessageRouter) SendMessage(w http.ResponseWriter, r *http.Request, 
 
 	message, err := router.Controller.SendMessage(urlParams.ConversationId, authedUserUUID, requestBody.ReplyTo, requestBody.Content, fileExt, fileReader)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+		return err
 	}
 
-	views.SendJson(w, message)
+	return views.SendJson(w, message)
 }
 
-func (router MessageRouter) SetSeen(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router MessageRouter) SetSeen(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
-	paginationParams, err := ParseAndValidatePaginationParams(r.URL)
+	paginationParams, err := parsers.ParseAndValidatePaginationParams(r.URL)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	messages, err := router.Controller.SetConversationMessagesAsSeen(urlParams.ConversationId, authedUserUUID, paginationParams)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	views.SendJson(w, messages)
+	return views.SendJson(w, messages)
 }
 
-func (router MessageRouter) GetConversationMessages(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router MessageRouter) GetConversationMessages(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
-	paginationParams, err := ParseAndValidatePaginationParams(r.URL)
+	paginationParams, err := parsers.ParseAndValidatePaginationParams(r.URL)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	messages, err := router.Controller.GetConversationMessages(urlParams.ConversationId, authedUserUUID, paginationParams)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	views.SendJson(w, messages)
+	return views.SendJson(w, messages)
 }
 
-func (router MessageRouter) GetConversationMessageDetail(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router MessageRouter) GetConversationMessageDetail(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	message, err := router.Controller.GetConversationMessage(urlParams.ConversationId, urlParams.MessageId, authedUserUUID)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	views.SendJson(w, message)
+	return views.SendJson(w, message)
 }
 
-func (router MessageRouter) DeleteConversationMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router MessageRouter) DeleteConversationMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	if err := router.Controller.DeleteMessage(urlParams.ConversationId, urlParams.MessageId, authedUserUUID); err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusNoContent)
+	return nil
 }
 
-func (router MessageRouter) GetMessageComments(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router MessageRouter) GetMessageComments(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	comments, err := router.Controller.GetComments(urlParams.ConversationId, urlParams.MessageId, authedUserUUID)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	views.SendJson(w, comments)
+	return views.SendJson(w, comments)
 }
 
-func (router MessageRouter) SetMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router MessageRouter) SetMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	requestBody := CommentRequestBody{}
-	if err := ParseAndValidateRequestBody(r, &requestBody); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateRequestBody(r, &requestBody); err != nil {
+		return err
 	}
 
 	comment, err := router.Controller.CommentMessage(urlParams.ConversationId, urlParams.MessageId, authedUserUUID, requestBody.Comment)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	views.SendJson(w, comment)
+	return views.SendJson(w, comment)
 }
 
-func (router MessageRouter) RemoveMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router MessageRouter) RemoveMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	if err := router.Controller.UncommentMessage(urlParams.ConversationId, urlParams.MessageId, authedUserUUID); err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusNoContent)
+	return nil
 }
 
-func (router MessageRouter) ForwardMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router MessageRouter) ForwardMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	requestBody := ForwardRequestBody{}
-	if err := ParseAndValidateRequestBody(r, &requestBody); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateRequestBody(r, &requestBody); err != nil {
+		return err
 	}
 
 	message, err := router.Controller.ForwardMessage(urlParams.ConversationId, urlParams.MessageId, authedUserUUID, requestBody.ForwardToId)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	views.SendJson(w, message)
+	return views.SendJson(w, message)
 }

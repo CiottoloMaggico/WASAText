@@ -4,8 +4,6 @@ import (
 	"github.com/ciottolomaggico/wasatext/service/database"
 )
 
-const MAX_GROUP_SIZE = 200
-
 type Conversation struct {
 	Id int64 `db:"conversation_id"`
 }
@@ -40,27 +38,47 @@ type ConversationModelImpl struct {
 }
 
 func (model ConversationModelImpl) CreateGroup(name string, author string, photo *string) (*Group, error) {
+	tx, err := model.Db.StartTx()
+	if err != nil {
+		return nil, err
+	}
+
+	queryConv, conv := `INSERT INTO Conversation DEFAULT VALUES RETURNING id conversation_id`, Conversation{}
+	if err := tx.QueryStructRow(&conv, queryConv); err != nil {
+		if err := tx.Rollback(); err != nil {
+			return nil, err
+		}
+		return nil, err
+	}
+
 	var query string
 	var params []interface{}
-	params = append(params, name, author)
+	params = append(params, conv.Id, name, author)
 
 	if photo != nil {
 		query = `
-			INSERT INTO GroupConversation (name, author, photo)
-			VALUES (?,?,?)
+			INSERT INTO GroupConversation (id, name, author, photo)
+			VALUES (?,?,?,?)
 			RETURNING id conversation_id, name group_name, author group_author, photo group_photo;
 		`
 		params = append(params, *photo)
 	} else {
 		query = `
-			INSERT INTO GroupConversation (name, author)
-			VALUES (?, ?)
+			INSERT INTO GroupConversation (id, name, author)
+			VALUES (?, ?, ?)
 			RETURNING id conversation_id, name group_name, author group_author, photo group_photo;
 		`
 	}
 
 	group := Group{}
-	if err := model.Db.QueryStructRow(&group, query, params...); err != nil {
+	if err := tx.QueryStructRow(&group, query, params...); err != nil {
+		if err := tx.Rollback(); err != nil {
+			return nil, err
+		}
+		return nil, err
+	}
+
+	if err := tx.Commit(); err != nil {
 		return nil, err
 	}
 
@@ -68,14 +86,35 @@ func (model ConversationModelImpl) CreateGroup(name string, author string, photo
 }
 
 func (model ConversationModelImpl) CreateChat(user1 string, user2 string) (*Chat, error) {
-	query := `
-		INSERT INTO Chat (user1, user2)
-		VALUES (?, ?)
+	queryConv := `INSERT INTO Conversation DEFAULT VALUES RETURNING id conversation_id`
+	queryChat := `
+		INSERT INTO Chat (id, user1, user2)
+		VALUES (?, ?, ?)
 		RETURNING id conversation_id, user1 chat_user1, user2 chat_user2;
 	`
 
+	tx, err := model.Db.StartTx()
+	if err != nil {
+		return nil, err
+	}
+
+	conv := Conversation{}
+	if err := tx.QueryStructRow(&conv, queryConv); err != nil {
+		if err := tx.Rollback(); err != nil {
+			return nil, err
+		}
+		return nil, err
+	}
+
 	chat := Chat{}
-	if err := model.Db.QueryStructRow(&chat, query, user1, user2); err != nil {
+	if err := tx.QueryStructRow(&chat, queryChat, conv.Id, user1, user2); err != nil {
+		if err := tx.Rollback(); err != nil {
+			return nil, err
+		}
+		return nil, err
+	}
+
+	if err := tx.Commit(); err != nil {
 		return nil, err
 	}
 
@@ -136,7 +175,7 @@ func (model ConversationModelImpl) IsParticipant(conversation int64, userUUID st
 
 	var exists bool
 	if err := model.Db.QueryRow(query, userUUID, conversation).Scan(&exists); err != nil {
-		return false, database.HandleSqlError(err)
+		return false, database.DBError(err)
 	}
 
 	return exists, nil
@@ -147,7 +186,7 @@ func (model ConversationModelImpl) AddGroupParticipant(user string, conversation
 		`INSERT INTO User_Conversation VALUES (?, ?);`,
 		user, conversation,
 	); err != nil {
-		return database.HandleSqlError(err)
+		return database.DBError(err)
 	}
 
 	return nil
@@ -162,20 +201,20 @@ func (model ConversationModelImpl) AddGroupParticipants(users []string, conversa
 	query := `INSERT INTO User_Conversation VALUES (?, ?);`
 	preparedQuery, err := tx.Prepare(query)
 	if err != nil {
-		return database.HandleSqlError(err)
+		return database.DBError(err)
 	}
 
 	for _, user := range users {
 		if _, err := preparedQuery.Exec(user, conversation); err != nil {
 			if err := tx.Rollback(); err != nil {
-				return database.HandleSqlError(err)
+				return database.DBError(err)
 			}
-			return database.HandleSqlError(err)
+			return database.DBError(err)
 		}
 	}
 
 	if err := tx.Commit(); err != nil {
-		return database.HandleSqlError(err)
+		return database.DBError(err)
 	}
 	return nil
 }
@@ -185,7 +224,7 @@ func (model ConversationModelImpl) RemoveGroupParticipant(user string, conversat
 		`DELETE FROM User_Conversation WHERE user = ? AND conversation = ?;`,
 		user, conversation,
 	); err != nil {
-		return database.HandleSqlError(err)
+		return database.DBError(err)
 	}
 	return nil
 }

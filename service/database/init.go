@@ -7,15 +7,10 @@ import (
 	"sort"
 )
 
-func RunMigrations(db *sqlx.DB) error {
-	files, err := os.ReadDir("migrations")
+func RunMigrations(db *sqlx.DB) {
+	files, err := os.ReadDir("./service/database/migrations")
 	if err != nil {
-		return err
-	}
-
-	tx, err := db.Begin()
-	if err != nil {
-		return err
+		panic("Unable to read db migrations directory")
 	}
 
 	sort.Slice(files, func(i, j int) bool {
@@ -23,26 +18,13 @@ func RunMigrations(db *sqlx.DB) error {
 	})
 
 	for _, file := range files {
-		migration, err := os.ReadFile("migrations/" + file.Name())
+		migration, err := os.ReadFile("./service/database/migrations/" + file.Name())
 		if err != nil {
-			if err := tx.Rollback(); err != nil {
-				return err
-			}
-			return err
+			panic(err)
 		}
 
-		if _, err := tx.Exec(string(migration)); err != nil {
-			if err := tx.Rollback(); err != nil {
-				return err
-			}
-			return err
-		}
+		db.MustExec(string(migration))
 	}
-
-	if err := tx.Commit(); err != nil {
-		return err
-	}
-	return nil
 }
 
 // New returns a new instance of AppDatabase based on the SQLite connection `db`.
@@ -52,10 +34,8 @@ func New(db *sqlx.DB) (AppDatabase, error) {
 		return nil, errors.New("database is required when building a AppDatabase")
 	}
 
-	// TODO: add run migrations from cmd line parameters like django
-	//if err := RunMigrations(db); err != nil {
-	//	return nil, err
-	//}
+	RunMigrations(db)
+	db.MustExec("PRAGMA foreign_keys = ON;")
 
 	return &appdbimpl{
 		db,

@@ -29,7 +29,7 @@ func (db *apptransactionimpl) QueryStructRow(dest interface{}, query string, arg
 	}
 
 	if err := db.QueryRowx(query, args...).StructScan(dest); err != nil {
-		return HandleSqlError(err)
+		return DBError(err)
 	}
 
 	return nil
@@ -47,11 +47,11 @@ func (db *apptransactionimpl) QueryStruct(dest interface{}, query string, args .
 
 	rows, err := db.Queryx(query, args...)
 	if err != nil {
-		return HandleSqlError(err)
+		return DBError(err)
 	}
 	defer func(rows *sqlx.Rows) error {
 		if err := rows.Close(); err != nil {
-			return HandleSqlError(err)
+			return DBError(err)
 		}
 		return nil
 	}(rows)
@@ -62,14 +62,14 @@ func (db *apptransactionimpl) QueryStruct(dest interface{}, query string, args .
 		newRow := reflect.New(destType)
 
 		if err := rows.StructScan(newRow.Interface()); err != nil {
-			return HandleSqlError(err)
+			return DBError(err)
 		}
 
 		destValue.Set(reflect.Append(destValue, newRow.Elem()))
 	}
 
 	if err := rows.Err(); err != nil {
-		return HandleSqlError(err)
+		return DBError(err)
 	}
 
 	return nil

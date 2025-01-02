@@ -13,23 +13,15 @@ type SessionController interface {
 }
 
 type SessionControllerImpl struct {
-	Model models.UserModel
+	Model          models.UserModel
+	UserController UserController
 }
 
 func (controller SessionControllerImpl) DoLogin(username string) (views.UserView, error) {
 	user, err := controller.Model.GetUserWithImageByUsername(username)
 
 	if errors.Is(err, database.NoResult) {
-		newUser, err := controller.Model.CreateUser(username)
-		if err != nil {
-			return views.UserView{}, err
-		}
-
-		user, err = controller.Model.GetUserWithImage(newUser.Uuid)
-
-		if err != nil {
-			return views.UserView{}, err
-		}
+		return controller.UserController.CreateUser(username)
 	}
 
 	return translators.UserWithImageToView(*user), nil

@@ -1,10 +1,11 @@
 package routers
 
 import (
-	"fmt"
+	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	"github.com/ciottolomaggico/wasatext/service/api/parsers"
 	"github.com/ciottolomaggico/wasatext/service/api/routes"
 	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
-	"github.com/ciottolomaggico/wasatext/service/utils/validators"
+	"github.com/ciottolomaggico/wasatext/service/validators"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
@@ -24,19 +25,19 @@ func (router UserRouter) ListRoutes() []routes.Route {
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID",
+			"/users/:userUUID",
 			http.MethodGet,
 			router.GetUser,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/username",
+			"/users/:userUUID/username",
 			http.MethodPut,
 			router.SetMyUsername,
 			true,
 		),
 		routes.New(
-			"/users/:UserUUID/avatar",
+			"/users/:userUUID/avatar",
 			http.MethodPut,
 			router.SetMyPhoto,
 			true,
@@ -44,117 +45,99 @@ func (router UserRouter) ListRoutes() []routes.Route {
 	}
 }
 
-func (router UserRouter) GetUsers(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router UserRouter) GetUsers(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	// Get query parameters and validate them
-	paginationParams, err := ParseAndValidatePaginationParams(r.URL)
+	paginationParams, err := parsers.ParseAndValidatePaginationParams(r.URL)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+		return err
 	}
 
 	// retrieve the list of users based on query parameters
 	users, err := router.Controller.GetUsers(paginationParams)
-
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
 	// serialize the list and send
-	views.SendJson(w, users)
-	return
+	return views.SendJson(w, users)
 }
 
-func (router UserRouter) GetUser(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router UserRouter) GetUser(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	// Get url parameters and validate them
 	urlParams := UserUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	// retrieve the user by its "uuid"
 	user, err := router.Controller.GetUser(urlParams.UserUUID)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
 	// serialize user and send
-	views.SendJson(w, user)
-	return
+	return views.SendJson(w, user)
 }
 
-func (router UserRouter) SetMyUsername(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router UserRouter) SetMyUsername(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	// Get url parameters and validate them
 	urlParams := UserUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	// check if "uuid" in url param correspond to the authed user
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	// retrieve body that contains new username
 	requestBody := UsernameRequestBody{}
-	if err := ParseAndValidateRequestBody(r, &requestBody); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateRequestBody(r, &requestBody); err != nil {
+		return err
 	}
 
 	// invoke the controllers
 	updatedUser, err := router.Controller.SetMyUsername(authedUserUUID, requestBody.Name)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	views.SendJson(w, updatedUser)
+	return views.SendJson(w, updatedUser)
 }
 
-func (router UserRouter) SetMyPhoto(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) {
+func (router UserRouter) SetMyPhoto(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	// Get url parameters and validate them
 	urlParams := UserUrlParams{}
-	if err := ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
 	}
 
 	// check if "uuid" in url param correspond to the authed user
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		w.WriteHeader(http.StatusForbidden)
-		return
+		return api_errors.Forbidden()
 	}
 
 	requestBody := UserPhotoRequestBody{}
-	if err := ParseAndValidateMultipartRequestBody(r, &requestBody); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err := parsers.ParseAndValidateMultipartRequestBody(r, &requestBody); err != nil {
+		return err
 	}
 	file, err := requestBody.Photo.Open()
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 	defer file.Close()
 
-	if err := validators.ImageIsValid(requestBody.Photo.Filename, requestBody.Photo.Size, file); err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		return
+	if err = validators.ImageIsValid(requestBody.Photo.Filename, requestBody.Photo.Size, file); err != nil {
+		return err
 	}
 
 	updatedUser, err := router.Controller.SetMyPhoto(authedUserUUID, filepath.Ext(requestBody.Photo.Filename), file)
 	if err != nil {
-		fmt.Println(err)
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+		return err
 	}
 
-	views.SendJson(w, updatedUser)
+	return views.SendJson(w, updatedUser)
 }

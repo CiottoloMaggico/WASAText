@@ -10,22 +10,28 @@ import (
 var NoResult = errors.New("no rows in result set")
 var ForeignKeyConstraint = errors.New("foreign key constraint violation")
 var UniqueConstraint = errors.New("unique constraint violation")
+var CheckConstraint = errors.New("check constraint violation")
+var TriggerConstraint = errors.New("trigger constraint violation")
 var UnexpectedError = errors.New("unexpected error")
 
-func HandleSqlError(err error) error {
-	fmt.Println(err)
+func DBError(err error) error {
 	var sqlErr sqlite3.Error
-	if !errors.As(err, &sqlErr) {
-		if errors.Is(err, sql.ErrNoRows) {
-			return NoResult
+	if errors.As(err, &sqlErr) {
+		fmt.Println(err)
+		sqlExtendedCode := sqlErr.ExtendedCode
+		switch sqlExtendedCode {
+		case sqlite3.ErrConstraintForeignKey:
+			return ForeignKeyConstraint
+		case sqlite3.ErrConstraintUnique:
+			return UniqueConstraint
+		case sqlite3.ErrConstraintCheck:
+			return CheckConstraint
+		case sqlite3.ErrConstraintTrigger:
+			return TriggerConstraint
 		}
-		return UnexpectedError
-	}
-
-	if errors.Is(sqlErr.Code, sqlite3.ErrConstraint) {
-		return ForeignKeyConstraint
-	} else if errors.Is(sqlErr.Code, sqlite3.ErrConstraintUnique) {
-		return UniqueConstraint
+	} else if errors.Is(err, sql.ErrNoRows) {
+		fmt.Println(err)
+		return NoResult
 	}
 
 	return UnexpectedError
