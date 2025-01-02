@@ -1,9 +1,9 @@
 /bin/
 /pkg/
 /src/
+/doc/api/
 /linters
-/media/images/
-/doc/api
+/media/images/*
 .idea/
 *.iml
 *.exe
