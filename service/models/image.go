@@ -9,6 +9,7 @@ import (
 	_ "image/jpeg"
 	_ "image/png"
 	"io"
+	"strings"
 )
 
 type Image struct {
@@ -52,7 +53,7 @@ func (model ImageModelImpl) CreateImage(extension string, file io.ReadSeeker) (*
 		return nil, err
 	}
 	filename, width, height := newUUID.String()+extension, cfg.Width, cfg.Height
-	path := model.Storage.GetFilePath(filename)
+	path := strings.TrimPrefix(model.Storage.GetFilePath(filename), ".")
 
 	if _, err := file.Seek(0, io.SeekStart); err != nil {
 		return nil, err
