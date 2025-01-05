@@ -1,26 +1,51 @@
+chatSummaryExample:
+  value:
+    id: 0
+    name: PaoloCannone07
+    image:
+      id: 532
+      width: 1024
+      height: 1024
+      fullUrl: "https://wasatext.com/images/532"
+    type: chat
+    read: false
 chatExample:
   value:
     id: 0
     name: PaoloCannone07
-    photo:
-      $ref: "../schemas/_index.yaml#/Image"
-    type: one_to_one
-    participants: ["PaoloCannone07", "GiorgioSpek"]
+    image:
+      id: 532
+      width: 1024
+      height: 1024
+      fullUrl: "https://wasatext.com/images/532"
+    type: chat
+    read: false
+    participants: [ "PaoloCannone07", "GiorgioSpek" ]
 messageExample:
   value:
     id: 12
     conversationId: 1
-    authorId: 12
+    author:
+      uuid: "ea43ab1d-5ec4-423e-b371-42fc05eae46e"
+      username: "PaoloCannone07"
+      photo:
+        id: 532
+        width: 1024
+        height: 1024
+        fullUrl: "https://wasatext.com/images/532"
     sendAt: "2024-11-18T14:42:08.062Z"
     status: "sent"
     repliedMessageId: 11
-    attachmentUrl: "https://www.wasatext.com/images/123"
+    attachment:
+      id: 532
+      width: 1024
+      height: 1024
+      fullUrl: "https://wasatext.com/images/532"
     content: "ciao come va"
 commentExample:
   value:
-    id : 20
     messageId: 12
-    authorId: 12
+    authorUuid: "ea43ab1d-5ec4-423e-b371-42fc05eae46e"
     content: "😁"
 userExample:
   value:

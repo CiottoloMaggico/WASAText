@@ -1,10 +1,10 @@
-userId:
-  name: user_id
+userUUID:
+  name: user_uuid
   in: path
-  description: Numeric id of the user
+  description: uuid v4 that identifies the user
   required: true
   schema:
-    $ref: "../schemas/_index.yaml#/ReadOnlyInt64"
+    $ref: "../schemas/_index.yaml#/Uuid"
 
 conversationId:
   name: conv_id
@@ -45,22 +45,3 @@ pageNumber:
   required: false
   schema:
     $ref: "../schemas/_index.yaml#/CustomInt32"
-
-sortConversations:
-  name: sort
-  description: sort the returned set by read/unread property, first unread then read or otherwise
-  in: query
-  schema:
-    type: string
-    default: "read"
-    enum: [ "read", "read_desc" ]
-
-sortMessages:
-  name: sort
-  in: query
-  description: Sort messages
-  schema:
-    type: string
-    default: "sent_desc"
-    enum: [ "sent", "sent_desc" ]
-

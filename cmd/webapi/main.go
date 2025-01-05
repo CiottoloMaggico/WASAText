@@ -111,7 +111,9 @@ func run() error {
 
 	// Create the API router
 	apirouter, err := api.New(app.CreateAuthMiddleware(), api.Config{
-		Logger: logger,
+		Logger:          logger,
+		StaticFilesUrl:  cfg.MediaStorage.UrlPath,
+		StaticFilesPath: cfg.MediaStorage.RootDir,
 	})
 	if err != nil {
 		logger.WithError(err).Error("error creating the API server instance")

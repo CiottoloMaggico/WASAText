@@ -1,6 +1,6 @@
 ChangeGroupPhoto:
   content:
-    application/json:
+    multipart/form-data:
       schema:
         description: Input schema used to change the photo of a group
         type: object
@@ -10,12 +10,12 @@ ChangeGroupPhoto:
 
 ChangeUserPhoto:
   content:
-    application/json:
+    multipart/form-data:
       schema:
         description: Input schema used to change the profile photo of the signed in user
         type: object
         properties:
-          image:
+          photo:
             $ref: "../schemas/_index.yaml#/ImageType"
 
 ChangeGroupName:
@@ -35,13 +35,13 @@ ChangeUsername:
         description: Input schema used to change the username of the signed-in user
         type: object
         properties:
-          name:
+          username:
             $ref: "../schemas/_index.yaml#/Username"
 
 GroupCreation:
   required: true
   content:
-    application/json:
+    multipart/form-data:
       schema:
         description: Input schema used to create a new group by the signed-in user
         type: object
@@ -51,14 +51,6 @@ GroupCreation:
             $ref: "../schemas/_index.yaml#/ConversationName"
           image:
             $ref: "../schemas/_index.yaml#/ImageType"
-          participants:
-            description: List of usernames to add in the group
-            type: array
-            minItems: 0
-            maxItems: 100
-            uniqueItems: true
-            items:
-              $ref: "../schemas/_index.yaml#/Username"
 
 AddUserToGroup:
   required: true
@@ -70,13 +62,13 @@ AddUserToGroup:
         required: [ "participants" ]
         properties:
           participants:
-            description: List of usernames to add in the group
+            description: List of users uuid to add in the group
             type: array
-            minItems: 0
-            maxItems: 100
+            minItems: 1
+            maxItems: 200
             uniqueItems: true
             items:
-              $ref: "../schemas/_index.yaml#/Username"
+              $ref: "../schemas/_index.yaml#/Uuid"
 
 ChatCreation:
   required: true
@@ -92,7 +84,7 @@ ChatCreation:
 
 MessageCreation:
   content:
-    application/json:
+    multipart/form-data:
       schema:
         description: Input schema used to send a message by the signed-in user
         type: object

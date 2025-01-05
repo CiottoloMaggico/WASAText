@@ -44,12 +44,15 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"github.com/sirupsen/logrus"
 	"net/http"
+	"os"
 )
 
 // Config is used to provide dependencies and configuration to the New function.
 type Config struct {
 	// Logger where log entries are sent
-	Logger logrus.FieldLogger
+	Logger          logrus.FieldLogger
+	StaticFilesUrl  string
+	StaticFilesPath string
 }
 
 // Router is the package API interface representing an API handler builder
@@ -76,12 +79,15 @@ func New(authMiddleware middlewares.AuthMiddleware, cfg Config) (Router, error) 
 	if cfg.Logger == nil {
 		return nil, errors.New("logger is required")
 	}
-
+	if _, err := os.Stat(cfg.StaticFilesPath); errors.Is(err, os.ErrNotExist) {
+		return nil, errors.New("static files path does not exist")
+	}
 	// Create a new router where we will register HTTP endpoints. The server will pass requests to this router to be
 	// handled.
 	router := httprouter.New()
 	router.RedirectTrailingSlash = false
 	router.RedirectFixedPath = false
+	router.ServeFiles(cfg.StaticFilesUrl, http.Dir(cfg.StaticFilesPath))
 
 	return &_router{
 		router:         router,

@@ -3,7 +3,6 @@ package database
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"github.com/mattn/go-sqlite3"
 )
 
@@ -17,7 +16,6 @@ var UnexpectedError = errors.New("unexpected error")
 func DBError(err error) error {
 	var sqlErr sqlite3.Error
 	if errors.As(err, &sqlErr) {
-		fmt.Println(err)
 		sqlExtendedCode := sqlErr.ExtendedCode
 		switch sqlExtendedCode {
 		case sqlite3.ErrConstraintForeignKey:
@@ -30,7 +28,6 @@ func DBError(err error) error {
 			return TriggerConstraint
 		}
 	} else if errors.Is(err, sql.ErrNoRows) {
-		fmt.Println(err)
 		return NoResult
 	}
 

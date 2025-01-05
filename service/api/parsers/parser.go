@@ -168,6 +168,7 @@ func ParseAndValidateUrlParams(ps httprouter.Params, res interface{}) error {
 }
 
 func ParseAndValidateMultipartRequestBody(req *http.Request, res interface{}) error {
+	// TODO: if i insert a name that isn't in the struct but is required panic check request body with photo instead of image
 	if err := req.ParseMultipartForm(0); err != nil {
 		return api_errors.InvalidMultipartBody()
 	}

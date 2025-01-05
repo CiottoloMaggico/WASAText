@@ -15,7 +15,7 @@
             description: Input schema used to login a user
             type: object
             properties:
-              name:
+              username:
                 $ref: "../schemas/_index.yaml#/Username"
     responses:
       "201":
@@ -64,9 +64,9 @@
         $ref: "../responses/_index.yaml#/429"
       default:
         $ref: "../responses/_index.yaml#/default"
-/users/{user_id}:
+/users/{user_uuid}:
   parameters:
-    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/userUUID"
   get:
     tags: ["users"]
     summary: Get detailed information about an user
@@ -93,9 +93,9 @@
         $ref: "../responses/_index.yaml#/429"
       default:
         $ref: "../responses/_index.yaml#/default"
-/user/{user_id}/username:
+/user/{user_uuid}/username:
   parameters:
-    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/userUUID"
   put:
     tags:
       - users
@@ -128,9 +128,9 @@
       default:
         $ref: "../responses/_index.yaml#/default"
 
-/user/{user_id}/photo:
+/user/{user_uuid}/avatar:
   parameters:
-    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/userUUID"
   put:
     tags:
       - users
@@ -162,9 +162,9 @@
         $ref: "../responses/_index.yaml#/429"
       default:
         $ref: "../responses/_index.yaml#/default"
-/users/{user_id}/chats:
+/users/{user_uuid}/chats:
   parameters:
-    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/userUUID"
   post:
     tags:
       - chats
@@ -180,10 +180,10 @@
         content:
           application/json:
             schema:
-              $ref: "../schemas/_index.yaml#/Conversation"
+              $ref: "../schemas/_index.yaml#/ConversationSummary"
             examples:
               chatExample:
-                $ref: "../examples/_index.yaml#/chatExample"
+                $ref: "../examples/_index.yaml#/chatSummaryExample"
       "400":
         $ref: "../responses/_index.yaml#/400"
       "401":
@@ -199,9 +199,9 @@
       default:
         $ref: "../responses/_index.yaml#/default"
 
-/users/{user_id}/groups:
+/users/{user_uuid}/groups:
   parameters:
-    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/userUUID"
   post:
     tags:
       - groups
@@ -217,7 +217,7 @@
         content:
           application/json:
             schema:
-              $ref: "../schemas/_index.yaml#/Conversation"
+              $ref: "../schemas/_index.yaml#/ConversationSummary"
       "400":
         $ref: "../responses/_index.yaml#/400"
       "401":
@@ -232,9 +232,9 @@
         $ref: "../responses/_index.yaml#/429"
       default:
         $ref: "../responses/_index.yaml#/default"
-/users/{user_id}/groups/{group_id}:
+/users/{user_uuid}/groups/{group_id}:
   parameters:
-    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/userUUID"
     - $ref: "../parameters/_index.yaml#/groupId"
   put:
     tags:
@@ -274,8 +274,8 @@
       This method removes the user from the participants of the group specified in the parameters
     operationId: leaveGroup
     responses:
-      "200":
-        $ref: "../responses/_index.yaml#/200"
+      "204":
+        $ref: "../responses/_index.yaml#/204"
       "401":
         $ref: "../responses/_index.yaml#/401"
       "403":
@@ -288,9 +288,9 @@
         $ref: "../responses/_index.yaml#/429"
       default:
         $ref: "../responses/_index.yaml#/default"
-/users/{user_id}/groups/{group_id}/name:
+/users/{user_uuid}/groups/{group_id}/name:
   parameters:
-    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/userUUID"
     - $ref: "../parameters/_index.yaml#/groupId"
   put:
     tags:
@@ -323,9 +323,9 @@
       default:
         $ref: "../responses/_index.yaml#/default"
 
-/users/{user_id}/groups/{group_id}/photo:
+/users/{user_uuid}/groups/{group_id}/photo:
   parameters:
-    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/userUUID"
     - $ref: "../parameters/_index.yaml#/groupId"
   put:
     tags:
@@ -334,8 +334,6 @@
     description: |
       This method allows participants to update the group photo
     operationId: setGroupPhoto
-    parameters:
-      - $ref: "../parameters/_index.yaml#/groupId"
     requestBody:
       $ref: "../requestBodies/_index.yaml#/ChangeGroupPhoto"
     responses:
@@ -359,9 +357,9 @@
         $ref: "../responses/_index.yaml#/429"
       default:
         $ref: "../responses/_index.yaml#/default"
-/users/{user_id}/conversations:
+/users/{user_uuid}/conversations:
   parameters:
-    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/userUUID"
   get:
     tags:
       - conversations
@@ -372,16 +370,15 @@
     parameters:
       - $ref: "../parameters/_index.yaml#/pageOffset"
       - $ref: "../parameters/_index.yaml#/pageNumber"
-      - $ref: "../parameters/_index.yaml#/sortConversations"
     responses:
       "200":
-        description: Succesful operation
+        description: "Successful operation"
         content:
           application/json:
             schema:
               description: Returns a paginated list of user conversations
               type: object
-              required: ["conversations"]
+              required: ["pagination", "conversations"]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
@@ -416,13 +413,13 @@
     operationId: setDelivered
     responses:
       "200":
-        description: Succesful operation
+        description: Successful operation
         content:
           application/json:
             schema:
               description: Returns a paginated list of user conversations
               type: object
-              required: ["conversations"]
+              required: ["pagination","conversations"]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
@@ -446,9 +443,9 @@
         $ref: "../responses/_index.yaml#/429"
       default:
         $ref: "../responses/_index.yaml#/default"
-/users/{user_id}/conversations/{conv_id}:
+/users/{user_uuid}/conversations/{conv_id}:
   parameters:
-    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/userUUID"
     - $ref: "../parameters/_index.yaml#/conversationId"
   get:
     tags: ["conversations"]
@@ -458,7 +455,7 @@
     operationId: getConversation
     responses:
       "200":
-        description: Succesful operation
+        description: Successful operation
         content:
           application/json:
             schema:
@@ -478,9 +475,9 @@
         $ref: "../responses/_index.yaml#/429"
       default:
         $ref: "../responses/_index.yaml#/default"
-/users/{user_id}/conversations/{conv_id}/messages:
+/users/{user_uuid}/conversations/{conv_id}/messages:
   parameters:
-    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/userUUID"
     - $ref: "../parameters/_index.yaml#/conversationId"
   post:
     tags:
@@ -524,13 +521,13 @@
     operationId: setSeen
     responses:
       "200":
-        description: Succesful operation
+        description: Successful operation
         content:
           application/json:
             schema:
               description: Returns a paginated list of conversation messages
               type: object
-              required: ["messages"]
+              required: ["pagination", "messages"]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
@@ -564,16 +561,15 @@
     parameters:
       - $ref: "../parameters/_index.yaml#/pageOffset"
       - $ref: "../parameters/_index.yaml#/pageNumber"
-      - $ref: "../parameters/_index.yaml#/sortMessages"
     responses:
       "200":
-        description: Succesful operation
+        description: Successful operation
         content:
           application/json:
             schema:
               description: Returns a paginated list of conversation messages
               type: object
-              required: ["messages"]
+              required: ["pagination","messages"]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
@@ -598,9 +594,9 @@
       default:
         $ref: "../responses/_index.yaml#/default"
 
-/users/{user_id}/conversations/{conv_id}/messages/{mess_id}:
+/users/{user_uuid}/conversations/{conv_id}/messages/{mess_id}:
   parameters:
-    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/userUUID"
     - $ref: "../parameters/_index.yaml#/conversationId"
     - $ref: "../parameters/_index.yaml#/messageId"
   get:
@@ -641,8 +637,8 @@
       Delete the message from the conversation
     operationId: deleteMessage
     responses:
-      "200":
-        $ref: "../responses/_index.yaml#/200"
+      "204":
+        $ref: "../responses/_index.yaml#/204"
       "401":
         $ref: "../responses/_index.yaml#/401"
       "403":
@@ -655,9 +651,9 @@
         $ref: "../responses/_index.yaml#/429"
       default:
         $ref: "../responses/_index.yaml#/default"
-/users/{user_id}/conversations/{conv_id}/messages/{mess_id}/comments:
+/users/{user_uuid}/conversations/{conv_id}/messages/{mess_id}/comments:
   parameters:
-    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/userUUID"
     - $ref: "../parameters/_index.yaml#/conversationId"
     - $ref: "../parameters/_index.yaml#/messageId"
   put:
@@ -670,8 +666,8 @@
     requestBody:
       $ref: "../requestBodies/_index.yaml#/CommentCreation"
     responses:
-      "201":
-        description: "Comment created"
+      "200":
+        description: "Successful operation"
         content:
           application/json:
             schema:
@@ -699,8 +695,8 @@
     description: Delete the user comment for the given message
     operationId: uncommentMessage
     responses:
-      "200":
-        $ref: "../responses/_index.yaml#/200"
+      "204":
+        $ref: "../responses/_index.yaml#/204"
       "401":
         $ref: "../responses/_index.yaml#/401"
       "403":
@@ -714,9 +710,9 @@
       default:
         $ref: "../responses/_index.yaml#/default"
 
-/users/{user_id}/conversations/{conv_id}/messages/{mess_id}/forward:
+/users/{user_uuid}/conversations/{conv_id}/messages/{mess_id}/forward:
   parameters:
-    - $ref: "../parameters/_index.yaml#/userId"
+    - $ref: "../parameters/_index.yaml#/userUUID"
     - $ref: "../parameters/_index.yaml#/conversationId"
     - $ref: "../parameters/_index.yaml#/messageId"
   post:
@@ -728,8 +724,8 @@
     requestBody:
       $ref: "../requestBodies/_index.yaml#/ForwardMessage"
     responses:
-      "201":
-        description: Message forwarded
+      "200":
+        description: "Successful operation"
         content:
           application/json:
             schema:

@@ -62,13 +62,13 @@ ConversationName:
 ConversationType:
   description: conversations type to specify its type
   type: string
-  enum: [ "group", "one_to_one" ]
+  enum: [ "group", "chat" ]
   readOnly: true
 
 MessageStatus:
   description: list of possible statuses of a message
   type: string
-  enum: [ "sent", "delivered", "read" ]
+  enum: [ "sent", "delivered", "seen" ]
   default: "sent"
 
 HttpStatusCode:
@@ -121,32 +121,40 @@ Image:
 ConversationSummary:
   description: Type used to return less detailed informations about a conversation
   type: object
-  required: [ "id", "name", "photo", "type" ]
+  required: [ "id", "name", "image", "type", "read" ]
   properties:
     id:
       $ref: "#/CustomInt64"
     name:
       $ref: "#/ConversationName"
-    photo:
+    image:
       $ref: "#/Image"
     type:
       $ref: "#/ConversationType"
+    read:
+      description: indicates if there are unread messages in the conversation
+      type: boolean
+      readOnly: true
     latestMessage:
       $ref: "#/Message"
 
 Conversation:
   description: Conversation type for detailed info about a conversation
   type: object
-  required: [ "id", "name", "photo", "type", "participants" ]
+  required: [ "id", "name", "image", "type", "participants", "read" ]
   properties:
     id:
       $ref: "#/CustomInt64"
     name:
       $ref: "#/ConversationName"
-    photo:
+    image:
       $ref: "#/Image"
     type:
       $ref: "#/ConversationType"
+    read:
+      description: indicates if there are unread messages in the conversation
+      type: boolean
+      readOnly: true
     latestMessage:
       $ref: "#/Message"
     participants:
@@ -162,14 +170,14 @@ Conversation:
 Message:
   description: Message type
   type: object
-  required: [ "id", "conversationId", "authorId", "sendAt", "status" ]
+  required: [ "id", "conversationId", "author", "sendAt", "status" ]
   properties:
     id:
       $ref: "#/CustomInt64"
     conversationId:
       $ref: "#/CustomInt64"
-    authorId:
-      $ref: "#/CustomInt64"
+    author:
+      $ref: "#/User"
     sendAt:
       description: timestamp of when the message was sent
       type: string
@@ -181,8 +189,8 @@ Message:
       $ref: "#/MessageStatus"
     repliedMessageId:
       $ref: "#/CustomInt64"
-    attachmentUrl:
-      $ref: "#/ReadOnlyUrl"
+    attachment:
+      $ref: "#/Image"
     content:
       description: text content of the message
       type: string
@@ -194,12 +202,10 @@ Comment:
   description: Comment type
   type: object
   properties:
-    id:
-      $ref: "#/CustomInt64"
     messageId:
       $ref: "#/CustomInt64"
-    authorId:
-      $ref: "#/CustomInt64"
+    authorUuid:
+      $ref: "#/Uuid"
     content:
       description: A 1 emoji comment
       type: string

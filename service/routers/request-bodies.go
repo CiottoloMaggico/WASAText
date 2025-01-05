@@ -5,7 +5,7 @@ import (
 )
 
 type UsernameRequestBody struct {
-	Name string `json:"name" validate:"required,min=3,max=16"`
+	Name string `json:"username" validate:"required,min=3,max=16"`
 }
 
 type UserPhotoRequestBody struct {

@@ -42,7 +42,7 @@ paths:
               description: Input schema used to login a user
               type: object
               properties:
-                name:
+                username:
                   $ref: '#/components/schemas/Username'
       responses:
         '201':
@@ -93,9 +93,9 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
-  '/users/{user_id}':
+  '/users/{user_uuid}':
     parameters:
-      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/userUUID'
     get:
       tags:
         - users
@@ -123,9 +123,9 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
-  '/user/{user_id}/username':
+  '/user/{user_uuid}/username':
     parameters:
-      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/userUUID'
     put:
       tags:
         - users
@@ -157,9 +157,9 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
-  '/user/{user_id}/photo':
+  '/user/{user_uuid}/avatar':
     parameters:
-      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/userUUID'
     put:
       tags:
         - users
@@ -191,9 +191,9 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
-  '/users/{user_id}/chats':
+  '/users/{user_uuid}/chats':
     parameters:
-      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/userUUID'
     post:
       tags:
         - chats
@@ -209,10 +209,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Conversation'
+                $ref: '#/components/schemas/ConversationSummary'
               examples:
                 chatExample:
-                  $ref: '#/components/examples/chatExample'
+                  $ref: '#/components/examples/chatSummaryExample'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -227,9 +227,9 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
-  '/users/{user_id}/groups':
+  '/users/{user_uuid}/groups':
     parameters:
-      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/userUUID'
     post:
       tags:
         - groups
@@ -245,7 +245,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Conversation'
+                $ref: '#/components/schemas/ConversationSummary'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -260,9 +260,9 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
-  '/users/{user_id}/groups/{group_id}':
+  '/users/{user_uuid}/groups/{group_id}':
     parameters:
-      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/userUUID'
       - $ref: '#/components/parameters/groupId'
     put:
       tags:
@@ -302,8 +302,8 @@ paths:
         This method removes the user from the participants of the group specified in the parameters
       operationId: leaveGroup
       responses:
-        '200':
-          $ref: '#/components/responses/200'
+        '204':
+          $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -316,9 +316,9 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
-  '/users/{user_id}/groups/{group_id}/name':
+  '/users/{user_uuid}/groups/{group_id}/name':
     parameters:
-      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/userUUID'
       - $ref: '#/components/parameters/groupId'
     put:
       tags:
@@ -350,9 +350,9 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
-  '/users/{user_id}/groups/{group_id}/photo':
+  '/users/{user_uuid}/groups/{group_id}/photo':
     parameters:
-      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/userUUID'
       - $ref: '#/components/parameters/groupId'
     put:
       tags:
@@ -361,8 +361,6 @@ paths:
       description: |
         This method allows participants to update the group photo
       operationId: setGroupPhoto
-      parameters:
-        - $ref: '#/components/parameters/groupId'
       requestBody:
         $ref: '#/components/requestBodies/ChangeGroupPhoto'
       responses:
@@ -386,9 +384,9 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
-  '/users/{user_id}/conversations':
+  '/users/{user_uuid}/conversations':
     parameters:
-      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/userUUID'
     get:
       tags:
         - conversations
@@ -399,16 +397,16 @@ paths:
       parameters:
         - $ref: '#/components/parameters/pageOffset'
         - $ref: '#/components/parameters/pageNumber'
-        - $ref: '#/components/parameters/sortConversations'
       responses:
         '200':
-          description: Succesful operation
+          description: Successful operation
           content:
             application/json:
               schema:
                 description: Returns a paginated list of user conversations
                 type: object
                 required:
+                  - pagination
                   - conversations
                 properties:
                   pagination:
@@ -444,13 +442,14 @@ paths:
       operationId: setDelivered
       responses:
         '200':
-          description: Succesful operation
+          description: Successful operation
           content:
             application/json:
               schema:
                 description: Returns a paginated list of user conversations
                 type: object
                 required:
+                  - pagination
                   - conversations
                 properties:
                   pagination:
@@ -475,9 +474,9 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
-  '/users/{user_id}/conversations/{conv_id}':
+  '/users/{user_uuid}/conversations/{conv_id}':
     parameters:
-      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/userUUID'
       - $ref: '#/components/parameters/conversationId'
     get:
       tags:
@@ -488,7 +487,7 @@ paths:
       operationId: getConversation
       responses:
         '200':
-          description: Succesful operation
+          description: Successful operation
           content:
             application/json:
               schema:
@@ -508,9 +507,9 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
-  '/users/{user_id}/conversations/{conv_id}/messages':
+  '/users/{user_uuid}/conversations/{conv_id}/messages':
     parameters:
-      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/userUUID'
       - $ref: '#/components/parameters/conversationId'
     post:
       tags:
@@ -554,13 +553,14 @@ paths:
       operationId: setSeen
       responses:
         '200':
-          description: Succesful operation
+          description: Successful operation
           content:
             application/json:
               schema:
                 description: Returns a paginated list of conversation messages
                 type: object
                 required:
+                  - pagination
                   - messages
                 properties:
                   pagination:
@@ -595,16 +595,16 @@ paths:
       parameters:
         - $ref: '#/components/parameters/pageOffset'
         - $ref: '#/components/parameters/pageNumber'
-        - $ref: '#/components/parameters/sortMessages'
       responses:
         '200':
-          description: Succesful operation
+          description: Successful operation
           content:
             application/json:
               schema:
                 description: Returns a paginated list of conversation messages
                 type: object
                 required:
+                  - pagination
                   - messages
                 properties:
                   pagination:
@@ -629,9 +629,9 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
-  '/users/{user_id}/conversations/{conv_id}/messages/{mess_id}':
+  '/users/{user_uuid}/conversations/{conv_id}/messages/{mess_id}':
     parameters:
-      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/userUUID'
       - $ref: '#/components/parameters/conversationId'
       - $ref: '#/components/parameters/messageId'
     get:
@@ -671,8 +671,8 @@ paths:
         Delete the message from the conversation
       operationId: deleteMessage
       responses:
-        '200':
-          $ref: '#/components/responses/200'
+        '204':
+          $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -685,9 +685,9 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
-  '/users/{user_id}/conversations/{conv_id}/messages/{mess_id}/comments':
+  '/users/{user_uuid}/conversations/{conv_id}/messages/{mess_id}/comments':
     parameters:
-      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/userUUID'
       - $ref: '#/components/parameters/conversationId'
       - $ref: '#/components/parameters/messageId'
     put:
@@ -700,8 +700,8 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/CommentCreation'
       responses:
-        '201':
-          description: Comment created
+        '200':
+          description: Successful operation
           content:
             application/json:
               schema:
@@ -728,8 +728,8 @@ paths:
       description: Delete the user comment for the given message
       operationId: uncommentMessage
       responses:
-        '200':
-          $ref: '#/components/responses/200'
+        '204':
+          $ref: '#/components/responses/204'
         '401':
           $ref: '#/components/responses/401'
         '403':
@@ -742,9 +742,9 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
-  '/users/{user_id}/conversations/{conv_id}/messages/{mess_id}/forward':
+  '/users/{user_uuid}/conversations/{conv_id}/messages/{mess_id}/forward':
     parameters:
-      - $ref: '#/components/parameters/userId'
+      - $ref: '#/components/parameters/userUUID'
       - $ref: '#/components/parameters/conversationId'
       - $ref: '#/components/parameters/messageId'
     post:
@@ -756,8 +756,8 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/ForwardMessage'
       responses:
-        '201':
-          description: Message forwarded
+        '200':
+          description: Successful operation
           content:
             application/json:
               schema:
@@ -838,7 +838,7 @@ components:
       type: string
       enum:
         - group
-        - one_to_one
+        - chat
       readOnly: true
     MessageStatus:
       description: list of possible statuses of a message
@@ -846,7 +846,7 @@ components:
       enum:
         - sent
         - delivered
-        - read
+        - seen
       default: sent
     HttpStatusCode:
       description: http status code type
@@ -896,17 +896,22 @@ components:
       required:
         - id
         - name
-        - photo
+        - image
         - type
+        - read
       properties:
         id:
           $ref: '#/components/schemas/CustomInt64'
         name:
           $ref: '#/components/schemas/ConversationName'
-        photo:
+        image:
           $ref: '#/components/schemas/Image'
         type:
           $ref: '#/components/schemas/ConversationType'
+        read:
+          description: indicates if there are unread messages in the conversation
+          type: boolean
+          readOnly: true
         latestMessage:
           $ref: '#/components/schemas/Message'
     Conversation:
@@ -915,18 +920,23 @@ components:
       required:
         - id
         - name
-        - photo
+        - image
         - type
         - participants
+        - read
       properties:
         id:
           $ref: '#/components/schemas/CustomInt64'
         name:
           $ref: '#/components/schemas/ConversationName'
-        photo:
+        image:
           $ref: '#/components/schemas/Image'
         type:
           $ref: '#/components/schemas/ConversationType'
+        read:
+          description: indicates if there are unread messages in the conversation
+          type: boolean
+          readOnly: true
         latestMessage:
           $ref: '#/components/schemas/Message'
         participants:
@@ -944,7 +954,7 @@ components:
       required:
         - id
         - conversationId
-        - authorId
+        - author
         - sendAt
         - status
       properties:
@@ -952,8 +962,8 @@ components:
           $ref: '#/components/schemas/CustomInt64'
         conversationId:
           $ref: '#/components/schemas/CustomInt64'
-        authorId:
-          $ref: '#/components/schemas/CustomInt64'
+        author:
+          $ref: '#/components/schemas/User'
         sendAt:
           description: timestamp of when the message was sent
           type: string
@@ -965,8 +975,8 @@ components:
           $ref: '#/components/schemas/MessageStatus'
         repliedMessageId:
           $ref: '#/components/schemas/CustomInt64'
-        attachmentUrl:
-          $ref: '#/components/schemas/ReadOnlyUrl'
+        attachment:
+          $ref: '#/components/schemas/Image'
         content:
           description: text content of the message
           type: string
@@ -977,12 +987,10 @@ components:
       description: Comment type
       type: object
       properties:
-        id:
-          $ref: '#/components/schemas/CustomInt64'
         messageId:
           $ref: '#/components/schemas/CustomInt64'
-        authorId:
-          $ref: '#/components/schemas/CustomInt64'
+        authorUuid:
+          $ref: '#/components/schemas/Uuid'
         content:
           description: A 1 emoji comment
           type: string
@@ -1016,13 +1024,13 @@ components:
         previousPage:
           $ref: '#/components/schemas/ReadOnlyUrl'
   parameters:
-    userId:
-      name: user_id
+    userUUID:
+      name: user_uuid
       in: path
-      description: Numeric id of the user
+      description: uuid v4 that identifies the user
       required: true
       schema:
-        $ref: '#/components/schemas/ReadOnlyInt64'
+        $ref: '#/components/schemas/Uuid'
     conversationId:
       name: conv_id
       in: path
@@ -1058,30 +1066,10 @@ components:
       required: false
       schema:
         $ref: '#/components/schemas/CustomInt32'
-    sortConversations:
-      name: sort
-      description: 'sort the returned set by read/unread property, first unread then read or otherwise'
-      in: query
-      schema:
-        type: string
-        default: read
-        enum:
-          - read
-          - read_desc
-    sortMessages:
-      name: sort
-      in: query
-      description: Sort messages
-      schema:
-        type: string
-        default: sent_desc
-        enum:
-          - sent
-          - sent_desc
   requestBodies:
     ChangeGroupPhoto:
       content:
-        application/json:
+        multipart/form-data:
           schema:
             description: Input schema used to change the photo of a group
             type: object
@@ -1090,12 +1078,12 @@ components:
                 $ref: '#/components/schemas/ImageType'
     ChangeUserPhoto:
       content:
-        application/json:
+        multipart/form-data:
           schema:
             description: Input schema used to change the profile photo of the signed in user
             type: object
             properties:
-              image:
+              photo:
                 $ref: '#/components/schemas/ImageType'
     ChangeGroupName:
       content:
@@ -1113,12 +1101,12 @@ components:
             description: Input schema used to change the username of the signed-in user
             type: object
             properties:
-              name:
+              username:
                 $ref: '#/components/schemas/Username'
     GroupCreation:
       required: true
       content:
-        application/json:
+        multipart/form-data:
           schema:
             description: Input schema used to create a new group by the signed-in user
             type: object
@@ -1129,14 +1117,6 @@ components:
                 $ref: '#/components/schemas/ConversationName'
               image:
                 $ref: '#/components/schemas/ImageType'
-              participants:
-                description: List of usernames to add in the group
-                type: array
-                minItems: 0
-                maxItems: 100
-                uniqueItems: true
-                items:
-                  $ref: '#/components/schemas/Username'
     AddUserToGroup:
       required: true
       content:
@@ -1148,13 +1128,13 @@ components:
               - participants
             properties:
               participants:
-                description: List of usernames to add in the group
+                description: List of users uuid to add in the group
                 type: array
-                minItems: 0
-                maxItems: 100
+                minItems: 1
+                maxItems: 200
                 uniqueItems: true
                 items:
-                  $ref: '#/components/schemas/Username'
+                  $ref: '#/components/schemas/Uuid'
     ChatCreation:
       required: true
       content:
@@ -1169,7 +1149,7 @@ components:
                 $ref: '#/components/schemas/Uuid'
     MessageCreation:
       content:
-        application/json:
+        multipart/form-data:
           schema:
             description: Input schema used to send a message by the signed-in user
             type: object
@@ -1208,15 +1188,8 @@ components:
               destConversationId:
                 $ref: '#/components/schemas/CustomInt64'
   responses:
-    '200':
-      description: Successful operation
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/HttpStatus'
-          example:
-            code: 200
-            description: All the operations went fine
+    '204':
+      description: No content
     '400':
       description: Bad request
       content:
@@ -1281,13 +1254,28 @@ components:
             code: 500
             description: Unexpected error
   examples:
+    chatSummaryExample:
+      value:
+        id: 0
+        name: PaoloCannone07
+        image:
+          id: 532
+          width: 1024
+          height: 1024
+          fullUrl: 'https://wasatext.com/images/532'
+        type: chat
+        read: false
     chatExample:
       value:
         id: 0
         name: PaoloCannone07
-        photo:
-          $ref: '#/components/schemas/Image'
-        type: one_to_one
+        image:
+          id: 532
+          width: 1024
+          height: 1024
+          fullUrl: 'https://wasatext.com/images/532'
+        type: chat
+        read: false
         participants:
           - PaoloCannone07
           - GiorgioSpek
@@ -1295,17 +1283,27 @@ components:
       value:
         id: 12
         conversationId: 1
-        authorId: 12
+        author:
+          uuid: ea43ab1d-5ec4-423e-b371-42fc05eae46e
+          username: PaoloCannone07
+          photo:
+            id: 532
+            width: 1024
+            height: 1024
+            fullUrl: 'https://wasatext.com/images/532'
         sendAt: '2024-11-18T14:42:08.062Z'
         status: sent
         repliedMessageId: 11
-        attachmentUrl: 'https://www.wasatext.com/images/123'
+        attachment:
+          id: 532
+          width: 1024
+          height: 1024
+          fullUrl: 'https://wasatext.com/images/532'
         content: ciao come va
     commentExample:
       value:
-        id: 20
         messageId: 12
-        authorId: 12
+        authorUuid: ea43ab1d-5ec4-423e-b371-42fc05eae46e
         content: "\U0001F601"
     userExample:
       value:

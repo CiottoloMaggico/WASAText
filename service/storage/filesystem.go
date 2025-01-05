@@ -1,7 +1,6 @@
 package storage
 
 import (
-	"fmt"
 	"io"
 	"os"
 )
@@ -16,11 +15,11 @@ func NewFileSystemStorage(rootDir string) (Storage, error) {
 	}, nil
 }
 
+// TODO: / in url isn't displayed, eg incorrect file saving, totally
 func (fs FilesystemStorage) SaveFile(filename string, content io.Reader) (string, error) {
 	fullPath := fs.rootDir + filename
 	dst, err := os.Create(fullPath)
 	if err != nil {
-		fmt.Println("ciao")
 		return "", err
 	}
 
