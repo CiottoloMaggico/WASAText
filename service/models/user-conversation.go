@@ -49,7 +49,7 @@ WITH UserConversations AS (
 SELECT
     uc.*,
     vm.message_id,
-    MAX(vm.message_sendAt) message_sendAt,
+    vm.message_sendAt message_sendAt,
 	vm.message_deliveredAt,
 	vm.message_seenAt,
 	vm.message_replyTo,
@@ -58,9 +58,12 @@ SELECT
     vm.user_uuid,
 	vm.user_username,
 	vm.image_uuid user_image,
-    CASE WHEN (um.status = 3 OR vm.message_id IS NULL) THEN true ELSE false END message_status
+    CASE
+        WHEN (um.status = 3) THEN true
+        ELSE false
+    END message_status
 FROM UserConversations uc
-LEFT OUTER JOIN ViewMessages vm ON vm.message_conversation = uc.userConversation_id
+LEFT OUTER JOIN ViewLatestMessages vm ON vm.message_conversation = uc.userConversation_id
 LEFT OUTER JOIN User_Message um ON vm.message_id = um.message AND um.user = ?
 WHERE uc.userConversation_id = ?;
 `
@@ -72,7 +75,7 @@ WITH UserConversations AS (
 SELECT
     uc.*,
     vm.message_id,
-    MAX(vm.message_sendAt) message_sendAt,
+    vm.message_sendAt message_sendAt,
 	vm.message_deliveredAt,
 	vm.message_seenAt,
 	vm.message_replyTo,
@@ -81,11 +84,13 @@ SELECT
     vm.user_uuid,
 	vm.user_username,
 	vm.image_uuid user_image,
-    CASE WHEN (um.status = 3 OR vm.message_id IS NULL) THEN true ELSE false END message_status
+    CASE
+        WHEN (um.status = 3) THEN true
+        ELSE false
+    END message_status
 FROM UserConversations uc
-LEFT OUTER JOIN ViewMessages vm ON vm.message_conversation = uc.userConversation_id
+LEFT OUTER JOIN ViewLatestMessages vm ON vm.message_conversation = uc.userConversation_id
 LEFT OUTER JOIN User_Message um ON vm.message_id = um.message AND um.user = ?
-GROUP BY uc.userConversation_id
 ORDER BY um.status ASC
 LIMIT ? OFFSET ?;
 `

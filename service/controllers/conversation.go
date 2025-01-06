@@ -136,7 +136,7 @@ func (controller ConversationControllerImpl) GetUserConversations(requestIssuerU
 	}
 
 	if conversationsCount == 0 {
-		return pagination.ToPaginatedView(paginationPs, conversationsCount, translators.UserConversationListToView(make([]models.UserConversation, 0)))
+		return pagination.ToPaginatedView(paginationPs, conversationsCount, translators.UserConversationListToSummaryView(make([]models.UserConversation, 0)))
 	}
 
 	conversations, err := controller.UserConversationModel.GetUserConversations(requestIssuerUUID, paginationPs.Page, paginationPs.Size)
@@ -144,14 +144,21 @@ func (controller ConversationControllerImpl) GetUserConversations(requestIssuerU
 		return pagination.PaginatedView{}, nil
 	}
 
-	return pagination.ToPaginatedView(paginationPs, conversationsCount, translators.UserConversationListToView(conversations))
+	return pagination.ToPaginatedView(paginationPs, conversationsCount, translators.UserConversationListToSummaryView(conversations))
 }
 
 func (controller ConversationControllerImpl) GetUserConversation(requestIssuerUUID string, conversationId int64) (views.UserConversationView, error) {
 	conversation, err := controller.UserConversationModel.GetUserConversation(requestIssuerUUID, conversationId)
+	if errors.Is(err, database.NoResult) {
+		return views.UserConversationView{}, api_errors.ResourceNotFound()
+	} else if err != nil {
+		return views.UserConversationView{}, err
+	}
+
+	participants, err := controller.ConversationModel.GetConversationParticipants(conversationId)
 	if err != nil {
 		return views.UserConversationView{}, err
 	}
 
-	return translators.UserConversationToView(*conversation), nil
+	return translators.UserConversationToView(*conversation, participants), nil
 }

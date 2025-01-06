@@ -5,12 +5,20 @@ import (
 	"github.com/ciottolomaggico/wasatext/service/api/parsers"
 	"github.com/ciottolomaggico/wasatext/service/api/routes"
 	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
-	"github.com/ciottolomaggico/wasatext/service/validators"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/julienschmidt/httprouter"
+	"mime/multipart"
 	"net/http"
 	"path/filepath"
 )
+
+type UsernameRequestBody struct {
+	Name string `json:"username" validate:"required,min=3,max=16"`
+}
+
+type UserPhotoRequestBody struct {
+	Photo *multipart.FileHeader `form:"photo" validate:"required,image"`
+}
 
 type UserRouter struct {
 	Controller controllers.UserController
@@ -129,10 +137,6 @@ func (router UserRouter) SetMyPhoto(w http.ResponseWriter, r *http.Request, para
 		return err
 	}
 	defer file.Close()
-
-	if err = validators.ImageIsValid(requestBody.Photo.Filename, requestBody.Photo.Size, file); err != nil {
-		return err
-	}
 
 	updatedUser, err := router.Controller.SetMyPhoto(authedUserUUID, filepath.Ext(requestBody.Photo.Filename), file)
 	if err != nil {

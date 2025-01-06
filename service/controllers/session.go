@@ -9,7 +9,7 @@ import (
 )
 
 type SessionController interface {
-	DoLogin(username string) (views.UserView, error)
+	DoLogin(username string) (views.UserWithImageView, error)
 }
 
 type SessionControllerImpl struct {
@@ -17,7 +17,7 @@ type SessionControllerImpl struct {
 	UserController UserController
 }
 
-func (controller SessionControllerImpl) DoLogin(username string) (views.UserView, error) {
+func (controller SessionControllerImpl) DoLogin(username string) (views.UserWithImageView, error) {
 	user, err := controller.Model.GetUserWithImageByUsername(username)
 
 	if errors.Is(err, database.NoResult) {

@@ -142,4 +142,25 @@ FROM Message m,
 		 LEFT OUTER JOIN Image i ON i.uuid = m.attachment
 WHERE m.author = u.user_uuid;
 
+CREATE VIEW IF NOT EXISTS ViewLatestMessages AS
+SELECT m.id           message_id,
+	   m.conversation message_conversation,
+	   MAX(m.sendAt)       message_sendAt,
+	   m.deliveredAt  message_deliveredAt,
+	   m.seenAt       message_seenAt,
+	   m.replyTo      message_replyTo,
+	   m.content      message_content,
+	   i.uuid         attachment_uuid,
+	   i.extension    attachment_extension,
+	   i.width        attachment_width,
+	   i.height       attachment_height,
+	   i.fullUrl      attachment_fullUrl,
+	   i.uploadedAt   attachment_uploadedAt,
+	   u.*
+FROM Message m,
+	 ViewUsers u
+		 LEFT OUTER JOIN Image i ON i.uuid = m.attachment
+WHERE m.author = u.user_uuid
+GROUP BY m.conversation;
+
 

@@ -5,8 +5,8 @@ import (
 	"github.com/ciottolomaggico/wasatext/service/views"
 )
 
-func UserConversationToView(userConversation models.UserConversation) views.UserConversationView {
-	return views.UserConversationView{
+func UserConversationToSummaryView(userConversation models.UserConversation) views.UserConversationSummaryView {
+	return views.UserConversationSummaryView{
 		userConversation.Id,
 		userConversation.Name,
 		ImageToView(userConversation.Image),
@@ -16,10 +16,22 @@ func UserConversationToView(userConversation models.UserConversation) views.User
 	}
 }
 
-func UserConversationListToView(userConversations []models.UserConversation) []views.UserConversationView {
-	var res = make([]views.UserConversationView, 0, cap(userConversations))
+func UserConversationListToSummaryView(userConversations []models.UserConversation) []views.UserConversationSummaryView {
+	var res = make([]views.UserConversationSummaryView, 0, cap(userConversations))
 	for _, conv := range userConversations {
-		res = append(res, UserConversationToView(conv))
+		res = append(res, UserConversationToSummaryView(conv))
 	}
 	return res
+}
+
+func UserConversationToView(userConversation models.UserConversation, participants []models.UserWithImage) views.UserConversationView {
+	return views.UserConversationView{
+		userConversation.Id,
+		userConversation.Name,
+		ImageToView(userConversation.Image),
+		userConversation.Type,
+		userConversation.Read,
+		UserConversationMessagePreviewToView(userConversation.UserConversationMessagePreview),
+		UserWithImageListToView(participants),
+	}
 }

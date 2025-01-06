@@ -13,11 +13,11 @@ import (
 )
 
 type UserController interface {
-	CreateUser(username string) (views.UserView, error)
-	SetMyUsername(userUUID string, newUsername string) (views.UserView, error)
-	SetMyPhoto(userUUID string, photoExtension string, photoFile io.ReadSeeker) (views.UserView, error)
-	GetUser(userUUID string) (views.UserView, error)
-	GetUserByUsername(username string) (views.UserView, error)
+	CreateUser(username string) (views.UserWithImageView, error)
+	SetMyUsername(userUUID string, newUsername string) (views.UserWithImageView, error)
+	SetMyPhoto(userUUID string, photoExtension string, photoFile io.ReadSeeker) (views.UserWithImageView, error)
+	GetUser(userUUID string) (views.UserWithImageView, error)
+	GetUserByUsername(username string) (views.UserWithImageView, error)
 	GetUsers(paginationPs pagination.PaginationParams) (pagination.PaginatedView, error)
 }
 
@@ -26,57 +26,57 @@ type UserControllerImpl struct {
 	Model           models.UserModel
 }
 
-func (controller UserControllerImpl) CreateUser(username string) (views.UserView, error) {
+func (controller UserControllerImpl) CreateUser(username string) (views.UserWithImageView, error) {
 	user, err := controller.Model.CreateUser(username)
 	if errors.Is(err, database.UniqueConstraint) {
-		return views.UserView{}, api_errors.NewApiError(http.StatusConflict, "an user with this username already exists")
+		return views.UserWithImageView{}, api_errors.NewApiError(http.StatusConflict, "an user with this username already exists")
 	} else if err != nil {
-		return views.UserView{}, err
+		return views.UserWithImageView{}, err
 	}
 
 	return controller.GetUser(user.Uuid)
 }
 
-func (controller UserControllerImpl) SetMyUsername(userUUID string, newUsername string) (views.UserView, error) {
+func (controller UserControllerImpl) SetMyUsername(userUUID string, newUsername string) (views.UserWithImageView, error) {
 	if _, err := controller.Model.UpdateUsername(userUUID, newUsername); errors.Is(err, database.UniqueConstraint) {
-		return views.UserView{}, api_errors.NewApiError(http.StatusConflict, "an user with this username already exists")
+		return views.UserWithImageView{}, api_errors.NewApiError(http.StatusConflict, "an user with this username already exists")
 	} else if err != nil {
-		return views.UserView{}, err
+		return views.UserWithImageView{}, err
 	}
 
 	return controller.GetUser(userUUID)
 }
 
-func (controller UserControllerImpl) SetMyPhoto(userUUID string, photoExtension string, photoFile io.ReadSeeker) (views.UserView, error) {
+func (controller UserControllerImpl) SetMyPhoto(userUUID string, photoExtension string, photoFile io.ReadSeeker) (views.UserWithImageView, error) {
 	image, err := controller.ImageController.CreateImage(photoExtension, photoFile)
 	if err != nil {
-		return views.UserView{}, err
+		return views.UserWithImageView{}, err
 	}
 
 	if _, err = controller.Model.UpdateProfilePic(userUUID, image.Uuid); err != nil {
-		return views.UserView{}, err
+		return views.UserWithImageView{}, err
 	}
 
 	return controller.GetUser(userUUID)
 }
 
-func (controller UserControllerImpl) GetUser(userUUID string) (views.UserView, error) {
+func (controller UserControllerImpl) GetUser(userUUID string) (views.UserWithImageView, error) {
 	user, err := controller.Model.GetUserWithImage(userUUID)
 	if errors.Is(err, database.NoResult) {
-		return views.UserView{}, api_errors.ResourceNotFound()
+		return views.UserWithImageView{}, api_errors.ResourceNotFound()
 	} else if err != nil {
-		return views.UserView{}, err
+		return views.UserWithImageView{}, err
 	}
 
 	return translators.UserWithImageToView(*user), nil
 }
 
-func (controller UserControllerImpl) GetUserByUsername(username string) (views.UserView, error) {
+func (controller UserControllerImpl) GetUserByUsername(username string) (views.UserWithImageView, error) {
 	user, err := controller.Model.GetUserWithImageByUsername(username)
 	if errors.Is(err, database.NoResult) {
-		return views.UserView{}, api_errors.ResourceNotFound()
+		return views.UserWithImageView{}, api_errors.ResourceNotFound()
 	} else if err != nil {
-		return views.UserView{}, err
+		return views.UserWithImageView{}, err
 	}
 
 	return translators.UserWithImageToView(*user), nil

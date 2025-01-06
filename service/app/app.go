@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/ciottolomaggico/wasatext/service/database"
 	"github.com/ciottolomaggico/wasatext/service/storage"
+	"github.com/ciottolomaggico/wasatext/service/validators"
 	"github.com/jmoiron/sqlx"
 	"github.com/sirupsen/logrus"
 )
@@ -34,6 +35,9 @@ func New(rawDB *sqlx.DB, storageRootPath *string, logger *logrus.Logger) (App, e
 	}
 	appStorage, err := storage.NewFileSystemStorage(*storageRootPath)
 	if err != nil {
+		return App{}, err
+	}
+	if err := validators.NewAppValidator(); err != nil {
 		return App{}, err
 	}
 

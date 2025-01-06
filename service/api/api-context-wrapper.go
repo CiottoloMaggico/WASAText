@@ -35,15 +35,15 @@ func (rt *_router) wrap(fn routes.Handler) httprouter.Handle {
 
 		// Call the next handler in chain (usually, the handler function for the path)
 		if err = fn(w, r, ps, ctx); err != nil {
-			if err, ok := err.(api_errors.APIError); ok {
-				rt.baseLogger.WithError(err).Warn("An api error occurred")
-				views.SendJson(w, err)
-			} else {
+			throwableError, ok := err.(api_errors.APIError)
+			if !ok {
 				rt.baseLogger.WithError(err).Error("An unexpected error occurred")
-				views.SendJson(w, api_errors.InternalServerError())
+				throwableError = api_errors.InternalServerError().(api_errors.APIError)
+			}
+			if err := views.ThrowError(w, throwableError); err != nil {
+				rt.baseLogger.WithError(err).Error("An error occurred while throwing an exception to the api")
 			}
 		}
-
 		return
 	}
 }

@@ -913,7 +913,7 @@ components:
           type: boolean
           readOnly: true
         latestMessage:
-          $ref: '#/components/schemas/Message'
+          $ref: '#/components/schemas/MessageSummary'
     Conversation:
       description: Conversation type for detailed info about a conversation
       type: object
@@ -938,7 +938,7 @@ components:
           type: boolean
           readOnly: true
         latestMessage:
-          $ref: '#/components/schemas/Message'
+          $ref: '#/components/schemas/MessageSummary'
         participants:
           description: List of group participants usernames
           type: array
@@ -948,6 +948,33 @@ components:
           maxItems: 200
           items:
             $ref: '#/components/schemas/Username'
+    MessageSummary:
+      description: MessageSummary type
+      type: object
+      required:
+        - id
+        - author
+        - sendAt
+      properties:
+        id:
+          $ref: '#/components/schemas/CustomInt64'
+        author:
+          $ref: '#/components/schemas/User'
+        sendAt:
+          description: timestamp of when the message was sent
+          type: string
+          format: date-time
+          readOnly: true
+          minLength: 1
+          maxLength: 100
+        content:
+          description: text content of the message
+          type: string
+          minLength: 1
+          maxLength: 4096
+          pattern: ^.*?$
+        attachment:
+          $ref: '#/components/schemas/Image'
     Message:
       description: Message type
       type: object

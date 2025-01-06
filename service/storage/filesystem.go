@@ -15,9 +15,8 @@ func NewFileSystemStorage(rootDir string) (Storage, error) {
 	}, nil
 }
 
-// TODO: / in url isn't displayed, eg incorrect file saving, totally
 func (fs FilesystemStorage) SaveFile(filename string, content io.Reader) (string, error) {
-	fullPath := fs.rootDir + filename
+	fullPath := fs.rootDir + "/" + filename
 	dst, err := os.Create(fullPath)
 	if err != nil {
 		return "", err
@@ -41,7 +40,7 @@ func (fs FilesystemStorage) SaveFile(filename string, content io.Reader) (string
 }
 
 func (fs FilesystemStorage) DeleteFile(filename string) error {
-	fullPath := fs.rootDir + filename
+	fullPath := fs.rootDir + "/" + filename
 	if err := os.Remove(fullPath); err != nil {
 		return err
 	}
@@ -49,12 +48,12 @@ func (fs FilesystemStorage) DeleteFile(filename string) error {
 }
 
 func (fs FilesystemStorage) GetFile(filename string) (*os.File, error) {
-	fullPath := fs.rootDir + filename
+	fullPath := fs.rootDir + "/" + filename
 	return os.Open(fullPath)
 }
 
 func (fs FilesystemStorage) GetFilePath(filename string) string {
-	fullPath := fs.rootDir + filename
+	fullPath := fs.rootDir + "/" + filename
 	return fullPath
 }
 

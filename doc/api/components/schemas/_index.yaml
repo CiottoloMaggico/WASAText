@@ -136,7 +136,7 @@ ConversationSummary:
       type: boolean
       readOnly: true
     latestMessage:
-      $ref: "#/Message"
+      $ref: "#/MessageSummary"
 
 Conversation:
   description: Conversation type for detailed info about a conversation
@@ -156,7 +156,7 @@ Conversation:
       type: boolean
       readOnly: true
     latestMessage:
-      $ref: "#/Message"
+      $ref: "#/MessageSummary"
     participants:
       description: List of group participants usernames
       type: array
@@ -166,6 +166,31 @@ Conversation:
       maxItems: 200
       items:
         $ref: "#/Username"
+
+MessageSummary:
+  description: MessageSummary type
+  type: object
+  required: [ "id", "author", "sendAt"]
+  properties:
+    id:
+      $ref: "#/CustomInt64"
+    author:
+      $ref: "#/User"
+    sendAt:
+      description: timestamp of when the message was sent
+      type: string
+      format: date-time
+      readOnly: true
+      minLength: 1
+      maxLength: 100
+    content:
+      description: text content of the message
+      type: string
+      minLength: 1
+      maxLength: 4096
+      pattern: "^.*?$"
+    attachment:
+      $ref: "#/Image"
 
 Message:
   description: Message type

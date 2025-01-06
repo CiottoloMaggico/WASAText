@@ -5,13 +5,33 @@ import (
 	"github.com/ciottolomaggico/wasatext/service/api/parsers"
 	"github.com/ciottolomaggico/wasatext/service/api/routes"
 	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
-	"github.com/ciottolomaggico/wasatext/service/validators"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/julienschmidt/httprouter"
 	"io"
+	"mime/multipart"
 	"net/http"
 	"path/filepath"
 )
+
+type NewChatRequestBody struct {
+	Recipient string `json:"recipient" validate:"required,uuid4"`
+}
+type NewGroupRequestBody struct {
+	Name  string                `form:"name" validate:"required,min=3,max=16"`
+	Photo *multipart.FileHeader `form:"image" validate:"omitempty,image"`
+}
+
+type ConversationNameRequestBody struct {
+	Name string `json:"name" validate:"required,min=3,max=16"`
+}
+
+type GroupPhotoRequestBody struct {
+	Photo *multipart.FileHeader `form:"image" validate:"required,image"`
+}
+
+type AddParticipantsRequestBody struct {
+	Participants []string `json:"participants" validate:"required,unique,min=1,max=200,dive,uuid4"`
+}
 
 type ConversationRouter struct {
 	ControllerConv controllers.ConversationController
@@ -168,11 +188,6 @@ func (router ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Requ
 			return err
 		}
 		defer file.Close()
-
-		if err = validators.ImageIsValid(requestBody.Photo.Filename, requestBody.Photo.Size, file); err != nil {
-			return err
-		}
-
 		fileReader = file
 		tmpExt := filepath.Ext(requestBody.Photo.Filename)
 		fileExt = &tmpExt
@@ -199,10 +214,6 @@ func (router ConversationRouter) AddToGroup(w http.ResponseWriter, r *http.Reque
 
 	requestBody := AddParticipantsRequestBody{}
 	if err := parsers.ParseAndValidateRequestBody(r, &requestBody); err != nil {
-		return err
-	}
-
-	if ok, err := validators.UsersUUIDValidator(requestBody.Participants); !ok {
 		return err
 	}
 
@@ -277,10 +288,6 @@ func (router ConversationRouter) SetGroupPhoto(w http.ResponseWriter, r *http.Re
 		return err
 	}
 	defer file.Close()
-
-	if err = validators.ImageIsValid(requestBody.Photo.Filename, requestBody.Photo.Size, file); err != nil {
-		return err
-	}
 
 	conversation, err := router.ControllerConv.ChangeGroupPhoto(urlParams.ConversationId, authedUserUUID, filepath.Ext(requestBody.Photo.Filename), file)
 	if err != nil {

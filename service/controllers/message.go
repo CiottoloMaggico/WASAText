@@ -45,6 +45,14 @@ func (controller MessageControllerImpl) SendMessage(conversationID int64, author
 		}
 		attachmentUUID = &image.Uuid
 	}
+	if replyToId != nil {
+		if _, err := controller.GetConversationMessage(conversationID, *replyToId, authorUUID); errors.Is(err, api_errors.ResourceNotFound()) {
+			return views.MessageView{}, api_errors.UnprocessableContent(map[string]string{"repliedMessageId": "The replied message id wasn't found."})
+		} else if err != nil {
+			return views.MessageView{}, err
+		}
+
+	}
 
 	message, err := controller.MessageModel.CreateMessage(
 		conversationID, authorUUID, replyToId, content, attachmentUUID,

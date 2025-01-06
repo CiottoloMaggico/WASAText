@@ -26,6 +26,7 @@ func MessageWithAuthorAndAttachmentToView(message models.MessageWithAuthorAndAtt
 		message.Id,
 		message.Conversation,
 		UserWithImageToView(message.UserWithImage),
+		message.SendAt,
 		message.GetStatus(),
 		message.ReplyTo,
 		nil,
@@ -57,7 +58,12 @@ func MessageWithAuthorToView(message models.MessageWithAuthor) views.MessageWith
 	return views.MessageWithAuthorView{
 		message.Id,
 		message.Conversation,
-		views.PlainUser{message.User.Uuid, message.User.Uuid, message.User.Photo},
+		views.UserView{
+			message.Uuid,
+			message.Username,
+			message.Photo,
+		},
+		message.SendAt,
 		message.GetStatus(),
 		message.ReplyTo,
 		message.Attachment,
@@ -65,16 +71,20 @@ func MessageWithAuthorToView(message models.MessageWithAuthor) views.MessageWith
 	}
 }
 
-func UserConversationMessagePreviewToView(message models.UserConversationMessagePreview) *views.UserConversationMessagePreview {
+func UserConversationMessagePreviewToView(message models.UserConversationMessagePreview) *views.MessageSummaryView {
 	if message.Id == nil {
 		return nil
 	}
 
-	return &views.UserConversationMessagePreview{
-		message.Id,
-		message.SendAt,
+	return &views.MessageSummaryView{
+		*message.Id,
+		views.UserView{
+			*message.Uuid,
+			*message.Username,
+			*message.Photo,
+		},
+		*message.SendAt,
 		message.Content,
 		message.Attachment,
-		message.Username,
 	}
 }

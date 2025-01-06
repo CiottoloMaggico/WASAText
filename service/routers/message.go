@@ -5,13 +5,27 @@ import (
 	"github.com/ciottolomaggico/wasatext/service/api/parsers"
 	"github.com/ciottolomaggico/wasatext/service/api/routes"
 	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
-	"github.com/ciottolomaggico/wasatext/service/validators"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/julienschmidt/httprouter"
 	"io"
+	"mime/multipart"
 	"net/http"
 	"path/filepath"
 )
+
+type NewMessageRequestBody struct {
+	Attachment *multipart.FileHeader `form:"attachment" validate:"required_without=Content,image"`
+	Content    *string               `form:"content" validate:"omitnil,min=0,max=4096,required_without=Attachment"`
+	ReplyTo    *int64                `form:"repliedMessageId" validate:"omitnil,min=0"`
+}
+
+type CommentRequestBody struct {
+	Comment string `json:"comment" validate:"required,emoji"`
+}
+
+type ForwardRequestBody struct {
+	ForwardToId int64 `json:"destConversationId" validate:"required,min=0"`
+}
 
 type MessageRouter struct {
 	Controller controllers.MessageController
@@ -100,10 +114,6 @@ func (router MessageRouter) SendMessage(w http.ResponseWriter, r *http.Request, 
 			return err
 		}
 		defer file.Close()
-
-		if err = validators.ImageIsValid(requestBody.Attachment.Filename, requestBody.Attachment.Size, file); err != nil {
-			return err
-		}
 
 		fileReader = file
 		tmpExt := filepath.Ext(requestBody.Attachment.Filename)

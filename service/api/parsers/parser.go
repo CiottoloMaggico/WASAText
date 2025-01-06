@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	"github.com/ciottolomaggico/wasatext/service/validators"
 	"github.com/ciottolomaggico/wasatext/service/views/pagination"
 	"github.com/go-playground/validator/v10"
 	"github.com/julienschmidt/httprouter"
@@ -14,8 +15,6 @@ import (
 	"reflect"
 	"strconv"
 )
-
-var validate = validator.New()
 
 const DEFAULT_PAGE_SIZE = 20
 
@@ -46,7 +45,7 @@ func ParseAndValidatePaginationParams(url *url.URL) (pagination.PaginationParams
 		res.Size = tmpSize
 	}
 
-	if err := validate.Struct(res); err != nil {
+	if err := validators.Validate.Struct(res); err != nil {
 		if errs, ok := err.(validator.ValidationErrors); ok {
 			errors := make(map[string]string, len(errs))
 			for _, fieldErr := range errs {
@@ -67,7 +66,7 @@ func ParseUrlParams(ps httprouter.Params, res interface{}) error {
 		var result interface{}
 		var err error = nil
 		field := underlyingType.Field(i)
-		urlRawValue := ps.ByName(field.Tag.Get("in"))
+		urlRawValue := ps.ByName(field.Tag.Get("url"))
 
 		switch field.Type.Kind() {
 		case reflect.String:
@@ -99,7 +98,7 @@ func ParseMultipartRequestBody(body *multipart.Form, res interface{}) error {
 
 	for i := 0; i < underlyingType.NumField(); i++ {
 		field, fieldValue := underlyingType.Field(i), reflect.ValueOf(nil)
-		pointedType, multipartFieldName := field.Type, field.Tag.Get("in")
+		pointedType, multipartFieldName := field.Type, field.Tag.Get("form")
 
 		if field.Type.Kind() == reflect.Ptr {
 			pointedType = field.Type.Elem()
@@ -136,7 +135,6 @@ func ParseMultipartRequestBody(body *multipart.Form, res interface{}) error {
 			default:
 				return errors.New("Unsupported field type: " + field.Type.String())
 			}
-
 			if field.Type.Kind() != reflect.Ptr {
 				fieldValue = fieldValue.Elem()
 			}
@@ -154,7 +152,7 @@ func ParseAndValidateUrlParams(ps httprouter.Params, res interface{}) error {
 	if err := ParseUrlParams(ps, res); err != nil {
 		return err
 	}
-	if err := validate.Struct(res); err != nil {
+	if err := validators.Validate.Struct(res); err != nil {
 		if errs, ok := err.(validator.ValidationErrors); ok {
 			errors := make(map[string]string, len(errs))
 			for _, fieldErr := range errs {
@@ -168,7 +166,6 @@ func ParseAndValidateUrlParams(ps httprouter.Params, res interface{}) error {
 }
 
 func ParseAndValidateMultipartRequestBody(req *http.Request, res interface{}) error {
-	// TODO: if i insert a name that isn't in the struct but is required panic check request body with photo instead of image
 	if err := req.ParseMultipartForm(0); err != nil {
 		return api_errors.InvalidMultipartBody()
 	}
@@ -176,11 +173,12 @@ func ParseAndValidateMultipartRequestBody(req *http.Request, res interface{}) er
 	if err := ParseMultipartRequestBody(body, res); err != nil {
 		return err
 	}
-	if err := validate.Struct(res); err != nil {
+	if err := validators.Validate.Struct(res); err != nil {
 		if errs, ok := err.(validator.ValidationErrors); ok {
 			errors := make(map[string]string, len(errs))
 			for _, fieldErr := range errs {
-				errors[fieldErr.Field()] = fieldErr.Error()
+				// NOTE: in a production environment validation error messages should be more refined
+				errors[fieldErr.Field()] = fmt.Sprintf("Field validation for '%s' failed on the '%s' tag", fieldErr.Field(), fieldErr.Tag())
 			}
 			return api_errors.UnprocessableContent(errors)
 		}
@@ -193,7 +191,7 @@ func ParseAndValidateRequestBody(req *http.Request, res interface{}) error {
 	if err := json.NewDecoder(req.Body).Decode(res); err != nil {
 		return api_errors.InvalidJson()
 	}
-	if err := validate.Struct(res); err != nil {
+	if err := validators.Validate.Struct(res); err != nil {
 		if errs, ok := err.(validator.ValidationErrors); ok {
 			errors := make(map[string]string, len(errs))
 			for _, fieldErr := range errs {

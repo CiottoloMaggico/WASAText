@@ -5,16 +5,16 @@ import (
 	"github.com/ciottolomaggico/wasatext/service/views"
 )
 
-func UserWithImageToView(user models.UserWithImage) views.UserView {
-	return views.UserView{
+func UserWithImageToView(user models.UserWithImage) views.UserWithImageView {
+	return views.UserWithImageView{
 		user.Uuid,
 		user.Username,
 		ImageToView(user.Image),
 	}
 }
 
-func UserWithImageListToView(users []models.UserWithImage) []views.UserView {
-	var res = make([]views.UserView, 0, cap(users))
+func UserWithImageListToView(users []models.UserWithImage) []views.UserWithImageView {
+	var res = make([]views.UserWithImageView, 0, cap(users))
 	for _, user := range users {
 		res = append(res, UserWithImageToView(user))
 	}
