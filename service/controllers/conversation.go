@@ -75,7 +75,9 @@ func (controller ConversationControllerImpl) AddToGroup(groupId int64, requestIs
 		return views.UserConversationView{}, err
 	}
 
-	if err := controller.ConversationModel.AddGroupParticipants(newParticipants, groupId); err != nil {
+	if err := controller.ConversationModel.AddGroupParticipants(newParticipants, groupId); errors.Is(err, database.TriggerConstraint) {
+		return views.UserConversationView{}, api_errors.Conflict(map[string]string{"group capacity": "Groups can handle al most 200 participants"})
+	} else if err != nil {
 		return views.UserConversationView{}, err
 	}
 

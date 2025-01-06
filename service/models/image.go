@@ -66,7 +66,7 @@ func (model ImageModelImpl) CreateImage(extension string, file io.ReadSeeker) (*
 
 	image := Image{}
 	if err := tx.QueryStructRow(&image, query, newUUID.String(), extension, width, height, path); err != nil {
-		return nil, database.DBError(err)
+		return nil, err
 	}
 
 	if _, err := model.Storage.SaveFile(filename, file); err != nil {
@@ -95,7 +95,7 @@ func (model ImageModelImpl) DeleteImage(uuid string) (*Image, error) {
 
 	image := Image{}
 	if err := tx.QueryStructRow(&image, query, uuid); err != nil {
-		return nil, database.DBError(err)
+		return nil, err
 	}
 
 	if err := model.Storage.DeleteFile(image.Filename()); err != nil {
@@ -120,7 +120,7 @@ func (model ImageModelImpl) GetImage(uuid string) (*Image, error) {
 
 	image := Image{}
 	if err := model.Db.QueryStructRow(&image, query, uuid); err != nil {
-		return nil, database.DBError(err)
+		return nil, err
 	}
 
 	return &image, nil

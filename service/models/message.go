@@ -124,7 +124,7 @@ func (model MessageModelImpl) CreateMessage(
 
 	message := Message{}
 	if err := model.Db.QueryStructRow(&message, query, conversation, author, replyTo, content, attachment); err != nil {
-		return nil, database.DBError(err)
+		return nil, err
 	}
 
 	return &message, nil

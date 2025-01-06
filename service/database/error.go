@@ -30,6 +30,5 @@ func DBError(err error) error {
 	} else if errors.Is(err, sql.ErrNoRows) {
 		return NoResult
 	}
-
 	return UnexpectedError
 }
