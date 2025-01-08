@@ -1,6 +1,6 @@
 module github.com/ciottolomaggico/wasatext
 
-go 1.23.2
+go 1.17
 
 toolchain go1.23.4
 
