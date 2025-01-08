@@ -2,8 +2,6 @@ module github.com/ciottolomaggico/wasatext
 
 go 1.17
 
-toolchain go1.23.4
-
 require (
 	github.com/ardanlabs/conf v1.5.0
 	github.com/go-playground/validator/v10 v10.23.0
