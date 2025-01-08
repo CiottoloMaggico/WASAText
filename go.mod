@@ -1,12 +1,13 @@
 module github.com/ciottolomaggico/wasatext
 
-go 1.17
+go 1.23.2
+
+toolchain go1.23.4
 
 require (
 	github.com/ardanlabs/conf v1.5.0
 	github.com/go-playground/validator/v10 v10.23.0
 	github.com/gofrs/uuid v4.4.0+incompatible
-	github.com/google/uuid v1.6.0
 	github.com/gorilla/handlers v1.5.2
 	github.com/jmoiron/sqlx v1.4.0
 	github.com/julienschmidt/httprouter v1.3.0
