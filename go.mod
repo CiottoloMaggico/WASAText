@@ -1,8 +1,6 @@
 module github.com/ciottolomaggico/wasatext
 
-go 1.23.2
-
-toolchain go1.23.4
+go 1.17
 
 require (
 	github.com/ardanlabs/conf v1.5.0
