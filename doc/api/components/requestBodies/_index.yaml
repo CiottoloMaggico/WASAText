@@ -5,7 +5,7 @@ ChangeGroupPhoto:
         description: Input schema used to change the photo of a group
         type: object
         properties:
-          image:
+          imageBytes:
             $ref: "../schemas/_index.yaml#/ImageType"
 
 ChangeUserPhoto:
@@ -15,7 +15,7 @@ ChangeUserPhoto:
         description: Input schema used to change the profile photo of the signed in user
         type: object
         properties:
-          photo:
+          photoBytes:
             $ref: "../schemas/_index.yaml#/ImageType"
 
 ChangeGroupName:
@@ -49,7 +49,7 @@ GroupCreation:
         properties:
           name:
             $ref: "../schemas/_index.yaml#/ConversationName"
-          image:
+          imageBytes:
             $ref: "../schemas/_index.yaml#/ImageType"
 
 AddUserToGroup:
@@ -90,7 +90,7 @@ MessageCreation:
         type: object
         minProperties: 1
         properties:
-          attachment:
+          attachmentBytes:
             $ref: "../schemas/_index.yaml#/ImageType"
           content:
             pattern: "^.*?$"

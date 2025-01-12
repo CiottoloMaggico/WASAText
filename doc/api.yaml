@@ -62,6 +62,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/pageOffset'
         - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/filter'
       responses:
         '200':
           description: Successful operation
@@ -397,6 +398,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/pageOffset'
         - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/filter'
       responses:
         '200':
           description: Successful operation
@@ -595,6 +597,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/pageOffset'
         - $ref: '#/components/parameters/pageNumber'
+        - $ref: '#/components/parameters/filter'
       responses:
         '200':
           description: Successful operation
@@ -1093,6 +1096,20 @@ components:
       required: false
       schema:
         $ref: '#/components/schemas/CustomInt32'
+    filter:
+      name: filter
+      in: query
+      description: 'Logic formula that can filter the resulting queryset. Supported operators are eq, ne, gt, ge, lt, le, and, or, not.'
+      required: false
+      schema:
+        type: string
+        maxLength: 500
+        minLength: 0
+        pattern: ^.*?$
+      examples:
+        allowedFormula:
+          summary: example of a filter formula
+          value: (priority eq 1 or city eq 'Redmond') and price gt 100
   requestBodies:
     ChangeGroupPhoto:
       content:
@@ -1101,7 +1118,7 @@ components:
             description: Input schema used to change the photo of a group
             type: object
             properties:
-              image:
+              imageBytes:
                 $ref: '#/components/schemas/ImageType'
     ChangeUserPhoto:
       content:
@@ -1110,7 +1127,7 @@ components:
             description: Input schema used to change the profile photo of the signed in user
             type: object
             properties:
-              photo:
+              photoBytes:
                 $ref: '#/components/schemas/ImageType'
     ChangeGroupName:
       content:
@@ -1142,7 +1159,7 @@ components:
             properties:
               name:
                 $ref: '#/components/schemas/ConversationName'
-              image:
+              imageBytes:
                 $ref: '#/components/schemas/ImageType'
     AddUserToGroup:
       required: true
@@ -1182,7 +1199,7 @@ components:
             type: object
             minProperties: 1
             properties:
-              attachment:
+              attachmentBytes:
                 $ref: '#/components/schemas/ImageType'
               content:
                 pattern: ^.*?$

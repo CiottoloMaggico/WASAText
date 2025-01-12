@@ -45,3 +45,18 @@ pageNumber:
   required: false
   schema:
     $ref: "../schemas/_index.yaml#/CustomInt32"
+
+filter:
+  name: filter
+  in: query
+  description: Logic formula that can filter the resulting queryset. Supported operators are eq, ne, gt, ge, lt, le, and, or, not.
+  required: false
+  schema:
+    type: string
+    maxLength: 500
+    minLength: 0
+    pattern: "^.*?$"
+  examples:
+    allowedFormula:
+      summary: example of a filter formula
+      value: "(priority eq 1 or city eq 'Redmond') and price gt 100"

@@ -1,6 +1,6 @@
 /session:
   post:
-    tags: ["login"]
+    tags: [ "login" ]
     summary: Logs in the user
     description: |-
       If the user does not exist, it will be created,
@@ -26,7 +26,7 @@
               $ref: "../schemas/_index.yaml#/User"
 /users:
   get:
-    tags: ["users"]
+    tags: [ "users" ]
     summary: Retrieve the list of all users of WASAText
     description: |
       Return a paginated list of all users registered to WASAText
@@ -34,6 +34,7 @@
     parameters:
       - $ref: "../parameters/_index.yaml#/pageOffset"
       - $ref: "../parameters/_index.yaml#/pageNumber"
+      - $ref: "../parameters/_index.yaml#/filter"
     responses:
       "200":
         description: Successful operation
@@ -42,7 +43,7 @@
             schema:
               description: Returns a paginated list of WASAText users
               type: object
-              required: ["users"]
+              required: [ "users" ]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
@@ -68,7 +69,7 @@
   parameters:
     - $ref: "../parameters/_index.yaml#/userUUID"
   get:
-    tags: ["users"]
+    tags: [ "users" ]
     summary: Get detailed information about an user
     description: |
       Returns detailed information about the user
@@ -370,6 +371,7 @@
     parameters:
       - $ref: "../parameters/_index.yaml#/pageOffset"
       - $ref: "../parameters/_index.yaml#/pageNumber"
+      - $ref: "../parameters/_index.yaml#/filter"
     responses:
       "200":
         description: "Successful operation"
@@ -378,7 +380,7 @@
             schema:
               description: Returns a paginated list of user conversations
               type: object
-              required: ["pagination", "conversations"]
+              required: [ "pagination", "conversations" ]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
@@ -419,7 +421,7 @@
             schema:
               description: Returns a paginated list of user conversations
               type: object
-              required: ["pagination","conversations"]
+              required: [ "pagination","conversations" ]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
@@ -448,7 +450,7 @@
     - $ref: "../parameters/_index.yaml#/userUUID"
     - $ref: "../parameters/_index.yaml#/conversationId"
   get:
-    tags: ["conversations"]
+    tags: [ "conversations" ]
     summary: Retrieve the detail of a conversation
     description: |
       Returns detailed informations about the conversation provided
@@ -527,7 +529,7 @@
             schema:
               description: Returns a paginated list of conversation messages
               type: object
-              required: ["pagination", "messages"]
+              required: [ "pagination", "messages" ]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
@@ -561,6 +563,7 @@
     parameters:
       - $ref: "../parameters/_index.yaml#/pageOffset"
       - $ref: "../parameters/_index.yaml#/pageNumber"
+      - $ref: "../parameters/_index.yaml#/filter"
     responses:
       "200":
         description: Successful operation
@@ -569,7 +572,7 @@
             schema:
               description: Returns a paginated list of conversation messages
               type: object
-              required: ["pagination","messages"]
+              required: [ "pagination","messages" ]
               properties:
                 pagination:
                   $ref: "../schemas/_index.yaml#/Pagination"
