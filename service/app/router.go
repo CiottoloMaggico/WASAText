@@ -9,7 +9,9 @@ func (app *App) StartRouters() []routers.ControllerRouter {
 		app.createUserRouter(),
 		app.createConversationRouter(),
 		app.createMessageRouter(),
+		app.createMessageInfoRouter(),
 		app.createSessionRouter(),
+		app.createUserConversationRouter(),
 	}
 }
 
@@ -22,13 +24,24 @@ func (app *App) createUserRouter() routers.UserRouter {
 func (app *App) createConversationRouter() routers.ConversationRouter {
 	return routers.ConversationRouter{
 		app.createConversationController(),
-		app.createMessageController(),
+	}
+}
+
+func (app *App) createUserConversationRouter() routers.UserConversationRouter {
+	return routers.UserConversationRouter{
+		app.createUserConversationController(),
 	}
 }
 
 func (app *App) createMessageRouter() routers.MessageRouter {
 	return routers.MessageRouter{
 		app.createMessageController(),
+	}
+}
+
+func (app *App) createMessageInfoRouter() routers.MessageInfoRouter {
+	return routers.MessageInfoRouter{
+		app.createMessageInfoController(),
 	}
 }
 

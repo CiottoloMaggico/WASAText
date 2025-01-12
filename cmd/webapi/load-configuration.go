@@ -17,19 +17,19 @@ type WebAPIConfiguration struct {
 		Path string `conf:"default:/conf/config.yml"`
 	}
 	Web struct {
-		APIHost         string        `conf:"default:0.0.0.0:3000"`
-		DebugHost       string        `conf:"default:0.0.0.0:4000"`
-		ReadTimeout     time.Duration `conf:"default:5s"`
-		WriteTimeout    time.Duration `conf:"default:5s"`
-		ShutdownTimeout time.Duration `conf:"default:5s"`
+		APIHost         string        `conf:"default:0.0.0.0:3000,env:CFG_WEB_API_HOST"`
+		DebugHost       string        `conf:"default:0.0.0.0:4000,env:CFG_WEB_DEBUG_HOST"`
+		ReadTimeout     time.Duration `conf:"default:5s,env:CFG_WEB_READ_TIMEOUT"`
+		WriteTimeout    time.Duration `conf:"default:5s,env:CFG_WEB_WRITE_TIMEOUT"`
+		ShutdownTimeout time.Duration `conf:"default:5s,env:CFG_WEB_SHUTDOWN_TIMEOUT"`
 	}
-	Debug bool
+	Debug bool `conf:"default:false,env:CFG_WEB_DEBUG"`
 	DB    struct {
-		Filename string `conf:"default:decaf.db"`
+		Filename string `conf:"default:decaf.db,env:CFG_WEB_DB_FILENAME"`
 	}
 	MediaStorage struct {
 		UrlPath string `conf:"default:/media/images/*filepath"`
-		RootDir string `conf:"default:./media/images"`
+		RootDir string `conf:"default:./media/images,env:CFG_WEB_MEDIA_ROOT_DIR"`
 	}
 }
 

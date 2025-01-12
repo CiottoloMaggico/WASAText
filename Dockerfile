@@ -1,0 +1,38 @@
+# Install the requested go version
+FROM golang:1.23-alpine AS go-build-stage
+
+RUN apk update && apk upgrade
+RUN apk add build-base
+
+# Setting the WORKDIR to set the directory where the next command where executed
+WORKDIR /app
+
+# Copy go.mod and go.sum in the project root directory
+COPY go.mod go.sum ./
+
+# Download all project dependencies
+RUN go mod download
+
+RUN mkdir ./bin
+COPY cmd ./cmd
+COPY service ./service
+
+
+RUN CGO_ENABLED=1 go build -o ./bin/webapi ./cmd/webapi
+
+FROM golang:1.23-alpine AS go-run-stage
+ENV CFG_WEB_API_HOST='0.0.0.0:3000'
+ENV CFG_WEB_DEBUG=false
+ENV CFG_DB_FILENAME='/tmp/wasatext.db'
+ENV CFG_WEB_MEDIA_ROOT_DIR='./media/images'
+EXPOSE 3000
+WORKDIR /app
+
+RUN mkdir -p $CFG_WEB_MEDIA_ROOT_DIR
+COPY media/images/default_group_image.jpg media/images/default_user_image.jpg $CFG_WEB_MEDIA_ROOT_DIR
+VOLUME $CFG_WEB_MEDIA_ROOT_DIR
+
+COPY --from=go-build-stage /app/ ./
+
+CMD ["./bin/webapi"]
+

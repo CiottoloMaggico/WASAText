@@ -21,6 +21,22 @@ func MessageInfoListToCommentView(infos []models.MessageInfo) []views.CommentVie
 	return res
 }
 
+func MessageInfoWithUserToCommentView(info models.MessageInfoWithUser) views.CommentWithAuthorView {
+	return views.CommentWithAuthorView{
+		info.Message,
+		UserWithImageToView(info.UserWithImage),
+		info.Comment,
+	}
+}
+
+func MessageInfoWithUserListToCommentView(infos []models.MessageInfoWithUser) []views.CommentWithAuthorView {
+	res := make([]views.CommentWithAuthorView, 0, cap(infos))
+	for _, comment := range infos {
+		res = append(res, MessageInfoWithUserToCommentView(comment))
+	}
+	return res
+}
+
 func MessageWithAuthorAndAttachmentToView(message models.MessageWithAuthorAndAttachment) views.MessageView {
 	view := views.MessageView{
 		message.Id,

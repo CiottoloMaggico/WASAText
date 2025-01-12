@@ -3,7 +3,6 @@ package parsers
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/validators"
 	"github.com/ciottolomaggico/wasatext/service/views/pagination"
@@ -18,15 +17,24 @@ import (
 
 const DEFAULT_PAGE_SIZE = 20
 
+func renderValidationErrors(errs validator.ValidationErrors) map[string]string {
+	res := make(map[string]string)
+	for _, fieldErr := range errs {
+		res[fieldErr.Field()] = fieldErr.Error()
+	}
+	return res
+}
+
 func ParseAndValidatePaginationParams(url *url.URL) (pagination.PaginationParams, error) {
 	query := url.Query()
-	res, page, size, _ := pagination.PaginationParams{
+	res := pagination.PaginationParams{
+		Page:       1,
+		Size:       DEFAULT_PAGE_SIZE,
 		CurrentUrl: url.String(),
-	}, query.Get("page"), query.Get("size"), query.Get("filter")
+		Filter:     query.Get("filter"),
+	}
 
-	if page == "" {
-		res.Page = 1
-	} else {
+	if page := query.Get("page"); page != "" {
 		tmpPage, err := strconv.Atoi(page)
 		if err != nil {
 			return pagination.PaginationParams{}, api_errors.InvalidUrlParameters()
@@ -34,24 +42,18 @@ func ParseAndValidatePaginationParams(url *url.URL) (pagination.PaginationParams
 		res.Page = tmpPage
 	}
 
-	if size == "" {
-		res.Size = DEFAULT_PAGE_SIZE
-	} else {
+	if size := query.Get("size"); size != "" {
 		tmpSize, err := strconv.Atoi(size)
 		if err != nil {
 			return pagination.PaginationParams{}, api_errors.InvalidUrlParameters()
 		}
-
 		res.Size = tmpSize
 	}
 
 	if err := validators.Validate.Struct(res); err != nil {
 		if errs, ok := err.(validator.ValidationErrors); ok {
-			errors := make(map[string]string, len(errs))
-			for _, fieldErr := range errs {
-				errors[fieldErr.Field()] = fieldErr.Error()
-			}
-			return pagination.PaginationParams{}, api_errors.UnprocessableContent(errors)
+			return pagination.PaginationParams{},
+				api_errors.UnprocessableContent(renderValidationErrors(errs))
 		}
 		return pagination.PaginationParams{}, err
 	}
@@ -154,11 +156,7 @@ func ParseAndValidateUrlParams(ps httprouter.Params, res interface{}) error {
 	}
 	if err := validators.Validate.Struct(res); err != nil {
 		if errs, ok := err.(validator.ValidationErrors); ok {
-			errors := make(map[string]string, len(errs))
-			for _, fieldErr := range errs {
-				errors[fieldErr.Field()] = fieldErr.Error()
-			}
-			return api_errors.UnprocessableContent(errors)
+			return api_errors.UnprocessableContent(renderValidationErrors(errs))
 		}
 		return err
 	}
@@ -175,12 +173,7 @@ func ParseAndValidateMultipartRequestBody(req *http.Request, res interface{}) er
 	}
 	if err := validators.Validate.Struct(res); err != nil {
 		if errs, ok := err.(validator.ValidationErrors); ok {
-			errors := make(map[string]string, len(errs))
-			for _, fieldErr := range errs {
-				// NOTE: in a production environment validation error messages should be more refined
-				errors[fieldErr.Field()] = fmt.Sprintf("Field validation for '%s' failed on the '%s' tag", fieldErr.Field(), fieldErr.Tag())
-			}
-			return api_errors.UnprocessableContent(errors)
+			return api_errors.UnprocessableContent(renderValidationErrors(errs))
 		}
 		return err
 	}
@@ -193,12 +186,7 @@ func ParseAndValidateRequestBody(req *http.Request, res interface{}) error {
 	}
 	if err := validators.Validate.Struct(res); err != nil {
 		if errs, ok := err.(validator.ValidationErrors); ok {
-			errors := make(map[string]string, len(errs))
-			for _, fieldErr := range errs {
-				// NOTE: in a production environment validation error messages should be more refined
-				errors[fieldErr.Field()] = fmt.Sprintf("Field validation for '%s' failed on the '%s' tag", fieldErr.Field(), fieldErr.Tag())
-			}
-			return api_errors.UnprocessableContent(errors)
+			return api_errors.UnprocessableContent(renderValidationErrors(errs))
 		}
 		return err
 	}

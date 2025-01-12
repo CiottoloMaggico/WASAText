@@ -3,7 +3,7 @@ package database
 import (
 	"database/sql"
 	"errors"
-	"github.com/mattn/go-sqlite3"
+	sqlite3 "github.com/mattn/go-sqlite3"
 )
 
 var NoResult = errors.New("no rows in result set")

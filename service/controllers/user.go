@@ -3,6 +3,7 @@ package controllers
 import (
 	"errors"
 	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	"github.com/ciottolomaggico/wasatext/service/api/filter"
 	"github.com/ciottolomaggico/wasatext/service/controllers/translators"
 	"github.com/ciottolomaggico/wasatext/service/database"
 	"github.com/ciottolomaggico/wasatext/service/models"
@@ -24,6 +25,7 @@ type UserController interface {
 type UserControllerImpl struct {
 	ImageController ImageController
 	Model           models.UserModel
+	Filter          filter.Filter
 }
 
 func (controller UserControllerImpl) CreateUser(username string) (views.UserWithImageView, error) {
@@ -83,7 +85,13 @@ func (controller UserControllerImpl) GetUserByUsername(username string) (views.U
 }
 
 func (controller UserControllerImpl) GetUsers(paginationPs pagination.PaginationParams) (pagination.PaginatedView, error) {
-	usersCount, err := controller.Model.Count()
+	filterQuery, err := controller.Filter.Evaluate(paginationPs.Filter)
+	if err != nil {
+		return pagination.PaginatedView{}, api_errors.InvalidUrlParameters()
+	}
+
+	queryParameters := database.NewQueryParameters(paginationPs.Page, paginationPs.Size, filterQuery)
+	usersCount, err := controller.Model.Count(queryParameters)
 	if err != nil {
 		return pagination.PaginatedView{}, err
 	}
@@ -92,7 +100,7 @@ func (controller UserControllerImpl) GetUsers(paginationPs pagination.Pagination
 		return pagination.ToPaginatedView(paginationPs, usersCount, translators.UserWithImageListToView(make([]models.UserWithImage, 0)))
 	}
 
-	users, err := controller.Model.GetUsersWithImage(paginationPs.Page, paginationPs.Size)
+	users, err := controller.Model.GetUsersWithImage(queryParameters)
 	if err != nil {
 		return pagination.PaginatedView{}, err
 	}

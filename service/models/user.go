@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"github.com/ciottolomaggico/wasatext/service/database"
 	"github.com/gofrs/uuid"
 )
@@ -11,8 +12,8 @@ type UserModel interface {
 	UpdateProfilePic(uuid string, newPhoto string) (*User, error)
 	GetUserWithImage(uuid string) (*UserWithImage, error)
 	GetUserWithImageByUsername(username string) (*UserWithImage, error)
-	GetUsersWithImage(page int, size int) ([]UserWithImage, error)
-	Count() (int, error)
+	GetUsersWithImage(parameters database.QueryParameters) ([]UserWithImage, error)
+	Count(parameters database.QueryParameters) (int, error)
 }
 
 type User struct {
@@ -31,10 +32,15 @@ type UserModelImpl struct {
 	Db database.AppDatabase
 }
 
-func (model UserModelImpl) Count() (int, error) {
-	query := `SELECT COUNT(*) FROM User`
+func (model UserModelImpl) Count(parameters database.QueryParameters) (int, error) {
 	var count int
+	query := `SELECT COUNT(*) FROM ViewUsers`
 
+	if filter := parameters.Filter; filter != "" {
+		query += fmt.Sprintf(" WHERE (%s)", filter)
+	}
+
+	query += ";"
 	if err := model.Db.QueryRow(query).Scan(&count); err != nil {
 		return 0, err
 	}
@@ -115,11 +121,17 @@ func (model UserModelImpl) GetUserWithImageByUsername(username string) (*UserWit
 	return &user, nil
 }
 
-func (model UserModelImpl) GetUsersWithImage(page int, size int) ([]UserWithImage, error) {
-	query := `SELECT * FROM ViewUsers LIMIT ? OFFSET ?;`
+func (model UserModelImpl) GetUsersWithImage(parameters database.QueryParameters) ([]UserWithImage, error) {
+	query := `SELECT * FROM ViewUsers`
 
-	users := make([]UserWithImage, 0, size)
-	if err := model.Db.QueryStruct(&users, query, size, (page-1)*size); err != nil {
+	if filter := parameters.Filter; filter != "" {
+		query += fmt.Sprintf(" WHERE (%s)", filter)
+	}
+
+	query += " LIMIT ? OFFSET ?;"
+
+	users := make([]UserWithImage, 0, parameters.Limit)
+	if err := model.Db.QueryStruct(&users, query, parameters.Limit, parameters.Offset); err != nil {
 		return nil, err
 	}
 

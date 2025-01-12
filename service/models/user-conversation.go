@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"github.com/ciottolomaggico/wasatext/service/database"
 )
 
@@ -91,8 +92,6 @@ SELECT
 FROM UserConversations uc
 LEFT OUTER JOIN ViewLatestMessages vm ON vm.message_conversation = uc.userConversation_id
 LEFT OUTER JOIN User_Message um ON vm.message_id = um.message AND um.user = ?
-ORDER BY um.status ASC
-LIMIT ? OFFSET ?;
 `
 
 type UserConversation struct {
@@ -106,8 +105,8 @@ type UserConversation struct {
 
 type UserConversationModel interface {
 	GetUserConversation(userUUID string, conversationId int64) (*UserConversation, error)
-	GetUserConversations(userUUID string, page int, size int) ([]UserConversation, error)
-	Count(userUUID string) (int, error)
+	GetUserConversations(userUUID string, parameters database.QueryParameters) ([]UserConversation, error)
+	Count(userUUID string, parameters database.QueryParameters) (int, error)
 }
 
 type UserConversationModelImpl struct {
@@ -125,21 +124,37 @@ func (model UserConversationModelImpl) GetUserConversation(userUUID string, conv
 
 }
 
-func (model UserConversationModelImpl) GetUserConversations(userUUID string, page int, size int) ([]UserConversation, error) {
+func (model UserConversationModelImpl) GetUserConversations(userUUID string, parameters database.QueryParameters) ([]UserConversation, error) {
 	query := qGetUserConversations
 
-	userConversations := make([]UserConversation, 0, size)
-	if err := model.Db.QueryStruct(&userConversations, query, userUUID, userUUID, userUUID, size, (page-1)*size); err != nil {
+	if filter := parameters.Filter; filter != "" {
+		query += fmt.Sprintf(" WHERE (%s)", filter)
+	}
+
+	query += " ORDER BY um.status ASC LIMIT ? OFFSET ?;"
+
+	userConversations := make([]UserConversation, 0, parameters.Limit)
+	if err := model.Db.QueryStruct(
+		&userConversations, query,
+		userUUID, userUUID, userUUID,
+		parameters.Limit, parameters.Offset,
+	); err != nil {
 		return nil, err
 	}
 	return userConversations, nil
 }
 
-func (model UserConversationModelImpl) Count(userUUID string) (int, error) {
-	query := `SELECT COUNT(*) FROM User_Conversation WHERE user = ?;`
+func (model UserConversationModelImpl) Count(userUUID string, parameters database.QueryParameters) (int, error) {
 	var count int
+	query := qGetUserConversations
 
-	if err := model.Db.QueryRow(query, userUUID).Scan(&count); err != nil {
+	if filter := parameters.Filter; filter != "" {
+		query += fmt.Sprintf(" WHERE (%s)", filter)
+	}
+
+	query = fmt.Sprintf(`SELECT COUNT(*) FROM (%s);`, query)
+
+	if err := model.Db.QueryRow(query, userUUID, userUUID, userUUID).Scan(&count); err != nil {
 		return 0, err
 	}
 	return count, nil

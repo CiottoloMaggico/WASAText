@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"github.com/ciottolomaggico/wasatext/service/database"
 )
 
@@ -68,10 +69,10 @@ type MessageModel interface {
 	) (*Message, error)
 	DeleteMessage(id int64) error
 	GetConversationMessage(messageId int64, conversationId int64) (*MessageWithAuthorAndAttachment, error)
-	GetConversationMessages(conversationId int64, page int, size int) ([]MessageWithAuthorAndAttachment, error)
+	GetConversationMessages(conversationId int64, parameters database.QueryParameters) ([]MessageWithAuthorAndAttachment, error)
 	SetMessagesAsDelivered(user string) error
 	SetConversationMessagesAsSeen(conversationId int64, user string) error
-	Count(conversationId int64) (int, error)
+	Count(conversationId int64, parameters database.QueryParameters) (int, error)
 }
 
 type MessageModelImpl struct {
@@ -151,11 +152,17 @@ func (model MessageModelImpl) GetConversationMessage(messageId int64, conversati
 	return &message, nil
 }
 
-func (model MessageModelImpl) GetConversationMessages(conversationId int64, page int, size int) ([]MessageWithAuthorAndAttachment, error) {
-	query := `SELECT * FROM ViewMessages WHERE message_conversation = ? ORDER BY message_sendAt DESC LIMIT ? OFFSET ?;`
+func (model MessageModelImpl) GetConversationMessages(conversationId int64, parameters database.QueryParameters) ([]MessageWithAuthorAndAttachment, error) {
+	query := `SELECT * FROM ViewMessages WHERE message_conversation = ?`
 
-	messages := make([]MessageWithAuthorAndAttachment, 0, size)
-	if err := model.Db.QueryStruct(&messages, query, conversationId, size, (page-1)*size); err != nil {
+	if filter := parameters.Filter; filter != "" {
+		query += fmt.Sprintf(" AND (%s)", filter)
+	}
+
+	query += " ORDER BY message_sendAt DESC LIMIT ? OFFSET ?;"
+
+	messages := make([]MessageWithAuthorAndAttachment, 0, parameters.Limit)
+	if err := model.Db.QueryStruct(&messages, query, conversationId, parameters.Limit, parameters.Offset); err != nil {
 		return nil, err
 	}
 
@@ -184,9 +191,15 @@ func (model MessageModelImpl) SetConversationMessagesAsSeen(conversationId int64
 	return nil
 }
 
-func (model MessageModelImpl) Count(conversationId int64) (int, error) {
-	query := `SELECT COUNT(*) FROM Message WHERE conversation = ?;`
+func (model MessageModelImpl) Count(conversationId int64, parameters database.QueryParameters) (int, error) {
 	var count int
+	query := `SELECT COUNT(*) FROM ViewMessages WHERE message_conversation = ?`
+
+	if filter := parameters.Filter; filter != "" {
+		query += fmt.Sprintf(" AND (%s)", filter)
+	}
+
+	query += ";"
 
 	if err := model.Db.QueryRow(query, conversationId).Scan(&count); err != nil {
 		return 0, err

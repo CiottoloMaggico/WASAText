@@ -34,6 +34,12 @@ type MessageRouter struct {
 func (router MessageRouter) ListRoutes() []routes.Route {
 	return []routes.Route{
 		routes.New(
+			"/users/:userUUID/conversations",
+			http.MethodPut,
+			router.SetDelivered,
+			true,
+		),
+		routes.New(
 			"/users/:userUUID/conversations/:conversationId/messages",
 			http.MethodPost,
 			router.SendMessage,
@@ -61,24 +67,6 @@ func (router MessageRouter) ListRoutes() []routes.Route {
 			"/users/:userUUID/conversations/:conversationId/messages/:messageId",
 			http.MethodDelete,
 			router.DeleteConversationMessage,
-			true,
-		),
-		routes.New(
-			"/users/:userUUID/conversations/:conversationId/messages/:messageId/comments",
-			http.MethodGet,
-			router.GetMessageComments,
-			true,
-		),
-		routes.New(
-			"/users/:userUUID/conversations/:conversationId/messages/:messageId/comments",
-			http.MethodPut,
-			router.SetMessageComment,
-			true,
-		),
-		routes.New(
-			"/users/:userUUID/conversations/:conversationId/messages/:messageId/comments",
-			http.MethodDelete,
-			router.RemoveMessageComment,
 			true,
 		),
 		routes.New(
@@ -126,6 +114,30 @@ func (router MessageRouter) SendMessage(w http.ResponseWriter, r *http.Request, 
 	}
 
 	return views.SendJson(w, message)
+}
+
+func (router MessageRouter) SetDelivered(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+	urlParams := UserUrlParams{}
+	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
+		return err
+	}
+
+	paginationParams, err := parsers.ParseAndValidatePaginationParams(r.URL)
+	if err != nil {
+		return err
+	}
+
+	authedUserUUID := *context.IssuerUUID
+	if authedUserUUID != urlParams.UserUUID {
+		return api_errors.Forbidden()
+	}
+
+	conversations, err := router.Controller.SetAllMessageDelivered(authedUserUUID, paginationParams)
+	if err != nil {
+		return err
+	}
+
+	return views.SendJson(w, conversations)
 }
 
 func (router MessageRouter) SetSeen(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
@@ -207,68 +219,6 @@ func (router MessageRouter) DeleteConversationMessage(w http.ResponseWriter, r *
 	}
 
 	if err := router.Controller.DeleteMessage(urlParams.ConversationId, urlParams.MessageId, authedUserUUID); err != nil {
-		return err
-	}
-
-	w.WriteHeader(http.StatusNoContent)
-	return nil
-}
-
-func (router MessageRouter) GetMessageComments(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
-	urlParams := UserConversationMessageUrlParams{}
-	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		return err
-	}
-
-	authedUserUUID := *context.IssuerUUID
-	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
-	}
-
-	comments, err := router.Controller.GetComments(urlParams.ConversationId, urlParams.MessageId, authedUserUUID)
-	if err != nil {
-		return err
-	}
-
-	return views.SendJson(w, comments)
-}
-
-func (router MessageRouter) SetMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
-	urlParams := UserConversationMessageUrlParams{}
-	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		return err
-	}
-
-	authedUserUUID := *context.IssuerUUID
-	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
-	}
-
-	requestBody := CommentRequestBody{}
-	if err := parsers.ParseAndValidateRequestBody(r, &requestBody); err != nil {
-		return err
-	}
-
-	comment, err := router.Controller.CommentMessage(urlParams.ConversationId, urlParams.MessageId, authedUserUUID, requestBody.Comment)
-	if err != nil {
-		return err
-	}
-
-	return views.SendJson(w, comment)
-}
-
-func (router MessageRouter) RemoveMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
-	urlParams := UserConversationMessageUrlParams{}
-	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		return err
-	}
-
-	authedUserUUID := *context.IssuerUUID
-	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
-	}
-
-	if err := router.Controller.UncommentMessage(urlParams.ConversationId, urlParams.MessageId, authedUserUUID); err != nil {
 		return err
 	}
 

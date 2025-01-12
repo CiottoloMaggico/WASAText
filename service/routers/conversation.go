@@ -34,30 +34,11 @@ type AddParticipantsRequestBody struct {
 }
 
 type ConversationRouter struct {
-	ControllerConv controllers.ConversationController
-	ControllerMess controllers.MessageController
+	Controller controllers.ConversationController
 }
 
 func (router ConversationRouter) ListRoutes() []routes.Route {
 	return []routes.Route{
-		routes.New(
-			"/users/:userUUID/conversations",
-			http.MethodGet,
-			router.GetMyConversations,
-			true,
-		),
-		routes.New(
-			"/users/:userUUID/conversations",
-			http.MethodPut,
-			router.SetDelivered,
-			true,
-		),
-		routes.New(
-			"/users/:userUUID/conversations/:conversationId",
-			http.MethodGet,
-			router.GetConversation,
-			true,
-		),
 		routes.New(
 			"/users/:userUUID/groups",
 			http.MethodPost,
@@ -97,73 +78,6 @@ func (router ConversationRouter) ListRoutes() []routes.Route {
 	}
 }
 
-func (router ConversationRouter) GetMyConversations(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
-	urlParams := UserUrlParams{}
-	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		return err
-	}
-
-	paginationParams, err := parsers.ParseAndValidatePaginationParams(r.URL)
-	if err != nil {
-		return err
-	}
-
-	authedUserUUID := *context.IssuerUUID
-	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
-	}
-
-	conversations, err := router.ControllerConv.GetUserConversations(authedUserUUID, paginationParams)
-	if err != nil {
-		return err
-	}
-
-	return views.SendJson(w, conversations)
-}
-
-func (router ConversationRouter) SetDelivered(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
-	urlParams := UserUrlParams{}
-	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		return err
-	}
-
-	paginationParams, err := parsers.ParseAndValidatePaginationParams(r.URL)
-	if err != nil {
-		return err
-	}
-
-	authedUserUUID := *context.IssuerUUID
-	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
-	}
-
-	conversations, err := router.ControllerMess.SetAllMessageDelivered(authedUserUUID, paginationParams)
-	if err != nil {
-		return err
-	}
-
-	return views.SendJson(w, conversations)
-}
-
-func (router ConversationRouter) GetConversation(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
-	urlParams := UserConversationUrlParams{}
-	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
-		return err
-	}
-
-	authedUserUUID := *context.IssuerUUID
-	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
-	}
-
-	conversation, err := router.ControllerConv.GetUserConversation(authedUserUUID, urlParams.ConversationId)
-	if err != nil {
-		return err
-	}
-
-	return views.SendJson(w, conversation)
-}
-
 func (router ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
@@ -193,7 +107,7 @@ func (router ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Requ
 		fileExt = &tmpExt
 	}
 
-	conversation, err := router.ControllerConv.CreateGroup(requestBody.Name, authedUserUUID, fileExt, fileReader)
+	conversation, err := router.Controller.CreateGroup(requestBody.Name, authedUserUUID, fileExt, fileReader)
 	if err != nil {
 		return err
 	}
@@ -217,7 +131,7 @@ func (router ConversationRouter) AddToGroup(w http.ResponseWriter, r *http.Reque
 		return err
 	}
 
-	conversation, err := router.ControllerConv.AddToGroup(urlParams.ConversationId, authedUserUUID, requestBody.Participants)
+	conversation, err := router.Controller.AddToGroup(urlParams.ConversationId, authedUserUUID, requestBody.Participants)
 	if err != nil {
 		return err
 	}
@@ -236,7 +150,7 @@ func (router ConversationRouter) LeaveGroup(w http.ResponseWriter, r *http.Reque
 		return api_errors.Forbidden()
 	}
 
-	if err := router.ControllerConv.LeaveGroup(urlParams.ConversationId, authedUserUUID); err != nil {
+	if err := router.Controller.LeaveGroup(urlParams.ConversationId, authedUserUUID); err != nil {
 		return err
 	}
 
@@ -260,7 +174,7 @@ func (router ConversationRouter) SetGroupName(w http.ResponseWriter, r *http.Req
 		return err
 	}
 
-	conversation, err := router.ControllerConv.ChangeGroupName(urlParams.ConversationId, authedUserUUID, requestBody.Name)
+	conversation, err := router.Controller.ChangeGroupName(urlParams.ConversationId, authedUserUUID, requestBody.Name)
 	if err != nil {
 		return err
 	}
@@ -289,7 +203,7 @@ func (router ConversationRouter) SetGroupPhoto(w http.ResponseWriter, r *http.Re
 	}
 	defer file.Close()
 
-	conversation, err := router.ControllerConv.ChangeGroupPhoto(urlParams.ConversationId, authedUserUUID, filepath.Ext(requestBody.Photo.Filename), file)
+	conversation, err := router.Controller.ChangeGroupPhoto(urlParams.ConversationId, authedUserUUID, filepath.Ext(requestBody.Photo.Filename), file)
 	if err != nil {
 		return err
 	}
@@ -313,7 +227,7 @@ func (router ConversationRouter) CreateChat(w http.ResponseWriter, r *http.Reque
 		return err
 	}
 
-	conversation, err := router.ControllerConv.CreateChat(authedUserUUID, requestBody.Recipient)
+	conversation, err := router.Controller.CreateChat(authedUserUUID, requestBody.Recipient)
 	if err != nil {
 		return err
 	}
