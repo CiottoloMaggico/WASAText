@@ -1470,7 +1470,7 @@ var Emojis = map[string]Emoji{
 	"1F303": {
 		Key:        "1F303",
 		Value:      "🌃",
-		Descriptor: "Night with Stars",
+		Descriptor: "Night With Stars",
 	},
 	"1F304": {
 		Key:        "1F304",
@@ -1535,7 +1535,7 @@ var Emojis = map[string]Emoji{
 	"1F310": {
 		Key:        "1F310",
 		Value:      "🌐",
-		Descriptor: "Globe with Meridians",
+		Descriptor: "Globe With Meridians",
 	},
 	"1F311": {
 		Key:        "1F311",
@@ -1605,7 +1605,7 @@ var Emojis = map[string]Emoji{
 	"1F31E": {
 		Key:        "1F31E",
 		Value:      "🌞",
-		Descriptor: "Sun with Face",
+		Descriptor: "Sun With Face",
 	},
 	"1F31F": {
 		Key:        "1F31F",
@@ -1640,17 +1640,17 @@ var Emojis = map[string]Emoji{
 	"1F327-FE0F": {
 		Key:        "1F327-FE0F",
 		Value:      "🌧️",
-		Descriptor: "Cloud with Rain",
+		Descriptor: "Cloud With Rain",
 	},
 	"1F328-FE0F": {
 		Key:        "1F328-FE0F",
 		Value:      "🌨️",
-		Descriptor: "Cloud with Snow",
+		Descriptor: "Cloud With Snow",
 	},
 	"1F329-FE0F": {
 		Key:        "1F329-FE0F",
 		Value:      "🌩️",
-		Descriptor: "Cloud with Lightning",
+		Descriptor: "Cloud With Lightning",
 	},
 	"1F32A-FE0F": {
 		Key:        "1F32A-FE0F",
@@ -1950,7 +1950,7 @@ var Emojis = map[string]Emoji{
 	"1F365": {
 		Key:        "1F365",
 		Value:      "🍥",
-		Descriptor: "Fish Cake with Swirl",
+		Descriptor: "Fish Cake With Swirl",
 	},
 	"1F366": {
 		Key:        "1F366",
@@ -2070,12 +2070,12 @@ var Emojis = map[string]Emoji{
 	"1F37D-FE0F": {
 		Key:        "1F37D-FE0F",
 		Value:      "🍽️",
-		Descriptor: "Fork and Knife with Plate",
+		Descriptor: "Fork and Knife With Plate",
 	},
 	"1F37E": {
 		Key:        "1F37E",
 		Value:      "🍾",
-		Descriptor: "Bottle with Popping Cork",
+		Descriptor: "Bottle With Popping Cork",
 	},
 	"1F37F": {
 		Key:        "1F37F",
@@ -2320,7 +2320,7 @@ var Emojis = map[string]Emoji{
 	"1F3AF": {
 		Key:        "1F3AF",
 		Value:      "🎯",
-		Descriptor: "Bullseye",
+		Descriptor: "Direct Hit",
 	},
 	"1F3B0": {
 		Key:        "1F3B0",
@@ -2965,7 +2965,7 @@ var Emojis = map[string]Emoji{
 	"1F3D6-FE0F": {
 		Key:        "1F3D6-FE0F",
 		Value:      "🏖️",
-		Descriptor: "Beach with Umbrella",
+		Descriptor: "Beach With Umbrella",
 	},
 	"1F3D7-FE0F": {
 		Key:        "1F3D7-FE0F",
@@ -3020,7 +3020,7 @@ var Emojis = map[string]Emoji{
 	"1F3E1": {
 		Key:        "1F3E1",
 		Value:      "🏡",
-		Descriptor: "House with Garden",
+		Descriptor: "House With Garden",
 	},
 	"1F3E2": {
 		Key:        "1F3E2",
@@ -3106,11 +3106,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F3F3-FE0F-200D-1F308",
 		Value:      "🏳️‍🌈",
 		Descriptor: "Rainbow Flag",
-	},
-	"1F3F3-FE0F-200D-26A7-FE0F": {
-		Key:        "1F3F3-FE0F-200D-26A7-FE0F",
-		Value:      "🏳️‍⚧️",
-		Descriptor: "Transgender Flag",
 	},
 	"1F3F4": {
 		Key:        "1F3F4",
@@ -3231,11 +3226,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F408",
 		Value:      "🐈",
 		Descriptor: "Cat",
-	},
-	"1F408-200D-2B1B": {
-		Key:        "1F408-200D-2B1B",
-		Value:      "🐈‍⬛",
-		Descriptor: "Black Cat",
 	},
 	"1F409": {
 		Key:        "1F409",
@@ -3496,11 +3486,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F43B",
 		Value:      "🐻",
 		Descriptor: "Bear",
-	},
-	"1F43B-200D-2744-FE0F": {
-		Key:        "1F43B-200D-2744-FE0F",
-		Value:      "🐻‍❄️",
-		Descriptor: "Polar Bear",
 	},
 	"1F43C": {
 		Key:        "1F43C",
@@ -4122,11 +4107,6 @@ var Emojis = map[string]Emoji{
 		Value:      "👨🏻‍🍳",
 		Descriptor: "Man Cook: Light Skin Tone",
 	},
-	"1F468-1F3FB-200D-1F37C": {
-		Key:        "1F468-1F3FB-200D-1F37C",
-		Value:      "👨🏻‍🍼",
-		Descriptor: "Man Feeding Baby: Light Skin Tone",
-	},
 	"1F468-1F3FB-200D-1F393": {
 		Key:        "1F468-1F3FB-200D-1F393",
 		Value:      "👨🏻‍🎓",
@@ -4205,7 +4185,7 @@ var Emojis = map[string]Emoji{
 	"1F468-1F3FB-200D-1F9AF": {
 		Key:        "1F468-1F3FB-200D-1F9AF",
 		Value:      "👨🏻‍🦯",
-		Descriptor: "Man with White Cane: Light Skin Tone",
+		Descriptor: "Man With Probing Cane: Light Skin Tone",
 	},
 	"1F468-1F3FB-200D-1F9B0": {
 		Key:        "1F468-1F3FB-200D-1F9B0",
@@ -4252,186 +4232,6 @@ var Emojis = map[string]Emoji{
 		Value:      "👨🏻‍✈️",
 		Descriptor: "Man Pilot: Light Skin Tone",
 	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F468": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F468",
-		Value:      "👨🏻‍❤️‍👨",
-		Descriptor: "Couple With Heart - Man: Light Skin Tone, Man: No Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "👨🏻‍❤️‍👨🏻",
-		Descriptor: "Couple with Heart: Man, Man, Light Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "👨🏻‍❤️‍👨🏼",
-		Descriptor: "Couple with Heart: Man, Man, Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "👨🏻‍❤️‍👨🏽",
-		Descriptor: "Couple with Heart: Man, Man, Light Skin Tone, Medium Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "👨🏻‍❤️‍👨🏾",
-		Descriptor: "Couple with Heart: Man, Man, Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "👨🏻‍❤️‍👨🏿",
-		Descriptor: "Couple with Heart: Man, Man, Light Skin Tone, Dark Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F469",
-		Value:      "👨🏻‍❤️‍👩",
-		Descriptor: "Couple With Heart - Man: Light Skin Tone, Woman: No Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "👨🏻‍❤️‍👩🏻",
-		Descriptor: "Couple With Heart - Man: Light Skin Tone, Woman: Light Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "👨🏻‍❤️‍👩🏼",
-		Descriptor: "Couple With Heart - Man: Light Skin Tone, Woman: Medium-Light Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "👨🏻‍❤️‍👩🏽",
-		Descriptor: "Couple With Heart - Man: Light Skin Tone, Woman: Medium Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "👨🏻‍❤️‍👩🏾",
-		Descriptor: "Couple With Heart - Man: Light Skin Tone, Woman: Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "👨🏻‍❤️‍👩🏿",
-		Descriptor: "Couple With Heart - Man: Light Skin Tone, Woman: Dark Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468",
-		Value:      "👨🏻‍❤️‍💋‍👨",
-		Descriptor: "Kiss - Man: Light Skin Tone, Man: No Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "👨🏻‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss: Man, Man, Light Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "👨🏻‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss: Man, Man, Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "👨🏻‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss: Man, Man, Light Skin Tone, Medium Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "👨🏻‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss: Man, Man, Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "👨🏻‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss: Man, Man, Light Skin Tone, Dark Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "👨🏻‍❤️‍💋‍👩",
-		Descriptor: "Kiss - Man: Light Skin Tone, Woman: No Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "👨🏻‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss - Man: Light Skin Tone, Woman: Light Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "👨🏻‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss - Man: Light Skin Tone, Woman: Medium-Light Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "👨🏻‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss - Man: Light Skin Tone, Woman: Medium Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "👨🏻‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss - Man: Light Skin Tone, Woman: Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "👨🏻‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss - Man: Light Skin Tone, Woman: Dark Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "👨🏻‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Man, Person, Light Skin Tone, No Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "👨🏻‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Man, Person, Light Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "👨🏻‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Man, Person, Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "👨🏻‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Man, Person, Light Skin Tone, Medium Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "👨🏻‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Man, Person, Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "👨🏻‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Man, Person, Light Skin Tone, Dark Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F9D1",
-		Value:      "👨🏻‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Man, Person, Light Skin Tone, No Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "👨🏻‍❤️‍🧑🏻",
-		Descriptor: "Couple With Heart: Man, Person, Light Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "👨🏻‍❤️‍🧑🏼",
-		Descriptor: "Couple With Heart: Man, Person, Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "👨🏻‍❤️‍🧑🏽",
-		Descriptor: "Couple With Heart: Man, Person, Light Skin Tone, Medium Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "👨🏻‍❤️‍🧑🏾",
-		Descriptor: "Couple With Heart: Man, Person, Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F468-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "👨🏻‍❤️‍🧑🏿",
-		Descriptor: "Couple With Heart: Man, Person, Light Skin Tone, Dark Skin Tone",
-	},
 	"1F468-1F3FC": {
 		Key:        "1F468-1F3FC",
 		Value:      "👨🏼",
@@ -4446,11 +4246,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F468-1F3FC-200D-1F373",
 		Value:      "👨🏼‍🍳",
 		Descriptor: "Man Cook: Medium-Light Skin Tone",
-	},
-	"1F468-1F3FC-200D-1F37C": {
-		Key:        "1F468-1F3FC-200D-1F37C",
-		Value:      "👨🏼‍🍼",
-		Descriptor: "Man Feeding Baby: Medium-Light Skin Tone",
 	},
 	"1F468-1F3FC-200D-1F393": {
 		Key:        "1F468-1F3FC-200D-1F393",
@@ -4530,7 +4325,7 @@ var Emojis = map[string]Emoji{
 	"1F468-1F3FC-200D-1F9AF": {
 		Key:        "1F468-1F3FC-200D-1F9AF",
 		Value:      "👨🏼‍🦯",
-		Descriptor: "Man with White Cane: Medium-Light Skin Tone",
+		Descriptor: "Man With Probing Cane: Medium-Light Skin Tone",
 	},
 	"1F468-1F3FC-200D-1F9B0": {
 		Key:        "1F468-1F3FC-200D-1F9B0",
@@ -4577,186 +4372,6 @@ var Emojis = map[string]Emoji{
 		Value:      "👨🏼‍✈️",
 		Descriptor: "Man Pilot: Medium-Light Skin Tone",
 	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F468": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F468",
-		Value:      "👨🏼‍❤️‍👨",
-		Descriptor: "Couple With Heart - Man: Medium-Light Skin Tone, Man: No Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "👨🏼‍❤️‍👨🏻",
-		Descriptor: "Couple with Heart: Man, Man, Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "👨🏼‍❤️‍👨🏼",
-		Descriptor: "Couple with Heart: Man, Man, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "👨🏼‍❤️‍👨🏽",
-		Descriptor: "Couple with Heart: Man, Man, Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "👨🏼‍❤️‍👨🏾",
-		Descriptor: "Couple with Heart: Man, Man, Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "👨🏼‍❤️‍👨🏿",
-		Descriptor: "Couple with Heart: Man, Man, Medium-Light Skin Tone, Dark Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F469",
-		Value:      "👨🏼‍❤️‍👩",
-		Descriptor: "Couple With Heart - Man: Medium-Light Skin Tone, Woman: No Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "👨🏼‍❤️‍👩🏻",
-		Descriptor: "Couple With Heart - Man: Medium-Light Skin Tone, Woman: Light Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "👨🏼‍❤️‍👩🏼",
-		Descriptor: "Couple With Heart - Man: Medium-Light Skin Tone, Woman: Medium-Light Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "👨🏼‍❤️‍👩🏽",
-		Descriptor: "Couple With Heart - Man: Medium-Light Skin Tone, Woman: Medium Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "👨🏼‍❤️‍👩🏾",
-		Descriptor: "Couple With Heart - Man: Medium-Light Skin Tone, Woman: Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "👨🏼‍❤️‍👩🏿",
-		Descriptor: "Couple With Heart - Man: Medium-Light Skin Tone, Woman: Dark Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468",
-		Value:      "👨🏼‍❤️‍💋‍👨",
-		Descriptor: "Kiss - Man: Medium-Light Skin Tone, Man: No Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "👨🏼‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss: Man, Man, Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "👨🏼‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss: Man, Man, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "👨🏼‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss: Man, Man, Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "👨🏼‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss: Man, Man, Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "👨🏼‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss: Man, Man, Medium-Light Skin Tone, Dark Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "👨🏼‍❤️‍💋‍👩",
-		Descriptor: "Kiss - Man: Medium-Light Skin Tone, Woman: No Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "👨🏼‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss - Man: Medium-Light Skin Tone, Woman: Light Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "👨🏼‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss - Man: Medium-Light Skin Tone, Woman: Medium-Light Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "👨🏼‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss - Man: Medium-Light Skin Tone, Woman: Medium Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "👨🏼‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss - Man: Medium-Light Skin Tone, Woman: Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "👨🏼‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss - Man: Medium-Light Skin Tone, Woman: Dark Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "👨🏼‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Man, Person, Medium-Light Skin Tone, No Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "👨🏼‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Man, Person, Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "👨🏼‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Man, Person, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "👨🏼‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Man, Person, Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "👨🏼‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Man, Person, Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "👨🏼‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Man, Person, Medium-Light Skin Tone, Dark Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F9D1",
-		Value:      "👨🏼‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Man, Person, Medium-Light Skin Tone, No Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "👨🏼‍❤️‍🧑🏻",
-		Descriptor: "Couple With Heart: Man, Person, Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "👨🏼‍❤️‍🧑🏼",
-		Descriptor: "Couple With Heart: Man, Person, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "👨🏼‍❤️‍🧑🏽",
-		Descriptor: "Couple With Heart: Man, Person, Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "👨🏼‍❤️‍🧑🏾",
-		Descriptor: "Couple With Heart: Man, Person, Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F468-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "👨🏼‍❤️‍🧑🏿",
-		Descriptor: "Couple With Heart: Man, Person, Medium-Light Skin Tone, Dark Skin Tone",
-	},
 	"1F468-1F3FD": {
 		Key:        "1F468-1F3FD",
 		Value:      "👨🏽",
@@ -4771,11 +4386,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F468-1F3FD-200D-1F373",
 		Value:      "👨🏽‍🍳",
 		Descriptor: "Man Cook: Medium Skin Tone",
-	},
-	"1F468-1F3FD-200D-1F37C": {
-		Key:        "1F468-1F3FD-200D-1F37C",
-		Value:      "👨🏽‍🍼",
-		Descriptor: "Man Feeding Baby: Medium Skin Tone",
 	},
 	"1F468-1F3FD-200D-1F393": {
 		Key:        "1F468-1F3FD-200D-1F393",
@@ -4855,7 +4465,7 @@ var Emojis = map[string]Emoji{
 	"1F468-1F3FD-200D-1F9AF": {
 		Key:        "1F468-1F3FD-200D-1F9AF",
 		Value:      "👨🏽‍🦯",
-		Descriptor: "Man with White Cane: Medium Skin Tone",
+		Descriptor: "Man With Probing Cane: Medium Skin Tone",
 	},
 	"1F468-1F3FD-200D-1F9B0": {
 		Key:        "1F468-1F3FD-200D-1F9B0",
@@ -4902,186 +4512,6 @@ var Emojis = map[string]Emoji{
 		Value:      "👨🏽‍✈️",
 		Descriptor: "Man Pilot: Medium Skin Tone",
 	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F468": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F468",
-		Value:      "👨🏽‍❤️‍👨",
-		Descriptor: "Couple With Heart - Man: Medium Skin Tone, Man: No Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "👨🏽‍❤️‍👨🏻",
-		Descriptor: "Couple with Heart: Man, Man, Medium Skin Tone, Light Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "👨🏽‍❤️‍👨🏼",
-		Descriptor: "Couple with Heart: Man, Man, Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "👨🏽‍❤️‍👨🏽",
-		Descriptor: "Couple with Heart: Man, Man, Medium Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "👨🏽‍❤️‍👨🏾",
-		Descriptor: "Couple with Heart: Man, Man, Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "👨🏽‍❤️‍👨🏿",
-		Descriptor: "Couple with Heart: Man, Man, Medium Skin Tone, Dark Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F469",
-		Value:      "👨🏽‍❤️‍👩",
-		Descriptor: "Couple With Heart - Man: Medium Skin Tone, Woman: No Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "👨🏽‍❤️‍👩🏻",
-		Descriptor: "Couple With Heart - Man: Medium Skin Tone, Woman: Light Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "👨🏽‍❤️‍👩🏼",
-		Descriptor: "Couple With Heart - Man: Medium Skin Tone, Woman: Medium-Light Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "👨🏽‍❤️‍👩🏽",
-		Descriptor: "Couple With Heart - Man: Medium Skin Tone, Woman: Medium Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "👨🏽‍❤️‍👩🏾",
-		Descriptor: "Couple With Heart - Man: Medium Skin Tone, Woman: Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "👨🏽‍❤️‍👩🏿",
-		Descriptor: "Couple With Heart - Man: Medium Skin Tone, Woman: Dark Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468",
-		Value:      "👨🏽‍❤️‍💋‍👨",
-		Descriptor: "Kiss - Man: Medium Skin Tone, Man: No Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "👨🏽‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss: Man, Man, Medium Skin Tone, Light Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "👨🏽‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss: Man, Man, Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "👨🏽‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss: Man, Man, Medium Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "👨🏽‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss: Man, Man, Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "👨🏽‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss: Man, Man, Medium Skin Tone, Dark Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "👨🏽‍❤️‍💋‍👩",
-		Descriptor: "Kiss - Man: Medium Skin Tone, Woman: No Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "👨🏽‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss - Man: Medium Skin Tone, Woman: Light Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "👨🏽‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss - Man: Medium Skin Tone, Woman: Medium-Light Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "👨🏽‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss - Man: Medium Skin Tone, Woman: Medium Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "👨🏽‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss - Man: Medium Skin Tone, Woman: Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "👨🏽‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss - Man: Medium Skin Tone, Woman: Dark Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "👨🏽‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Man, Person, Medium Skin Tone, No Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "👨🏽‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Man, Person, Medium Skin Tone, Light Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "👨🏽‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Man, Person, Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "👨🏽‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Man, Person, Medium Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "👨🏽‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Man, Person, Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "👨🏽‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Man, Person, Medium Skin Tone, Dark Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F9D1",
-		Value:      "👨🏽‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Man, Person, Medium Skin Tone, No Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "👨🏽‍❤️‍🧑🏻",
-		Descriptor: "Couple With Heart: Man, Person, Medium Skin Tone, Light Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "👨🏽‍❤️‍🧑🏼",
-		Descriptor: "Couple With Heart: Man, Person, Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "👨🏽‍❤️‍🧑🏽",
-		Descriptor: "Couple With Heart: Man, Person, Medium Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "👨🏽‍❤️‍🧑🏾",
-		Descriptor: "Couple With Heart: Man, Person, Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F468-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "👨🏽‍❤️‍🧑🏿",
-		Descriptor: "Couple With Heart: Man, Person, Medium Skin Tone, Dark Skin Tone",
-	},
 	"1F468-1F3FE": {
 		Key:        "1F468-1F3FE",
 		Value:      "👨🏾",
@@ -5096,11 +4526,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F468-1F3FE-200D-1F373",
 		Value:      "👨🏾‍🍳",
 		Descriptor: "Man Cook: Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FE-200D-1F37C": {
-		Key:        "1F468-1F3FE-200D-1F37C",
-		Value:      "👨🏾‍🍼",
-		Descriptor: "Man Feeding Baby: Medium-Dark Skin Tone",
 	},
 	"1F468-1F3FE-200D-1F393": {
 		Key:        "1F468-1F3FE-200D-1F393",
@@ -5180,7 +4605,7 @@ var Emojis = map[string]Emoji{
 	"1F468-1F3FE-200D-1F9AF": {
 		Key:        "1F468-1F3FE-200D-1F9AF",
 		Value:      "👨🏾‍🦯",
-		Descriptor: "Man with White Cane: Medium-Dark Skin Tone",
+		Descriptor: "Man With Probing Cane: Medium-Dark Skin Tone",
 	},
 	"1F468-1F3FE-200D-1F9B0": {
 		Key:        "1F468-1F3FE-200D-1F9B0",
@@ -5227,186 +4652,6 @@ var Emojis = map[string]Emoji{
 		Value:      "👨🏾‍✈️",
 		Descriptor: "Man Pilot: Medium-Dark Skin Tone",
 	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F468": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F468",
-		Value:      "👨🏾‍❤️‍👨",
-		Descriptor: "Couple With Heart - Man: Medium-Dark Skin Tone, Man: No Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "👨🏾‍❤️‍👨🏻",
-		Descriptor: "Couple with Heart: Man, Man, Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "👨🏾‍❤️‍👨🏼",
-		Descriptor: "Couple with Heart: Man, Man, Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "👨🏾‍❤️‍👨🏽",
-		Descriptor: "Couple with Heart: Man, Man, Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "👨🏾‍❤️‍👨🏾",
-		Descriptor: "Couple with Heart: Man, Man, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "👨🏾‍❤️‍👨🏿",
-		Descriptor: "Couple with Heart: Man, Man, Medium-Dark Skin Tone, Dark Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F469",
-		Value:      "👨🏾‍❤️‍👩",
-		Descriptor: "Couple With Heart - Man: Medium-Dark Skin Tone, Woman: No Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "👨🏾‍❤️‍👩🏻",
-		Descriptor: "Couple With Heart - Man: Medium-Dark Skin Tone, Woman: Light Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "👨🏾‍❤️‍👩🏼",
-		Descriptor: "Couple With Heart - Man: Medium-Dark Skin Tone, Woman: Medium-Light Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "👨🏾‍❤️‍👩🏽",
-		Descriptor: "Couple With Heart - Man: Medium-Dark Skin Tone, Woman: Medium Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "👨🏾‍❤️‍👩🏾",
-		Descriptor: "Couple With Heart - Man: Medium-Dark Skin Tone, Woman: Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "👨🏾‍❤️‍👩🏿",
-		Descriptor: "Couple With Heart - Man: Medium-Dark Skin Tone, Woman: Dark Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468",
-		Value:      "👨🏾‍❤️‍💋‍👨",
-		Descriptor: "Kiss - Man: Medium-Dark Skin Tone, Man: No Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "👨🏾‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss: Man, Man, Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "👨🏾‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss: Man, Man, Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "👨🏾‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss: Man, Man, Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "👨🏾‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss: Man, Man, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "👨🏾‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss: Man, Man, Medium-Dark Skin Tone, Dark Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "👨🏾‍❤️‍💋‍👩",
-		Descriptor: "Kiss - Man: Medium-Dark Skin Tone, Woman: No Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "👨🏾‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss - Man: Medium-Dark Skin Tone, Woman: Light Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "👨🏾‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss - Man: Medium-Dark Skin Tone, Woman: Medium-Light Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "👨🏾‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss - Man: Medium-Dark Skin Tone, Woman: Medium Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "👨🏾‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss - Man: Medium-Dark Skin Tone, Woman: Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "👨🏾‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss - Man: Medium-Dark Skin Tone, Woman: Dark Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "👨🏾‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Man, Person, Medium-Dark Skin Tone, No Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "👨🏾‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Man, Person, Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "👨🏾‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Man, Person, Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "👨🏾‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Man, Person, Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "👨🏾‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Man, Person, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "👨🏾‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Man, Person, Medium-Dark Skin Tone, Dark Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F9D1",
-		Value:      "👨🏾‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Man, Person, Medium-Dark Skin Tone, No Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "👨🏾‍❤️‍🧑🏻",
-		Descriptor: "Couple With Heart: Man, Person, Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "👨🏾‍❤️‍🧑🏼",
-		Descriptor: "Couple With Heart: Man, Person, Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "👨🏾‍❤️‍🧑🏽",
-		Descriptor: "Couple With Heart: Man, Person, Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "👨🏾‍❤️‍🧑🏾",
-		Descriptor: "Couple With Heart: Man, Person, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F468-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "👨🏾‍❤️‍🧑🏿",
-		Descriptor: "Couple With Heart: Man, Person, Medium-Dark Skin Tone, Dark Skin Tone",
-	},
 	"1F468-1F3FF": {
 		Key:        "1F468-1F3FF",
 		Value:      "👨🏿",
@@ -5421,11 +4666,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F468-1F3FF-200D-1F373",
 		Value:      "👨🏿‍🍳",
 		Descriptor: "Man Cook: Dark Skin Tone",
-	},
-	"1F468-1F3FF-200D-1F37C": {
-		Key:        "1F468-1F3FF-200D-1F37C",
-		Value:      "👨🏿‍🍼",
-		Descriptor: "Man Feeding Baby: Dark Skin Tone",
 	},
 	"1F468-1F3FF-200D-1F393": {
 		Key:        "1F468-1F3FF-200D-1F393",
@@ -5505,7 +4745,7 @@ var Emojis = map[string]Emoji{
 	"1F468-1F3FF-200D-1F9AF": {
 		Key:        "1F468-1F3FF-200D-1F9AF",
 		Value:      "👨🏿‍🦯",
-		Descriptor: "Man with White Cane: Dark Skin Tone",
+		Descriptor: "Man With Probing Cane: Dark Skin Tone",
 	},
 	"1F468-1F3FF-200D-1F9B0": {
 		Key:        "1F468-1F3FF-200D-1F9B0",
@@ -5552,186 +4792,6 @@ var Emojis = map[string]Emoji{
 		Value:      "👨🏿‍✈️",
 		Descriptor: "Man Pilot: Dark Skin Tone",
 	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F468": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F468",
-		Value:      "👨🏿‍❤️‍👨",
-		Descriptor: "Couple With Heart - Man: Dark Skin Tone, Man: No Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "👨🏿‍❤️‍👨🏻",
-		Descriptor: "Couple with Heart: Man, Man, Dark Skin Tone, Light Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "👨🏿‍❤️‍👨🏼",
-		Descriptor: "Couple with Heart: Man, Man, Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "👨🏿‍❤️‍👨🏽",
-		Descriptor: "Couple with Heart: Man, Man, Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "👨🏿‍❤️‍👨🏾",
-		Descriptor: "Couple with Heart: Man, Man, Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "👨🏿‍❤️‍👨🏿",
-		Descriptor: "Couple with Heart: Man, Man, Dark Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F469",
-		Value:      "👨🏿‍❤️‍👩",
-		Descriptor: "Couple With Heart - Man: Dark Skin Tone, Woman: No Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "👨🏿‍❤️‍👩🏻",
-		Descriptor: "Couple With Heart - Man: Dark Skin Tone, Woman: Light Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "👨🏿‍❤️‍👩🏼",
-		Descriptor: "Couple With Heart - Man: Dark Skin Tone, Woman: Medium-Light Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "👨🏿‍❤️‍👩🏽",
-		Descriptor: "Couple With Heart - Man: Dark Skin Tone, Woman: Medium Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "👨🏿‍❤️‍👩🏾",
-		Descriptor: "Couple With Heart - Man: Dark Skin Tone, Woman: Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "👨🏿‍❤️‍👩🏿",
-		Descriptor: "Couple With Heart - Man: Dark Skin Tone, Woman: Dark Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468",
-		Value:      "👨🏿‍❤️‍💋‍👨",
-		Descriptor: "Kiss - Man: Dark Skin Tone, Man: No Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "👨🏿‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss: Man, Man, Dark Skin Tone, Light Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "👨🏿‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss: Man, Man, Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "👨🏿‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss: Man, Man, Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "👨🏿‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss: Man, Man, Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "👨🏿‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss: Man, Man, Dark Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "👨🏿‍❤️‍💋‍👩",
-		Descriptor: "Kiss - Man: Dark Skin Tone, Woman: No Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "👨🏿‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss - Man: Dark Skin Tone, Woman: Light Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "👨🏿‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss - Man: Dark Skin Tone, Woman: Medium-Light Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "👨🏿‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss - Man: Dark Skin Tone, Woman: Medium Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "👨🏿‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss - Man: Dark Skin Tone, Woman: Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "👨🏿‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss - Man: Dark Skin Tone, Woman: Dark Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "👨🏿‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Man, Person, Dark Skin Tone, No Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "👨🏿‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Man, Person, Dark Skin Tone, Light Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "👨🏿‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Man, Person, Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "👨🏿‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Man, Person, Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "👨🏿‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Man, Person, Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "👨🏿‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Man, Person, Dark Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F9D1",
-		Value:      "👨🏿‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Man, Person, Dark Skin Tone, No Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "👨🏿‍❤️‍🧑🏻",
-		Descriptor: "Couple With Heart: Man, Person, Dark Skin Tone, Light Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "👨🏿‍❤️‍🧑🏼",
-		Descriptor: "Couple With Heart: Man, Person, Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "👨🏿‍❤️‍🧑🏽",
-		Descriptor: "Couple With Heart: Man, Person, Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "👨🏿‍❤️‍🧑🏾",
-		Descriptor: "Couple With Heart: Man, Person, Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F468-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "👨🏿‍❤️‍🧑🏿",
-		Descriptor: "Couple With Heart: Man, Person, Dark Skin Tone",
-	},
 	"1F468-200D-1F33E": {
 		Key:        "1F468-200D-1F33E",
 		Value:      "👨‍🌾",
@@ -5741,11 +4801,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F468-200D-1F373",
 		Value:      "👨‍🍳",
 		Descriptor: "Man Cook",
-	},
-	"1F468-200D-1F37C": {
-		Key:        "1F468-200D-1F37C",
-		Value:      "👨‍🍼",
-		Descriptor: "Man Feeding Baby",
 	},
 	"1F468-200D-1F393": {
 		Key:        "1F468-200D-1F393",
@@ -5880,7 +4935,7 @@ var Emojis = map[string]Emoji{
 	"1F468-200D-1F9AF": {
 		Key:        "1F468-200D-1F9AF",
 		Value:      "👨‍🦯",
-		Descriptor: "Man with White Cane",
+		Descriptor: "Man With Probing Cane",
 	},
 	"1F468-200D-1F9B0": {
 		Key:        "1F468-200D-1F9B0",
@@ -5930,182 +4985,12 @@ var Emojis = map[string]Emoji{
 	"1F468-200D-2764-FE0F-200D-1F468": {
 		Key:        "1F468-200D-2764-FE0F-200D-1F468",
 		Value:      "👨‍❤️‍👨",
-		Descriptor: "Couple with Heart: Man, Man",
-	},
-	"1F468-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "👨‍❤️‍👨🏻",
-		Descriptor: "Couple With Heart - Man: No Skin Tone, Man: Light Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "👨‍❤️‍👨🏼",
-		Descriptor: "Couple With Heart - Man: No Skin Tone, Man: Medium-Light Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "👨‍❤️‍👨🏽",
-		Descriptor: "Couple With Heart - Man: No Skin Tone, Man: Medium Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "👨‍❤️‍👨🏾",
-		Descriptor: "Couple With Heart - Man: No Skin Tone, Man: Medium-Dark Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "👨‍❤️‍👨🏿",
-		Descriptor: "Couple With Heart - Man: No Skin Tone, Man: Dark Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F469",
-		Value:      "👨‍❤️‍👩",
-		Descriptor: "Couple With Heart - Man, Woman",
-	},
-	"1F468-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "👨‍❤️‍👩🏻",
-		Descriptor: "Couple With Heart - Man: No Skin Tone, Woman: Light Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "👨‍❤️‍👩🏼",
-		Descriptor: "Couple With Heart - Man: No Skin Tone, Woman: Medium-Light Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "👨‍❤️‍👩🏽",
-		Descriptor: "Couple With Heart - Man: No Skin Tone, Woman: Medium Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "👨‍❤️‍👩🏾",
-		Descriptor: "Couple With Heart - Man: No Skin Tone, Woman: Medium-Dark Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "👨‍❤️‍👩🏿",
-		Descriptor: "Couple With Heart - Man: No Skin Tone, Woman: Dark Skin Tone",
+		Descriptor: "Couple With Heart: Man, Man",
 	},
 	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F468": {
 		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F468",
 		Value:      "👨‍❤️‍💋‍👨",
 		Descriptor: "Kiss: Man, Man",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "👨‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss - Man: No Skin Tone, Man: Light Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "👨‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss - Man: No Skin Tone, Man: Medium-Light Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "👨‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss - Man: No Skin Tone, Man: Medium Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "👨‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss - Man: No Skin Tone, Man: Medium-Dark Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "👨‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss - Man: No Skin Tone, Man: Dark Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "👨‍❤️‍💋‍👩",
-		Descriptor: "Kiss - Man, Woman",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "👨‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss - Man: No Skin Tone, Woman: Light Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "👨‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss - Man: No Skin Tone, Woman: Medium-Light Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "👨‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss - Man: No Skin Tone, Woman: Medium Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "👨‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss - Man: No Skin Tone, Woman: Medium-Dark Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "👨‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss - Man: No Skin Tone, Woman: Dark Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "👨‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Man, Person",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "👨‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Man, Person, No Skin Tone, Light Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "👨‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Man, Person, No Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "👨‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Man, Person, No Skin Tone, Medium Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "👨‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Man, Person, No Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "👨‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Man, Person, No Skin Tone, Dark Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F9D1",
-		Value:      "👨‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Man, Person",
-	},
-	"1F468-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "👨‍❤️‍🧑🏻",
-		Descriptor: "Couple With Heart: Man, Person, No Skin Tone, Light Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "👨‍❤️‍🧑🏼",
-		Descriptor: "Couple With Heart: Man, Person, No Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "👨‍❤️‍🧑🏽",
-		Descriptor: "Couple With Heart: Man, Person, No Skin Tone, Medium Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "👨‍❤️‍🧑🏾",
-		Descriptor: "Couple With Heart: Man, Person, No Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F468-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F468-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "👨‍❤️‍🧑🏿",
-		Descriptor: "Couple With Heart: Man, Person, No Skin Tone, Dark Skin Tone",
 	},
 	"1F469": {
 		Key:        "1F469",
@@ -6126,11 +5011,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F469-1F3FB-200D-1F373",
 		Value:      "👩🏻‍🍳",
 		Descriptor: "Woman Cook: Light Skin Tone",
-	},
-	"1F469-1F3FB-200D-1F37C": {
-		Key:        "1F469-1F3FB-200D-1F37C",
-		Value:      "👩🏻‍🍼",
-		Descriptor: "Woman Feeding Baby: Light Skin Tone",
 	},
 	"1F469-1F3FB-200D-1F393": {
 		Key:        "1F469-1F3FB-200D-1F393",
@@ -6230,7 +5110,7 @@ var Emojis = map[string]Emoji{
 	"1F469-1F3FB-200D-1F9AF": {
 		Key:        "1F469-1F3FB-200D-1F9AF",
 		Value:      "👩🏻‍🦯",
-		Descriptor: "Woman with White Cane: Light Skin Tone",
+		Descriptor: "Woman With Probing Cane: Light Skin Tone",
 	},
 	"1F469-1F3FB-200D-1F9B0": {
 		Key:        "1F469-1F3FB-200D-1F9B0",
@@ -6277,186 +5157,6 @@ var Emojis = map[string]Emoji{
 		Value:      "👩🏻‍✈️",
 		Descriptor: "Woman Pilot: Light Skin Tone",
 	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F468": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F468",
-		Value:      "👩🏻‍❤️‍👨",
-		Descriptor: "Couple With Heart - Woman: Light Skin Tone, Man: No Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "👩🏻‍❤️‍👨🏻",
-		Descriptor: "Couple with Heart: Woman, Man, Light Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "👩🏻‍❤️‍👨🏼",
-		Descriptor: "Couple with Heart: Woman, Man, Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "👩🏻‍❤️‍👨🏽",
-		Descriptor: "Couple with Heart: Woman, Man, Light Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "👩🏻‍❤️‍👨🏾",
-		Descriptor: "Couple with Heart: Woman, Man, Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "👩🏻‍❤️‍👨🏿",
-		Descriptor: "Couple with Heart: Woman, Man, Light Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F469",
-		Value:      "👩🏻‍❤️‍👩",
-		Descriptor: "Couple With Heart - Woman: Light Skin Tone, Woman: No Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "👩🏻‍❤️‍👩🏻",
-		Descriptor: "Couple with Heart: Woman, Woman, Light Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "👩🏻‍❤️‍👩🏼",
-		Descriptor: "Couple with Heart: Woman, Woman, Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "👩🏻‍❤️‍👩🏽",
-		Descriptor: "Couple with Heart: Woman, Woman, Light Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "👩🏻‍❤️‍👩🏾",
-		Descriptor: "Couple with Heart: Woman, Woman, Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "👩🏻‍❤️‍👩🏿",
-		Descriptor: "Couple with Heart: Woman, Woman, Light Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468",
-		Value:      "👩🏻‍❤️‍💋‍👨",
-		Descriptor: "Kiss - Woman: Light Skin Tone, Man: No Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "👩🏻‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss: Woman, Man, Light Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "👩🏻‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss: Woman, Man, Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "👩🏻‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss: Woman, Man, Light Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "👩🏻‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss: Woman, Man, Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "👩🏻‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss: Woman, Man, Light Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "👩🏻‍❤️‍💋‍👩",
-		Descriptor: "Kiss - Woman: Light Skin Tone, Woman: No Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "👩🏻‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss: Woman, Woman, Light Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "👩🏻‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss: Woman, Woman, Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "👩🏻‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss: Woman, Woman, Light Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "👩🏻‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss: Woman, Woman, Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "👩🏻‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss: Woman, Woman, Light Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "👩🏻‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Woman, Person, Light Skin Tone, No Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "👩🏻‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Woman, Person, Light Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "👩🏻‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Woman, Person, Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "👩🏻‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Woman, Person, Light Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "👩🏻‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Woman, Person, Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "👩🏻‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Woman, Person, Light Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F9D1",
-		Value:      "👩🏻‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Woman, Person, Light Skin Tone, No Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "👩🏻‍❤️‍🧑🏻",
-		Descriptor: "Couple With Heart: Woman, Person, Light Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "👩🏻‍❤️‍🧑🏼",
-		Descriptor: "Couple With Heart: Woman, Person, Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "👩🏻‍❤️‍🧑🏽",
-		Descriptor: "Couple With Heart: Woman, Person, Light Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "👩🏻‍❤️‍🧑🏾",
-		Descriptor: "Couple With Heart: Woman, Person, Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F469-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "👩🏻‍❤️‍🧑🏿",
-		Descriptor: "Couple With Heart: Woman, Person, Light Skin Tone, Dark Skin Tone",
-	},
 	"1F469-1F3FC": {
 		Key:        "1F469-1F3FC",
 		Value:      "👩🏼",
@@ -6471,11 +5171,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F469-1F3FC-200D-1F373",
 		Value:      "👩🏼‍🍳",
 		Descriptor: "Woman Cook: Medium-Light Skin Tone",
-	},
-	"1F469-1F3FC-200D-1F37C": {
-		Key:        "1F469-1F3FC-200D-1F37C",
-		Value:      "👩🏼‍🍼",
-		Descriptor: "Woman Feeding Baby: Medium-Light Skin Tone",
 	},
 	"1F469-1F3FC-200D-1F393": {
 		Key:        "1F469-1F3FC-200D-1F393",
@@ -6575,7 +5270,7 @@ var Emojis = map[string]Emoji{
 	"1F469-1F3FC-200D-1F9AF": {
 		Key:        "1F469-1F3FC-200D-1F9AF",
 		Value:      "👩🏼‍🦯",
-		Descriptor: "Woman with White Cane: Medium-Light Skin Tone",
+		Descriptor: "Woman With Probing Cane: Medium-Light Skin Tone",
 	},
 	"1F469-1F3FC-200D-1F9B0": {
 		Key:        "1F469-1F3FC-200D-1F9B0",
@@ -6622,186 +5317,6 @@ var Emojis = map[string]Emoji{
 		Value:      "👩🏼‍✈️",
 		Descriptor: "Woman Pilot: Medium-Light Skin Tone",
 	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F468": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F468",
-		Value:      "👩🏼‍❤️‍👨",
-		Descriptor: "Couple With Heart - Woman: Medium-Light Skin Tone, Man: No Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "👩🏼‍❤️‍👨🏻",
-		Descriptor: "Couple with Heart: Woman, Man, Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "👩🏼‍❤️‍👨🏼",
-		Descriptor: "Couple with Heart: Woman, Man, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "👩🏼‍❤️‍👨🏽",
-		Descriptor: "Couple with Heart: Woman, Man, Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "👩🏼‍❤️‍👨🏾",
-		Descriptor: "Couple with Heart: Woman, Man, Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "👩🏼‍❤️‍👨🏿",
-		Descriptor: "Couple with Heart: Woman, Man, Medium-Light Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F469",
-		Value:      "👩🏼‍❤️‍👩",
-		Descriptor: "Couple With Heart - Woman: Medium-Light Skin Tone, Woman: No Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "👩🏼‍❤️‍👩🏻",
-		Descriptor: "Couple with Heart: Woman, Woman, Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "👩🏼‍❤️‍👩🏼",
-		Descriptor: "Couple with Heart: Woman, Woman, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "👩🏼‍❤️‍👩🏽",
-		Descriptor: "Couple with Heart: Woman, Woman, Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "👩🏼‍❤️‍👩🏾",
-		Descriptor: "Couple with Heart: Woman, Woman, Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "👩🏼‍❤️‍👩🏿",
-		Descriptor: "Couple with Heart: Woman, Woman, Medium-Light Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468",
-		Value:      "👩🏼‍❤️‍💋‍👨",
-		Descriptor: "Kiss - Woman: Medium-Light Skin Tone, Man: No Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "👩🏼‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss: Woman, Man, Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "👩🏼‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss: Woman, Man, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "👩🏼‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss: Woman, Man, Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "👩🏼‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss: Woman, Man, Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "👩🏼‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss: Woman, Man, Medium-Light Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "👩🏼‍❤️‍💋‍👩",
-		Descriptor: "Kiss - Woman: Medium-Light Skin Tone, Woman: No Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "👩🏼‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss: Woman, Woman, Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "👩🏼‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss: Woman, Woman, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "👩🏼‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss: Woman, Woman, Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "👩🏼‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss: Woman, Woman, Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "👩🏼‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss: Woman, Woman, Medium-Light Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "👩🏼‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Woman, Person, Medium-Light Skin Tone, No Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "👩🏼‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Woman, Person, Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "👩🏼‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Woman, Person, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "👩🏼‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Woman, Person, Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "👩🏼‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Woman, Person, Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "👩🏼‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Woman, Person, Medium-Light Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F9D1",
-		Value:      "👩🏼‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Woman, Person, Medium-Light Skin Tone, No Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "👩🏼‍❤️‍🧑🏻",
-		Descriptor: "Couple With Heart: Woman, Person, Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "👩🏼‍❤️‍🧑🏼",
-		Descriptor: "Couple With Heart: Woman, Person, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "👩🏼‍❤️‍🧑🏽",
-		Descriptor: "Couple With Heart: Woman, Person, Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "👩🏼‍❤️‍🧑🏾",
-		Descriptor: "Couple With Heart: Woman, Person, Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F469-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "👩🏼‍❤️‍🧑🏿",
-		Descriptor: "Couple With Heart: Woman, Person, Medium-Light Skin Tone, Dark Skin Tone",
-	},
 	"1F469-1F3FD": {
 		Key:        "1F469-1F3FD",
 		Value:      "👩🏽",
@@ -6816,11 +5331,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F469-1F3FD-200D-1F373",
 		Value:      "👩🏽‍🍳",
 		Descriptor: "Woman Cook: Medium Skin Tone",
-	},
-	"1F469-1F3FD-200D-1F37C": {
-		Key:        "1F469-1F3FD-200D-1F37C",
-		Value:      "👩🏽‍🍼",
-		Descriptor: "Woman Feeding Baby: Medium Skin Tone",
 	},
 	"1F469-1F3FD-200D-1F393": {
 		Key:        "1F469-1F3FD-200D-1F393",
@@ -6920,7 +5430,7 @@ var Emojis = map[string]Emoji{
 	"1F469-1F3FD-200D-1F9AF": {
 		Key:        "1F469-1F3FD-200D-1F9AF",
 		Value:      "👩🏽‍🦯",
-		Descriptor: "Woman with White Cane: Medium Skin Tone",
+		Descriptor: "Woman With Probing Cane: Medium Skin Tone",
 	},
 	"1F469-1F3FD-200D-1F9B0": {
 		Key:        "1F469-1F3FD-200D-1F9B0",
@@ -6967,186 +5477,6 @@ var Emojis = map[string]Emoji{
 		Value:      "👩🏽‍✈️",
 		Descriptor: "Woman Pilot: Medium Skin Tone",
 	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F468": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F468",
-		Value:      "👩🏽‍❤️‍👨",
-		Descriptor: "Couple With Heart - Woman: Medium Skin Tone, Man: No Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "👩🏽‍❤️‍👨🏻",
-		Descriptor: "Couple with Heart: Woman, Man, Medium Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "👩🏽‍❤️‍👨🏼",
-		Descriptor: "Couple with Heart: Woman, Man, Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "👩🏽‍❤️‍👨🏽",
-		Descriptor: "Couple with Heart: Woman, Man, Medium Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "👩🏽‍❤️‍👨🏾",
-		Descriptor: "Couple with Heart: Woman, Man, Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "👩🏽‍❤️‍👨🏿",
-		Descriptor: "Couple with Heart: Woman, Man, Medium Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F469",
-		Value:      "👩🏽‍❤️‍👩",
-		Descriptor: "Couple With Heart - Woman: Medium Skin Tone, Woman: No Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "👩🏽‍❤️‍👩🏻",
-		Descriptor: "Couple with Heart: Woman, Woman, Medium Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "👩🏽‍❤️‍👩🏼",
-		Descriptor: "Couple with Heart: Woman, Woman, Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "👩🏽‍❤️‍👩🏽",
-		Descriptor: "Couple with Heart: Woman, Woman, Medium Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "👩🏽‍❤️‍👩🏾",
-		Descriptor: "Couple with Heart: Woman, Woman, Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "👩🏽‍❤️‍👩🏿",
-		Descriptor: "Couple with Heart: Woman, Woman, Medium Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468",
-		Value:      "👩🏽‍❤️‍💋‍👨",
-		Descriptor: "Kiss - Woman: Medium Skin Tone, Man: No Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "👩🏽‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss: Woman, Man, Medium Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "👩🏽‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss: Woman, Man, Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "👩🏽‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss: Woman, Man, Medium Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "👩🏽‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss: Woman, Man, Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "👩🏽‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss: Woman, Man, Medium Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "👩🏽‍❤️‍💋‍👩",
-		Descriptor: "Kiss - Woman: Medium Skin Tone, Woman: No Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "👩🏽‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss: Woman, Woman, Medium Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "👩🏽‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss: Woman, Woman, Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "👩🏽‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss: Woman, Woman, Medium Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "👩🏽‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss: Woman, Woman, Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "👩🏽‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss: Woman, Woman, Medium Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "👩🏽‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Woman, Person, Medium Skin Tone, No Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "👩🏽‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Woman, Person, Medium Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "👩🏽‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Woman, Person, Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "👩🏽‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Woman, Person, Medium Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "👩🏽‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Woman, Person, Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "👩🏽‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Woman, Person, Medium Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F9D1",
-		Value:      "👩🏽‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Woman, Person, Medium Skin Tone, No Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "👩🏽‍❤️‍🧑🏻",
-		Descriptor: "Couple With Heart: Woman, Person, Medium Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "👩🏽‍❤️‍🧑🏼",
-		Descriptor: "Couple With Heart: Woman, Person, Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "👩🏽‍❤️‍🧑🏽",
-		Descriptor: "Couple With Heart: Woman, Person, Medium Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "👩🏽‍❤️‍🧑🏾",
-		Descriptor: "Couple With Heart: Woman, Person, Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F469-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "👩🏽‍❤️‍🧑🏿",
-		Descriptor: "Couple With Heart: Woman, Person, Medium Skin Tone, Dark Skin Tone",
-	},
 	"1F469-1F3FE": {
 		Key:        "1F469-1F3FE",
 		Value:      "👩🏾",
@@ -7161,11 +5491,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F469-1F3FE-200D-1F373",
 		Value:      "👩🏾‍🍳",
 		Descriptor: "Woman Cook: Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FE-200D-1F37C": {
-		Key:        "1F469-1F3FE-200D-1F37C",
-		Value:      "👩🏾‍🍼",
-		Descriptor: "Woman Feeding Baby: Medium-Dark Skin Tone",
 	},
 	"1F469-1F3FE-200D-1F393": {
 		Key:        "1F469-1F3FE-200D-1F393",
@@ -7265,7 +5590,7 @@ var Emojis = map[string]Emoji{
 	"1F469-1F3FE-200D-1F9AF": {
 		Key:        "1F469-1F3FE-200D-1F9AF",
 		Value:      "👩🏾‍🦯",
-		Descriptor: "Woman with White Cane: Medium-Dark Skin Tone",
+		Descriptor: "Woman With Probing Cane: Medium-Dark Skin Tone",
 	},
 	"1F469-1F3FE-200D-1F9B0": {
 		Key:        "1F469-1F3FE-200D-1F9B0",
@@ -7312,186 +5637,6 @@ var Emojis = map[string]Emoji{
 		Value:      "👩🏾‍✈️",
 		Descriptor: "Woman Pilot: Medium-Dark Skin Tone",
 	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F468": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F468",
-		Value:      "👩🏾‍❤️‍👨",
-		Descriptor: "Couple With Heart - Woman: Medium-Dark Skin Tone, Man: No Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "👩🏾‍❤️‍👨🏻",
-		Descriptor: "Couple with Heart: Woman, Man, Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "👩🏾‍❤️‍👨🏼",
-		Descriptor: "Couple with Heart: Woman, Man, Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "👩🏾‍❤️‍👨🏽",
-		Descriptor: "Couple with Heart: Woman, Man, Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "👩🏾‍❤️‍👨🏾",
-		Descriptor: "Couple with Heart: Woman, Man, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "👩🏾‍❤️‍👨🏿",
-		Descriptor: "Couple with Heart: Woman, Man, Medium-Dark Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F469",
-		Value:      "👩🏾‍❤️‍👩",
-		Descriptor: "Couple With Heart - Woman: Medium-Dark Skin Tone, Woman: No Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "👩🏾‍❤️‍👩🏻",
-		Descriptor: "Couple with Heart: Woman, Woman, Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "👩🏾‍❤️‍👩🏼",
-		Descriptor: "Couple with Heart: Woman, Woman, Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "👩🏾‍❤️‍👩🏽",
-		Descriptor: "Couple with Heart: Woman, Woman, Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "👩🏾‍❤️‍👩🏾",
-		Descriptor: "Couple with Heart: Woman, Woman, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "👩🏾‍❤️‍👩🏿",
-		Descriptor: "Couple with Heart: Woman, Woman, Medium-Dark Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468",
-		Value:      "👩🏾‍❤️‍💋‍👨",
-		Descriptor: "Kiss - Woman: Medium-Dark Skin Tone, Man: No Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "👩🏾‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss: Woman, Man, Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "👩🏾‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss: Woman, Man, Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "👩🏾‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss: Woman, Man, Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "👩🏾‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss: Woman, Man, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "👩🏾‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss: Woman, Man, Medium-Dark Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "👩🏾‍❤️‍💋‍👩",
-		Descriptor: "Kiss - Woman: Medium-Dark Skin Tone, Woman: No Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "👩🏾‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss: Woman, Woman, Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "👩🏾‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss: Woman, Woman, Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "👩🏾‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss: Woman, Woman, Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "👩🏾‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss: Woman, Woman, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "👩🏾‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss: Woman, Woman, Medium-Dark Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "👩🏾‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Woman, Person, Medium-Dark Skin Tone, No Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "👩🏾‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Woman, Person, Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "👩🏾‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Woman, Person, Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "👩🏾‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Woman, Person, Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "👩🏾‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Woman, Person, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "👩🏾‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Woman, Person, Medium-Dark Skin Tone, Dark Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F9D1",
-		Value:      "👩🏾‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Woman, Person, Medium-Dark Skin Tone, No Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "👩🏾‍❤️‍🧑🏻",
-		Descriptor: "Couple With Heart: Woman, Person, Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "👩🏾‍❤️‍🧑🏼",
-		Descriptor: "Couple With Heart: Woman, Person, Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "👩🏾‍❤️‍🧑🏽",
-		Descriptor: "Couple With Heart: Woman, Person, Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "👩🏾‍❤️‍🧑🏾",
-		Descriptor: "Couple With Heart: Woman, Person, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F469-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "👩🏾‍❤️‍🧑🏿",
-		Descriptor: "Couple With Heart: Woman, Person, Medium-Dark Skin Tone, Dark Skin Tone",
-	},
 	"1F469-1F3FF": {
 		Key:        "1F469-1F3FF",
 		Value:      "👩🏿",
@@ -7506,11 +5651,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F469-1F3FF-200D-1F373",
 		Value:      "👩🏿‍🍳",
 		Descriptor: "Woman Cook: Dark Skin Tone",
-	},
-	"1F469-1F3FF-200D-1F37C": {
-		Key:        "1F469-1F3FF-200D-1F37C",
-		Value:      "👩🏿‍🍼",
-		Descriptor: "Woman Feeding Baby: Dark Skin Tone",
 	},
 	"1F469-1F3FF-200D-1F393": {
 		Key:        "1F469-1F3FF-200D-1F393",
@@ -7610,7 +5750,7 @@ var Emojis = map[string]Emoji{
 	"1F469-1F3FF-200D-1F9AF": {
 		Key:        "1F469-1F3FF-200D-1F9AF",
 		Value:      "👩🏿‍🦯",
-		Descriptor: "Woman with White Cane: Dark Skin Tone",
+		Descriptor: "Woman With Probing Cane: Dark Skin Tone",
 	},
 	"1F469-1F3FF-200D-1F9B0": {
 		Key:        "1F469-1F3FF-200D-1F9B0",
@@ -7657,186 +5797,6 @@ var Emojis = map[string]Emoji{
 		Value:      "👩🏿‍✈️",
 		Descriptor: "Woman Pilot: Dark Skin Tone",
 	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F468": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F468",
-		Value:      "👩🏿‍❤️‍👨",
-		Descriptor: "Couple With Heart - Woman: Dark Skin Tone, Man: No Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "👩🏿‍❤️‍👨🏻",
-		Descriptor: "Couple with Heart: Woman, Man, Dark Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "👩🏿‍❤️‍👨🏼",
-		Descriptor: "Couple with Heart: Woman, Man, Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "👩🏿‍❤️‍👨🏽",
-		Descriptor: "Couple with Heart: Woman, Man, Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "👩🏿‍❤️‍👨🏾",
-		Descriptor: "Couple with Heart: Woman, Man, Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "👩🏿‍❤️‍👨🏿",
-		Descriptor: "Couple with Heart: Woman, Man, Dark Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F469",
-		Value:      "👩🏿‍❤️‍👩",
-		Descriptor: "Couple With Heart - Woman: Dark Skin Tone, Woman: No Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "👩🏿‍❤️‍👩🏻",
-		Descriptor: "Couple with Heart: Woman, Woman, Dark Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "👩🏿‍❤️‍👩🏼",
-		Descriptor: "Couple with Heart: Woman, Woman, Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "👩🏿‍❤️‍👩🏽",
-		Descriptor: "Couple with Heart: Woman, Woman, Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "👩🏿‍❤️‍👩🏾",
-		Descriptor: "Couple with Heart: Woman, Woman, Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "👩🏿‍❤️‍👩🏿",
-		Descriptor: "Couple with Heart: Woman, Woman, Dark Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468",
-		Value:      "👩🏿‍❤️‍💋‍👨",
-		Descriptor: "Kiss - Woman: Dark Skin Tone, Man: No Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "👩🏿‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss: Woman, Man, Dark Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "👩🏿‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss: Woman, Man, Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "👩🏿‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss: Woman, Man, Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "👩🏿‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss: Woman, Man, Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "👩🏿‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss: Woman, Man, Dark Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "👩🏿‍❤️‍💋‍👩",
-		Descriptor: "Kiss - Woman: Dark Skin Tone, Woman: No Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "👩🏿‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss: Woman, Woman, Dark Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "👩🏿‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss: Woman, Woman, Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "👩🏿‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss: Woman, Woman, Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "👩🏿‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss: Woman, Woman, Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "👩🏿‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss: Woman, Woman, Dark Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "👩🏿‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Woman, Person, Dark Skin Tone, No Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "👩🏿‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Woman, Person, Dark Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "👩🏿‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Woman, Person, Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "👩🏿‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Woman, Person, Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "👩🏿‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Woman, Person, Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "👩🏿‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Woman, Person, Dark Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F9D1",
-		Value:      "👩🏿‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Woman, Person, Dark Skin Tone, No Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "👩🏿‍❤️‍🧑🏻",
-		Descriptor: "Couple With Heart: Woman, Person, Dark Skin Tone, Light Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "👩🏿‍❤️‍🧑🏼",
-		Descriptor: "Couple With Heart: Woman, Person, Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "👩🏿‍❤️‍🧑🏽",
-		Descriptor: "Couple With Heart: Woman, Person, Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "👩🏿‍❤️‍🧑🏾",
-		Descriptor: "Couple With Heart: Woman, Person, Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F469-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "👩🏿‍❤️‍🧑🏿",
-		Descriptor: "Couple With Heart: Woman, Person, Dark Skin Tone",
-	},
 	"1F469-200D-1F33E": {
 		Key:        "1F469-200D-1F33E",
 		Value:      "👩‍🌾",
@@ -7846,11 +5806,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F469-200D-1F373",
 		Value:      "👩‍🍳",
 		Descriptor: "Woman Cook",
-	},
-	"1F469-200D-1F37C": {
-		Key:        "1F469-200D-1F37C",
-		Value:      "👩‍🍼",
-		Descriptor: "Woman Feeding Baby",
 	},
 	"1F469-200D-1F393": {
 		Key:        "1F469-200D-1F393",
@@ -7960,7 +5915,7 @@ var Emojis = map[string]Emoji{
 	"1F469-200D-1F9AF": {
 		Key:        "1F469-200D-1F9AF",
 		Value:      "👩‍🦯",
-		Descriptor: "Woman with White Cane",
+		Descriptor: "Woman With Probing Cane",
 	},
 	"1F469-200D-1F9B0": {
 		Key:        "1F469-200D-1F9B0",
@@ -8010,182 +5965,22 @@ var Emojis = map[string]Emoji{
 	"1F469-200D-2764-FE0F-200D-1F468": {
 		Key:        "1F469-200D-2764-FE0F-200D-1F468",
 		Value:      "👩‍❤️‍👨",
-		Descriptor: "Couple with Heart: Woman, Man",
-	},
-	"1F469-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "👩‍❤️‍👨🏻",
-		Descriptor: "Couple With Heart - Woman: No Skin Tone, Man: Light Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "👩‍❤️‍👨🏼",
-		Descriptor: "Couple With Heart - Woman: No Skin Tone, Man: Medium-Light Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "👩‍❤️‍👨🏽",
-		Descriptor: "Couple With Heart - Woman: No Skin Tone, Man: Medium Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "👩‍❤️‍👨🏾",
-		Descriptor: "Couple With Heart - Woman: No Skin Tone, Man: Medium-Dark Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "👩‍❤️‍👨🏿",
-		Descriptor: "Couple With Heart - Woman: No Skin Tone, Man: Dark Skin Tone",
+		Descriptor: "Couple With Heart: Woman, Man",
 	},
 	"1F469-200D-2764-FE0F-200D-1F469": {
 		Key:        "1F469-200D-2764-FE0F-200D-1F469",
 		Value:      "👩‍❤️‍👩",
-		Descriptor: "Couple with Heart: Woman, Woman",
-	},
-	"1F469-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "👩‍❤️‍👩🏻",
-		Descriptor: "Couple With Heart - Woman: No Skin Tone, Woman: Light Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "👩‍❤️‍👩🏼",
-		Descriptor: "Couple With Heart - Woman: No Skin Tone, Woman: Medium-Light Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "👩‍❤️‍👩🏽",
-		Descriptor: "Couple With Heart - Woman: No Skin Tone, Woman: Medium Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "👩‍❤️‍👩🏾",
-		Descriptor: "Couple With Heart - Woman: No Skin Tone, Woman: Medium-Dark Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "👩‍❤️‍👩🏿",
-		Descriptor: "Couple With Heart - Woman: No Skin Tone, Woman: Dark Skin Tone",
+		Descriptor: "Couple With Heart: Woman, Woman",
 	},
 	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F468": {
 		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F468",
 		Value:      "👩‍❤️‍💋‍👨",
 		Descriptor: "Kiss: Woman, Man",
 	},
-	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "👩‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss - Woman: No Skin Tone, Man: Light Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "👩‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss - Woman: No Skin Tone, Man: Medium-Light Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "👩‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss - Woman: No Skin Tone, Man: Medium Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "👩‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss - Woman: No Skin Tone, Man: Medium-Dark Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "👩‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss - Woman: No Skin Tone, Man: Dark Skin Tone",
-	},
 	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F469": {
 		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F469",
 		Value:      "👩‍❤️‍💋‍👩",
 		Descriptor: "Kiss: Woman, Woman",
-	},
-	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "👩‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss - Woman: No Skin Tone, Woman: Light Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "👩‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss - Woman: No Skin Tone, Woman: Medium-Light Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "👩‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss - Woman: No Skin Tone, Woman: Medium Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "👩‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss - Woman: No Skin Tone, Woman: Medium-Dark Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "👩‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss - Woman: No Skin Tone, Woman: Dark Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "👩‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Woman, Person",
-	},
-	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "👩‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Woman, Person, No Skin Tone, Light Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "👩‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Woman, Person, No Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "👩‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Woman, Person, No Skin Tone, Medium Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "👩‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Woman, Person, No Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "👩‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Woman, Person, No Skin Tone, Dark Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F9D1",
-		Value:      "👩‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Woman, Person",
-	},
-	"1F469-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "👩‍❤️‍🧑🏻",
-		Descriptor: "Couple With Heart: Woman, Person, No Skin Tone, Light Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "👩‍❤️‍🧑🏼",
-		Descriptor: "Couple With Heart: Woman, Person, No Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "👩‍❤️‍🧑🏽",
-		Descriptor: "Couple With Heart: Woman, Person, No Skin Tone, Medium Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "👩‍❤️‍🧑🏾",
-		Descriptor: "Couple With Heart: Woman, Person, No Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F469-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F469-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "👩‍❤️‍🧑🏿",
-		Descriptor: "Couple With Heart: Woman, Person, No Skin Tone, Dark Skin Tone",
 	},
 	"1F46A": {
 		Key:        "1F46A",
@@ -8375,107 +6170,47 @@ var Emojis = map[string]Emoji{
 	"1F46F": {
 		Key:        "1F46F",
 		Value:      "👯",
-		Descriptor: "People with Bunny Ears",
+		Descriptor: "People With Bunny Ears",
 	},
 	"1F46F-200D-2640-FE0F": {
 		Key:        "1F46F-200D-2640-FE0F",
 		Value:      "👯‍♀️",
-		Descriptor: "Women with Bunny Ears",
+		Descriptor: "Women With Bunny Ears",
 	},
 	"1F46F-200D-2642-FE0F": {
 		Key:        "1F46F-200D-2642-FE0F",
 		Value:      "👯‍♂️",
-		Descriptor: "Men with Bunny Ears",
+		Descriptor: "Men With Bunny Ears",
 	},
 	"1F470": {
 		Key:        "1F470",
 		Value:      "👰",
-		Descriptor: "Person with Veil",
+		Descriptor: "Bride With Veil",
 	},
 	"1F470-1F3FB": {
 		Key:        "1F470-1F3FB",
 		Value:      "👰🏻",
-		Descriptor: "Person with Veil: Light Skin Tone",
-	},
-	"1F470-1F3FB-200D-2640-FE0F": {
-		Key:        "1F470-1F3FB-200D-2640-FE0F",
-		Value:      "👰🏻‍♀️",
-		Descriptor: "Woman with Veil: Light Skin Tone",
-	},
-	"1F470-1F3FB-200D-2642-FE0F": {
-		Key:        "1F470-1F3FB-200D-2642-FE0F",
-		Value:      "👰🏻‍♂️",
-		Descriptor: "Man with Veil: Light Skin Tone",
+		Descriptor: "Bride With Veil: Light Skin Tone",
 	},
 	"1F470-1F3FC": {
 		Key:        "1F470-1F3FC",
 		Value:      "👰🏼",
-		Descriptor: "Person with Veil: Medium-Light Skin Tone",
-	},
-	"1F470-1F3FC-200D-2640-FE0F": {
-		Key:        "1F470-1F3FC-200D-2640-FE0F",
-		Value:      "👰🏼‍♀️",
-		Descriptor: "Woman with Veil: Medium-Light Skin Tone",
-	},
-	"1F470-1F3FC-200D-2642-FE0F": {
-		Key:        "1F470-1F3FC-200D-2642-FE0F",
-		Value:      "👰🏼‍♂️",
-		Descriptor: "Man with Veil: Medium-Light Skin Tone",
+		Descriptor: "Bride With Veil: Medium-Light Skin Tone",
 	},
 	"1F470-1F3FD": {
 		Key:        "1F470-1F3FD",
 		Value:      "👰🏽",
-		Descriptor: "Person with Veil: Medium Skin Tone",
-	},
-	"1F470-1F3FD-200D-2640-FE0F": {
-		Key:        "1F470-1F3FD-200D-2640-FE0F",
-		Value:      "👰🏽‍♀️",
-		Descriptor: "Woman with Veil: Medium Skin Tone",
-	},
-	"1F470-1F3FD-200D-2642-FE0F": {
-		Key:        "1F470-1F3FD-200D-2642-FE0F",
-		Value:      "👰🏽‍♂️",
-		Descriptor: "Man with Veil: Medium Skin Tone",
+		Descriptor: "Bride With Veil: Medium Skin Tone",
 	},
 	"1F470-1F3FE": {
 		Key:        "1F470-1F3FE",
 		Value:      "👰🏾",
-		Descriptor: "Person with Veil: Medium-Dark Skin Tone",
-	},
-	"1F470-1F3FE-200D-2640-FE0F": {
-		Key:        "1F470-1F3FE-200D-2640-FE0F",
-		Value:      "👰🏾‍♀️",
-		Descriptor: "Woman with Veil: Medium-Dark Skin Tone",
-	},
-	"1F470-1F3FE-200D-2642-FE0F": {
-		Key:        "1F470-1F3FE-200D-2642-FE0F",
-		Value:      "👰🏾‍♂️",
-		Descriptor: "Man with Veil: Medium-Dark Skin Tone",
+		Descriptor: "Bride With Veil: Medium-Dark Skin Tone",
 	},
 	"1F470-1F3FF": {
 		Key:        "1F470-1F3FF",
 		Value:      "👰🏿",
-		Descriptor: "Person with Veil: Dark Skin Tone",
-	},
-	"1F470-1F3FF-200D-2640-FE0F": {
-		Key:        "1F470-1F3FF-200D-2640-FE0F",
-		Value:      "👰🏿‍♀️",
-		Descriptor: "Woman with Veil: Dark Skin Tone",
-	},
-	"1F470-1F3FF-200D-2642-FE0F": {
-		Key:        "1F470-1F3FF-200D-2642-FE0F",
-		Value:      "👰🏿‍♂️",
-		Descriptor: "Man with Veil: Dark Skin Tone",
-	},
-	"1F470-200D-2640-FE0F": {
-		Key:        "1F470-200D-2640-FE0F",
-		Value:      "👰‍♀️",
-		Descriptor: "Woman with Veil",
-	},
-	"1F470-200D-2642-FE0F": {
-		Key:        "1F470-200D-2642-FE0F",
-		Value:      "👰‍♂️",
-		Descriptor: "Man with Veil",
+		Descriptor: "Bride With Veil: Dark Skin Tone",
 	},
 	"1F471": {
 		Key:        "1F471",
@@ -8570,32 +6305,32 @@ var Emojis = map[string]Emoji{
 	"1F472": {
 		Key:        "1F472",
 		Value:      "👲",
-		Descriptor: "Person with Skullcap",
+		Descriptor: "Man With Skullcap",
 	},
 	"1F472-1F3FB": {
 		Key:        "1F472-1F3FB",
 		Value:      "👲🏻",
-		Descriptor: "Person with Skullcap: Light Skin Tone",
+		Descriptor: "Man With Skullcap: Light Skin Tone",
 	},
 	"1F472-1F3FC": {
 		Key:        "1F472-1F3FC",
 		Value:      "👲🏼",
-		Descriptor: "Person with Skullcap: Medium-Light Skin Tone",
+		Descriptor: "Man With Skullcap: Medium-Light Skin Tone",
 	},
 	"1F472-1F3FD": {
 		Key:        "1F472-1F3FD",
 		Value:      "👲🏽",
-		Descriptor: "Person with Skullcap: Medium Skin Tone",
+		Descriptor: "Man With Skullcap: Medium Skin Tone",
 	},
 	"1F472-1F3FE": {
 		Key:        "1F472-1F3FE",
 		Value:      "👲🏾",
-		Descriptor: "Person with Skullcap: Medium-Dark Skin Tone",
+		Descriptor: "Man With Skullcap: Medium-Dark Skin Tone",
 	},
 	"1F472-1F3FF": {
 		Key:        "1F472-1F3FF",
 		Value:      "👲🏿",
-		Descriptor: "Person with Skullcap: Dark Skin Tone",
+		Descriptor: "Man With Skullcap: Dark Skin Tone",
 	},
 	"1F473": {
 		Key:        "1F473",
@@ -8955,7 +6690,7 @@ var Emojis = map[string]Emoji{
 	"1F47F": {
 		Key:        "1F47F",
 		Value:      "👿",
-		Descriptor: "Angry Face with Horns",
+		Descriptor: "Angry Face With Horns",
 	},
 	"1F480": {
 		Key:        "1F480",
@@ -9427,31 +7162,6 @@ var Emojis = map[string]Emoji{
 		Value:      "💏",
 		Descriptor: "Kiss",
 	},
-	"1F48F-1F3FB": {
-		Key:        "1F48F-1F3FB",
-		Value:      "💏🏻",
-		Descriptor: "Kiss: Light Skin Tone",
-	},
-	"1F48F-1F3FC": {
-		Key:        "1F48F-1F3FC",
-		Value:      "💏🏼",
-		Descriptor: "Kiss: Medium-Light Skin Tone",
-	},
-	"1F48F-1F3FD": {
-		Key:        "1F48F-1F3FD",
-		Value:      "💏🏽",
-		Descriptor: "Kiss: Medium Skin Tone",
-	},
-	"1F48F-1F3FE": {
-		Key:        "1F48F-1F3FE",
-		Value:      "💏🏾",
-		Descriptor: "Kiss: Medium-Dark Skin Tone",
-	},
-	"1F48F-1F3FF": {
-		Key:        "1F48F-1F3FF",
-		Value:      "💏🏿",
-		Descriptor: "Kiss: Dark Skin Tone",
-	},
 	"1F490": {
 		Key:        "1F490",
 		Value:      "💐",
@@ -9460,32 +7170,7 @@ var Emojis = map[string]Emoji{
 	"1F491": {
 		Key:        "1F491",
 		Value:      "💑",
-		Descriptor: "Couple with Heart",
-	},
-	"1F491-1F3FB": {
-		Key:        "1F491-1F3FB",
-		Value:      "💑🏻",
-		Descriptor: "Couple with Heart: Light Skin Tone",
-	},
-	"1F491-1F3FC": {
-		Key:        "1F491-1F3FC",
-		Value:      "💑🏼",
-		Descriptor: "Couple with Heart: Medium-Light Skin Tone",
-	},
-	"1F491-1F3FD": {
-		Key:        "1F491-1F3FD",
-		Value:      "💑🏽",
-		Descriptor: "Couple with Heart: Medium Skin Tone",
-	},
-	"1F491-1F3FE": {
-		Key:        "1F491-1F3FE",
-		Value:      "💑🏾",
-		Descriptor: "Couple with Heart: Medium-Dark Skin Tone",
-	},
-	"1F491-1F3FF": {
-		Key:        "1F491-1F3FF",
-		Value:      "💑🏿",
-		Descriptor: "Couple with Heart: Dark Skin Tone",
+		Descriptor: "Couple With Heart",
 	},
 	"1F492": {
 		Key:        "1F492",
@@ -9520,7 +7205,7 @@ var Emojis = map[string]Emoji{
 	"1F498": {
 		Key:        "1F498",
 		Value:      "💘",
-		Descriptor: "Heart with Arrow",
+		Descriptor: "Heart With Arrow",
 	},
 	"1F499": {
 		Key:        "1F499",
@@ -9545,7 +7230,7 @@ var Emojis = map[string]Emoji{
 	"1F49D": {
 		Key:        "1F49D",
 		Value:      "💝",
-		Descriptor: "Heart with Ribbon",
+		Descriptor: "Heart With Ribbon",
 	},
 	"1F49E": {
 		Key:        "1F49E",
@@ -9560,7 +7245,7 @@ var Emojis = map[string]Emoji{
 	"1F4A0": {
 		Key:        "1F4A0",
 		Value:      "💠",
-		Descriptor: "Diamond with a Dot",
+		Descriptor: "Diamond With a Dot",
 	},
 	"1F4A1": {
 		Key:        "1F4A1",
@@ -9705,12 +7390,12 @@ var Emojis = map[string]Emoji{
 	"1F4B8": {
 		Key:        "1F4B8",
 		Value:      "💸",
-		Descriptor: "Money with Wings",
+		Descriptor: "Money With Wings",
 	},
 	"1F4B9": {
 		Key:        "1F4B9",
 		Value:      "💹",
-		Descriptor: "Chart Increasing with Yen",
+		Descriptor: "Chart Increasing With Yen",
 	},
 	"1F4BA": {
 		Key:        "1F4BA",
@@ -9760,7 +7445,7 @@ var Emojis = map[string]Emoji{
 	"1F4C3": {
 		Key:        "1F4C3",
 		Value:      "📃",
-		Descriptor: "Page with Curl",
+		Descriptor: "Page With Curl",
 	},
 	"1F4C4": {
 		Key:        "1F4C4",
@@ -9845,7 +7530,7 @@ var Emojis = map[string]Emoji{
 	"1F4D4": {
 		Key:        "1F4D4",
 		Value:      "📔",
-		Descriptor: "Notebook with Decorative Cover",
+		Descriptor: "Notebook With Decorative Cover",
 	},
 	"1F4D5": {
 		Key:        "1F4D5",
@@ -9950,27 +7635,27 @@ var Emojis = map[string]Emoji{
 	"1F4E9": {
 		Key:        "1F4E9",
 		Value:      "📩",
-		Descriptor: "Envelope with Arrow",
+		Descriptor: "Envelope With Arrow",
 	},
 	"1F4EA": {
 		Key:        "1F4EA",
 		Value:      "📪",
-		Descriptor: "Closed Mailbox with Lowered Flag",
+		Descriptor: "Closed Mailbox With Lowered Flag",
 	},
 	"1F4EB": {
 		Key:        "1F4EB",
 		Value:      "📫",
-		Descriptor: "Closed Mailbox with Raised Flag",
+		Descriptor: "Closed Mailbox With Raised Flag",
 	},
 	"1F4EC": {
 		Key:        "1F4EC",
 		Value:      "📬",
-		Descriptor: "Open Mailbox with Raised Flag",
+		Descriptor: "Open Mailbox With Raised Flag",
 	},
 	"1F4ED": {
 		Key:        "1F4ED",
 		Value:      "📭",
-		Descriptor: "Open Mailbox with Lowered Flag",
+		Descriptor: "Open Mailbox With Lowered Flag",
 	},
 	"1F4EE": {
 		Key:        "1F4EE",
@@ -9995,7 +7680,7 @@ var Emojis = map[string]Emoji{
 	"1F4F2": {
 		Key:        "1F4F2",
 		Value:      "📲",
-		Descriptor: "Mobile Phone with Arrow",
+		Descriptor: "Mobile Phone With Arrow",
 	},
 	"1F4F3": {
 		Key:        "1F4F3",
@@ -10025,7 +7710,7 @@ var Emojis = map[string]Emoji{
 	"1F4F8": {
 		Key:        "1F4F8",
 		Value:      "📸",
-		Descriptor: "Camera with Flash",
+		Descriptor: "Camera With Flash",
 	},
 	"1F4F9": {
 		Key:        "1F4F9",
@@ -10135,12 +7820,12 @@ var Emojis = map[string]Emoji{
 	"1F50F": {
 		Key:        "1F50F",
 		Value:      "🔏",
-		Descriptor: "Locked with Pen",
+		Descriptor: "Locked With Pen",
 	},
 	"1F510": {
 		Key:        "1F510",
 		Value:      "🔐",
-		Descriptor: "Locked with Key",
+		Descriptor: "Locked With Key",
 	},
 	"1F511": {
 		Key:        "1F511",
@@ -10165,7 +7850,7 @@ var Emojis = map[string]Emoji{
 	"1F515": {
 		Key:        "1F515",
 		Value:      "🔕",
-		Descriptor: "Bell with Slash",
+		Descriptor: "Bell With Slash",
 	},
 	"1F516": {
 		Key:        "1F516",
@@ -10275,7 +7960,7 @@ var Emojis = map[string]Emoji{
 	"1F52B": {
 		Key:        "1F52B",
 		Value:      "🔫",
-		Descriptor: "Water Pistol",
+		Descriptor: "Pistol",
 	},
 	"1F52C": {
 		Key:        "1F52C",
@@ -10535,32 +8220,32 @@ var Emojis = map[string]Emoji{
 	"1F574-1F3FB": {
 		Key:        "1F574-1F3FB",
 		Value:      "🕴🏻",
-		Descriptor: "Person in Suit Levitating: Light Skin Tone",
+		Descriptor: "Man in Suit Levitating: Light Skin Tone",
 	},
 	"1F574-1F3FC": {
 		Key:        "1F574-1F3FC",
 		Value:      "🕴🏼",
-		Descriptor: "Person in Suit Levitating: Medium-Light Skin Tone",
+		Descriptor: "Man in Suit Levitating: Medium-Light Skin Tone",
 	},
 	"1F574-1F3FD": {
 		Key:        "1F574-1F3FD",
 		Value:      "🕴🏽",
-		Descriptor: "Person in Suit Levitating: Medium Skin Tone",
+		Descriptor: "Man in Suit Levitating: Medium Skin Tone",
 	},
 	"1F574-1F3FE": {
 		Key:        "1F574-1F3FE",
 		Value:      "🕴🏾",
-		Descriptor: "Person in Suit Levitating: Medium-Dark Skin Tone",
+		Descriptor: "Man in Suit Levitating: Medium-Dark Skin Tone",
 	},
 	"1F574-1F3FF": {
 		Key:        "1F574-1F3FF",
 		Value:      "🕴🏿",
-		Descriptor: "Person in Suit Levitating: Dark Skin Tone",
+		Descriptor: "Man in Suit Levitating: Dark Skin Tone",
 	},
 	"1F574-FE0F": {
 		Key:        "1F574-FE0F",
 		Value:      "🕴️",
-		Descriptor: "Person in Suit Levitating",
+		Descriptor: "Man in Suit Levitating",
 	},
 	"1F575-1F3FB": {
 		Key:        "1F575-1F3FB",
@@ -10730,32 +8415,32 @@ var Emojis = map[string]Emoji{
 	"1F590-1F3FB": {
 		Key:        "1F590-1F3FB",
 		Value:      "🖐🏻",
-		Descriptor: "Hand with Fingers Splayed: Light Skin Tone",
+		Descriptor: "Hand With Fingers Splayed: Light Skin Tone",
 	},
 	"1F590-1F3FC": {
 		Key:        "1F590-1F3FC",
 		Value:      "🖐🏼",
-		Descriptor: "Hand with Fingers Splayed: Medium-Light Skin Tone",
+		Descriptor: "Hand With Fingers Splayed: Medium-Light Skin Tone",
 	},
 	"1F590-1F3FD": {
 		Key:        "1F590-1F3FD",
 		Value:      "🖐🏽",
-		Descriptor: "Hand with Fingers Splayed: Medium Skin Tone",
+		Descriptor: "Hand With Fingers Splayed: Medium Skin Tone",
 	},
 	"1F590-1F3FE": {
 		Key:        "1F590-1F3FE",
 		Value:      "🖐🏾",
-		Descriptor: "Hand with Fingers Splayed: Medium-Dark Skin Tone",
+		Descriptor: "Hand With Fingers Splayed: Medium-Dark Skin Tone",
 	},
 	"1F590-1F3FF": {
 		Key:        "1F590-1F3FF",
 		Value:      "🖐🏿",
-		Descriptor: "Hand with Fingers Splayed: Dark Skin Tone",
+		Descriptor: "Hand With Fingers Splayed: Dark Skin Tone",
 	},
 	"1F590-FE0F": {
 		Key:        "1F590-FE0F",
 		Value:      "🖐️",
-		Descriptor: "Hand with Fingers Splayed",
+		Descriptor: "Hand With Fingers Splayed",
 	},
 	"1F595": {
 		Key:        "1F595",
@@ -10915,7 +8600,7 @@ var Emojis = map[string]Emoji{
 	"1F5F3-FE0F": {
 		Key:        "1F5F3-FE0F",
 		Value:      "🗳️",
-		Descriptor: "Ballot Box with Ballot",
+		Descriptor: "Ballot Box With Ballot",
 	},
 	"1F5FA-FE0F": {
 		Key:        "1F5FA-FE0F",
@@ -10955,27 +8640,27 @@ var Emojis = map[string]Emoji{
 	"1F601": {
 		Key:        "1F601",
 		Value:      "😁",
-		Descriptor: "Beaming Face with Smiling Eyes",
+		Descriptor: "Beaming Face With Smiling Eyes",
 	},
 	"1F602": {
 		Key:        "1F602",
 		Value:      "😂",
-		Descriptor: "Face with Tears of Joy",
+		Descriptor: "Face With Tears of Joy",
 	},
 	"1F603": {
 		Key:        "1F603",
 		Value:      "😃",
-		Descriptor: "Grinning Face with Big Eyes",
+		Descriptor: "Grinning Face With Big Eyes",
 	},
 	"1F604": {
 		Key:        "1F604",
 		Value:      "😄",
-		Descriptor: "Grinning Face with Smiling Eyes",
+		Descriptor: "Grinning Face With Smiling Eyes",
 	},
 	"1F605": {
 		Key:        "1F605",
 		Value:      "😅",
-		Descriptor: "Grinning Face with Sweat",
+		Descriptor: "Grinning Face With Sweat",
 	},
 	"1F606": {
 		Key:        "1F606",
@@ -10985,12 +8670,12 @@ var Emojis = map[string]Emoji{
 	"1F607": {
 		Key:        "1F607",
 		Value:      "😇",
-		Descriptor: "Smiling Face with Halo",
+		Descriptor: "Smiling Face With Halo",
 	},
 	"1F608": {
 		Key:        "1F608",
 		Value:      "😈",
-		Descriptor: "Smiling Face with Horns",
+		Descriptor: "Smiling Face With Horns",
 	},
 	"1F609": {
 		Key:        "1F609",
@@ -11000,7 +8685,7 @@ var Emojis = map[string]Emoji{
 	"1F60A": {
 		Key:        "1F60A",
 		Value:      "😊",
-		Descriptor: "Smiling Face with Smiling Eyes",
+		Descriptor: "Smiling Face With Smiling Eyes",
 	},
 	"1F60B": {
 		Key:        "1F60B",
@@ -11015,12 +8700,12 @@ var Emojis = map[string]Emoji{
 	"1F60D": {
 		Key:        "1F60D",
 		Value:      "😍",
-		Descriptor: "Smiling Face with Heart-Eyes",
+		Descriptor: "Smiling Face With Heart-Eyes",
 	},
 	"1F60E": {
 		Key:        "1F60E",
 		Value:      "😎",
-		Descriptor: "Smiling Face with Sunglasses",
+		Descriptor: "Smiling Face With Sunglasses",
 	},
 	"1F60F": {
 		Key:        "1F60F",
@@ -11045,7 +8730,7 @@ var Emojis = map[string]Emoji{
 	"1F613": {
 		Key:        "1F613",
 		Value:      "😓",
-		Descriptor: "Downcast Face with Sweat",
+		Descriptor: "Downcast Face With Sweat",
 	},
 	"1F614": {
 		Key:        "1F614",
@@ -11075,27 +8760,27 @@ var Emojis = map[string]Emoji{
 	"1F619": {
 		Key:        "1F619",
 		Value:      "😙",
-		Descriptor: "Kissing Face with Smiling Eyes",
+		Descriptor: "Kissing Face With Smiling Eyes",
 	},
 	"1F61A": {
 		Key:        "1F61A",
 		Value:      "😚",
-		Descriptor: "Kissing Face with Closed Eyes",
+		Descriptor: "Kissing Face With Closed Eyes",
 	},
 	"1F61B": {
 		Key:        "1F61B",
 		Value:      "😛",
-		Descriptor: "Face with Tongue",
+		Descriptor: "Face With Tongue",
 	},
 	"1F61C": {
 		Key:        "1F61C",
 		Value:      "😜",
-		Descriptor: "Winking Face with Tongue",
+		Descriptor: "Winking Face With Tongue",
 	},
 	"1F61D": {
 		Key:        "1F61D",
 		Value:      "😝",
-		Descriptor: "Squinting Face with Tongue",
+		Descriptor: "Squinting Face With Tongue",
 	},
 	"1F61E": {
 		Key:        "1F61E",
@@ -11115,7 +8800,7 @@ var Emojis = map[string]Emoji{
 	"1F621": {
 		Key:        "1F621",
 		Value:      "😡",
-		Descriptor: "Enraged Face",
+		Descriptor: "Pouting Face",
 	},
 	"1F622": {
 		Key:        "1F622",
@@ -11130,7 +8815,7 @@ var Emojis = map[string]Emoji{
 	"1F624": {
 		Key:        "1F624",
 		Value:      "😤",
-		Descriptor: "Face with Steam From Nose",
+		Descriptor: "Face With Steam From Nose",
 	},
 	"1F625": {
 		Key:        "1F625",
@@ -11140,7 +8825,7 @@ var Emojis = map[string]Emoji{
 	"1F626": {
 		Key:        "1F626",
 		Value:      "😦",
-		Descriptor: "Frowning Face with Open Mouth",
+		Descriptor: "Frowning Face With Open Mouth",
 	},
 	"1F627": {
 		Key:        "1F627",
@@ -11180,12 +8865,7 @@ var Emojis = map[string]Emoji{
 	"1F62E": {
 		Key:        "1F62E",
 		Value:      "😮",
-		Descriptor: "Face with Open Mouth",
-	},
-	"1F62E-200D-1F4A8": {
-		Key:        "1F62E-200D-1F4A8",
-		Value:      "😮‍💨",
-		Descriptor: "Face Exhaling",
+		Descriptor: "Face With Open Mouth",
 	},
 	"1F62F": {
 		Key:        "1F62F",
@@ -11195,7 +8875,7 @@ var Emojis = map[string]Emoji{
 	"1F630": {
 		Key:        "1F630",
 		Value:      "😰",
-		Descriptor: "Anxious Face with Sweat",
+		Descriptor: "Anxious Face With Sweat",
 	},
 	"1F631": {
 		Key:        "1F631",
@@ -11220,37 +8900,27 @@ var Emojis = map[string]Emoji{
 	"1F635": {
 		Key:        "1F635",
 		Value:      "😵",
-		Descriptor: "Face with Crossed-Out Eyes",
-	},
-	"1F635-200D-1F4AB": {
-		Key:        "1F635-200D-1F4AB",
-		Value:      "😵‍💫",
-		Descriptor: "Face with Spiral Eyes",
+		Descriptor: "Dizzy Face",
 	},
 	"1F636": {
 		Key:        "1F636",
 		Value:      "😶",
 		Descriptor: "Face Without Mouth",
 	},
-	"1F636-200D-1F32B-FE0F": {
-		Key:        "1F636-200D-1F32B-FE0F",
-		Value:      "😶‍🌫️",
-		Descriptor: "Face in Clouds",
-	},
 	"1F637": {
 		Key:        "1F637",
 		Value:      "😷",
-		Descriptor: "Face with Medical Mask",
+		Descriptor: "Face With Medical Mask",
 	},
 	"1F638": {
 		Key:        "1F638",
 		Value:      "😸",
-		Descriptor: "Grinning Cat with Smiling Eyes",
+		Descriptor: "Grinning Cat With Smiling Eyes",
 	},
 	"1F639": {
 		Key:        "1F639",
 		Value:      "😹",
-		Descriptor: "Cat with Tears of Joy",
+		Descriptor: "Cat With Tears of Joy",
 	},
 	"1F63A": {
 		Key:        "1F63A",
@@ -11260,12 +8930,12 @@ var Emojis = map[string]Emoji{
 	"1F63B": {
 		Key:        "1F63B",
 		Value:      "😻",
-		Descriptor: "Smiling Cat with Heart-Eyes",
+		Descriptor: "Smiling Cat With Heart-Eyes",
 	},
 	"1F63C": {
 		Key:        "1F63C",
 		Value:      "😼",
-		Descriptor: "Cat with Wry Smile",
+		Descriptor: "Cat With Wry Smile",
 	},
 	"1F63D": {
 		Key:        "1F63D",
@@ -11305,7 +8975,7 @@ var Emojis = map[string]Emoji{
 	"1F644": {
 		Key:        "1F644",
 		Value:      "🙄",
-		Descriptor: "Face with Rolling Eyes",
+		Descriptor: "Face With Rolling Eyes",
 	},
 	"1F645": {
 		Key:        "1F645",
@@ -12682,31 +10352,6 @@ var Emojis = map[string]Emoji{
 		Value:      "🛕",
 		Descriptor: "Hindu Temple",
 	},
-	"1F6D6": {
-		Key:        "1F6D6",
-		Value:      "🛖",
-		Descriptor: "Hut",
-	},
-	"1F6D7": {
-		Key:        "1F6D7",
-		Value:      "🛗",
-		Descriptor: "Elevator",
-	},
-	"1F6DD": {
-		Key:        "1F6DD",
-		Value:      "🛝",
-		Descriptor: "Playground Slide",
-	},
-	"1F6DE": {
-		Key:        "1F6DE",
-		Value:      "🛞",
-		Descriptor: "Wheel",
-	},
-	"1F6DF": {
-		Key:        "1F6DF",
-		Value:      "🛟",
-		Descriptor: "Ring Buoy",
-	},
 	"1F6E0-FE0F": {
 		Key:        "1F6E0-FE0F",
 		Value:      "🛠️",
@@ -12797,16 +10442,6 @@ var Emojis = map[string]Emoji{
 		Value:      "🛺",
 		Descriptor: "Auto Rickshaw",
 	},
-	"1F6FB": {
-		Key:        "1F6FB",
-		Value:      "🛻",
-		Descriptor: "Pickup Truck",
-	},
-	"1F6FC": {
-		Key:        "1F6FC",
-		Value:      "🛼",
-		Descriptor: "Roller Skate",
-	},
 	"1F7E0": {
 		Key:        "1F7E0",
 		Value:      "🟠",
@@ -12867,41 +10502,6 @@ var Emojis = map[string]Emoji{
 		Value:      "🟫",
 		Descriptor: "Brown Square",
 	},
-	"1F7F0": {
-		Key:        "1F7F0",
-		Value:      "🟰",
-		Descriptor: "Heavy Equals Sign",
-	},
-	"1F90C": {
-		Key:        "1F90C",
-		Value:      "🤌",
-		Descriptor: "Pinched Fingers",
-	},
-	"1F90C-1F3FB": {
-		Key:        "1F90C-1F3FB",
-		Value:      "🤌🏻",
-		Descriptor: "Pinched Fingers: Light Skin Tone",
-	},
-	"1F90C-1F3FC": {
-		Key:        "1F90C-1F3FC",
-		Value:      "🤌🏼",
-		Descriptor: "Pinched Fingers: Medium-Light Skin Tone",
-	},
-	"1F90C-1F3FD": {
-		Key:        "1F90C-1F3FD",
-		Value:      "🤌🏽",
-		Descriptor: "Pinched Fingers: Medium Skin Tone",
-	},
-	"1F90C-1F3FE": {
-		Key:        "1F90C-1F3FE",
-		Value:      "🤌🏾",
-		Descriptor: "Pinched Fingers: Medium-Dark Skin Tone",
-	},
-	"1F90C-1F3FF": {
-		Key:        "1F90C-1F3FF",
-		Value:      "🤌🏿",
-		Descriptor: "Pinched Fingers: Dark Skin Tone",
-	},
 	"1F90D": {
 		Key:        "1F90D",
 		Value:      "🤍",
@@ -12955,7 +10555,7 @@ var Emojis = map[string]Emoji{
 	"1F912": {
 		Key:        "1F912",
 		Value:      "🤒",
-		Descriptor: "Face with Thermometer",
+		Descriptor: "Face With Thermometer",
 	},
 	"1F913": {
 		Key:        "1F913",
@@ -12970,7 +10570,7 @@ var Emojis = map[string]Emoji{
 	"1F915": {
 		Key:        "1F915",
 		Value:      "🤕",
-		Descriptor: "Face with Head-Bandage",
+		Descriptor: "Face With Head-Bandage",
 	},
 	"1F916": {
 		Key:        "1F916",
@@ -12980,7 +10580,7 @@ var Emojis = map[string]Emoji{
 	"1F917": {
 		Key:        "1F917",
 		Value:      "🤗",
-		Descriptor: "Smiling Face with Open Hands",
+		Descriptor: "Hugging Face",
 	},
 	"1F918": {
 		Key:        "1F918",
@@ -13136,31 +10736,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F91D",
 		Value:      "🤝",
 		Descriptor: "Handshake",
-	},
-	"1F91D-1F3FB": {
-		Key:        "1F91D-1F3FB",
-		Value:      "🤝🏻",
-		Descriptor: "Handshake: Light Skin Tone",
-	},
-	"1F91D-1F3FC": {
-		Key:        "1F91D-1F3FC",
-		Value:      "🤝🏼",
-		Descriptor: "Handshake: Medium-Light Skin Tone",
-	},
-	"1F91D-1F3FD": {
-		Key:        "1F91D-1F3FD",
-		Value:      "🤝🏽",
-		Descriptor: "Handshake: Medium Skin Tone",
-	},
-	"1F91D-1F3FE": {
-		Key:        "1F91D-1F3FE",
-		Value:      "🤝🏾",
-		Descriptor: "Handshake: Medium-Dark Skin Tone",
-	},
-	"1F91D-1F3FF": {
-		Key:        "1F91D-1F3FF",
-		Value:      "🤝🏿",
-		Descriptor: "Handshake: Dark Skin Tone",
 	},
 	"1F91E": {
 		Key:        "1F91E",
@@ -13350,7 +10925,7 @@ var Emojis = map[string]Emoji{
 	"1F928": {
 		Key:        "1F928",
 		Value:      "🤨",
-		Descriptor: "Face with Raised Eyebrow",
+		Descriptor: "Face With Raised Eyebrow",
 	},
 	"1F929": {
 		Key:        "1F929",
@@ -13370,12 +10945,12 @@ var Emojis = map[string]Emoji{
 	"1F92C": {
 		Key:        "1F92C",
 		Value:      "🤬",
-		Descriptor: "Face with Symbols on Mouth",
+		Descriptor: "Face With Symbols on Mouth",
 	},
 	"1F92D": {
 		Key:        "1F92D",
 		Value:      "🤭",
-		Descriptor: "Face with Hand Over Mouth",
+		Descriptor: "Face With Hand Over Mouth",
 	},
 	"1F92E": {
 		Key:        "1F92E",
@@ -13540,92 +11115,32 @@ var Emojis = map[string]Emoji{
 	"1F935": {
 		Key:        "1F935",
 		Value:      "🤵",
-		Descriptor: "Person in Tuxedo",
+		Descriptor: "Man in Tuxedo",
 	},
 	"1F935-1F3FB": {
 		Key:        "1F935-1F3FB",
 		Value:      "🤵🏻",
-		Descriptor: "Person in Tuxedo: Light Skin Tone",
-	},
-	"1F935-1F3FB-200D-2640-FE0F": {
-		Key:        "1F935-1F3FB-200D-2640-FE0F",
-		Value:      "🤵🏻‍♀️",
-		Descriptor: "Woman in Tuxedo: Light Skin Tone",
-	},
-	"1F935-1F3FB-200D-2642-FE0F": {
-		Key:        "1F935-1F3FB-200D-2642-FE0F",
-		Value:      "🤵🏻‍♂️",
 		Descriptor: "Man in Tuxedo: Light Skin Tone",
 	},
 	"1F935-1F3FC": {
 		Key:        "1F935-1F3FC",
 		Value:      "🤵🏼",
-		Descriptor: "Person in Tuxedo: Medium-Light Skin Tone",
-	},
-	"1F935-1F3FC-200D-2640-FE0F": {
-		Key:        "1F935-1F3FC-200D-2640-FE0F",
-		Value:      "🤵🏼‍♀️",
-		Descriptor: "Woman in Tuxedo: Medium-Light Skin Tone",
-	},
-	"1F935-1F3FC-200D-2642-FE0F": {
-		Key:        "1F935-1F3FC-200D-2642-FE0F",
-		Value:      "🤵🏼‍♂️",
 		Descriptor: "Man in Tuxedo: Medium-Light Skin Tone",
 	},
 	"1F935-1F3FD": {
 		Key:        "1F935-1F3FD",
 		Value:      "🤵🏽",
-		Descriptor: "Person in Tuxedo: Medium Skin Tone",
-	},
-	"1F935-1F3FD-200D-2640-FE0F": {
-		Key:        "1F935-1F3FD-200D-2640-FE0F",
-		Value:      "🤵🏽‍♀️",
-		Descriptor: "Woman in Tuxedo: Medium Skin Tone",
-	},
-	"1F935-1F3FD-200D-2642-FE0F": {
-		Key:        "1F935-1F3FD-200D-2642-FE0F",
-		Value:      "🤵🏽‍♂️",
 		Descriptor: "Man in Tuxedo: Medium Skin Tone",
 	},
 	"1F935-1F3FE": {
 		Key:        "1F935-1F3FE",
 		Value:      "🤵🏾",
-		Descriptor: "Person in Tuxedo: Medium-Dark Skin Tone",
-	},
-	"1F935-1F3FE-200D-2640-FE0F": {
-		Key:        "1F935-1F3FE-200D-2640-FE0F",
-		Value:      "🤵🏾‍♀️",
-		Descriptor: "Woman in Tuxedo: Medium-Dark Skin Tone",
-	},
-	"1F935-1F3FE-200D-2642-FE0F": {
-		Key:        "1F935-1F3FE-200D-2642-FE0F",
-		Value:      "🤵🏾‍♂️",
 		Descriptor: "Man in Tuxedo: Medium-Dark Skin Tone",
 	},
 	"1F935-1F3FF": {
 		Key:        "1F935-1F3FF",
 		Value:      "🤵🏿",
-		Descriptor: "Person in Tuxedo: Dark Skin Tone",
-	},
-	"1F935-1F3FF-200D-2640-FE0F": {
-		Key:        "1F935-1F3FF-200D-2640-FE0F",
-		Value:      "🤵🏿‍♀️",
-		Descriptor: "Woman in Tuxedo: Dark Skin Tone",
-	},
-	"1F935-1F3FF-200D-2642-FE0F": {
-		Key:        "1F935-1F3FF-200D-2642-FE0F",
-		Value:      "🤵🏿‍♂️",
 		Descriptor: "Man in Tuxedo: Dark Skin Tone",
-	},
-	"1F935-200D-2640-FE0F": {
-		Key:        "1F935-200D-2640-FE0F",
-		Value:      "🤵‍♀️",
-		Descriptor: "Woman in Tuxedo",
-	},
-	"1F935-200D-2642-FE0F": {
-		Key:        "1F935-200D-2642-FE0F",
-		Value:      "🤵‍♂️",
-		Descriptor: "Man in Tuxedo",
 	},
 	"1F936": {
 		Key:        "1F936",
@@ -14305,12 +11820,12 @@ var Emojis = map[string]Emoji{
 	"1F963": {
 		Key:        "1F963",
 		Value:      "🥣",
-		Descriptor: "Bowl with Spoon",
+		Descriptor: "Bowl With Spoon",
 	},
 	"1F964": {
 		Key:        "1F964",
 		Value:      "🥤",
-		Descriptor: "Cup with Straw",
+		Descriptor: "Cup With Straw",
 	},
 	"1F965": {
 		Key:        "1F965",
@@ -14370,17 +11885,12 @@ var Emojis = map[string]Emoji{
 	"1F970": {
 		Key:        "1F970",
 		Value:      "🥰",
-		Descriptor: "Smiling Face with Hearts",
+		Descriptor: "Smiling Face With Hearts",
 	},
 	"1F971": {
 		Key:        "1F971",
 		Value:      "🥱",
 		Descriptor: "Yawning Face",
-	},
-	"1F972": {
-		Key:        "1F972",
-		Value:      "🥲",
-		Descriptor: "Smiling Face with Tear",
 	},
 	"1F973": {
 		Key:        "1F973",
@@ -14401,46 +11911,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F976",
 		Value:      "🥶",
 		Descriptor: "Cold Face",
-	},
-	"1F977": {
-		Key:        "1F977",
-		Value:      "🥷",
-		Descriptor: "Ninja",
-	},
-	"1F977-1F3FB": {
-		Key:        "1F977-1F3FB",
-		Value:      "🥷🏻",
-		Descriptor: "Ninja: Light Skin Tone",
-	},
-	"1F977-1F3FC": {
-		Key:        "1F977-1F3FC",
-		Value:      "🥷🏼",
-		Descriptor: "Ninja: Medium-Light Skin Tone",
-	},
-	"1F977-1F3FD": {
-		Key:        "1F977-1F3FD",
-		Value:      "🥷🏽",
-		Descriptor: "Ninja: Medium Skin Tone",
-	},
-	"1F977-1F3FE": {
-		Key:        "1F977-1F3FE",
-		Value:      "🥷🏾",
-		Descriptor: "Ninja: Medium-Dark Skin Tone",
-	},
-	"1F977-1F3FF": {
-		Key:        "1F977-1F3FF",
-		Value:      "🥷🏿",
-		Descriptor: "Ninja: Dark Skin Tone",
-	},
-	"1F978": {
-		Key:        "1F978",
-		Value:      "🥸",
-		Descriptor: "Disguised Face",
-	},
-	"1F979": {
-		Key:        "1F979",
-		Value:      "🥹",
-		Descriptor: "Face Holding Back Tears",
 	},
 	"1F97A": {
 		Key:        "1F97A",
@@ -14647,16 +12117,6 @@ var Emojis = map[string]Emoji{
 		Value:      "🦢",
 		Descriptor: "Swan",
 	},
-	"1F9A3": {
-		Key:        "1F9A3",
-		Value:      "🦣",
-		Descriptor: "Mammoth",
-	},
-	"1F9A4": {
-		Key:        "1F9A4",
-		Value:      "🦤",
-		Descriptor: "Dodo",
-	},
 	"1F9A5": {
 		Key:        "1F9A5",
 		Value:      "🦥",
@@ -14687,21 +12147,6 @@ var Emojis = map[string]Emoji{
 		Value:      "🦪",
 		Descriptor: "Oyster",
 	},
-	"1F9AB": {
-		Key:        "1F9AB",
-		Value:      "🦫",
-		Descriptor: "Beaver",
-	},
-	"1F9AC": {
-		Key:        "1F9AC",
-		Value:      "🦬",
-		Descriptor: "Bison",
-	},
-	"1F9AD": {
-		Key:        "1F9AD",
-		Value:      "🦭",
-		Descriptor: "Seal",
-	},
 	"1F9AE": {
 		Key:        "1F9AE",
 		Value:      "🦮",
@@ -14710,7 +12155,7 @@ var Emojis = map[string]Emoji{
 	"1F9AF": {
 		Key:        "1F9AF",
 		Value:      "🦯",
-		Descriptor: "White Cane",
+		Descriptor: "Probing Cane",
 	},
 	"1F9B0": {
 		Key:        "1F9B0",
@@ -14990,32 +12435,32 @@ var Emojis = map[string]Emoji{
 	"1F9BB": {
 		Key:        "1F9BB",
 		Value:      "🦻",
-		Descriptor: "Ear with Hearing Aid",
+		Descriptor: "Ear With Hearing Aid",
 	},
 	"1F9BB-1F3FB": {
 		Key:        "1F9BB-1F3FB",
 		Value:      "🦻🏻",
-		Descriptor: "Ear with Hearing Aid: Light Skin Tone",
+		Descriptor: "Ear With Hearing Aid: Light Skin Tone",
 	},
 	"1F9BB-1F3FC": {
 		Key:        "1F9BB-1F3FC",
 		Value:      "🦻🏼",
-		Descriptor: "Ear with Hearing Aid: Medium-Light Skin Tone",
+		Descriptor: "Ear With Hearing Aid: Medium-Light Skin Tone",
 	},
 	"1F9BB-1F3FD": {
 		Key:        "1F9BB-1F3FD",
 		Value:      "🦻🏽",
-		Descriptor: "Ear with Hearing Aid: Medium Skin Tone",
+		Descriptor: "Ear With Hearing Aid: Medium Skin Tone",
 	},
 	"1F9BB-1F3FE": {
 		Key:        "1F9BB-1F3FE",
 		Value:      "🦻🏾",
-		Descriptor: "Ear with Hearing Aid: Medium-Dark Skin Tone",
+		Descriptor: "Ear With Hearing Aid: Medium-Dark Skin Tone",
 	},
 	"1F9BB-1F3FF": {
 		Key:        "1F9BB-1F3FF",
 		Value:      "🦻🏿",
-		Descriptor: "Ear with Hearing Aid: Dark Skin Tone",
+		Descriptor: "Ear With Hearing Aid: Dark Skin Tone",
 	},
 	"1F9BC": {
 		Key:        "1F9BC",
@@ -15091,16 +12536,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F9CA",
 		Value:      "🧊",
 		Descriptor: "Ice",
-	},
-	"1F9CB": {
-		Key:        "1F9CB",
-		Value:      "🧋",
-		Descriptor: "Bubble Tea",
-	},
-	"1F9CC": {
-		Key:        "1F9CC",
-		Value:      "🧌",
-		Descriptor: "Troll",
 	},
 	"1F9CD": {
 		Key:        "1F9CD",
@@ -15375,7 +12810,7 @@ var Emojis = map[string]Emoji{
 	"1F9D0": {
 		Key:        "1F9D0",
 		Value:      "🧐",
-		Descriptor: "Face with Monocle",
+		Descriptor: "Face With Monocle",
 	},
 	"1F9D1": {
 		Key:        "1F9D1",
@@ -15396,16 +12831,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F9D1-1F3FB-200D-1F373",
 		Value:      "🧑🏻‍🍳",
 		Descriptor: "Cook: Light Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-1F37C": {
-		Key:        "1F9D1-1F3FB-200D-1F37C",
-		Value:      "🧑🏻‍🍼",
-		Descriptor: "Person Feeding Baby: Light Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-1F384": {
-		Key:        "1F9D1-1F3FB-200D-1F384",
-		Value:      "🧑🏻‍🎄",
-		Descriptor: "Mx Claus: Light Skin Tone",
 	},
 	"1F9D1-1F3FB-200D-1F393": {
 		Key:        "1F9D1-1F3FB-200D-1F393",
@@ -15490,7 +12915,7 @@ var Emojis = map[string]Emoji{
 	"1F9D1-1F3FB-200D-1F9AF": {
 		Key:        "1F9D1-1F3FB-200D-1F9AF",
 		Value:      "🧑🏻‍🦯",
-		Descriptor: "Person with White Cane: Light Skin Tone",
+		Descriptor: "Person With Probing Cane: Light Skin Tone",
 	},
 	"1F9D1-1F3FB-200D-1F9B0": {
 		Key:        "1F9D1-1F3FB-200D-1F9B0",
@@ -15520,7 +12945,7 @@ var Emojis = map[string]Emoji{
 	"1F9D1-1F3FB-200D-1F9BD": {
 		Key:        "1F9D1-1F3FB-200D-1F9BD",
 		Value:      "🧑🏻‍🦽",
-		Descriptor: "Person in Manual Wheelchair: Light Skin Tone",
+		Descriptor: "Person in Manual Wheelchair: Light Skin Ton",
 	},
 	"1F9D1-1F3FB-200D-2695-FE0F": {
 		Key:        "1F9D1-1F3FB-200D-2695-FE0F",
@@ -15537,186 +12962,6 @@ var Emojis = map[string]Emoji{
 		Value:      "🧑🏻‍✈️",
 		Descriptor: "Pilot: Light Skin Tone",
 	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F468": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F468",
-		Value:      "🧑🏻‍❤️‍👨",
-		Descriptor: "Couple With Heart: Person, Man, Light Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "🧑🏻‍❤️‍👨🏻",
-		Descriptor: "Couple With Heart: Person, Man, Light Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "🧑🏻‍❤️‍👨🏼",
-		Descriptor: "Couple With Heart: Person, Man, Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "🧑🏻‍❤️‍👨🏽",
-		Descriptor: "Couple With Heart: Person, Man, Light Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "🧑🏻‍❤️‍👨🏾",
-		Descriptor: "Couple With Heart: Person, Man, Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "🧑🏻‍❤️‍👨🏿",
-		Descriptor: "Couple With Heart: Person, Man, Light Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F469",
-		Value:      "🧑🏻‍❤️‍👩",
-		Descriptor: "Couple With Heart: Person, Woman, Light Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "🧑🏻‍❤️‍👩🏻",
-		Descriptor: "Couple With Heart: Person, Woman, Light Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "🧑🏻‍❤️‍👩🏼",
-		Descriptor: "Couple With Heart: Person, Woman, Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "🧑🏻‍❤️‍👩🏽",
-		Descriptor: "Couple With Heart: Person, Woman, Light Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "🧑🏻‍❤️‍👩🏾",
-		Descriptor: "Couple With Heart: Person, Woman, Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "🧑🏻‍❤️‍👩🏿",
-		Descriptor: "Couple With Heart: Person, Woman, Light Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468",
-		Value:      "🧑🏻‍❤️‍💋‍👨",
-		Descriptor: "Kiss: Person, Man, Light Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "🧑🏻‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss: Person, Man, Light Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "🧑🏻‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss: Person, Man, Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "🧑🏻‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss: Person, Man, Light Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "🧑🏻‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss: Person, Man, Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "🧑🏻‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss: Person, Man, Light Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "🧑🏻‍❤️‍💋‍👩",
-		Descriptor: "Kiss: Person, Woman, Light Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "🧑🏻‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss: Person, Woman, Light Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "🧑🏻‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss: Person, Woman, Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "🧑🏻‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss: Person, Woman, Light Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "🧑🏻‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss: Person, Woman, Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "🧑🏻‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss: Person, Woman, Light Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "🧑🏻‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Person, Person, Light Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "🧑🏻‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Person, Person, Light Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "🧑🏻‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Person, Person, Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "🧑🏻‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Person, Person, Light Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "🧑🏻‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Person, Person, Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "🧑🏻‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Person, Person, Light Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F9D1",
-		Value:      "🧑🏻‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Person, Person, Light Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "🧑🏻‍❤️‍🧑🏻",
-		Descriptor: "Couple With Heart: Person, Person, Light Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "🧑🏻‍❤️‍🧑🏼",
-		Descriptor: "Couple with Heart: Person, Person, Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "🧑🏻‍❤️‍🧑🏽",
-		Descriptor: "Couple with Heart: Person, Person, Light Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "🧑🏻‍❤️‍🧑🏾",
-		Descriptor: "Couple with Heart: Person, Person, Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F9D1-1F3FB-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "🧑🏻‍❤️‍🧑🏿",
-		Descriptor: "Couple with Heart: Person, Person, Light Skin Tone, Dark Skin Tone",
-	},
 	"1F9D1-1F3FC": {
 		Key:        "1F9D1-1F3FC",
 		Value:      "🧑🏼",
@@ -15731,16 +12976,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F9D1-1F3FC-200D-1F373",
 		Value:      "🧑🏼‍🍳",
 		Descriptor: "Cook: Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-1F37C": {
-		Key:        "1F9D1-1F3FC-200D-1F37C",
-		Value:      "🧑🏼‍🍼",
-		Descriptor: "Person Feeding Baby: Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-1F384": {
-		Key:        "1F9D1-1F3FC-200D-1F384",
-		Value:      "🧑🏼‍🎄",
-		Descriptor: "Mx Claus: Medium-Light Skin Tone",
 	},
 	"1F9D1-1F3FC-200D-1F393": {
 		Key:        "1F9D1-1F3FC-200D-1F393",
@@ -15825,7 +13060,7 @@ var Emojis = map[string]Emoji{
 	"1F9D1-1F3FC-200D-1F9AF": {
 		Key:        "1F9D1-1F3FC-200D-1F9AF",
 		Value:      "🧑🏼‍🦯",
-		Descriptor: "Person with White Cane: Medium-Light Skin Tone",
+		Descriptor: "Person With Probing Cane: Medium-Light Skin Tone",
 	},
 	"1F9D1-1F3FC-200D-1F9B0": {
 		Key:        "1F9D1-1F3FC-200D-1F9B0",
@@ -15872,186 +13107,6 @@ var Emojis = map[string]Emoji{
 		Value:      "🧑🏼‍✈️",
 		Descriptor: "Pilot: Medium-Light Skin Tone",
 	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F468": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F468",
-		Value:      "🧑🏼‍❤️‍👨",
-		Descriptor: "Couple With Heart: Person, Man, Medium-Light Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "🧑🏼‍❤️‍👨🏻",
-		Descriptor: "Couple With Heart: Person, Man, Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "🧑🏼‍❤️‍👨🏼",
-		Descriptor: "Couple With Heart: Person, Man, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "🧑🏼‍❤️‍👨🏽",
-		Descriptor: "Couple With Heart: Person, Man, Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "🧑🏼‍❤️‍👨🏾",
-		Descriptor: "Couple With Heart: Person, Man, Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "🧑🏼‍❤️‍👨🏿",
-		Descriptor: "Couple With Heart: Person, Man, Medium-Light Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F469",
-		Value:      "🧑🏼‍❤️‍👩",
-		Descriptor: "Couple With Heart: Person, Woman, Medium-Light Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "🧑🏼‍❤️‍👩🏻",
-		Descriptor: "Couple With Heart: Person, Woman, Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "🧑🏼‍❤️‍👩🏼",
-		Descriptor: "Couple With Heart: Person, Woman, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "🧑🏼‍❤️‍👩🏽",
-		Descriptor: "Couple With Heart: Person, Woman, Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "🧑🏼‍❤️‍👩🏾",
-		Descriptor: "Couple With Heart: Person, Woman, Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "🧑🏼‍❤️‍👩🏿",
-		Descriptor: "Couple With Heart: Person, Woman, Medium-Light Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468",
-		Value:      "🧑🏼‍❤️‍💋‍👨",
-		Descriptor: "Kiss: Person, Man, Medium-Light Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "🧑🏼‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss: Person, Man, Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "🧑🏼‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss: Person, Man, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "🧑🏼‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss: Person, Man, Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "🧑🏼‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss: Person, Man, Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "🧑🏼‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss: Person, Man, Medium-Light Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "🧑🏼‍❤️‍💋‍👩",
-		Descriptor: "Kiss: Person, Woman, Medium-Light Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "🧑🏼‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss: Person, Woman, Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "🧑🏼‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss: Person, Woman, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "🧑🏼‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss: Person, Woman, Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "🧑🏼‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss: Person, Woman, Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "🧑🏼‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss: Person, Woman, Medium-Light Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "🧑🏼‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Person, Person, Medium-Light Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "🧑🏼‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Person, Person, Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "🧑🏼‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Person, Person, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "🧑🏼‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Person, Person, Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "🧑🏼‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Person, Person, Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "🧑🏼‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Person, Person, Medium-Light Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F9D1",
-		Value:      "🧑🏼‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Person, Person, Medium-Light Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "🧑🏼‍❤️‍🧑🏻",
-		Descriptor: "Couple with Heart: Person, Person, Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "🧑🏼‍❤️‍🧑🏼",
-		Descriptor: "Couple With Heart: Person, Person, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "🧑🏼‍❤️‍🧑🏽",
-		Descriptor: "Couple with Heart: Person, Person, Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "🧑🏼‍❤️‍🧑🏾",
-		Descriptor: "Couple with Heart: Person, Person, Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F9D1-1F3FC-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "🧑🏼‍❤️‍🧑🏿",
-		Descriptor: "Couple with Heart: Person, Person, Medium-Light Skin Tone, Dark Skin Tone",
-	},
 	"1F9D1-1F3FD": {
 		Key:        "1F9D1-1F3FD",
 		Value:      "🧑🏽",
@@ -16066,16 +13121,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F9D1-1F3FD-200D-1F373",
 		Value:      "🧑🏽‍🍳",
 		Descriptor: "Cook: Medium Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-1F37C": {
-		Key:        "1F9D1-1F3FD-200D-1F37C",
-		Value:      "🧑🏽‍🍼",
-		Descriptor: "Person Feeding Baby: Medium Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-1F384": {
-		Key:        "1F9D1-1F3FD-200D-1F384",
-		Value:      "🧑🏽‍🎄",
-		Descriptor: "Mx Claus: Medium Skin Tone",
 	},
 	"1F9D1-1F3FD-200D-1F393": {
 		Key:        "1F9D1-1F3FD-200D-1F393",
@@ -16160,7 +13205,7 @@ var Emojis = map[string]Emoji{
 	"1F9D1-1F3FD-200D-1F9AF": {
 		Key:        "1F9D1-1F3FD-200D-1F9AF",
 		Value:      "🧑🏽‍🦯",
-		Descriptor: "Person with White Cane: Medium Skin Tone",
+		Descriptor: "Person With Probing Cane: Medium Skin Tone",
 	},
 	"1F9D1-1F3FD-200D-1F9B0": {
 		Key:        "1F9D1-1F3FD-200D-1F9B0",
@@ -16207,186 +13252,6 @@ var Emojis = map[string]Emoji{
 		Value:      "🧑🏽‍✈️",
 		Descriptor: "Pilot: Medium Skin Tone",
 	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F468": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F468",
-		Value:      "🧑🏽‍❤️‍👨",
-		Descriptor: "Couple With Heart: Person, Man, Medium Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "🧑🏽‍❤️‍👨🏻",
-		Descriptor: "Couple With Heart: Person, Man, Medium Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "🧑🏽‍❤️‍👨🏼",
-		Descriptor: "Couple With Heart: Person, Man, Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "🧑🏽‍❤️‍👨🏽",
-		Descriptor: "Couple With Heart: Person, Man, Medium Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "🧑🏽‍❤️‍👨🏾",
-		Descriptor: "Couple With Heart: Person, Man, Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "🧑🏽‍❤️‍👨🏿",
-		Descriptor: "Couple With Heart: Person, Man, Medium Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F469",
-		Value:      "🧑🏽‍❤️‍👩",
-		Descriptor: "Couple With Heart: Person, Woman, Medium Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "🧑🏽‍❤️‍👩🏻",
-		Descriptor: "Couple With Heart: Person, Woman, Medium Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "🧑🏽‍❤️‍👩🏼",
-		Descriptor: "Couple With Heart: Person, Woman, Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "🧑🏽‍❤️‍👩🏽",
-		Descriptor: "Couple With Heart: Person, Woman, Medium Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "🧑🏽‍❤️‍👩🏾",
-		Descriptor: "Couple With Heart: Person, Woman, Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "🧑🏽‍❤️‍👩🏿",
-		Descriptor: "Couple With Heart: Person, Woman, Medium Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468",
-		Value:      "🧑🏽‍❤️‍💋‍👨",
-		Descriptor: "Kiss: Person, Man, Medium Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "🧑🏽‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss: Person, Man, Medium Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "🧑🏽‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss: Person, Man, Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "🧑🏽‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss: Person, Man, Medium Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "🧑🏽‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss: Person, Man, Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "🧑🏽‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss: Person, Man, Medium Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "🧑🏽‍❤️‍💋‍👩",
-		Descriptor: "Kiss: Person, Woman, Medium Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "🧑🏽‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss: Person, Woman, Medium Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "🧑🏽‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss: Person, Woman, Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "🧑🏽‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss: Person, Woman, Medium Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "🧑🏽‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss: Person, Woman, Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "🧑🏽‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss: Person, Woman, Medium Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "🧑🏽‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Person, Person, Medium Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "🧑🏽‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Person, Person, Medium Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "🧑🏽‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Person, Person, Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "🧑🏽‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Person, Person, Medium Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "🧑🏽‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Person, Person, Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "🧑🏽‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Person, Person, Medium Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F9D1",
-		Value:      "🧑🏽‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Person, Person, Medium Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "🧑🏽‍❤️‍🧑🏻",
-		Descriptor: "Couple with Heart: Person, Person, Medium Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "🧑🏽‍❤️‍🧑🏼",
-		Descriptor: "Couple with Heart: Person, Person, Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "🧑🏽‍❤️‍🧑🏽",
-		Descriptor: "Couple With Heart: Person, Person, Medium Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "🧑🏽‍❤️‍🧑🏾",
-		Descriptor: "Couple with Heart: Person, Person, Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F9D1-1F3FD-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "🧑🏽‍❤️‍🧑🏿",
-		Descriptor: "Couple with Heart: Person, Person, Medium Skin Tone, Dark Skin Tone",
-	},
 	"1F9D1-1F3FE": {
 		Key:        "1F9D1-1F3FE",
 		Value:      "🧑🏾",
@@ -16401,16 +13266,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F9D1-1F3FE-200D-1F373",
 		Value:      "🧑🏾‍🍳",
 		Descriptor: "Cook: Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-1F37C": {
-		Key:        "1F9D1-1F3FE-200D-1F37C",
-		Value:      "🧑🏾‍🍼",
-		Descriptor: "Person Feeding Baby: Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-1F384": {
-		Key:        "1F9D1-1F3FE-200D-1F384",
-		Value:      "🧑🏾‍🎄",
-		Descriptor: "Mx Claus: Medium-Dark Skin Tone",
 	},
 	"1F9D1-1F3FE-200D-1F393": {
 		Key:        "1F9D1-1F3FE-200D-1F393",
@@ -16495,7 +13350,7 @@ var Emojis = map[string]Emoji{
 	"1F9D1-1F3FE-200D-1F9AF": {
 		Key:        "1F9D1-1F3FE-200D-1F9AF",
 		Value:      "🧑🏾‍🦯",
-		Descriptor: "Person with White Cane: Medium-Dark Skin Tone",
+		Descriptor: "Person With Probing Cane: Medium-Dark Skin Tone",
 	},
 	"1F9D1-1F3FE-200D-1F9B0": {
 		Key:        "1F9D1-1F3FE-200D-1F9B0",
@@ -16542,186 +13397,6 @@ var Emojis = map[string]Emoji{
 		Value:      "🧑🏾‍✈️",
 		Descriptor: "Pilot: Medium-Dark Skin Tone",
 	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F468": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F468",
-		Value:      "🧑🏾‍❤️‍👨",
-		Descriptor: "Couple With Heart: Person, Man, Medium-Dark Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "🧑🏾‍❤️‍👨🏻",
-		Descriptor: "Couple With Heart: Person, Man, Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "🧑🏾‍❤️‍👨🏼",
-		Descriptor: "Couple With Heart: Person, Man, Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "🧑🏾‍❤️‍👨🏽",
-		Descriptor: "Couple With Heart: Person, Man, Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "🧑🏾‍❤️‍👨🏾",
-		Descriptor: "Couple With Heart: Person, Man, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "🧑🏾‍❤️‍👨🏿",
-		Descriptor: "Couple With Heart: Person, Man, Medium-Dark Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F469",
-		Value:      "🧑🏾‍❤️‍👩",
-		Descriptor: "Couple With Heart: Person, Woman, Medium-Dark Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "🧑🏾‍❤️‍👩🏻",
-		Descriptor: "Couple With Heart: Person, Woman, Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "🧑🏾‍❤️‍👩🏼",
-		Descriptor: "Couple With Heart: Person, Woman, Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "🧑🏾‍❤️‍👩🏽",
-		Descriptor: "Couple With Heart: Person, Woman, Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "🧑🏾‍❤️‍👩🏾",
-		Descriptor: "Couple With Heart: Person, Woman, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "🧑🏾‍❤️‍👩🏿",
-		Descriptor: "Couple With Heart: Person, Woman, Medium-Dark Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468",
-		Value:      "🧑🏾‍❤️‍💋‍👨",
-		Descriptor: "Kiss: Person, Man, Medium-Dark Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "🧑🏾‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss: Person, Man, Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "🧑🏾‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss: Person, Man, Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "🧑🏾‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss: Person, Man, Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "🧑🏾‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss: Person, Man, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "🧑🏾‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss: Person, Man, Medium-Dark Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "🧑🏾‍❤️‍💋‍👩",
-		Descriptor: "Kiss: Person, Woman, Medium-Dark Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "🧑🏾‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss: Person, Woman, Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "🧑🏾‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss: Person, Woman, Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "🧑🏾‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss: Person, Woman, Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "🧑🏾‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss: Person, Woman, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "🧑🏾‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss: Person, Woman, Medium-Dark Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "🧑🏾‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Person, Person, Medium-Dark Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "🧑🏾‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Person, Person, Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "🧑🏾‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Person, Person, Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "🧑🏾‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Person, Person, Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "🧑🏾‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Person, Person, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "🧑🏾‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Person, Person, Medium-Dark Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F9D1",
-		Value:      "🧑🏾‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Person, Person, Medium-Dark Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "🧑🏾‍❤️‍🧑🏻",
-		Descriptor: "Couple with Heart: Person, Person, Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "🧑🏾‍❤️‍🧑🏼",
-		Descriptor: "Couple with Heart: Person, Person, Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "🧑🏾‍❤️‍🧑🏽",
-		Descriptor: "Couple with Heart: Person, Person, Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "🧑🏾‍❤️‍🧑🏾",
-		Descriptor: "Couple With Heart: Person, Person, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F9D1-1F3FE-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "🧑🏾‍❤️‍🧑🏿",
-		Descriptor: "Couple with Heart: Person, Person, Medium-Dark Skin Tone, Dark Skin Tone",
-	},
 	"1F9D1-1F3FF": {
 		Key:        "1F9D1-1F3FF",
 		Value:      "🧑🏿",
@@ -16736,16 +13411,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F9D1-1F3FF-200D-1F373",
 		Value:      "🧑🏿‍🍳",
 		Descriptor: "Cook: Dark Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-1F37C": {
-		Key:        "1F9D1-1F3FF-200D-1F37C",
-		Value:      "🧑🏿‍🍼",
-		Descriptor: "Person Feeding Baby: Dark Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-1F384": {
-		Key:        "1F9D1-1F3FF-200D-1F384",
-		Value:      "🧑🏿‍🎄",
-		Descriptor: "Mx Claus: Dark Skin Tone",
 	},
 	"1F9D1-1F3FF-200D-1F393": {
 		Key:        "1F9D1-1F3FF-200D-1F393",
@@ -16830,7 +13495,7 @@ var Emojis = map[string]Emoji{
 	"1F9D1-1F3FF-200D-1F9AF": {
 		Key:        "1F9D1-1F3FF-200D-1F9AF",
 		Value:      "🧑🏿‍🦯",
-		Descriptor: "Person with White Cane: Dark Skin Tone",
+		Descriptor: "Person With Probing Cane: Dark Skin Tone",
 	},
 	"1F9D1-1F3FF-200D-1F9B0": {
 		Key:        "1F9D1-1F3FF-200D-1F9B0",
@@ -16877,186 +13542,6 @@ var Emojis = map[string]Emoji{
 		Value:      "🧑🏿‍✈️",
 		Descriptor: "Pilot: Dark Skin Tone",
 	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F468": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F468",
-		Value:      "🧑🏿‍❤️‍👨",
-		Descriptor: "Couple With Heart: Person, Man, Dark Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "🧑🏿‍❤️‍👨🏻",
-		Descriptor: "Couple With Heart: Person, Man, Dark Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "🧑🏿‍❤️‍👨🏼",
-		Descriptor: "Couple With Heart: Person, Man, Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "🧑🏿‍❤️‍👨🏽",
-		Descriptor: "Couple With Heart: Person, Man, Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "🧑🏿‍❤️‍👨🏾",
-		Descriptor: "Couple With Heart: Person, Man, Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "🧑🏿‍❤️‍👨🏿",
-		Descriptor: "Couple With Heart: Person, Man, Dark Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F469",
-		Value:      "🧑🏿‍❤️‍👩",
-		Descriptor: "Couple With Heart: Person, Woman, Dark Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "🧑🏿‍❤️‍👩🏻",
-		Descriptor: "Couple With Heart: Person, Woman, Dark Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "🧑🏿‍❤️‍👩🏼",
-		Descriptor: "Couple With Heart: Person, Woman, Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "🧑🏿‍❤️‍👩🏽",
-		Descriptor: "Couple With Heart: Person, Woman, Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "🧑🏿‍❤️‍👩🏾",
-		Descriptor: "Couple With Heart: Person, Woman, Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "🧑🏿‍❤️‍👩🏿",
-		Descriptor: "Couple With Heart: Person, Woman, Dark Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468",
-		Value:      "🧑🏿‍❤️‍💋‍👨",
-		Descriptor: "Kiss: Person, Man, Dark Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "🧑🏿‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss: Person, Man, Dark Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "🧑🏿‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss: Person, Man, Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "🧑🏿‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss: Person, Man, Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "🧑🏿‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss: Person, Man, Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "🧑🏿‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss: Person, Man, Dark Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "🧑🏿‍❤️‍💋‍👩",
-		Descriptor: "Kiss: Person, Woman, Dark Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "🧑🏿‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss: Person, Woman, Dark Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "🧑🏿‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss: Person, Woman, Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "🧑🏿‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss: Person, Woman, Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "🧑🏿‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss: Person, Woman, Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "🧑🏿‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss: Person, Woman, Dark Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "🧑🏿‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Person, Person, Dark Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "🧑🏿‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Person, Person, Dark Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "🧑🏿‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Person, Person, Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "🧑🏿‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Person, Person, Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "🧑🏿‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Person, Person, Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "🧑🏿‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Person, Person, Dark Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F9D1",
-		Value:      "🧑🏿‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Person, Person, Dark Skin Tone, No Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "🧑🏿‍❤️‍🧑🏻",
-		Descriptor: "Couple with Heart: Person, Person, Dark Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "🧑🏿‍❤️‍🧑🏼",
-		Descriptor: "Couple with Heart: Person, Person, Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "🧑🏿‍❤️‍🧑🏽",
-		Descriptor: "Couple with Heart: Person, Person, Dark Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "🧑🏿‍❤️‍🧑🏾",
-		Descriptor: "Couple with Heart: Person, Person, Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F9D1-1F3FF-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "🧑🏿‍❤️‍🧑🏿",
-		Descriptor: "Couple With Heart: Person, Person, Dark Skin Tone",
-	},
 	"1F9D1-200D-1F33E": {
 		Key:        "1F9D1-200D-1F33E",
 		Value:      "🧑‍🌾",
@@ -17066,16 +13551,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F9D1-200D-1F373",
 		Value:      "🧑‍🍳",
 		Descriptor: "Cook",
-	},
-	"1F9D1-200D-1F37C": {
-		Key:        "1F9D1-200D-1F37C",
-		Value:      "🧑‍🍼",
-		Descriptor: "Person Feeding Baby",
-	},
-	"1F9D1-200D-1F384": {
-		Key:        "1F9D1-200D-1F384",
-		Value:      "🧑‍🎄",
-		Descriptor: "Mx Claus",
 	},
 	"1F9D1-200D-1F393": {
 		Key:        "1F9D1-200D-1F393",
@@ -17140,7 +13615,7 @@ var Emojis = map[string]Emoji{
 	"1F9D1-200D-1F9AF": {
 		Key:        "1F9D1-200D-1F9AF",
 		Value:      "🧑‍🦯",
-		Descriptor: "Person with White Cane",
+		Descriptor: "Person With Probing Cane",
 	},
 	"1F9D1-200D-1F9B0": {
 		Key:        "1F9D1-200D-1F9B0",
@@ -17186,186 +13661,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1F9D1-200D-2708-FE0F",
 		Value:      "🧑‍✈️",
 		Descriptor: "Pilot",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F468": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F468",
-		Value:      "🧑‍❤️‍👨",
-		Descriptor: "Couple With Heart: Person, Man",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F468-1F3FB": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F468-1F3FB",
-		Value:      "🧑‍❤️‍👨🏻",
-		Descriptor: "Couple With Heart: Person, Man, No Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F468-1F3FC": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F468-1F3FC",
-		Value:      "🧑‍❤️‍👨🏼",
-		Descriptor: "Couple With Heart: Person, Man, No Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F468-1F3FD": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F468-1F3FD",
-		Value:      "🧑‍❤️‍👨🏽",
-		Descriptor: "Couple With Heart: Person, Man, No Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F468-1F3FE": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F468-1F3FE",
-		Value:      "🧑‍❤️‍👨🏾",
-		Descriptor: "Couple With Heart: Person, Man, No Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F468-1F3FF": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F468-1F3FF",
-		Value:      "🧑‍❤️‍👨🏿",
-		Descriptor: "Couple With Heart: Person, Man, No Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F469": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F469",
-		Value:      "🧑‍❤️‍👩",
-		Descriptor: "Couple With Heart: Person, Woman",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F469-1F3FB": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F469-1F3FB",
-		Value:      "🧑‍❤️‍👩🏻",
-		Descriptor: "Couple With Heart: Person, Woman, No Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F469-1F3FC": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F469-1F3FC",
-		Value:      "🧑‍❤️‍👩🏼",
-		Descriptor: "Couple With Heart: Person, Woman, No Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F469-1F3FD": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F469-1F3FD",
-		Value:      "🧑‍❤️‍👩🏽",
-		Descriptor: "Couple With Heart: Person, Woman, No Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F469-1F3FE": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F469-1F3FE",
-		Value:      "🧑‍❤️‍👩🏾",
-		Descriptor: "Couple With Heart: Person, Woman, No Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F469-1F3FF": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F469-1F3FF",
-		Value:      "🧑‍❤️‍👩🏿",
-		Descriptor: "Couple With Heart: Person, Woman, No Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F468": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F468",
-		Value:      "🧑‍❤️‍💋‍👨",
-		Descriptor: "Kiss: Person, Man",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FB",
-		Value:      "🧑‍❤️‍💋‍👨🏻",
-		Descriptor: "Kiss: Person, Man, No Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FC",
-		Value:      "🧑‍❤️‍💋‍👨🏼",
-		Descriptor: "Kiss: Person, Man, No Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FD",
-		Value:      "🧑‍❤️‍💋‍👨🏽",
-		Descriptor: "Kiss: Person, Man, No Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FE",
-		Value:      "🧑‍❤️‍💋‍👨🏾",
-		Descriptor: "Kiss: Person, Man, No Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F468-1F3FF",
-		Value:      "🧑‍❤️‍💋‍👨🏿",
-		Descriptor: "Kiss: Person, Man, No Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F469": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F469",
-		Value:      "🧑‍❤️‍💋‍👩",
-		Descriptor: "Kiss: Person, Woman",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FB",
-		Value:      "🧑‍❤️‍💋‍👩🏻",
-		Descriptor: "Kiss: Person, Woman, No Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FC",
-		Value:      "🧑‍❤️‍💋‍👩🏼",
-		Descriptor: "Kiss: Person, Woman, No Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FD",
-		Value:      "🧑‍❤️‍💋‍👩🏽",
-		Descriptor: "Kiss: Person, Woman, No Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FE",
-		Value:      "🧑‍❤️‍💋‍👩🏾",
-		Descriptor: "Kiss: Person, Woman, No Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F469-1F3FF",
-		Value:      "🧑‍❤️‍💋‍👩🏿",
-		Descriptor: "Kiss: Person, Woman, No Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F9D1": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F9D1",
-		Value:      "🧑‍❤️‍💋‍🧑",
-		Descriptor: "Kiss: Person, Person",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FB",
-		Value:      "🧑‍❤️‍💋‍🧑🏻",
-		Descriptor: "Kiss: Person, Person, No Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FC",
-		Value:      "🧑‍❤️‍💋‍🧑🏼",
-		Descriptor: "Kiss: Person, Person, No Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FD",
-		Value:      "🧑‍❤️‍💋‍🧑🏽",
-		Descriptor: "Kiss: Person, Person, No Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FE",
-		Value:      "🧑‍❤️‍💋‍🧑🏾",
-		Descriptor: "Kiss: Person, Person, No Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F48B-200D-1F9D1-1F3FF",
-		Value:      "🧑‍❤️‍💋‍🧑🏿",
-		Descriptor: "Kiss: Person, Person, No Skin Tone, Dark Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F9D1": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F9D1",
-		Value:      "🧑‍❤️‍🧑",
-		Descriptor: "Couple With Heart: Person, Person",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F9D1-1F3FB": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F9D1-1F3FB",
-		Value:      "🧑‍❤️‍🧑🏻",
-		Descriptor: "Couple With Heart: Person, Person, No Skin Tone, Light Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F9D1-1F3FC": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F9D1-1F3FC",
-		Value:      "🧑‍❤️‍🧑🏼",
-		Descriptor: "Couple With Heart: Person, Person, No Skin Tone, Medium-Light Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F9D1-1F3FD": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F9D1-1F3FD",
-		Value:      "🧑‍❤️‍🧑🏽",
-		Descriptor: "Couple With Heart: Person, Person, No Skin Tone, Medium Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F9D1-1F3FE": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F9D1-1F3FE",
-		Value:      "🧑‍❤️‍🧑🏾",
-		Descriptor: "Couple With Heart: Person, Person, No Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1F9D1-200D-2764-FE0F-200D-1F9D1-1F3FF": {
-		Key:        "1F9D1-200D-2764-FE0F-200D-1F9D1-1F3FF",
-		Value:      "🧑‍❤️‍🧑🏿",
-		Descriptor: "Couple With Heart: Person, Person, No Skin Tone, Dark Skin Tone",
 	},
 	"1F9D2": {
 		Key:        "1F9D2",
@@ -17430,122 +13725,62 @@ var Emojis = map[string]Emoji{
 	"1F9D4": {
 		Key:        "1F9D4",
 		Value:      "🧔",
-		Descriptor: "Person: Beard",
+		Descriptor: "Man: Beard",
 	},
 	"1F9D4-1F3FB": {
 		Key:        "1F9D4-1F3FB",
 		Value:      "🧔🏻",
-		Descriptor: "Person: Light Skin Tone, Beard",
-	},
-	"1F9D4-1F3FB-200D-2640-FE0F": {
-		Key:        "1F9D4-1F3FB-200D-2640-FE0F",
-		Value:      "🧔🏻‍♀️",
-		Descriptor: "Woman: Light Skin Tone, Beard",
-	},
-	"1F9D4-1F3FB-200D-2642-FE0F": {
-		Key:        "1F9D4-1F3FB-200D-2642-FE0F",
-		Value:      "🧔🏻‍♂️",
 		Descriptor: "Man: Light Skin Tone, Beard",
 	},
 	"1F9D4-1F3FC": {
 		Key:        "1F9D4-1F3FC",
 		Value:      "🧔🏼",
-		Descriptor: "Person: Medium-Light Skin Tone, Beard",
-	},
-	"1F9D4-1F3FC-200D-2640-FE0F": {
-		Key:        "1F9D4-1F3FC-200D-2640-FE0F",
-		Value:      "🧔🏼‍♀️",
-		Descriptor: "Woman: Medium-Light Skin Tone, Beard",
-	},
-	"1F9D4-1F3FC-200D-2642-FE0F": {
-		Key:        "1F9D4-1F3FC-200D-2642-FE0F",
-		Value:      "🧔🏼‍♂️",
 		Descriptor: "Man: Medium-Light Skin Tone, Beard",
 	},
 	"1F9D4-1F3FD": {
 		Key:        "1F9D4-1F3FD",
 		Value:      "🧔🏽",
-		Descriptor: "Person: Medium Skin Tone, Beard",
-	},
-	"1F9D4-1F3FD-200D-2640-FE0F": {
-		Key:        "1F9D4-1F3FD-200D-2640-FE0F",
-		Value:      "🧔🏽‍♀️",
-		Descriptor: "Woman: Medium Skin Tone, Beard",
-	},
-	"1F9D4-1F3FD-200D-2642-FE0F": {
-		Key:        "1F9D4-1F3FD-200D-2642-FE0F",
-		Value:      "🧔🏽‍♂️",
 		Descriptor: "Man: Medium Skin Tone, Beard",
 	},
 	"1F9D4-1F3FE": {
 		Key:        "1F9D4-1F3FE",
 		Value:      "🧔🏾",
-		Descriptor: "Person: Medium-Dark Skin Tone, Beard",
-	},
-	"1F9D4-1F3FE-200D-2640-FE0F": {
-		Key:        "1F9D4-1F3FE-200D-2640-FE0F",
-		Value:      "🧔🏾‍♀️",
-		Descriptor: "Woman: Medium-Dark Skin Tone, Beard",
-	},
-	"1F9D4-1F3FE-200D-2642-FE0F": {
-		Key:        "1F9D4-1F3FE-200D-2642-FE0F",
-		Value:      "🧔🏾‍♂️",
 		Descriptor: "Man: Medium-Dark Skin Tone, Beard",
 	},
 	"1F9D4-1F3FF": {
 		Key:        "1F9D4-1F3FF",
 		Value:      "🧔🏿",
-		Descriptor: "Person: Dark Skin Tone, Beard",
-	},
-	"1F9D4-1F3FF-200D-2640-FE0F": {
-		Key:        "1F9D4-1F3FF-200D-2640-FE0F",
-		Value:      "🧔🏿‍♀️",
-		Descriptor: "Woman: Dark Skin Tone, Beard",
-	},
-	"1F9D4-1F3FF-200D-2642-FE0F": {
-		Key:        "1F9D4-1F3FF-200D-2642-FE0F",
-		Value:      "🧔🏿‍♂️",
 		Descriptor: "Man: Dark Skin Tone, Beard",
-	},
-	"1F9D4-200D-2640-FE0F": {
-		Key:        "1F9D4-200D-2640-FE0F",
-		Value:      "🧔‍♀️",
-		Descriptor: "Woman: Beard",
-	},
-	"1F9D4-200D-2642-FE0F": {
-		Key:        "1F9D4-200D-2642-FE0F",
-		Value:      "🧔‍♂️",
-		Descriptor: "Man: Beard",
 	},
 	"1F9D5": {
 		Key:        "1F9D5",
 		Value:      "🧕",
-		Descriptor: "Woman with Headscarf",
+		Descriptor: "Woman With Headscarf",
 	},
 	"1F9D5-1F3FB": {
 		Key:        "1F9D5-1F3FB",
 		Value:      "🧕🏻",
-		Descriptor: "Woman with Headscarf: Light Skin Tone",
+		Descriptor: "Woman With Headscarf: Light Skin Tone",
 	},
 	"1F9D5-1F3FC": {
 		Key:        "1F9D5-1F3FC",
 		Value:      "🧕🏼",
-		Descriptor: "Woman with Headscarf: Medium-Light Skin Tone",
+		Descriptor: "Woman With Headscarf: Medium-Light Skin Tone",
 	},
 	"1F9D5-1F3FD": {
 		Key:        "1F9D5-1F3FD",
 		Value:      "🧕🏽",
-		Descriptor: "Woman with Headscarf: Medium Skin Tone",
+		Descriptor: "Woman With Headscarf: Medium Skin Tone",
 	},
 	"1F9D5-1F3FE": {
 		Key:        "1F9D5-1F3FE",
 		Value:      "🧕🏾",
-		Descriptor: "Woman with Headscarf: Medium-Dark Skin Tone",
+		Descriptor: "Woman With Headscarf: Medium-Dark Skin Tone",
 	},
 	"1F9D5-1F3FF": {
 		Key:        "1F9D5-1F3FF",
 		Value:      "🧕🏿",
-		Descriptor: "Woman with Headscarf: Dark Skin Tone",
+		Descriptor: "Woman With Headscarf: Dark Skin Tone",
 	},
 	"1F9D6": {
 		Key:        "1F9D6",
@@ -18477,11 +14712,6 @@ var Emojis = map[string]Emoji{
 		Value:      "🩳",
 		Descriptor: "Shorts",
 	},
-	"1FA74": {
-		Key:        "1FA74",
-		Value:      "🩴",
-		Descriptor: "Thong Sandal",
-	},
 	"1FA78": {
 		Key:        "1FA78",
 		Value:      "🩸",
@@ -18497,16 +14727,6 @@ var Emojis = map[string]Emoji{
 		Value:      "🩺",
 		Descriptor: "Stethoscope",
 	},
-	"1FA7B": {
-		Key:        "1FA7B",
-		Value:      "🩻",
-		Descriptor: "X-Ray",
-	},
-	"1FA7C": {
-		Key:        "1FA7C",
-		Value:      "🩼",
-		Descriptor: "Crutch",
-	},
 	"1FA80": {
 		Key:        "1FA80",
 		Value:      "🪀",
@@ -18521,26 +14741,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1FA82",
 		Value:      "🪂",
 		Descriptor: "Parachute",
-	},
-	"1FA83": {
-		Key:        "1FA83",
-		Value:      "🪃",
-		Descriptor: "Boomerang",
-	},
-	"1FA84": {
-		Key:        "1FA84",
-		Value:      "🪄",
-		Descriptor: "Magic Wand",
-	},
-	"1FA85": {
-		Key:        "1FA85",
-		Value:      "🪅",
-		Descriptor: "Piñata",
-	},
-	"1FA86": {
-		Key:        "1FA86",
-		Value:      "🪆",
-		Descriptor: "Nesting Dolls",
 	},
 	"1FA90": {
 		Key:        "1FA90",
@@ -18571,736 +14771,6 @@ var Emojis = map[string]Emoji{
 		Key:        "1FA95",
 		Value:      "🪕",
 		Descriptor: "Banjo",
-	},
-	"1FA96": {
-		Key:        "1FA96",
-		Value:      "🪖",
-		Descriptor: "Military Helmet",
-	},
-	"1FA97": {
-		Key:        "1FA97",
-		Value:      "🪗",
-		Descriptor: "Accordion",
-	},
-	"1FA98": {
-		Key:        "1FA98",
-		Value:      "🪘",
-		Descriptor: "Long Drum",
-	},
-	"1FA99": {
-		Key:        "1FA99",
-		Value:      "🪙",
-		Descriptor: "Coin",
-	},
-	"1FA9A": {
-		Key:        "1FA9A",
-		Value:      "🪚",
-		Descriptor: "Carpentry Saw",
-	},
-	"1FA9B": {
-		Key:        "1FA9B",
-		Value:      "🪛",
-		Descriptor: "Screwdriver",
-	},
-	"1FA9C": {
-		Key:        "1FA9C",
-		Value:      "🪜",
-		Descriptor: "Ladder",
-	},
-	"1FA9D": {
-		Key:        "1FA9D",
-		Value:      "🪝",
-		Descriptor: "Hook",
-	},
-	"1FA9E": {
-		Key:        "1FA9E",
-		Value:      "🪞",
-		Descriptor: "Mirror",
-	},
-	"1FA9F": {
-		Key:        "1FA9F",
-		Value:      "🪟",
-		Descriptor: "Window",
-	},
-	"1FAA0": {
-		Key:        "1FAA0",
-		Value:      "🪠",
-		Descriptor: "Plunger",
-	},
-	"1FAA1": {
-		Key:        "1FAA1",
-		Value:      "🪡",
-		Descriptor: "Sewing Needle",
-	},
-	"1FAA2": {
-		Key:        "1FAA2",
-		Value:      "🪢",
-		Descriptor: "Knot",
-	},
-	"1FAA3": {
-		Key:        "1FAA3",
-		Value:      "🪣",
-		Descriptor: "Bucket",
-	},
-	"1FAA4": {
-		Key:        "1FAA4",
-		Value:      "🪤",
-		Descriptor: "Mouse Trap",
-	},
-	"1FAA5": {
-		Key:        "1FAA5",
-		Value:      "🪥",
-		Descriptor: "Toothbrush",
-	},
-	"1FAA6": {
-		Key:        "1FAA6",
-		Value:      "🪦",
-		Descriptor: "Headstone",
-	},
-	"1FAA7": {
-		Key:        "1FAA7",
-		Value:      "🪧",
-		Descriptor: "Placard",
-	},
-	"1FAA8": {
-		Key:        "1FAA8",
-		Value:      "🪨",
-		Descriptor: "Rock",
-	},
-	"1FAA9": {
-		Key:        "1FAA9",
-		Value:      "🪩",
-		Descriptor: "Mirror Ball",
-	},
-	"1FAAA": {
-		Key:        "1FAAA",
-		Value:      "🪪",
-		Descriptor: "Identification Card",
-	},
-	"1FAAB": {
-		Key:        "1FAAB",
-		Value:      "🪫",
-		Descriptor: "Low Battery",
-	},
-	"1FAAC": {
-		Key:        "1FAAC",
-		Value:      "🪬",
-		Descriptor: "Hamsa",
-	},
-	"1FAB0": {
-		Key:        "1FAB0",
-		Value:      "🪰",
-		Descriptor: "Fly",
-	},
-	"1FAB1": {
-		Key:        "1FAB1",
-		Value:      "🪱",
-		Descriptor: "Worm",
-	},
-	"1FAB2": {
-		Key:        "1FAB2",
-		Value:      "🪲",
-		Descriptor: "Beetle",
-	},
-	"1FAB3": {
-		Key:        "1FAB3",
-		Value:      "🪳",
-		Descriptor: "Cockroach",
-	},
-	"1FAB4": {
-		Key:        "1FAB4",
-		Value:      "🪴",
-		Descriptor: "Potted Plant",
-	},
-	"1FAB5": {
-		Key:        "1FAB5",
-		Value:      "🪵",
-		Descriptor: "Wood",
-	},
-	"1FAB6": {
-		Key:        "1FAB6",
-		Value:      "🪶",
-		Descriptor: "Feather",
-	},
-	"1FAB7": {
-		Key:        "1FAB7",
-		Value:      "🪷",
-		Descriptor: "Lotus",
-	},
-	"1FAB8": {
-		Key:        "1FAB8",
-		Value:      "🪸",
-		Descriptor: "Coral",
-	},
-	"1FAB9": {
-		Key:        "1FAB9",
-		Value:      "🪹",
-		Descriptor: "Empty Nest",
-	},
-	"1FABA": {
-		Key:        "1FABA",
-		Value:      "🪺",
-		Descriptor: "Nest with Eggs",
-	},
-	"1FAC0": {
-		Key:        "1FAC0",
-		Value:      "🫀",
-		Descriptor: "Anatomical Heart",
-	},
-	"1FAC1": {
-		Key:        "1FAC1",
-		Value:      "🫁",
-		Descriptor: "Lungs",
-	},
-	"1FAC2": {
-		Key:        "1FAC2",
-		Value:      "🫂",
-		Descriptor: "People Hugging",
-	},
-	"1FAC3": {
-		Key:        "1FAC3",
-		Value:      "🫃",
-		Descriptor: "Pregnant Man",
-	},
-	"1FAC3-1F3FB": {
-		Key:        "1FAC3-1F3FB",
-		Value:      "🫃🏻",
-		Descriptor: "Pregnant Man: Light Skin Tone",
-	},
-	"1FAC3-1F3FC": {
-		Key:        "1FAC3-1F3FC",
-		Value:      "🫃🏼",
-		Descriptor: "Pregnant Man: Medium-Light Skin Tone",
-	},
-	"1FAC3-1F3FD": {
-		Key:        "1FAC3-1F3FD",
-		Value:      "🫃🏽",
-		Descriptor: "Pregnant Man: Medium Skin Tone",
-	},
-	"1FAC3-1F3FE": {
-		Key:        "1FAC3-1F3FE",
-		Value:      "🫃🏾",
-		Descriptor: "Pregnant Man: Medium-Dark Skin Tone",
-	},
-	"1FAC3-1F3FF": {
-		Key:        "1FAC3-1F3FF",
-		Value:      "🫃🏿",
-		Descriptor: "Pregnant Man: Dark Skin Tone",
-	},
-	"1FAC4": {
-		Key:        "1FAC4",
-		Value:      "🫄",
-		Descriptor: "Pregnant Person",
-	},
-	"1FAC4-1F3FB": {
-		Key:        "1FAC4-1F3FB",
-		Value:      "🫄🏻",
-		Descriptor: "Pregnant Person: Light Skin Tone",
-	},
-	"1FAC4-1F3FC": {
-		Key:        "1FAC4-1F3FC",
-		Value:      "🫄🏼",
-		Descriptor: "Pregnant Person: Medium-Light Skin Tone",
-	},
-	"1FAC4-1F3FD": {
-		Key:        "1FAC4-1F3FD",
-		Value:      "🫄🏽",
-		Descriptor: "Pregnant Person: Medium Skin Tone",
-	},
-	"1FAC4-1F3FE": {
-		Key:        "1FAC4-1F3FE",
-		Value:      "🫄🏾",
-		Descriptor: "Pregnant Person: Medium-Dark Skin Tone",
-	},
-	"1FAC4-1F3FF": {
-		Key:        "1FAC4-1F3FF",
-		Value:      "🫄🏿",
-		Descriptor: "Pregnant Person: Dark Skin Tone",
-	},
-	"1FAC5": {
-		Key:        "1FAC5",
-		Value:      "🫅",
-		Descriptor: "Person with Crown",
-	},
-	"1FAC5-1F3FB": {
-		Key:        "1FAC5-1F3FB",
-		Value:      "🫅🏻",
-		Descriptor: "Person with Crown: Light Skin Tone",
-	},
-	"1FAC5-1F3FC": {
-		Key:        "1FAC5-1F3FC",
-		Value:      "🫅🏼",
-		Descriptor: "Person with Crown: Medium-Light Skin Tone",
-	},
-	"1FAC5-1F3FD": {
-		Key:        "1FAC5-1F3FD",
-		Value:      "🫅🏽",
-		Descriptor: "Person with Crown: Medium Skin Tone",
-	},
-	"1FAC5-1F3FE": {
-		Key:        "1FAC5-1F3FE",
-		Value:      "🫅🏾",
-		Descriptor: "Person with Crown: Medium-Dark Skin Tone",
-	},
-	"1FAC5-1F3FF": {
-		Key:        "1FAC5-1F3FF",
-		Value:      "🫅🏿",
-		Descriptor: "Person with Crown: Dark Skin Tone",
-	},
-	"1FAD0": {
-		Key:        "1FAD0",
-		Value:      "🫐",
-		Descriptor: "Blueberries",
-	},
-	"1FAD1": {
-		Key:        "1FAD1",
-		Value:      "🫑",
-		Descriptor: "Bell Pepper",
-	},
-	"1FAD2": {
-		Key:        "1FAD2",
-		Value:      "🫒",
-		Descriptor: "Olive",
-	},
-	"1FAD3": {
-		Key:        "1FAD3",
-		Value:      "🫓",
-		Descriptor: "Flatbread",
-	},
-	"1FAD4": {
-		Key:        "1FAD4",
-		Value:      "🫔",
-		Descriptor: "Tamale",
-	},
-	"1FAD5": {
-		Key:        "1FAD5",
-		Value:      "🫕",
-		Descriptor: "Fondue",
-	},
-	"1FAD6": {
-		Key:        "1FAD6",
-		Value:      "🫖",
-		Descriptor: "Teapot",
-	},
-	"1FAD7": {
-		Key:        "1FAD7",
-		Value:      "🫗",
-		Descriptor: "Pouring Liquid",
-	},
-	"1FAD8": {
-		Key:        "1FAD8",
-		Value:      "🫘",
-		Descriptor: "Beans",
-	},
-	"1FAD9": {
-		Key:        "1FAD9",
-		Value:      "🫙",
-		Descriptor: "Jar",
-	},
-	"1FAE0": {
-		Key:        "1FAE0",
-		Value:      "🫠",
-		Descriptor: "Melting Face",
-	},
-	"1FAE1": {
-		Key:        "1FAE1",
-		Value:      "🫡",
-		Descriptor: "Saluting Face",
-	},
-	"1FAE2": {
-		Key:        "1FAE2",
-		Value:      "🫢",
-		Descriptor: "Face with Open Eyes and Hand Over Mouth",
-	},
-	"1FAE3": {
-		Key:        "1FAE3",
-		Value:      "🫣",
-		Descriptor: "Face with Peeking Eye",
-	},
-	"1FAE4": {
-		Key:        "1FAE4",
-		Value:      "🫤",
-		Descriptor: "Face with Diagonal Mouth",
-	},
-	"1FAE5": {
-		Key:        "1FAE5",
-		Value:      "🫥",
-		Descriptor: "Dotted Line Face",
-	},
-	"1FAE6": {
-		Key:        "1FAE6",
-		Value:      "🫦",
-		Descriptor: "Biting Lip",
-	},
-	"1FAE7": {
-		Key:        "1FAE7",
-		Value:      "🫧",
-		Descriptor: "Bubbles",
-	},
-	"1FAF0": {
-		Key:        "1FAF0",
-		Value:      "🫰",
-		Descriptor: "Hand with Index Finger and Thumb Crossed",
-	},
-	"1FAF0-1F3FB": {
-		Key:        "1FAF0-1F3FB",
-		Value:      "🫰🏻",
-		Descriptor: "Hand with Index Finger and Thumb Crossed: Light Skin Tone",
-	},
-	"1FAF0-1F3FC": {
-		Key:        "1FAF0-1F3FC",
-		Value:      "🫰🏼",
-		Descriptor: "Hand with Index Finger and Thumb Crossed: Medium-Light Skin Tone",
-	},
-	"1FAF0-1F3FD": {
-		Key:        "1FAF0-1F3FD",
-		Value:      "🫰🏽",
-		Descriptor: "Hand with Index Finger and Thumb Crossed: Medium Skin Tone",
-	},
-	"1FAF0-1F3FE": {
-		Key:        "1FAF0-1F3FE",
-		Value:      "🫰🏾",
-		Descriptor: "Hand with Index Finger and Thumb Crossed: Medium-Dark Skin Tone",
-	},
-	"1FAF0-1F3FF": {
-		Key:        "1FAF0-1F3FF",
-		Value:      "🫰🏿",
-		Descriptor: "Hand with Index Finger and Thumb Crossed: Dark Skin Tone",
-	},
-	"1FAF1": {
-		Key:        "1FAF1",
-		Value:      "🫱",
-		Descriptor: "Rightwards Hand",
-	},
-	"1FAF1-1F3FB": {
-		Key:        "1FAF1-1F3FB",
-		Value:      "🫱🏻",
-		Descriptor: "Rightwards Hand: Light Skin Tone",
-	},
-	"1FAF1-1F3FB-200D-1FAF2": {
-		Key:        "1FAF1-1F3FB-200D-1FAF2",
-		Value:      "🫱🏻‍🫲",
-		Descriptor: "Handshake: Light Skin Tone, No Skin Tone",
-	},
-	"1FAF1-1F3FB-200D-1FAF2-1F3FC": {
-		Key:        "1FAF1-1F3FB-200D-1FAF2-1F3FC",
-		Value:      "🫱🏻‍🫲🏼",
-		Descriptor: "Handshake: Light Skin Tone, Medium-Light Skin Tone",
-	},
-	"1FAF1-1F3FB-200D-1FAF2-1F3FD": {
-		Key:        "1FAF1-1F3FB-200D-1FAF2-1F3FD",
-		Value:      "🫱🏻‍🫲🏽",
-		Descriptor: "Handshake: Light Skin Tone, Medium Skin Tone",
-	},
-	"1FAF1-1F3FB-200D-1FAF2-1F3FE": {
-		Key:        "1FAF1-1F3FB-200D-1FAF2-1F3FE",
-		Value:      "🫱🏻‍🫲🏾",
-		Descriptor: "Handshake: Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1FAF1-1F3FB-200D-1FAF2-1F3FF": {
-		Key:        "1FAF1-1F3FB-200D-1FAF2-1F3FF",
-		Value:      "🫱🏻‍🫲🏿",
-		Descriptor: "Handshake: Light Skin Tone, Dark Skin Tone",
-	},
-	"1FAF1-1F3FC": {
-		Key:        "1FAF1-1F3FC",
-		Value:      "🫱🏼",
-		Descriptor: "Rightwards Hand: Medium-Light Skin Tone",
-	},
-	"1FAF1-1F3FC-200D-1FAF2": {
-		Key:        "1FAF1-1F3FC-200D-1FAF2",
-		Value:      "🫱🏼‍🫲",
-		Descriptor: "Handshake: Medium-Light Skin Tone, No Skin Tone",
-	},
-	"1FAF1-1F3FC-200D-1FAF2-1F3FB": {
-		Key:        "1FAF1-1F3FC-200D-1FAF2-1F3FB",
-		Value:      "🫱🏼‍🫲🏻",
-		Descriptor: "Handshake: Medium-Light Skin Tone, Light Skin Tone",
-	},
-	"1FAF1-1F3FC-200D-1FAF2-1F3FD": {
-		Key:        "1FAF1-1F3FC-200D-1FAF2-1F3FD",
-		Value:      "🫱🏼‍🫲🏽",
-		Descriptor: "Handshake: Medium-Light Skin Tone, Medium Skin Tone",
-	},
-	"1FAF1-1F3FC-200D-1FAF2-1F3FE": {
-		Key:        "1FAF1-1F3FC-200D-1FAF2-1F3FE",
-		Value:      "🫱🏼‍🫲🏾",
-		Descriptor: "Handshake: Medium-Light Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1FAF1-1F3FC-200D-1FAF2-1F3FF": {
-		Key:        "1FAF1-1F3FC-200D-1FAF2-1F3FF",
-		Value:      "🫱🏼‍🫲🏿",
-		Descriptor: "Handshake: Medium-Light Skin Tone, Dark Skin Tone",
-	},
-	"1FAF1-1F3FD": {
-		Key:        "1FAF1-1F3FD",
-		Value:      "🫱🏽",
-		Descriptor: "Rightwards Hand: Medium Skin Tone",
-	},
-	"1FAF1-1F3FD-200D-1FAF2": {
-		Key:        "1FAF1-1F3FD-200D-1FAF2",
-		Value:      "🫱🏽‍🫲",
-		Descriptor: "Handshake: Medium Skin Tone, No Skin Tone",
-	},
-	"1FAF1-1F3FD-200D-1FAF2-1F3FB": {
-		Key:        "1FAF1-1F3FD-200D-1FAF2-1F3FB",
-		Value:      "🫱🏽‍🫲🏻",
-		Descriptor: "Handshake: Medium Skin Tone, Light Skin Tone",
-	},
-	"1FAF1-1F3FD-200D-1FAF2-1F3FC": {
-		Key:        "1FAF1-1F3FD-200D-1FAF2-1F3FC",
-		Value:      "🫱🏽‍🫲🏼",
-		Descriptor: "Handshake: Medium Skin Tone, Medium-Light Skin Tone",
-	},
-	"1FAF1-1F3FD-200D-1FAF2-1F3FE": {
-		Key:        "1FAF1-1F3FD-200D-1FAF2-1F3FE",
-		Value:      "🫱🏽‍🫲🏾",
-		Descriptor: "Handshake: Medium Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1FAF1-1F3FD-200D-1FAF2-1F3FF": {
-		Key:        "1FAF1-1F3FD-200D-1FAF2-1F3FF",
-		Value:      "🫱🏽‍🫲🏿",
-		Descriptor: "Handshake: Medium Skin Tone, Dark Skin Tone",
-	},
-	"1FAF1-1F3FE": {
-		Key:        "1FAF1-1F3FE",
-		Value:      "🫱🏾",
-		Descriptor: "Rightwards Hand: Medium-Dark Skin Tone",
-	},
-	"1FAF1-1F3FE-200D-1FAF2": {
-		Key:        "1FAF1-1F3FE-200D-1FAF2",
-		Value:      "🫱🏾‍🫲",
-		Descriptor: "Handshake: Medium-Dark Skin Tone, No Skin Tone",
-	},
-	"1FAF1-1F3FE-200D-1FAF2-1F3FB": {
-		Key:        "1FAF1-1F3FE-200D-1FAF2-1F3FB",
-		Value:      "🫱🏾‍🫲🏻",
-		Descriptor: "Handshake: Medium-Dark Skin Tone, Light Skin Tone",
-	},
-	"1FAF1-1F3FE-200D-1FAF2-1F3FC": {
-		Key:        "1FAF1-1F3FE-200D-1FAF2-1F3FC",
-		Value:      "🫱🏾‍🫲🏼",
-		Descriptor: "Handshake: Medium-Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1FAF1-1F3FE-200D-1FAF2-1F3FD": {
-		Key:        "1FAF1-1F3FE-200D-1FAF2-1F3FD",
-		Value:      "🫱🏾‍🫲🏽",
-		Descriptor: "Handshake: Medium-Dark Skin Tone, Medium Skin Tone",
-	},
-	"1FAF1-1F3FE-200D-1FAF2-1F3FF": {
-		Key:        "1FAF1-1F3FE-200D-1FAF2-1F3FF",
-		Value:      "🫱🏾‍🫲🏿",
-		Descriptor: "Handshake: Medium-Dark Skin Tone, Dark Skin Tone",
-	},
-	"1FAF1-1F3FF": {
-		Key:        "1FAF1-1F3FF",
-		Value:      "🫱🏿",
-		Descriptor: "Rightwards Hand: Dark Skin Tone",
-	},
-	"1FAF1-1F3FF-200D-1FAF2": {
-		Key:        "1FAF1-1F3FF-200D-1FAF2",
-		Value:      "🫱🏿‍🫲",
-		Descriptor: "Handshake: Dark Skin Tone, No Skin Tone",
-	},
-	"1FAF1-1F3FF-200D-1FAF2-1F3FB": {
-		Key:        "1FAF1-1F3FF-200D-1FAF2-1F3FB",
-		Value:      "🫱🏿‍🫲🏻",
-		Descriptor: "Handshake: Dark Skin Tone, Light Skin Tone",
-	},
-	"1FAF1-1F3FF-200D-1FAF2-1F3FC": {
-		Key:        "1FAF1-1F3FF-200D-1FAF2-1F3FC",
-		Value:      "🫱🏿‍🫲🏼",
-		Descriptor: "Handshake: Dark Skin Tone, Medium-Light Skin Tone",
-	},
-	"1FAF1-1F3FF-200D-1FAF2-1F3FD": {
-		Key:        "1FAF1-1F3FF-200D-1FAF2-1F3FD",
-		Value:      "🫱🏿‍🫲🏽",
-		Descriptor: "Handshake: Dark Skin Tone, Medium Skin Tone",
-	},
-	"1FAF1-1F3FF-200D-1FAF2-1F3FE": {
-		Key:        "1FAF1-1F3FF-200D-1FAF2-1F3FE",
-		Value:      "🫱🏿‍🫲🏾",
-		Descriptor: "Handshake: Dark Skin Tone, Medium-Dark Skin Tone",
-	},
-	"1FAF1-200D-1FAF2": {
-		Key:        "1FAF1-200D-1FAF2",
-		Value:      "🫱‍🫲",
-		Descriptor: "Handshake: No Skin Tone, No Skin Tone",
-	},
-	"1FAF1-200D-1FAF2-1F3FB": {
-		Key:        "1FAF1-200D-1FAF2-1F3FB",
-		Value:      "🫱‍🫲🏻",
-		Descriptor: "Handshake: No Skin Tone, Light Skin Tone",
-	},
-	"1FAF1-200D-1FAF2-1F3FC": {
-		Key:        "1FAF1-200D-1FAF2-1F3FC",
-		Value:      "🫱‍🫲🏼",
-		Descriptor: "Handshake: No Skin Tone, Medium-Light Skin Tone",
-	},
-	"1FAF1-200D-1FAF2-1F3FD": {
-		Key:        "1FAF1-200D-1FAF2-1F3FD",
-		Value:      "🫱‍🫲🏽",
-		Descriptor: "Handshake: No Skin Tone, Medium Skin Tone",
-	},
-	"1FAF1-200D-1FAF2-1F3FE": {
-		Key:        "1FAF1-200D-1FAF2-1F3FE",
-		Value:      "🫱‍🫲🏾",
-		Descriptor: "Handshake: No Skin Tone, Medium Dark Skin Tone",
-	},
-	"1FAF1-200D-1FAF2-1F3FF": {
-		Key:        "1FAF1-200D-1FAF2-1F3FF",
-		Value:      "🫱‍🫲🏿",
-		Descriptor: "Handshake: No Skin Tone, Dark Skin Tone",
-	},
-	"1FAF2": {
-		Key:        "1FAF2",
-		Value:      "🫲",
-		Descriptor: "Leftwards Hand",
-	},
-	"1FAF2-1F3FB": {
-		Key:        "1FAF2-1F3FB",
-		Value:      "🫲🏻",
-		Descriptor: "Leftwards Hand: Light Skin Tone",
-	},
-	"1FAF2-1F3FC": {
-		Key:        "1FAF2-1F3FC",
-		Value:      "🫲🏼",
-		Descriptor: "Leftwards Hand: Medium-Light Skin Tone",
-	},
-	"1FAF2-1F3FD": {
-		Key:        "1FAF2-1F3FD",
-		Value:      "🫲🏽",
-		Descriptor: "Leftwards Hand: Medium Skin Tone",
-	},
-	"1FAF2-1F3FE": {
-		Key:        "1FAF2-1F3FE",
-		Value:      "🫲🏾",
-		Descriptor: "Leftwards Hand: Medium-Dark Skin Tone",
-	},
-	"1FAF2-1F3FF": {
-		Key:        "1FAF2-1F3FF",
-		Value:      "🫲🏿",
-		Descriptor: "Leftwards Hand: Dark Skin Tone",
-	},
-	"1FAF3": {
-		Key:        "1FAF3",
-		Value:      "🫳",
-		Descriptor: "Palm Down Hand",
-	},
-	"1FAF3-1F3FB": {
-		Key:        "1FAF3-1F3FB",
-		Value:      "🫳🏻",
-		Descriptor: "Palm Down Hand: Light Skin Tone",
-	},
-	"1FAF3-1F3FC": {
-		Key:        "1FAF3-1F3FC",
-		Value:      "🫳🏼",
-		Descriptor: "Palm Down Hand: Medium-Light Skin Tone",
-	},
-	"1FAF3-1F3FD": {
-		Key:        "1FAF3-1F3FD",
-		Value:      "🫳🏽",
-		Descriptor: "Palm Down Hand: Medium Skin Tone",
-	},
-	"1FAF3-1F3FE": {
-		Key:        "1FAF3-1F3FE",
-		Value:      "🫳🏾",
-		Descriptor: "Palm Down Hand: Medium-Dark Skin Tone",
-	},
-	"1FAF3-1F3FF": {
-		Key:        "1FAF3-1F3FF",
-		Value:      "🫳🏿",
-		Descriptor: "Palm Down Hand: Dark Skin Tone",
-	},
-	"1FAF4": {
-		Key:        "1FAF4",
-		Value:      "🫴",
-		Descriptor: "Palm Up Hand",
-	},
-	"1FAF4-1F3FB": {
-		Key:        "1FAF4-1F3FB",
-		Value:      "🫴🏻",
-		Descriptor: "Palm Up Hand: Light Skin Tone",
-	},
-	"1FAF4-1F3FC": {
-		Key:        "1FAF4-1F3FC",
-		Value:      "🫴🏼",
-		Descriptor: "Palm Up Hand: Medium-Light Skin Tone",
-	},
-	"1FAF4-1F3FD": {
-		Key:        "1FAF4-1F3FD",
-		Value:      "🫴🏽",
-		Descriptor: "Palm Up Hand: Medium Skin Tone",
-	},
-	"1FAF4-1F3FE": {
-		Key:        "1FAF4-1F3FE",
-		Value:      "🫴🏾",
-		Descriptor: "Palm Up Hand: Medium-Dark Skin Tone",
-	},
-	"1FAF4-1F3FF": {
-		Key:        "1FAF4-1F3FF",
-		Value:      "🫴🏿",
-		Descriptor: "Palm Up Hand: Dark Skin Tone",
-	},
-	"1FAF5": {
-		Key:        "1FAF5",
-		Value:      "🫵",
-		Descriptor: "Index Pointing at the Viewer",
-	},
-	"1FAF5-1F3FB": {
-		Key:        "1FAF5-1F3FB",
-		Value:      "🫵🏻",
-		Descriptor: "Index Pointing at the Viewer: Light Skin Tone",
-	},
-	"1FAF5-1F3FC": {
-		Key:        "1FAF5-1F3FC",
-		Value:      "🫵🏼",
-		Descriptor: "Index Pointing at the Viewer: Medium-Light Skin Tone",
-	},
-	"1FAF5-1F3FD": {
-		Key:        "1FAF5-1F3FD",
-		Value:      "🫵🏽",
-		Descriptor: "Index Pointing at the Viewer: Medium Skin Tone",
-	},
-	"1FAF5-1F3FE": {
-		Key:        "1FAF5-1F3FE",
-		Value:      "🫵🏾",
-		Descriptor: "Index Pointing at the Viewer: Medium-Dark Skin Tone",
-	},
-	"1FAF5-1F3FF": {
-		Key:        "1FAF5-1F3FF",
-		Value:      "🫵🏿",
-		Descriptor: "Index Pointing at the Viewer: Dark Skin Tone",
-	},
-	"1FAF6": {
-		Key:        "1FAF6",
-		Value:      "🫶",
-		Descriptor: "Heart Hands",
-	},
-	"1FAF6-1F3FB": {
-		Key:        "1FAF6-1F3FB",
-		Value:      "🫶🏻",
-		Descriptor: "Heart Hands: Light Skin Tone",
-	},
-	"1FAF6-1F3FC": {
-		Key:        "1FAF6-1F3FC",
-		Value:      "🫶🏼",
-		Descriptor: "Heart Hands: Medium-Light Skin Tone",
-	},
-	"1FAF6-1F3FD": {
-		Key:        "1FAF6-1F3FD",
-		Value:      "🫶🏽",
-		Descriptor: "Heart Hands: Medium Skin Tone",
-	},
-	"1FAF6-1F3FE": {
-		Key:        "1FAF6-1F3FE",
-		Value:      "🫶🏾",
-		Descriptor: "Heart Hands: Medium-Dark Skin Tone",
-	},
-	"1FAF6-1F3FF": {
-		Key:        "1FAF6-1F3FF",
-		Value:      "🫶🏿",
-		Descriptor: "Heart Hands: Dark Skin Tone",
 	},
 	"203C-FE0F": {
 		Key:        "203C-FE0F",
@@ -19535,12 +15005,12 @@ var Emojis = map[string]Emoji{
 	"2611-FE0F": {
 		Key:        "2611-FE0F",
 		Value:      "☑️",
-		Descriptor: "Check Box with Check",
+		Descriptor: "Check Box With Check",
 	},
 	"2614": {
 		Key:        "2614",
 		Value:      "☔",
-		Descriptor: "Umbrella with Rain Drops",
+		Descriptor: "Umbrella With Rain Drops",
 	},
 	"2615": {
 		Key:        "2615",
@@ -19787,11 +15257,6 @@ var Emojis = map[string]Emoji{
 		Value:      "⚡",
 		Descriptor: "High Voltage",
 	},
-	"26A7-FE0F": {
-		Key:        "26A7-FE0F",
-		Value:      "⚧️",
-		Descriptor: "Transgender Symbol",
-	},
 	"26AA": {
 		Key:        "26AA",
 		Value:      "⚪",
@@ -19835,7 +15300,7 @@ var Emojis = map[string]Emoji{
 	"26C8-FE0F": {
 		Key:        "26C8-FE0F",
 		Value:      "⛈️",
-		Descriptor: "Cloud with Lightning and Rain",
+		Descriptor: "Cloud With Lightning and Rain",
 	},
 	"26CE": {
 		Key:        "26CE",
@@ -20170,7 +15635,7 @@ var Emojis = map[string]Emoji{
 	"2716-FE0F": {
 		Key:        "2716-FE0F",
 		Value:      "✖️",
-		Descriptor: "Multiply",
+		Descriptor: "Multiplication Sign",
 	},
 	"271D-FE0F": {
 		Key:        "271D-FE0F",
@@ -20220,7 +15685,7 @@ var Emojis = map[string]Emoji{
 	"2753": {
 		Key:        "2753",
 		Value:      "❓",
-		Descriptor: "Red Question Mark",
+		Descriptor: "Question Mark",
 	},
 	"2754": {
 		Key:        "2754",
@@ -20235,7 +15700,7 @@ var Emojis = map[string]Emoji{
 	"2757": {
 		Key:        "2757",
 		Value:      "❗",
-		Descriptor: "Red Exclamation Mark",
+		Descriptor: "Exclamation Mark",
 	},
 	"2763-FE0F": {
 		Key:        "2763-FE0F",
@@ -20247,30 +15712,20 @@ var Emojis = map[string]Emoji{
 		Value:      "❤️",
 		Descriptor: "Red Heart",
 	},
-	"2764-FE0F-200D-1F525": {
-		Key:        "2764-FE0F-200D-1F525",
-		Value:      "❤️‍🔥",
-		Descriptor: "Heart on Fire",
-	},
-	"2764-FE0F-200D-1FA79": {
-		Key:        "2764-FE0F-200D-1FA79",
-		Value:      "❤️‍🩹",
-		Descriptor: "Mending Heart",
-	},
 	"2795": {
 		Key:        "2795",
 		Value:      "➕",
-		Descriptor: "Plus",
+		Descriptor: "Plus Sign",
 	},
 	"2796": {
 		Key:        "2796",
 		Value:      "➖",
-		Descriptor: "Minus",
+		Descriptor: "Minus Sign",
 	},
 	"2797": {
 		Key:        "2797",
 		Value:      "➗",
-		Descriptor: "Divide",
+		Descriptor: "Division Sign",
 	},
 	"27A1-FE0F": {
 		Key:        "27A1-FE0F",
