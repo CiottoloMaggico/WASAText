@@ -1,0 +1,51 @@
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+:root {
+	--BACKGROUND-COLOR: #000;
+	--PRIMARY-COLOR: #25D366;
+	--SECONDARY-COLOR: #128C7E;
+	--TERTIARY-COLOR: #075E54;
+	--FOURTH-COLOR: #34B7F1;
+
+	--MAIN-BORDER-RADIUS: 15px;
+}
+
+html {
+	background-color: var(--BACKGROUND-COLOR);
+	z-index: -1;
+}
+
+body {
+	background-color: var(--TERTIARY-COLOR);
+	border-radius: var(--MAIN-BORDER-RADIUS);
+	height: calc(100vh - 50px);
+	margin: 25px auto;
+	width: min(90%, 1600px);
+	z-index: 0;
+}
+
+main {
+	position: relative;
+	height: calc(100vh - 50px);
+}
+
+.primary-btn {
+	background-color: var(--FOURTH-COLOR);
+	color: #fff;
+	font-weight: bold;
+}
+
+.primary-btn:hover,
+.primary-btn:focus {
+	background-color: transparent;
+	border: 1px solid var(--FOURTH-COLOR);
+	color: var(--FOURTH-COLOR);
+}
+

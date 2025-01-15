@@ -1,8 +1,19 @@
 import axios from "axios";
+import {getAuthentication} from "./session";
 
-const instance = axios.create({
+
+export function getApiUrl(path) {
+	if (path.startsWith("/")) {
+		return __API_URL__ + path;
+	}
+	return __API_URL__ + "/" + path;
+}
+
+export const api = axios.create({
 	baseURL: __API_URL__,
 	timeout: 1000 * 5
 });
 
-export default instance;
+api.defaults.headers.common['Authorization'] = 'Bearer ' + getAuthentication();
+
+export default api

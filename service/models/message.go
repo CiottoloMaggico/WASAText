@@ -79,6 +79,20 @@ type MessageModelImpl struct {
 	Db database.AppDatabase
 }
 
+func (m UserConversationMessagePreview) GetStatus() string {
+	res := "sent"
+
+	if m.DeliveredAt != nil {
+		res = "delivered"
+	}
+
+	if m.SeenAt != nil {
+		res = "seen"
+	}
+
+	return res
+}
+
 func (m MessageWithAuthorAndAttachment) GetStatus() string {
 	res := "sent"
 
@@ -159,7 +173,7 @@ func (model MessageModelImpl) GetConversationMessages(conversationId int64, para
 		query += fmt.Sprintf(" AND (%s)", filter)
 	}
 
-	query += " ORDER BY message_sendAt DESC LIMIT ? OFFSET ?;"
+	query += " ORDER BY message_sendAt ASC LIMIT ? OFFSET ?;"
 
 	messages := make([]MessageWithAuthorAndAttachment, 0, parameters.Limit)
 	if err := model.Db.QueryStruct(&messages, query, conversationId, parameters.Limit, parameters.Offset); err != nil {

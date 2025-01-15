@@ -4,6 +4,7 @@
 /doc/api/
 /linters
 /media/images/*
+/webui/node_modules
 .idea/
 *.iml
 *.exe

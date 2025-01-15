@@ -100,6 +100,7 @@ func UserConversationMessagePreviewToView(message models.UserConversationMessage
 			*message.Photo,
 		},
 		*message.SendAt,
+		message.GetStatus(),
 		message.Content,
 		message.Attachment,
 	}

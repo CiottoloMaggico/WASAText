@@ -15,7 +15,7 @@ import (
 
 type NewMessageRequestBody struct {
 	Attachment *multipart.FileHeader `form:"attachment" validate:"required_without=Content,omitempty,image"`
-	Content    *string               `form:"content" validate:"omitnil,min=0,max=4096,required_without=Attachment"`
+	Content    *string               `form:"content" validate:"required_without=Attachment,omitnil,min=0,max=4096"`
 	ReplyTo    *int64                `form:"repliedMessageId" validate:"omitnil,min=0"`
 }
 
