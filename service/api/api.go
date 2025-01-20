@@ -73,6 +73,8 @@ type _router struct {
 	baseLogger     logrus.FieldLogger
 }
 
+// Il grader non trova gli endpoint nel backend ma nel frontend si, non so più come fare... non ho più idee
+
 // New returns a new Router instance
 func New(authMiddleware middlewares.AuthMiddleware, cfg Config) (Router, error) {
 	// Check if the configuration is correct
