@@ -107,20 +107,6 @@ func (m MessageWithAuthorAndAttachment) GetStatus() string {
 	return res
 }
 
-func (m MessageWithAuthor) GetStatus() string {
-	res := "sent"
-
-	if m.DeliveredAt != nil {
-		res = "delivered"
-	}
-
-	if m.SeenAt != nil {
-		res = "seen"
-	}
-
-	return res
-}
-
 func (model MessageModelImpl) CreateMessage(
 	conversation int64,
 	author string,

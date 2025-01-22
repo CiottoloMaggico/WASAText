@@ -21,10 +21,6 @@ func NewApiError(statusCode int, detail interface{}) APIError {
 	}
 }
 
-func InvalidHeaders() error {
-	return NewApiError(http.StatusBadRequest, "Invalid headers")
-}
-
 func InvalidJson() error {
 	return NewApiError(http.StatusBadRequest, "Invalid json body")
 }
@@ -55,8 +51,4 @@ func Conflict(errors map[string]string) error {
 
 func ResourceNotFound() error {
 	return NewApiError(http.StatusNotFound, "Resource not found")
-}
-
-func InternalServerError() error {
-	return NewApiError(http.StatusInternalServerError, "Internal server error")
 }

@@ -25,7 +25,7 @@ type WebAPIConfiguration struct {
 	}
 	Debug bool `conf:"default:false,env:CFG_WEB_DEBUG"`
 	DB    struct {
-		Filename string `conf:"default:/local/decaf.db,env:CFG_WEB_DB_FILENAME"`
+		Filename string `conf:"default:./local/decaf.db,env:CFG_WEB_DB_FILENAME"`
 	}
 	MediaStorage struct {
 		UrlPath string `conf:"default:/media/images/*filepath"`

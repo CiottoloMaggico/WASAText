@@ -13,14 +13,6 @@ func MessageInfoToCommentView(info models.MessageInfo) views.CommentView {
 	}
 }
 
-func MessageInfoListToCommentView(infos []models.MessageInfo) []views.CommentView {
-	res := make([]views.CommentView, 0, cap(infos))
-	for _, comment := range infos {
-		res = append(res, MessageInfoToCommentView(comment))
-	}
-	return res
-}
-
 func MessageInfoWithUserToCommentView(info models.MessageInfoWithUser) views.CommentWithAuthorView {
 	return views.CommentWithAuthorView{
 		info.Message,
@@ -68,23 +60,6 @@ func MessageWithAuthorAndAttachmentListToView(messages []models.MessageWithAutho
 		res = append(res, MessageWithAuthorAndAttachmentToView(message))
 	}
 	return res
-}
-
-func MessageWithAuthorToView(message models.MessageWithAuthor) views.MessageWithAuthorView {
-	return views.MessageWithAuthorView{
-		message.Id,
-		message.Conversation,
-		views.UserView{
-			message.Uuid,
-			message.Username,
-			message.Photo,
-		},
-		message.SendAt,
-		message.GetStatus(),
-		message.ReplyTo,
-		message.Attachment,
-		message.Content,
-	}
 }
 
 func UserConversationMessagePreviewToView(message models.UserConversationMessagePreview) *views.MessageSummaryView {

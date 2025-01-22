@@ -9,7 +9,8 @@ var (
 	operandRegex = regexp.MustCompile(
 		`[a-zA-Z_]+\s(?:eq|ne|gt|ge|lt|le)\s(?:'(.*?)'|-?\d+.\d+|-?\d+)|[a-zA-Z]+\s(?:eq|ne)\s(?:null|true|false)`,
 	)
-	logicOperators = []string{"and", "or", "not"}
+	apiOperatorsRegex = regexp.MustCompile(`^(?:eq|ne|ge|gt|le|lt)$`)
+	logicOperators    = []string{"and", "or", "not"}
 )
 
 func validLogicOperator(op string) bool {

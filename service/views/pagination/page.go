@@ -15,17 +15,11 @@ type Page struct {
 }
 
 func (p Page) HasNext() bool {
-	if p.Page+1 > p.finalPage {
-		return false
-	}
-	return true
+	return p.Page+1 <= p.finalPage
 }
 
 func (p Page) HasPrevious() bool {
-	if p.Page-1 < 1 {
-		return false
-	}
-	return true
+	return p.Page-1 >= 1
 }
 
 func (p Page) pageUrl(pageNum int) string {
@@ -38,14 +32,14 @@ func (p Page) pageUrl(pageNum int) string {
 
 func (p Page) NextPageUrl() (string, error) {
 	if !p.HasNext() {
-		return "", errors.New("No next page")
+		return "", errors.New("no next page")
 	}
 	return p.pageUrl(p.Page + 1), nil
 }
 
 func (p Page) PreviousPageUrl() (string, error) {
 	if !p.HasPrevious() {
-		return "", errors.New("No previous page")
+		return "", errors.New("no previous page")
 	}
 	return p.pageUrl(p.Page - 1), nil
 }

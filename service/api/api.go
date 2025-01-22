@@ -98,7 +98,7 @@ func New(authMiddleware middlewares.AuthMiddleware, cfg Config) (Router, error) 
 
 func (r *_router) Register(route routes.Route) {
 	var handler routes.Handler
-	if route.AuthenticationRequired() == true {
+	if route.AuthenticationRequired() {
 		handler = r.authMiddleware.Wrap(route.GetHandler())
 	} else {
 		handler = route.GetHandler()

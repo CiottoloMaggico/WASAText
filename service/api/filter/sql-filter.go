@@ -26,8 +26,8 @@ func NewSqlFilter(model interface{}) (SqlFilter, error) {
 		return SqlFilter{}, NewFilterError("invalid model", "model must be a struct")
 	}
 
-	for iOp, _ := range sqlOperatorsMapping {
-		if ok, err := regexp.MatchString(`^(?:eq|ne|ge|gt|le|lt)$`, iOp); !ok || err != nil {
+	for iOp := range sqlOperatorsMapping {
+		if ok := apiOperatorsRegex.MatchString(iOp); !ok {
 			return SqlFilter{}, NewFilterError("unsupported operation", fmt.Sprintf("%s %s", iOp, " is not supported"))
 		}
 	}

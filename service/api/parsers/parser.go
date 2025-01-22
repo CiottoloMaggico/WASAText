@@ -80,7 +80,7 @@ func ParseUrlParams(ps httprouter.Params, res interface{}) error {
 		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
 			result, err = strconv.ParseUint(urlRawValue, 10, 0)
 		case reflect.Float32, reflect.Float64:
-			result, err = strconv.ParseFloat(urlRawValue, 0)
+			result, err = strconv.ParseFloat(urlRawValue, 64)
 		case reflect.Bool:
 			result, err = strconv.ParseBool(urlRawValue)
 		default:
@@ -101,7 +101,7 @@ func ParseMultipartRequestBody(body *multipart.Form, res interface{}) error {
 	underlyingType, underlyingValue := reflect.TypeOf(res).Elem(), reflect.ValueOf(res).Elem()
 
 	for i := 0; i < underlyingType.NumField(); i++ {
-		field, fieldValue := underlyingType.Field(i), reflect.ValueOf(nil)
+		field := underlyingType.Field(i)
 		pointedType, multipartFieldName := field.Type, field.Tag.Get("form")
 
 		if field.Type.Kind() == reflect.Ptr {
@@ -109,6 +109,7 @@ func ParseMultipartRequestBody(body *multipart.Form, res interface{}) error {
 		}
 
 		if val, ok := body.Value[multipartFieldName]; ok {
+			var fieldValue reflect.Value
 			switch pointedType.Kind() {
 			case reflect.String:
 				fieldValue = reflect.ValueOf(&val[0])
@@ -125,7 +126,7 @@ func ParseMultipartRequestBody(body *multipart.Form, res interface{}) error {
 				}
 				fieldValue = reflect.ValueOf(&result)
 			case reflect.Float32, reflect.Float64:
-				result, err := strconv.ParseFloat(val[0], 0)
+				result, err := strconv.ParseFloat(val[0], 64)
 				if err != nil {
 					return api_errors.InvalidMultipartBody()
 				}
@@ -144,7 +145,7 @@ func ParseMultipartRequestBody(body *multipart.Form, res interface{}) error {
 			}
 			underlyingValue.Field(i).Set(fieldValue)
 		} else if val, ok := body.File[multipartFieldName]; ok {
-			fieldValue = reflect.ValueOf(val[0])
+			fieldValue := reflect.ValueOf(val[0])
 			underlyingValue.Field(i).Set(fieldValue)
 		}
 

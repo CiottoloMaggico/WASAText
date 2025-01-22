@@ -46,6 +46,5 @@ func (rt *_router) wrap(fn routes.Handler) httprouter.Handle {
 				rt.baseLogger.WithError(err).Error("An error occurred while throwing an exception to the api")
 			}
 		}
-		return
 	}
 }
