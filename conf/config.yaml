@@ -1,0 +1,5 @@
+db:
+  filename: "./local/decaf.db"
+mediastorage:
+  urlpath: "/media/images/*filepath"
+  rootdir: "./media/images"

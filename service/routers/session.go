@@ -18,13 +18,13 @@ func (router SessionRouter) ListRoutes() []routes.Route {
 		routes.New(
 			"/session",
 			http.MethodPost,
-			router.DoLogin,
+			router.doLogin,
 			false,
 		),
 	}
 }
 
-func (router SessionRouter) DoLogin(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router SessionRouter) doLogin(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	requestBody := UsernameRequestBody{}
 	if err := parsers.ParseAndValidateRequestBody(r, &requestBody); err != nil {
 		return err

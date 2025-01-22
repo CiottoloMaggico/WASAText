@@ -3,6 +3,7 @@
 /src/
 /doc/api/
 /local
+/conf
 /linters
 /media/images/*
 /webui/node_modules

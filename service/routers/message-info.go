@@ -19,25 +19,25 @@ func (router MessageInfoRouter) ListRoutes() []routes.Route {
 		routes.New(
 			"/users/:userUUID/conversations/:conversationId/messages/:messageId/comments",
 			http.MethodGet,
-			router.GetMessageComments,
+			router.getMessageComments,
 			true,
 		),
 		routes.New(
 			"/users/:userUUID/conversations/:conversationId/messages/:messageId/comments",
 			http.MethodPut,
-			router.SetMessageComment,
+			router.setMessageComment,
 			true,
 		),
 		routes.New(
 			"/users/:userUUID/conversations/:conversationId/messages/:messageId/comments",
 			http.MethodDelete,
-			router.RemoveMessageComment,
+			router.removeMessageComment,
 			true,
 		),
 	}
 }
 
-func (router MessageInfoRouter) GetMessageComments(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router MessageInfoRouter) getMessageComments(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -56,7 +56,7 @@ func (router MessageInfoRouter) GetMessageComments(w http.ResponseWriter, r *htt
 	return views.SendJson(w, comments)
 }
 
-func (router MessageInfoRouter) SetMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router MessageInfoRouter) setMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -80,7 +80,7 @@ func (router MessageInfoRouter) SetMessageComment(w http.ResponseWriter, r *http
 	return views.SendJson(w, comment)
 }
 
-func (router MessageInfoRouter) RemoveMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router MessageInfoRouter) removeMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err

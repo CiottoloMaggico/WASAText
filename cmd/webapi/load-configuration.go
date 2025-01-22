@@ -14,7 +14,7 @@ import (
 // loadConfiguration and values from flags, environment variable or configuration file will be loaded.
 type WebAPIConfiguration struct {
 	Config struct {
-		Path string `conf:"default:/conf/config.yml"`
+		Path string `conf:"default:./conf/config.yaml"`
 	}
 	Web struct {
 		APIHost         string        `conf:"default:0.0.0.0:3000,env:CFG_WEB_API_HOST"`
@@ -25,7 +25,7 @@ type WebAPIConfiguration struct {
 	}
 	Debug bool `conf:"default:false,env:CFG_WEB_DEBUG"`
 	DB    struct {
-		Filename string `conf:"default:./local/decaf.db,env:CFG_WEB_DB_FILENAME"`
+		Filename string `conf:"default:/tmp/decaf.db,env:CFG_WEB_DB_FILENAME"`
 	}
 	MediaStorage struct {
 		UrlPath string `conf:"default:/media/images/*filepath"`
@@ -69,6 +69,5 @@ func loadConfiguration() (WebAPIConfiguration, error) {
 		}
 		_ = fp.Close()
 	}
-
 	return cfg, nil
 }

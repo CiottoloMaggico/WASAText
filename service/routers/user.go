@@ -29,31 +29,31 @@ func (router UserRouter) ListRoutes() []routes.Route {
 		routes.New(
 			"/users",
 			http.MethodGet,
-			router.GetUsers,
+			router.getUsers,
 			true,
 		),
 		routes.New(
 			"/users/:userUUID",
 			http.MethodGet,
-			router.GetUser,
+			router.getUser,
 			true,
 		),
 		routes.New(
 			"/users/:userUUID/username",
 			http.MethodPut,
-			router.SetMyUsername,
+			router.setMyUsername,
 			true,
 		),
 		routes.New(
 			"/users/:userUUID/avatar",
 			http.MethodPut,
-			router.SetMyPhoto,
+			router.setMyPhoto,
 			true,
 		),
 	}
 }
 
-func (router UserRouter) GetUsers(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router UserRouter) getUsers(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	// Get query parameters and validate them
 	paginationParams, err := parsers.ParseAndValidatePaginationParams(r.URL)
 	if err != nil {
@@ -70,7 +70,7 @@ func (router UserRouter) GetUsers(w http.ResponseWriter, r *http.Request, params
 	return views.SendJson(w, users)
 }
 
-func (router UserRouter) GetUser(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router UserRouter) getUser(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	// Get url parameters and validate them
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
@@ -87,7 +87,7 @@ func (router UserRouter) GetUser(w http.ResponseWriter, r *http.Request, params 
 	return views.SendJson(w, user)
 }
 
-func (router UserRouter) SetMyUsername(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router UserRouter) setMyUsername(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	// Get url parameters and validate them
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
@@ -115,7 +115,7 @@ func (router UserRouter) SetMyUsername(w http.ResponseWriter, r *http.Request, p
 	return views.SendJson(w, updatedUser)
 }
 
-func (router UserRouter) SetMyPhoto(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router UserRouter) setMyPhoto(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	// Get url parameters and validate them
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {

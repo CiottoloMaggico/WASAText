@@ -4,15 +4,15 @@ import (
 	"errors"
 	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/routes"
-	"github.com/ciottolomaggico/wasatext/service/controllers"
 	"github.com/ciottolomaggico/wasatext/service/database"
+	"github.com/ciottolomaggico/wasatext/service/models"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 	"strings"
 )
 
 type AuthMiddleware struct {
-	Controller controllers.UserController
+	Model models.UserModel
 }
 
 func (m AuthMiddleware) Wrap(next routes.Handler) routes.Handler {
@@ -24,11 +24,10 @@ func (m AuthMiddleware) Wrap(next routes.Handler) routes.Handler {
 			return api_errors.AuthenticationRequired()
 		}
 
-		authedUser, err := m.Controller.GetUser(token)
+		authedUser, err := m.Model.GetUserWithImage(token)
 		if errors.Is(err, database.NoResult) {
 			return api_errors.AuthenticationRequired()
 		}
-
 		context.IssuerUUID = &authedUser.Uuid
 		return next(w, r, params, context)
 	})
