@@ -51,10 +51,12 @@ func ParseAndValidatePaginationParams(url *url.URL) (pagination.PaginationParams
 	}
 
 	if err := validators.Validate.Struct(res); err != nil {
-		if errs, ok := err.(validator.ValidationErrors); ok {
+		var validationErrs validator.ValidationErrors
+		if ok := errors.As(err, &validationErrs); ok {
 			return pagination.PaginationParams{},
-				api_errors.UnprocessableContent(renderValidationErrors(errs))
+				api_errors.UnprocessableContent(renderValidationErrors(validationErrs))
 		}
+
 		return pagination.PaginationParams{}, err
 	}
 	return res, nil
@@ -155,9 +157,11 @@ func ParseAndValidateUrlParams(ps httprouter.Params, res interface{}) error {
 		return err
 	}
 	if err := validators.Validate.Struct(res); err != nil {
-		if errs, ok := err.(validator.ValidationErrors); ok {
-			return api_errors.UnprocessableContent(renderValidationErrors(errs))
+		var validationErrs validator.ValidationErrors
+		if ok := errors.As(err, &validationErrs); ok {
+			return api_errors.UnprocessableContent(renderValidationErrors(validationErrs))
 		}
+
 		return err
 	}
 	return nil
@@ -171,10 +175,13 @@ func ParseAndValidateMultipartRequestBody(req *http.Request, res interface{}) er
 	if err := ParseMultipartRequestBody(body, res); err != nil {
 		return err
 	}
+
 	if err := validators.Validate.Struct(res); err != nil {
-		if errs, ok := err.(validator.ValidationErrors); ok {
-			return api_errors.UnprocessableContent(renderValidationErrors(errs))
+		var validationErrs validator.ValidationErrors
+		if ok := errors.As(err, &validationErrs); ok {
+			return api_errors.UnprocessableContent(renderValidationErrors(validationErrs))
 		}
+
 		return err
 	}
 	return nil
@@ -185,9 +192,11 @@ func ParseAndValidateRequestBody(req *http.Request, res interface{}) error {
 		return api_errors.InvalidJson()
 	}
 	if err := validators.Validate.Struct(res); err != nil {
-		if errs, ok := err.(validator.ValidationErrors); ok {
-			return api_errors.UnprocessableContent(renderValidationErrors(errs))
+		var validationErrs validator.ValidationErrors
+		if ok := errors.As(err, &validationErrs); ok {
+			return api_errors.UnprocessableContent(renderValidationErrors(validationErrs))
 		}
+
 		return err
 	}
 	return nil
