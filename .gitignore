@@ -2,6 +2,7 @@
 /pkg/
 /src/
 /doc/api/
+/local
 /linters
 /media/images/*
 /webui/node_modules
@@ -9,6 +10,7 @@
 *.iml
 *.exe
 *.db
+decaf.db
 .DS_Store
 .env
 *.wiki.git
