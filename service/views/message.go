@@ -4,7 +4,7 @@ type MessageSummaryView struct {
 	Id         int64    `json:"id"`
 	Author     UserView `json:"author"`
 	SendAt     string   `json:"sendAt"`
-	Status 	string `json:"status"`
+	Status     string   `json:"status"`
 	Content    *string  `json:"content"`
 	Attachment *string  `json:"attachment"`
 }
