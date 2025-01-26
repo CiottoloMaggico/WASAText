@@ -36,7 +36,7 @@ func (rt *_router) wrap(fn routes.Handler) httprouter.Handle {
 
 		// Call the next handler in chain (usually, the handler function for the path)
 		if err = fn(w, r, ps, ctx); err != nil {
-			var throwableError api_errors.APIError
+			var throwableError api_errors.ErrApi
 			if ok := errors.As(err, &throwableError); !ok {
 				rt.baseLogger.WithError(err).Error("An unexpected error occurred")
 				throwableError = api_errors.NewApiError(http.StatusInternalServerError, "Internal server error")

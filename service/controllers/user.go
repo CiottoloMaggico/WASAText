@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"errors"
 	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/filter"
 	"github.com/ciottolomaggico/wasatext/service/controllers/translators"
@@ -10,7 +9,6 @@ import (
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/ciottolomaggico/wasatext/service/views/pagination"
 	"io"
-	"net/http"
 )
 
 type UserController interface {
@@ -30,20 +28,16 @@ type UserControllerImpl struct {
 
 func (controller UserControllerImpl) CreateUser(username string) (views.UserWithImageView, error) {
 	user, err := controller.Model.CreateUser(username)
-	if errors.Is(err, database.UniqueConstraint) {
-		return views.UserWithImageView{}, api_errors.NewApiError(http.StatusConflict, "an user with this username already exists")
-	} else if err != nil {
-		return views.UserWithImageView{}, err
+	if err != nil {
+		return views.UserWithImageView{}, translators.ErrDBToErrApi(err)
 	}
 
 	return controller.GetUser(user.Uuid)
 }
 
 func (controller UserControllerImpl) SetMyUsername(userUUID string, newUsername string) (views.UserWithImageView, error) {
-	if _, err := controller.Model.UpdateUsername(userUUID, newUsername); errors.Is(err, database.UniqueConstraint) {
-		return views.UserWithImageView{}, api_errors.NewApiError(http.StatusConflict, "an user with this username already exists")
-	} else if err != nil {
-		return views.UserWithImageView{}, err
+	if _, err := controller.Model.UpdateUsername(userUUID, newUsername); err != nil {
+		return views.UserWithImageView{}, translators.ErrDBToErrApi(err)
 	}
 
 	return controller.GetUser(userUUID)
@@ -64,10 +58,8 @@ func (controller UserControllerImpl) SetMyPhoto(userUUID string, photoExtension 
 
 func (controller UserControllerImpl) GetUser(userUUID string) (views.UserWithImageView, error) {
 	user, err := controller.Model.GetUserWithImage(userUUID)
-	if errors.Is(err, database.NoResult) {
-		return views.UserWithImageView{}, api_errors.ResourceNotFound()
-	} else if err != nil {
-		return views.UserWithImageView{}, err
+	if err != nil {
+		return views.UserWithImageView{}, translators.ErrDBToErrApi(err)
 	}
 
 	return translators.UserWithImageToView(*user), nil
@@ -75,10 +67,8 @@ func (controller UserControllerImpl) GetUser(userUUID string) (views.UserWithIma
 
 func (controller UserControllerImpl) GetUserByUsername(username string) (views.UserWithImageView, error) {
 	user, err := controller.Model.GetUserWithImageByUsername(username)
-	if errors.Is(err, database.NoResult) {
-		return views.UserWithImageView{}, api_errors.ResourceNotFound()
-	} else if err != nil {
-		return views.UserWithImageView{}, err
+	if err != nil {
+		return views.UserWithImageView{}, translators.ErrDBToErrApi(err)
 	}
 
 	return translators.UserWithImageToView(*user), nil
@@ -91,18 +81,19 @@ func (controller UserControllerImpl) GetUsers(paginationPs pagination.Pagination
 	}
 
 	queryParameters := database.NewQueryParameters(paginationPs.Page, paginationPs.Size, filterQuery)
+
 	usersCount, err := controller.Model.Count(queryParameters)
 	if err != nil {
 		return pagination.PaginatedView{}, err
 	}
 
-	if usersCount == 0 {
-		return pagination.ToPaginatedView(paginationPs, usersCount, translators.UserWithImageListToView(make([]models.UserWithImage, 0)))
-	}
+	users := make([]models.UserWithImage, 0)
+	if usersCount > 0 {
+		users, err = controller.Model.GetUsersWithImage(queryParameters)
+		if err != nil {
+			return pagination.PaginatedView{}, err
+		}
 
-	users, err := controller.Model.GetUsersWithImage(queryParameters)
-	if err != nil {
-		return pagination.PaginatedView{}, err
 	}
 
 	return pagination.ToPaginatedView(paginationPs, usersCount, translators.UserWithImageListToView(users))

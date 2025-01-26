@@ -16,7 +16,7 @@ func SendJson(w http.ResponseWriter, data interface{}) error {
 	return nil
 }
 
-func ThrowError(w http.ResponseWriter, err api_errors.APIError) error {
+func ThrowError(w http.ResponseWriter, err api_errors.ErrApi) error {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(err.Status)
 

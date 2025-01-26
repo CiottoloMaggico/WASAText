@@ -23,17 +23,28 @@ type MessageInfoModel interface {
 	GetMessageComments(messageId int64) ([]MessageInfoWithUser, error)
 	SetComment(user string, message int64, comment string) (*MessageInfo, error)
 	RemoveComment(user string, message int64) error
+	CountMessageComments(messageId int64) (int, error)
 }
 
 type MessageInfoModelImpl struct {
 	Db database.AppDatabase
 }
 
+func (model MessageInfoModelImpl) CountMessageComments(messageId int64) (int, error) {
+	var count int
+	query := `SELECT COUNT(*) FROM User_Message WHERE message = ? AND comment IS NOT NULL;`
+
+	if err := model.Db.QueryRow(query, messageId).Scan(&count); err != nil {
+		return 0, err
+	}
+	return count, nil
+}
+
 func (model MessageInfoModelImpl) GetMessageComments(messageId int64) ([]MessageInfoWithUser, error) {
 	query := `
 		SELECT um.message messageInfo_message, um.status messageInfo_status, um.comment messageInfo_comment, vu.*
 		FROM User_Message um, ViewUsers vu
-		WHERE message = ? AND vu.user_uuid = um.user AND comment IS NOT NULL
+		WHERE message = ? AND vu.user_uuid = um.user AND comment IS NOT NULL;
 	`
 
 	messageInfos := make([]MessageInfoWithUser, 0)

@@ -15,3 +15,13 @@ func (r *_router) Handler(routers []routers.ControllerRouter) http.Handler {
 
 	return r.router
 }
+
+//func (r *_router) Handler() http.Handler {
+//	rt.router.GET("/", rt.getHelloWorld)
+//	rt.router.GET("/context", rt.wrap(rt.getContextReply))
+//
+//	// Special routes
+//	rt.router.GET("/liveness", rt.liveness)
+//
+//	return rt.router
+//}

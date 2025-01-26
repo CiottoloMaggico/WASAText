@@ -1,9 +1,7 @@
 package controllers
 
 import (
-	"errors"
 	"github.com/ciottolomaggico/wasatext/service/controllers/translators"
-	"github.com/ciottolomaggico/wasatext/service/database"
 	"github.com/ciottolomaggico/wasatext/service/models"
 	"github.com/ciottolomaggico/wasatext/service/views"
 )
@@ -24,9 +22,17 @@ func (controller MessageInfoControllerImpl) GetComments(conversationId int64, me
 		return nil, err
 	}
 
-	comments, err := controller.Model.GetMessageComments(messageId)
-	if err != nil && !errors.Is(err, database.NoResult) {
+	commentsCount, err := controller.Model.CountMessageComments(messageId)
+	if err != nil {
 		return nil, err
+	}
+
+	comments := make([]models.MessageInfoWithUser, 0)
+	if commentsCount > 0 {
+		comments, err = controller.Model.GetMessageComments(messageId)
+		if err != nil {
+			return nil, translators.ErrDBToErrApi(err)
+		}
 	}
 
 	return translators.MessageInfoWithUserListToCommentView(comments), nil
@@ -49,5 +55,9 @@ func (controller MessageInfoControllerImpl) UncommentMessage(conversationId int6
 		return err
 	}
 
-	return controller.Model.RemoveComment(authorUUID, messageId)
+	if err := controller.Model.RemoveComment(authorUUID, messageId); err != nil {
+		return translators.ErrDBToErrApi(err)
+	}
+
+	return nil
 }

@@ -19,7 +19,7 @@ CREATE TRIGGER IF NOT EXISTS message_author_must_be_a_participant
 				   WHERE conversation = new.conversation
 					 AND user = new.author)
 BEGIN
-	SELECT RAISE(ABORT, 'TRIGGER: message author must be a participant of the conversation');
+	SELECT RAISE(ABORT, 'TRIGGER: message_author_must_be_a_participant');
 END;
 
 CREATE TRIGGER IF NOT EXISTS replied_message_within_same_conversation
@@ -34,7 +34,7 @@ CREATE TRIGGER IF NOT EXISTS replied_message_within_same_conversation
 					 AND message.conversation = new.conversation)
 BEGIN
 	SELECT RAISE(ABORT,
-				 'TRIGGER: invalid replied message id, the replied message not exist or not belongs to the conversation');
+				 'TRIGGER: replied_message_within_same_conversation');
 END;
 
 CREATE TRIGGER IF NOT EXISTS add_chat_to_users
@@ -98,7 +98,7 @@ CREATE TRIGGER IF NOT EXISTS group_participants_limit
 		 FROM User_Conversation
 		 WHERE conversation = new.conversation) >= 200
 BEGIN
-	SELECT RAISE(ABORT, 'TRIGGER: group participants limit reached (max: 200)');
+	SELECT RAISE(ABORT, 'TRIGGER: group_participants_limit');
 END;
 
 CREATE TRIGGER IF NOT EXISTS delete_empty_groups

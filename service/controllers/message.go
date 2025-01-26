@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"errors"
 	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/filter"
 	"github.com/ciottolomaggico/wasatext/service/controllers/translators"
@@ -36,23 +35,31 @@ func (controller MessageControllerImpl) SendMessage(conversationID int64, author
 	}
 
 	var attachmentUUID *string = nil
+
+	commit := true
+	defer func() {
+		if !commit {
+			controller.ImageController.DeleteImage(*attachmentUUID)
+		}
+	}()
+
 	if attachmentExt != nil && attachmentFile != nil {
 		image, err := controller.ImageController.CreateImage(*attachmentExt, attachmentFile)
 		if err != nil {
 			return views.MessageView{}, err
 		}
 		attachmentUUID = &image.Uuid
+		commit = false
 	}
 
 	message, err := controller.Model.CreateMessage(
 		conversationID, authorUUID, replyToId, content, attachmentUUID,
 	)
-	if errors.Is(err, database.TriggerConstraint) {
-		return views.MessageView{}, api_errors.UnprocessableContent(map[string]string{"repliedMessageId": "The replied message must belongs to this conversation"})
-	} else if err != nil {
-		return views.MessageView{}, err
+	if err != nil {
+		return views.MessageView{}, translators.ErrDBToErrApi(err)
 	}
 
+	commit = true
 	return controller.GetConversationMessage(conversationID, message.Id, authorUUID)
 }
 
@@ -62,11 +69,10 @@ func (controller MessageControllerImpl) GetConversationMessage(conversationID in
 	}
 
 	message, err := controller.Model.GetConversationMessage(messageId, conversationID)
-	if errors.Is(err, database.NoResult) {
-		return views.MessageView{}, api_errors.ResourceNotFound()
-	} else if err != nil {
-		return views.MessageView{}, err
+	if err != nil {
+		return views.MessageView{}, translators.ErrDBToErrApi(err)
 	}
+
 	return translators.MessageWithAuthorAndAttachmentToView(*message), err
 }
 
@@ -79,24 +85,19 @@ func (controller MessageControllerImpl) GetConversationMessages(conversationID i
 	if err != nil {
 		return pagination.PaginatedView{}, api_errors.InvalidUrlParameters()
 	}
-
 	queryParameters := database.NewQueryParameters(paginationPs.Page, paginationPs.Size, filterQuery)
+
 	messagesCount, err := controller.Model.Count(conversationID, queryParameters)
 	if err != nil {
 		return pagination.PaginatedView{}, err
 	}
 
-	if messagesCount == 0 {
-		return pagination.ToPaginatedView(
-			paginationPs,
-			messagesCount,
-			translators.MessageWithAuthorAndAttachmentListToView(make([]models.MessageWithAuthorAndAttachment, 0)),
-		)
-	}
-
-	messages, err := controller.Model.GetConversationMessages(conversationID, queryParameters)
-	if err != nil {
-		return pagination.PaginatedView{}, err
+	messages := make([]models.MessageWithAuthorAndAttachment, 0)
+	if messagesCount > 0 {
+		messages, err = controller.Model.GetConversationMessages(conversationID, queryParameters)
+		if err != nil {
+			return pagination.PaginatedView{}, err
+		}
 	}
 
 	return pagination.ToPaginatedView(paginationPs, messagesCount, translators.MessageWithAuthorAndAttachmentListToView(messages))

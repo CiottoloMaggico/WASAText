@@ -1,10 +1,8 @@
 package middlewares
 
 import (
-	"errors"
 	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/routes"
-	"github.com/ciottolomaggico/wasatext/service/database"
 	"github.com/ciottolomaggico/wasatext/service/models"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
@@ -25,9 +23,12 @@ func (m AuthMiddleware) Wrap(next routes.Handler) routes.Handler {
 		}
 
 		authedUser, err := m.Model.GetUserWithImage(token)
-		if errors.Is(err, database.NoResult) {
-			return api_errors.AuthenticationRequired()
+		if err != nil {
+			return err
 		}
+		//if errors.Is(err, database.NoResult) {
+		//	return api_errors.AuthenticationRequired()
+		//}
 		context.IssuerUUID = &authedUser.Uuid
 		return next(w, r, params, context)
 	})

@@ -5,17 +5,17 @@ import (
 	"strconv"
 )
 
-type APIError struct {
+type ErrApi struct {
 	Status int         `json:"status"`
 	Detail interface{} `json:"detail"`
 }
 
-func (e APIError) Error() string {
+func (e ErrApi) Error() string {
 	return strconv.Itoa(e.Status)
 }
 
-func NewApiError(statusCode int, detail interface{}) APIError {
-	return APIError{
+func NewApiError(statusCode int, detail interface{}) ErrApi {
+	return ErrApi{
 		statusCode,
 		detail,
 	}
