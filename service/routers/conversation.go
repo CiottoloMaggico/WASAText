@@ -42,43 +42,43 @@ func (router ConversationRouter) ListRoutes() []routes.Route {
 		routes.New(
 			"/users/:userUUID/groups",
 			http.MethodPost,
-			router.createGroup,
+			router.CreateGroup,
 			true,
 		),
 		routes.New(
 			"/users/:userUUID/groups/:conversationId",
 			http.MethodPut,
-			router.addToGroup,
+			router.AddToGroup,
 			true,
 		),
 		routes.New(
 			"/users/:userUUID/groups/:conversationId",
 			http.MethodDelete,
-			router.leaveGroup,
+			router.LeaveGroup,
 			true,
 		),
 		routes.New(
 			"/users/:userUUID/groups/:conversationId/name",
 			http.MethodPut,
-			router.setGroupName,
+			router.SetGroupName,
 			true,
 		),
 		routes.New(
 			"/users/:userUUID/groups/:conversationId/photo",
 			http.MethodPut,
-			router.setGroupPhoto,
+			router.SetGroupPhoto,
 			true,
 		),
 		routes.New(
 			"/users/:userUUID/chats",
 			http.MethodPost,
-			router.createChat,
+			router.CreateChat,
 			true,
 		),
 	}
 }
 
-func (router ConversationRouter) createGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -115,7 +115,7 @@ func (router ConversationRouter) createGroup(w http.ResponseWriter, r *http.Requ
 	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) addToGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router ConversationRouter) AddToGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -139,7 +139,7 @@ func (router ConversationRouter) addToGroup(w http.ResponseWriter, r *http.Reque
 	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) leaveGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router ConversationRouter) LeaveGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -158,7 +158,7 @@ func (router ConversationRouter) leaveGroup(w http.ResponseWriter, r *http.Reque
 	return nil
 }
 
-func (router ConversationRouter) setGroupName(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router ConversationRouter) SetGroupName(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -182,7 +182,7 @@ func (router ConversationRouter) setGroupName(w http.ResponseWriter, r *http.Req
 	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) setGroupPhoto(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router ConversationRouter) SetGroupPhoto(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -211,7 +211,7 @@ func (router ConversationRouter) setGroupPhoto(w http.ResponseWriter, r *http.Re
 	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) createChat(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router ConversationRouter) CreateChat(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err

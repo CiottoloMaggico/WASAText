@@ -114,13 +114,12 @@ func run() error {
 		Logger:          logger,
 		StaticFilesUrl:  cfg.MediaStorage.UrlPath,
 		StaticFilesPath: cfg.MediaStorage.RootDir,
-	})
+	}, app)
 	if err != nil {
 		logger.WithError(err).Error("error creating the API server instance")
 		return fmt.Errorf("creating the API server instance: %w", err)
 	}
-	router := apirouter.Handler(app.StartRouters())
-
+	router := apirouter.Handler()
 	router, err = registerWebUI(router)
 	if err != nil {
 		logger.WithError(err).Error("error registering web UI handler")

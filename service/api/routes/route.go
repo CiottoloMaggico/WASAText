@@ -8,33 +8,33 @@ type Route interface {
 }
 
 type RouteImpl struct {
-	path           string
-	method         string
-	authentication bool
-	handler        Handler
+	Path           string
+	Method         string
+	Authentication bool
+	Handler        Handler
 }
 
 func (r RouteImpl) GetPath() string {
-	return r.path
+	return r.Path
 }
 
 func (r RouteImpl) GetMethod() string {
-	return r.method
+	return r.Method
 }
 
 func (r RouteImpl) AuthenticationRequired() bool {
-	return r.authentication
+	return r.Authentication
 }
 
 func (r RouteImpl) GetHandler() Handler {
-	return r.handler
+	return r.Handler
 }
 
 func New(path string, method string, handler Handler, authRequired bool) Route {
 	return RouteImpl{
-		path:           path,
-		method:         method,
-		authentication: authRequired,
-		handler:        handler,
+		path,
+		method,
+		authRequired,
+		handler,
 	}
 }

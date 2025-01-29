@@ -19,19 +19,19 @@ func (router UserConversationRouter) ListRoutes() []routes.Route {
 		routes.New(
 			"/users/:userUUID/conversations",
 			http.MethodGet,
-			router.getMyConversations,
+			router.GetMyConversations,
 			true,
 		),
 		routes.New(
 			"/users/:userUUID/conversations/:conversationId",
 			http.MethodGet,
-			router.getConversation,
+			router.GetConversation,
 			true,
 		),
 	}
 }
 
-func (router UserConversationRouter) getMyConversations(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router UserConversationRouter) GetMyConversations(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -55,7 +55,7 @@ func (router UserConversationRouter) getMyConversations(w http.ResponseWriter, r
 	return views.SendJson(w, conversations)
 }
 
-func (router UserConversationRouter) getConversation(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router UserConversationRouter) GetConversation(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err

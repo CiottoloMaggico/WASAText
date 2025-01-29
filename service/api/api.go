@@ -39,8 +39,8 @@ package api
 import (
 	"errors"
 	"github.com/ciottolomaggico/wasatext/service/api/routes"
+	"github.com/ciottolomaggico/wasatext/service/app"
 	"github.com/ciottolomaggico/wasatext/service/middlewares"
-	"github.com/ciottolomaggico/wasatext/service/routers"
 	"github.com/julienschmidt/httprouter"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -58,7 +58,8 @@ type Config struct {
 // Router is the package API interface representing an API handler builder
 type Router interface {
 	// Handler returns an HTTP handler for APIs provided in this package
-	Handler(routers []routers.ControllerRouter) http.Handler
+	//Handler(routers []routers.ControllerRouter) http.Handler
+	Handler() http.Handler
 
 	// Register a new route in the router
 	Register(route routes.Route)
@@ -71,10 +72,11 @@ type _router struct {
 	router         *httprouter.Router
 	authMiddleware middlewares.AuthMiddleware
 	baseLogger     logrus.FieldLogger
+	app            app.Application
 }
 
 // New returns a new Router instance
-func New(authMiddleware middlewares.AuthMiddleware, cfg Config) (Router, error) {
+func New(authMiddleware middlewares.AuthMiddleware, cfg Config, app app.Application) (Router, error) {
 	// Check if the configuration is correct
 	if cfg.Logger == nil {
 		return nil, errors.New("logger is required")
@@ -90,19 +92,21 @@ func New(authMiddleware middlewares.AuthMiddleware, cfg Config) (Router, error) 
 	router.ServeFiles(cfg.StaticFilesUrl, http.Dir(cfg.StaticFilesPath))
 
 	return &_router{
-		router:         router,
-		authMiddleware: authMiddleware,
-		baseLogger:     cfg.Logger,
+		router,
+		authMiddleware,
+		cfg.Logger,
+		app,
 	}, nil
 }
 
 func (r *_router) Register(route routes.Route) {
-	var handler routes.Handler
+	var handler httprouter.Handle
+
 	if route.AuthenticationRequired() {
-		handler = r.authMiddleware.Wrap(route.GetHandler())
+		handler = r.wrap(r.authMiddleware.Wrap(route.GetHandler()))
 	} else {
-		handler = route.GetHandler()
+		handler = r.wrap(route.GetHandler())
 	}
 
-	r.router.Handle(route.GetMethod(), route.GetPath(), r.wrap(handler))
+	r.router.Handle(route.GetMethod(), route.GetPath(), handler)
 }
