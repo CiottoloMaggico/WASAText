@@ -48,7 +48,7 @@ func (controller UserConversationControllerImpl) GetUserConversations(requestIss
 func (controller UserConversationControllerImpl) GetUserConversation(requestIssuerUUID string, conversationId int64) (views.UserConversationView, error) {
 	conversation, err := controller.Model.GetUserConversation(requestIssuerUUID, conversationId)
 	if err != nil {
-		return views.UserConversationView{}, translators.ErrDBToErrApi(err)
+		return views.UserConversationView{}, translators.DBErrorToApiError(err)
 	}
 
 	participants, err := controller.ConversationModel.GetConversationParticipants(conversationId)

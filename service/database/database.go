@@ -53,7 +53,7 @@ type appdbimpl struct {
 func (db *appdbimpl) StartTx() (AppTransaction, error) {
 	tx, err := db.DB.Beginx()
 	if err != nil {
-		return nil, DBError(err)
+		return nil, HandleDBError(err)
 	}
 	return &apptransactionimpl{tx}, nil
 }
@@ -69,7 +69,7 @@ func (db *appdbimpl) QueryStructRow(dest interface{}, query string, args ...inte
 	}
 
 	if err := db.QueryRowx(query, args...).StructScan(dest); err != nil {
-		return DBError(err)
+		return HandleDBError(err)
 	}
 
 	return nil
@@ -87,11 +87,11 @@ func (db *appdbimpl) QueryStruct(dest interface{}, query string, args ...interfa
 
 	rows, err := db.Queryx(query, args...)
 	if err != nil {
-		return DBError(err)
+		return HandleDBError(err)
 	}
 	defer func(rows *sqlx.Rows) error {
 		if err := rows.Close(); err != nil {
-			return DBError(err)
+			return HandleDBError(err)
 		}
 		return nil
 	}(rows)
@@ -102,14 +102,14 @@ func (db *appdbimpl) QueryStruct(dest interface{}, query string, args ...interfa
 		newRow := reflect.New(destType)
 
 		if err := rows.StructScan(newRow.Interface()); err != nil {
-			return DBError(err)
+			return HandleDBError(err)
 		}
 
 		destValue.Set(reflect.Append(destValue, newRow.Elem()))
 	}
 
 	if err := rows.Err(); err != nil {
-		return DBError(err)
+		return HandleDBError(err)
 	}
 
 	return nil

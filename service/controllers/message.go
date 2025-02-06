@@ -39,7 +39,7 @@ func (controller MessageControllerImpl) SendMessage(conversationID int64, author
 	commit := true
 	defer func() {
 		if !commit {
-			controller.ImageController.DeleteImage(*attachmentUUID)
+			_ = controller.ImageController.DeleteImage(*attachmentUUID)
 		}
 	}()
 
@@ -56,7 +56,7 @@ func (controller MessageControllerImpl) SendMessage(conversationID int64, author
 		conversationID, authorUUID, replyToId, content, attachmentUUID,
 	)
 	if err != nil {
-		return views.MessageView{}, translators.ErrDBToErrApi(err)
+		return views.MessageView{}, translators.DBErrorToApiError(err)
 	}
 
 	commit = true
@@ -70,7 +70,7 @@ func (controller MessageControllerImpl) GetConversationMessage(conversationID in
 
 	message, err := controller.Model.GetConversationMessage(messageId, conversationID)
 	if err != nil {
-		return views.MessageView{}, translators.ErrDBToErrApi(err)
+		return views.MessageView{}, translators.DBErrorToApiError(err)
 	}
 
 	return translators.MessageWithAuthorAndAttachmentToView(*message), err

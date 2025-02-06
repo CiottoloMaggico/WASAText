@@ -94,7 +94,7 @@
         $ref: "../responses/_index.yaml#/429"
       default:
         $ref: "../responses/_index.yaml#/default"
-/user/{user_uuid}/username:
+/users/{user_uuid}/username:
   parameters:
     - $ref: "../parameters/_index.yaml#/userUUID"
   put:
@@ -129,7 +129,7 @@
       default:
         $ref: "../responses/_index.yaml#/default"
 
-/user/{user_uuid}/avatar:
+/users/{user_uuid}/avatar:
   parameters:
     - $ref: "../parameters/_index.yaml#/userUUID"
   put:

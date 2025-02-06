@@ -31,7 +31,7 @@ func (controller MessageInfoControllerImpl) GetComments(conversationId int64, me
 	if commentsCount > 0 {
 		comments, err = controller.Model.GetMessageComments(messageId)
 		if err != nil {
-			return nil, translators.ErrDBToErrApi(err)
+			return nil, translators.DBErrorToApiError(err)
 		}
 	}
 
@@ -56,7 +56,7 @@ func (controller MessageInfoControllerImpl) UncommentMessage(conversationId int6
 	}
 
 	if err := controller.Model.RemoveComment(authorUUID, messageId); err != nil {
-		return translators.ErrDBToErrApi(err)
+		return translators.DBErrorToApiError(err)
 	}
 
 	return nil

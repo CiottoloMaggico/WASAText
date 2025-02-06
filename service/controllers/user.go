@@ -29,7 +29,7 @@ type UserControllerImpl struct {
 func (controller UserControllerImpl) CreateUser(username string) (views.UserWithImageView, error) {
 	user, err := controller.Model.CreateUser(username)
 	if err != nil {
-		return views.UserWithImageView{}, translators.ErrDBToErrApi(err)
+		return views.UserWithImageView{}, translators.DBErrorToApiError(err)
 	}
 
 	return controller.GetUser(user.Uuid)
@@ -37,7 +37,7 @@ func (controller UserControllerImpl) CreateUser(username string) (views.UserWith
 
 func (controller UserControllerImpl) SetMyUsername(userUUID string, newUsername string) (views.UserWithImageView, error) {
 	if _, err := controller.Model.UpdateUsername(userUUID, newUsername); err != nil {
-		return views.UserWithImageView{}, translators.ErrDBToErrApi(err)
+		return views.UserWithImageView{}, translators.DBErrorToApiError(err)
 	}
 
 	return controller.GetUser(userUUID)
@@ -59,7 +59,7 @@ func (controller UserControllerImpl) SetMyPhoto(userUUID string, photoExtension 
 func (controller UserControllerImpl) GetUser(userUUID string) (views.UserWithImageView, error) {
 	user, err := controller.Model.GetUserWithImage(userUUID)
 	if err != nil {
-		return views.UserWithImageView{}, translators.ErrDBToErrApi(err)
+		return views.UserWithImageView{}, translators.DBErrorToApiError(err)
 	}
 
 	return translators.UserWithImageToView(*user), nil
@@ -68,7 +68,7 @@ func (controller UserControllerImpl) GetUser(userUUID string) (views.UserWithIma
 func (controller UserControllerImpl) GetUserByUsername(username string) (views.UserWithImageView, error) {
 	user, err := controller.Model.GetUserWithImageByUsername(username)
 	if err != nil {
-		return views.UserWithImageView{}, translators.ErrDBToErrApi(err)
+		return views.UserWithImageView{}, translators.DBErrorToApiError(err)
 	}
 
 	return translators.UserWithImageToView(*user), nil

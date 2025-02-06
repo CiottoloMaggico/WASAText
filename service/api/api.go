@@ -38,7 +38,6 @@ package api
 
 import (
 	"errors"
-	"github.com/ciottolomaggico/wasatext/service/api/routes"
 	"github.com/ciottolomaggico/wasatext/service/app"
 	"github.com/ciottolomaggico/wasatext/service/middlewares"
 	"github.com/julienschmidt/httprouter"
@@ -60,9 +59,6 @@ type Router interface {
 	// Handler returns an HTTP handler for APIs provided in this package
 	//Handler(routers []routers.ControllerRouter) http.Handler
 	Handler() http.Handler
-
-	// Register a new route in the router
-	Register(route routes.Route)
 
 	// Close terminates any resource used in the package
 	Close() error
@@ -97,16 +93,4 @@ func New(authMiddleware middlewares.AuthMiddleware, cfg Config, app app.Applicat
 		cfg.Logger,
 		app,
 	}, nil
-}
-
-func (r *_router) Register(route routes.Route) {
-	var handler httprouter.Handle
-
-	if route.AuthenticationRequired() {
-		handler = r.wrap(r.authMiddleware.Wrap(route.GetHandler()))
-	} else {
-		handler = r.wrap(route.GetHandler())
-	}
-
-	r.router.Handle(route.GetMethod(), route.GetPath(), handler)
 }

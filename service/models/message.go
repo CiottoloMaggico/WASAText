@@ -136,7 +136,7 @@ func (model MessageModelImpl) DeleteMessage(id int64) error {
 		`DELETE FROM Message WHERE id = ?;`,
 		id,
 	); err != nil {
-		return database.DBError(err)
+		return database.HandleDBError(err)
 	}
 	return nil
 }
@@ -172,7 +172,7 @@ func (model MessageModelImpl) GetConversationMessages(conversationId int64, para
 func (model MessageModelImpl) SetMessagesAsDelivered(user string) error {
 	query := `UPDATE User_Message SET status = 2 WHERE user = ? AND status = 1;`
 	if _, err := model.Db.Exec(query, user); err != nil {
-		return database.DBError(err)
+		return database.HandleDBError(err)
 	}
 	return nil
 }
@@ -186,7 +186,7 @@ func (model MessageModelImpl) SetConversationMessagesAsSeen(conversationId int64
 				  	AND um.message = m.id AND um.status < 3;
 	`
 	if _, err := model.Db.Exec(query, user, conversationId); err != nil {
-		return database.DBError(err)
+		return database.HandleDBError(err)
 	}
 	return nil
 }

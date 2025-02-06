@@ -175,7 +175,7 @@ func (model ConversationModelImpl) IsParticipant(conversation int64, userUUID st
 
 	var exists bool
 	if err := model.Db.QueryRow(query, userUUID, conversation).Scan(&exists); err != nil {
-		return false, database.DBError(err)
+		return false, database.HandleDBError(err)
 	}
 
 	return exists, nil
@@ -186,7 +186,7 @@ func (model ConversationModelImpl) AddGroupParticipant(user string, conversation
 		`INSERT INTO User_Conversation VALUES (?, ?);`,
 		user, conversation,
 	); err != nil {
-		return database.DBError(err)
+		return database.HandleDBError(err)
 	}
 
 	return nil
@@ -201,20 +201,20 @@ func (model ConversationModelImpl) AddGroupParticipants(users []string, conversa
 	query := `INSERT INTO User_Conversation VALUES (?, ?);`
 	preparedQuery, err := tx.Prepare(query)
 	if err != nil {
-		return database.DBError(err)
+		return database.HandleDBError(err)
 	}
 
 	for _, user := range users {
 		if _, err := preparedQuery.Exec(user, conversation); err != nil {
 			if err := tx.Rollback(); err != nil {
-				return database.DBError(err)
+				return database.HandleDBError(err)
 			}
-			return database.DBError(err)
+			return database.HandleDBError(err)
 		}
 	}
 
 	if err := tx.Commit(); err != nil {
-		return database.DBError(err)
+		return database.HandleDBError(err)
 	}
 	return nil
 }
@@ -224,7 +224,7 @@ func (model ConversationModelImpl) RemoveGroupParticipant(user string, conversat
 		`DELETE FROM User_Conversation WHERE user = ? AND conversation = ?;`,
 		user, conversation,
 	); err != nil {
-		return database.DBError(err)
+		return database.HandleDBError(err)
 	}
 	return nil
 }

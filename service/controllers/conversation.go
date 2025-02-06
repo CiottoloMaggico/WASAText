@@ -39,7 +39,7 @@ func (controller ConversationControllerImpl) CreateGroup(groupName string, autho
 	commit := true
 	defer func() {
 		if !commit {
-			controller.ImageController.DeleteImage(*photoUUID)
+			_ = controller.ImageController.DeleteImage(*photoUUID)
 		}
 	}()
 
@@ -81,7 +81,7 @@ func (controller ConversationControllerImpl) AddToGroup(groupId int64, requestIs
 	}
 
 	if err := controller.Model.AddGroupParticipants(newParticipants, groupId); err != nil {
-		return views.UserConversationView{}, translators.ErrDBToErrApi(err)
+		return views.UserConversationView{}, translators.DBErrorToApiError(err)
 	}
 
 	return controller.UserConversationController.GetUserConversation(requestIssuerUUID, groupId)
@@ -116,7 +116,7 @@ func (controller ConversationControllerImpl) ChangeGroupPhoto(groupId int64, req
 	commit := false
 	defer func() {
 		if !commit {
-			controller.ImageController.DeleteImage(image.Uuid)
+			_ = controller.ImageController.DeleteImage(image.Uuid)
 		}
 	}()
 
@@ -132,7 +132,7 @@ func (controller ConversationControllerImpl) ChangeGroupPhoto(groupId int64, req
 func (controller ConversationControllerImpl) CreateChat(authorUUID string, recipientUUID string) (views.UserConversationView, error) {
 	chat, err := controller.Model.CreateChat(authorUUID, recipientUUID)
 	if err != nil {
-		return views.UserConversationView{}, translators.ErrDBToErrApi(err)
+		return views.UserConversationView{}, translators.DBErrorToApiError(err)
 	}
 
 	return controller.UserConversationController.GetUserConversation(authorUUID, chat.Id)

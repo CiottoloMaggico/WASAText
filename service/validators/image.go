@@ -22,7 +22,8 @@ func ImageContentValidator(fileSize int64, image multipart.File) (string, error)
 		})
 	}
 	// Check if file content is actually an image
-	buffer := make([]byte, 512) // To detect content type are read at most 512 bytes from the file
+	// To detect content type are read at most 512 bytes from the file
+	buffer := make([]byte, 512)
 	if _, err := io.ReadFull(image, buffer); err != nil {
 		return "", err
 	}

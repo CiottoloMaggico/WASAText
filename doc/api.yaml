@@ -12,7 +12,7 @@ info:
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
   version: 1.0.0
 servers:
-  - url: 'http://127.0.0.1:3000'
+  - url: 'https://api.wasatext.com/api/v1'
     description: Production server
 tags:
   - name: conversations
@@ -124,7 +124,7 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
-  '/user/{user_uuid}/username':
+  '/users/{user_uuid}/username':
     parameters:
       - $ref: '#/components/parameters/userUUID'
     put:
@@ -158,7 +158,7 @@ paths:
           $ref: '#/components/responses/429'
         default:
           $ref: '#/components/responses/default'
-  '/user/{user_uuid}/avatar':
+  '/users/{user_uuid}/avatar':
     parameters:
       - $ref: '#/components/parameters/userUUID'
     put:

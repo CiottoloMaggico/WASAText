@@ -17,7 +17,7 @@ async function login() {
 </script>
 
 <template>
-	<main class="login-page">
+	<div class="login-page">
 		<div class="login-box">
 			<div class="login-box-content">
 				<h1 class="login-box-title mb-4">Login</h1>
@@ -31,7 +31,7 @@ async function login() {
 				</form>
 			</div>
 		</div>
-	</main>
+	</div>
 </template>
 
 <style scoped>
