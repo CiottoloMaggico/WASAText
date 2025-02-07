@@ -58,6 +58,7 @@ type Router interface {
 	// Handler returns an HTTP handler for APIs provided in this package
 	// Handler(routers []routers.ControllerRouter) http.Handler
 	Handler() http.Handler
+	Handle(endpointId string) httprouter.Handle
 
 	// Close terminates any resource used in the package
 	Close() error
