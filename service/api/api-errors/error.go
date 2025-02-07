@@ -45,10 +45,6 @@ func Forbidden() error {
 	return NewApiError(http.StatusForbidden, "You are not allowed to access this resource")
 }
 
-func Conflict(errors map[string]string) error {
-	return NewApiError(http.StatusConflict, errors)
-}
-
 func ResourceNotFound() error {
 	return NewApiError(http.StatusNotFound, "Resource not found")
 }

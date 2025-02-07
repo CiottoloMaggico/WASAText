@@ -1,4 +1,4 @@
-package routes
+package requests
 
 import (
 	"github.com/julienschmidt/httprouter"

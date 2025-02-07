@@ -3,7 +3,7 @@ package middlewares
 import (
 	"errors"
 	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
-	"github.com/ciottolomaggico/wasatext/service/api/routes"
+	"github.com/ciottolomaggico/wasatext/service/api/requests"
 	"github.com/ciottolomaggico/wasatext/service/database"
 	"github.com/ciottolomaggico/wasatext/service/models"
 	"github.com/julienschmidt/httprouter"
@@ -15,8 +15,8 @@ type AuthMiddleware struct {
 	Model models.UserModel
 }
 
-func (m AuthMiddleware) Wrap(next routes.Handler) routes.Handler {
-	return routes.Handler(func(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (m AuthMiddleware) Wrap(next requests.Handler) requests.Handler {
+	return requests.Handler(func(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 		noResult := database.ErrNoResult
 		authHeader := strings.ToLower(r.Header.Get("Authorization"))
 		token := strings.TrimPrefix(authHeader, "bearer ")

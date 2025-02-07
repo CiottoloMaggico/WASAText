@@ -39,7 +39,6 @@ package api
 import (
 	"errors"
 	"github.com/ciottolomaggico/wasatext/service/app"
-	"github.com/ciottolomaggico/wasatext/service/middlewares"
 	"github.com/julienschmidt/httprouter"
 	"github.com/sirupsen/logrus"
 	"net/http"
@@ -57,7 +56,7 @@ type Config struct {
 // Router is the package API interface representing an API handler builder
 type Router interface {
 	// Handler returns an HTTP handler for APIs provided in this package
-	//Handler(routers []routers.ControllerRouter) http.Handler
+	// Handler(routers []routers.ControllerRouter) http.Handler
 	Handler() http.Handler
 
 	// Close terminates any resource used in the package
@@ -65,14 +64,13 @@ type Router interface {
 }
 
 type _router struct {
-	router         *httprouter.Router
-	authMiddleware middlewares.AuthMiddleware
-	baseLogger     logrus.FieldLogger
-	app            app.Application
+	router     *httprouter.Router
+	baseLogger logrus.FieldLogger
+	app        app.Application
 }
 
 // New returns a new Router instance
-func New(authMiddleware middlewares.AuthMiddleware, cfg Config, app app.Application) (Router, error) {
+func New(cfg Config, app app.Application) (Router, error) {
 	// Check if the configuration is correct
 	if cfg.Logger == nil {
 		return nil, errors.New("logger is required")
@@ -89,7 +87,6 @@ func New(authMiddleware middlewares.AuthMiddleware, cfg Config, app app.Applicat
 
 	return &_router{
 		router,
-		authMiddleware,
 		cfg.Logger,
 		app,
 	}, nil

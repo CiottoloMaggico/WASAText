@@ -14,8 +14,3 @@ func Now() time.Time {
 	}
 	return time.Now()
 }
-
-// Since returns the time passed since the parameter tm.
-func Since(tm time.Time) time.Duration {
-	return Now().Sub(tm)
-}

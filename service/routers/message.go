@@ -3,7 +3,8 @@ package routers
 import (
 	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/parsers"
-	"github.com/ciottolomaggico/wasatext/service/api/routes"
+	"github.com/ciottolomaggico/wasatext/service/api/requests"
+	"github.com/ciottolomaggico/wasatext/service/app/routes"
 	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/julienschmidt/httprouter"
@@ -28,48 +29,58 @@ type ForwardRequestBody struct {
 }
 
 type MessageRouter struct {
+	Router
 	Controller controllers.MessageController
 }
 
-func (router MessageRouter) ListRoutes() []routes.Route {
-	return []routes.Route{
-		routes.New(
+func NewMessageRouter(routeFactory routes.RouteFactory, controller controllers.MessageController) ControllerRouter {
+	result := &MessageRouter{
+		NewBaseRouter(routeFactory),
+		controller,
+	}
+	result.initializeRoutes()
+	return *result
+}
+
+func (router *MessageRouter) initializeRoutes() {
+	router.routes = map[string]routes.Route{
+		"setDelivered": router.routeFactory.New(
 			"/users/:userUUID/conversations",
 			http.MethodPut,
 			router.SetDelivered,
 			true,
 		),
-		routes.New(
+		"sendMessage": router.routeFactory.New(
 			"/users/:userUUID/conversations/:conversationId/messages",
 			http.MethodPost,
 			router.SendMessage,
 			true,
 		),
-		routes.New(
+		"setSeen": router.routeFactory.New(
 			"/users/:userUUID/conversations/:conversationId/messages",
 			http.MethodPut,
 			router.SetSeen,
 			true,
 		),
-		routes.New(
+		"getConversationMessages": router.routeFactory.New(
 			"/users/:userUUID/conversations/:conversationId/messages",
 			http.MethodGet,
 			router.GetConversationMessages,
 			true,
 		),
-		routes.New(
+		"messageDetail": router.routeFactory.New(
 			"/users/:userUUID/conversations/:conversationId/messages/:messageId",
 			http.MethodGet,
 			router.GetConversationMessageDetail,
 			true,
 		),
-		routes.New(
+		"deleteMessage": router.routeFactory.New(
 			"/users/:userUUID/conversations/:conversationId/messages/:messageId",
 			http.MethodDelete,
 			router.DeleteConversationMessage,
 			true,
 		),
-		routes.New(
+		"forwardMessage": router.routeFactory.New(
 			"/users/:userUUID/conversations/:conversationId/messages/:messageId/forward",
 			http.MethodPost,
 			router.ForwardMessage,
@@ -78,7 +89,7 @@ func (router MessageRouter) ListRoutes() []routes.Route {
 	}
 }
 
-func (router MessageRouter) SendMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router MessageRouter) SendMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -116,7 +127,7 @@ func (router MessageRouter) SendMessage(w http.ResponseWriter, r *http.Request, 
 	return views.SendJson(w, message)
 }
 
-func (router MessageRouter) SetDelivered(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router MessageRouter) SetDelivered(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -140,7 +151,7 @@ func (router MessageRouter) SetDelivered(w http.ResponseWriter, r *http.Request,
 	return views.SendJson(w, conversations)
 }
 
-func (router MessageRouter) SetSeen(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router MessageRouter) SetSeen(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -164,7 +175,7 @@ func (router MessageRouter) SetSeen(w http.ResponseWriter, r *http.Request, para
 	return views.SendJson(w, messages)
 }
 
-func (router MessageRouter) GetConversationMessages(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router MessageRouter) GetConversationMessages(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -188,7 +199,7 @@ func (router MessageRouter) GetConversationMessages(w http.ResponseWriter, r *ht
 	return views.SendJson(w, messages)
 }
 
-func (router MessageRouter) GetConversationMessageDetail(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router MessageRouter) GetConversationMessageDetail(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -207,7 +218,7 @@ func (router MessageRouter) GetConversationMessageDetail(w http.ResponseWriter, 
 	return views.SendJson(w, message)
 }
 
-func (router MessageRouter) DeleteConversationMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router MessageRouter) DeleteConversationMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -226,7 +237,7 @@ func (router MessageRouter) DeleteConversationMessage(w http.ResponseWriter, r *
 	return nil
 }
 
-func (router MessageRouter) ForwardMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router MessageRouter) ForwardMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err

@@ -1,77 +1,31 @@
 package app
 
 import (
+	"github.com/ciottolomaggico/wasatext/service/api/requests"
+	"github.com/ciottolomaggico/wasatext/service/app/routes"
 	"github.com/ciottolomaggico/wasatext/service/routers"
 )
 
-func (app *App) startRouters() map[string]interface{} {
-	return map[string]interface{}{
-		"user":             app.createUserRouter(),
-		"session":          app.createSessionRouter(),
-		"conversation":     app.createConversationRouter(),
-		"userConversation": app.createUserConversationRouter(),
-		"message":          app.createMessageRouter(),
-		"messageInfo":      app.createMessageInfoRouter(),
+func (app *App) startRouters() map[string]routers.ControllerRouter {
+	routeFactory := routes.NewRouteFactory(app.CreateAuthMiddleware())
+
+	return map[string]routers.ControllerRouter{
+		"user":             routers.NewUserRouter(routeFactory, app.createUserController()),
+		"session":          routers.NewSessionRouter(routeFactory, app.createSessionController()),
+		"conversation":     routers.NewConversationRouter(routeFactory, app.createConversationController()),
+		"userConversation": routers.NewUserConversationRouter(routeFactory, app.createUserConversationController()),
+		"message":          routers.NewMessageRouter(routeFactory, app.createMessageController()),
+		"messageInfo":      routers.NewMessageInfoRouter(routeFactory, app.createMessageInfoController()),
 	}
 }
 
-func (app *App) createUserRouter() routers.UserRouter {
-	return routers.UserRouter{
-		app.createUserController(),
+func (app *App) GetEndpointHandler(endpointId string) requests.Handler {
+	for _, router := range app.routers {
+		if route := router.GetRoute(endpointId); route != nil {
+			return route.GetHandler()
+		}
 	}
-}
 
-func (app *App) createConversationRouter() routers.ConversationRouter {
-	return routers.ConversationRouter{
-		app.createConversationController(),
-	}
-}
-
-func (app *App) createUserConversationRouter() routers.UserConversationRouter {
-	return routers.UserConversationRouter{
-		app.createUserConversationController(),
-	}
-}
-
-func (app *App) createMessageRouter() routers.MessageRouter {
-	return routers.MessageRouter{
-		app.createMessageController(),
-	}
-}
-
-func (app *App) createMessageInfoRouter() routers.MessageInfoRouter {
-	return routers.MessageInfoRouter{
-		app.createMessageInfoController(),
-	}
-}
-
-func (app *App) createSessionRouter() routers.SessionRouter {
-	return routers.SessionRouter{
-		app.createSessionController(),
-	}
-}
-
-func (app *App) GetUserRouter() routers.UserRouter {
-	return app.routers["user"].(routers.UserRouter)
-}
-
-func (app *App) GetSessionRouter() routers.SessionRouter {
-	router := app.routers["session"].(routers.SessionRouter)
-	return router
-}
-
-func (app *App) GetConversationRouter() routers.ConversationRouter {
-	return app.routers["conversation"].(routers.ConversationRouter)
-}
-
-func (app *App) GetUserConversationRouter() routers.UserConversationRouter {
-	return app.routers["userConversation"].(routers.UserConversationRouter)
-}
-
-func (app *App) GetMessageRouter() routers.MessageRouter {
-	return app.routers["message"].(routers.MessageRouter)
-}
-
-func (app *App) GetMessageInfoRouter() routers.MessageInfoRouter {
-	return app.routers["messageInfo"].(routers.MessageInfoRouter)
+	app.logger.Errorf("Endpoint not found: %s", endpointId)
+	return nil
 }

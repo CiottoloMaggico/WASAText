@@ -110,7 +110,7 @@ func run() error {
 	serverErrors := make(chan error, 1)
 
 	// Create the API router
-	apirouter, err := api.New(app.CreateAuthMiddleware(), api.Config{
+	apirouter, err := api.New(api.Config{
 		Logger:          logger,
 		StaticFilesUrl:  cfg.MediaStorage.UrlPath,
 		StaticFilesPath: cfg.MediaStorage.RootDir,

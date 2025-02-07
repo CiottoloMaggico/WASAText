@@ -3,7 +3,7 @@ package api
 import (
 	"errors"
 	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
-	"github.com/ciottolomaggico/wasatext/service/api/routes"
+	"github.com/ciottolomaggico/wasatext/service/api/requests"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/gofrs/uuid"
 	"github.com/julienschmidt/httprouter"
@@ -15,7 +15,7 @@ import (
 // required by the httprouter package.
 
 // wrap parses the request and adds a reqcontext.RequestContext instance related to the request.
-func (rt *_router) wrap(fn routes.Handler) httprouter.Handle {
+func (rt *_router) wrap(fn requests.Handler) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		reqUUID, err := uuid.NewV4()
 		if err != nil {
@@ -23,7 +23,7 @@ func (rt *_router) wrap(fn routes.Handler) httprouter.Handle {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		var ctx = routes.RequestContext{
+		var ctx = requests.RequestContext{
 			ReqUUID:    reqUUID,
 			IssuerUUID: nil,
 		}

@@ -3,7 +3,8 @@ package routers
 import (
 	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/parsers"
-	"github.com/ciottolomaggico/wasatext/service/api/routes"
+	"github.com/ciottolomaggico/wasatext/service/api/requests"
+	"github.com/ciottolomaggico/wasatext/service/app/routes"
 	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/julienschmidt/httprouter"
@@ -34,42 +35,52 @@ type AddParticipantsRequestBody struct {
 }
 
 type ConversationRouter struct {
+	Router
 	Controller controllers.ConversationController
 }
 
-func (router ConversationRouter) ListRoutes() []routes.Route {
-	return []routes.Route{
-		routes.New(
+func NewConversationRouter(routeFactory routes.RouteFactory, controller controllers.ConversationController) ControllerRouter {
+	result := &ConversationRouter{
+		NewBaseRouter(routeFactory),
+		controller,
+	}
+	result.initializeRoutes()
+	return *result
+}
+
+func (router *ConversationRouter) initializeRoutes() {
+	router.routes = map[string]routes.Route{
+		"createGroup": router.routeFactory.New(
 			"/users/:userUUID/groups",
 			http.MethodPost,
 			router.CreateGroup,
 			true,
 		),
-		routes.New(
+		"addToGroup": router.routeFactory.New(
 			"/users/:userUUID/groups/:conversationId",
 			http.MethodPut,
 			router.AddToGroup,
 			true,
 		),
-		routes.New(
+		"leaveGroup": router.routeFactory.New(
 			"/users/:userUUID/groups/:conversationId",
 			http.MethodDelete,
 			router.LeaveGroup,
 			true,
 		),
-		routes.New(
+		"setGroupName": router.routeFactory.New(
 			"/users/:userUUID/groups/:conversationId/name",
 			http.MethodPut,
 			router.SetGroupName,
 			true,
 		),
-		routes.New(
+		"setGroupPhoto": router.routeFactory.New(
 			"/users/:userUUID/groups/:conversationId/photo",
 			http.MethodPut,
 			router.SetGroupPhoto,
 			true,
 		),
-		routes.New(
+		"createChat": router.routeFactory.New(
 			"/users/:userUUID/chats",
 			http.MethodPost,
 			router.CreateChat,
@@ -78,7 +89,7 @@ func (router ConversationRouter) ListRoutes() []routes.Route {
 	}
 }
 
-func (router ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -115,7 +126,7 @@ func (router ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Requ
 	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) AddToGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router ConversationRouter) AddToGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -139,7 +150,7 @@ func (router ConversationRouter) AddToGroup(w http.ResponseWriter, r *http.Reque
 	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) LeaveGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router ConversationRouter) LeaveGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -158,7 +169,7 @@ func (router ConversationRouter) LeaveGroup(w http.ResponseWriter, r *http.Reque
 	return nil
 }
 
-func (router ConversationRouter) SetGroupName(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router ConversationRouter) SetGroupName(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -182,7 +193,7 @@ func (router ConversationRouter) SetGroupName(w http.ResponseWriter, r *http.Req
 	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) SetGroupPhoto(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router ConversationRouter) SetGroupPhoto(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -211,7 +222,7 @@ func (router ConversationRouter) SetGroupPhoto(w http.ResponseWriter, r *http.Re
 	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) CreateChat(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router ConversationRouter) CreateChat(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err

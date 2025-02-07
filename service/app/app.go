@@ -2,8 +2,8 @@ package app
 
 import (
 	"errors"
+	"github.com/ciottolomaggico/wasatext/service/api/requests"
 	"github.com/ciottolomaggico/wasatext/service/database"
-	"github.com/ciottolomaggico/wasatext/service/middlewares"
 	"github.com/ciottolomaggico/wasatext/service/routers"
 	"github.com/ciottolomaggico/wasatext/service/storage"
 	"github.com/ciottolomaggico/wasatext/service/validators"
@@ -12,14 +12,7 @@ import (
 )
 
 type Application interface {
-	GetUserRouter() routers.UserRouter
-	GetSessionRouter() routers.SessionRouter
-	GetConversationRouter() routers.ConversationRouter
-	GetUserConversationRouter() routers.UserConversationRouter
-	GetMessageRouter() routers.MessageRouter
-	GetMessageInfoRouter() routers.MessageInfoRouter
-
-	CreateAuthMiddleware() middlewares.AuthMiddleware
+	GetEndpointHandler(endpointId string) requests.Handler
 }
 
 type App struct {
@@ -27,7 +20,7 @@ type App struct {
 	storage  storage.Storage
 	logger   *logrus.Logger
 
-	routers map[string]interface{}
+	routers map[string]routers.ControllerRouter
 }
 
 func New(rawDB *sqlx.DB, storageRootPath *string, logger *logrus.Logger) (Application, error) {

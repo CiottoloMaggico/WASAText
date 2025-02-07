@@ -3,7 +3,8 @@ package routers
 import (
 	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/parsers"
-	"github.com/ciottolomaggico/wasatext/service/api/routes"
+	"github.com/ciottolomaggico/wasatext/service/api/requests"
+	"github.com/ciottolomaggico/wasatext/service/app/routes"
 	"github.com/ciottolomaggico/wasatext/service/controllers"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/julienschmidt/httprouter"
@@ -11,18 +12,28 @@ import (
 )
 
 type UserConversationRouter struct {
+	Router
 	Controller controllers.UserConversationController
 }
 
-func (router UserConversationRouter) ListRoutes() []routes.Route {
-	return []routes.Route{
-		routes.New(
+func NewUserConversationRouter(routeFactory routes.RouteFactory, controller controllers.UserConversationController) ControllerRouter {
+	result := &UserConversationRouter{
+		NewBaseRouter(routeFactory),
+		controller,
+	}
+	result.initializeRoutes()
+	return *result
+}
+
+func (router *UserConversationRouter) initializeRoutes() {
+	router.routes = map[string]routes.Route{
+		"getMyConversations": router.routeFactory.New(
 			"/users/:userUUID/conversations",
 			http.MethodGet,
 			router.GetMyConversations,
 			true,
 		),
-		routes.New(
+		"getConversation": router.routeFactory.New(
 			"/users/:userUUID/conversations/:conversationId",
 			http.MethodGet,
 			router.GetConversation,
@@ -31,7 +42,7 @@ func (router UserConversationRouter) ListRoutes() []routes.Route {
 	}
 }
 
-func (router UserConversationRouter) GetMyConversations(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router UserConversationRouter) GetMyConversations(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -55,7 +66,7 @@ func (router UserConversationRouter) GetMyConversations(w http.ResponseWriter, r
 	return views.SendJson(w, conversations)
 }
 
-func (router UserConversationRouter) GetConversation(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router UserConversationRouter) GetConversation(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err

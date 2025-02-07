@@ -3,7 +3,8 @@ package routers
 import (
 	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/parsers"
-	"github.com/ciottolomaggico/wasatext/service/api/routes"
+	"github.com/ciottolomaggico/wasatext/service/api/requests"
+	"github.com/ciottolomaggico/wasatext/service/app/routes"
 	"github.com/ciottolomaggico/wasatext/service/controllers"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/julienschmidt/httprouter"
@@ -11,24 +12,34 @@ import (
 )
 
 type MessageInfoRouter struct {
+	Router
 	Controller controllers.MessageInfoController
 }
 
-func (router MessageInfoRouter) ListRoutes() []routes.Route {
-	return []routes.Route{
-		routes.New(
+func NewMessageInfoRouter(routeFactory routes.RouteFactory, controller controllers.MessageInfoController) ControllerRouter {
+	result := &MessageInfoRouter{
+		NewBaseRouter(routeFactory),
+		controller,
+	}
+	result.initializeRoutes()
+	return *result
+}
+
+func (router *MessageInfoRouter) initializeRoutes() {
+	router.routes = map[string]routes.Route{
+		"getMessageComments": router.routeFactory.New(
 			"/users/:userUUID/conversations/:conversationId/messages/:messageId/comments",
 			http.MethodGet,
 			router.GetMessageComments,
 			true,
 		),
-		routes.New(
+		"commentMessage": router.routeFactory.New(
 			"/users/:userUUID/conversations/:conversationId/messages/:messageId/comments",
 			http.MethodPut,
 			router.SetMessageComment,
 			true,
 		),
-		routes.New(
+		"uncommentMessage": router.routeFactory.New(
 			"/users/:userUUID/conversations/:conversationId/messages/:messageId/comments",
 			http.MethodDelete,
 			router.RemoveMessageComment,
@@ -37,7 +48,7 @@ func (router MessageInfoRouter) ListRoutes() []routes.Route {
 	}
 }
 
-func (router MessageInfoRouter) GetMessageComments(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router MessageInfoRouter) GetMessageComments(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -56,7 +67,7 @@ func (router MessageInfoRouter) GetMessageComments(w http.ResponseWriter, r *htt
 	return views.SendJson(w, comments)
 }
 
-func (router MessageInfoRouter) SetMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router MessageInfoRouter) SetMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -80,7 +91,7 @@ func (router MessageInfoRouter) SetMessageComment(w http.ResponseWriter, r *http
 	return views.SendJson(w, comment)
 }
 
-func (router MessageInfoRouter) RemoveMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router MessageInfoRouter) RemoveMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err

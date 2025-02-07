@@ -3,7 +3,8 @@ package routers
 import (
 	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/parsers"
-	"github.com/ciottolomaggico/wasatext/service/api/routes"
+	"github.com/ciottolomaggico/wasatext/service/api/requests"
+	"github.com/ciottolomaggico/wasatext/service/app/routes"
 	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/julienschmidt/httprouter"
@@ -21,30 +22,40 @@ type UserPhotoRequestBody struct {
 }
 
 type UserRouter struct {
+	Router
 	Controller controllers.UserController
 }
 
-func (router UserRouter) ListRoutes() []routes.Route {
-	return []routes.Route{
-		routes.New(
+func NewUserRouter(routeFactory routes.RouteFactory, controller controllers.UserController) ControllerRouter {
+	result := &UserRouter{
+		NewBaseRouter(routeFactory),
+		controller,
+	}
+	result.initializeRoutes()
+	return *result
+}
+
+func (router *UserRouter) initializeRoutes() {
+	router.routes = map[string]routes.Route{
+		"getUsers": router.routeFactory.New(
 			"/users",
 			http.MethodGet,
 			router.GetUsers,
 			true,
 		),
-		routes.New(
+		"getUser": router.routeFactory.New(
 			"/users/:userUUID",
 			http.MethodGet,
 			router.GetUser,
 			true,
 		),
-		routes.New(
+		"setMyUserName": router.routeFactory.New(
 			"/users/:userUUID/username",
 			http.MethodPut,
 			router.SetMyUsername,
 			true,
 		),
-		routes.New(
+		"setMyPhoto": router.routeFactory.New(
 			"/users/:userUUID/avatar",
 			http.MethodPut,
 			router.SetMyPhoto,
@@ -53,7 +64,7 @@ func (router UserRouter) ListRoutes() []routes.Route {
 	}
 }
 
-func (router UserRouter) GetUsers(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router UserRouter) GetUsers(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	// Get query parameters and validate them
 	paginationParams, err := parsers.ParseAndValidatePaginationParams(r.URL)
 	if err != nil {
@@ -70,7 +81,7 @@ func (router UserRouter) GetUsers(w http.ResponseWriter, r *http.Request, params
 	return views.SendJson(w, users)
 }
 
-func (router UserRouter) GetUser(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router UserRouter) GetUser(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	// Get url parameters and validate them
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
@@ -87,7 +98,7 @@ func (router UserRouter) GetUser(w http.ResponseWriter, r *http.Request, params 
 	return views.SendJson(w, user)
 }
 
-func (router UserRouter) SetMyUsername(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router UserRouter) SetMyUsername(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	// Get url parameters and validate them
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
@@ -115,7 +126,7 @@ func (router UserRouter) SetMyUsername(w http.ResponseWriter, r *http.Request, p
 	return views.SendJson(w, updatedUser)
 }
 
-func (router UserRouter) SetMyPhoto(w http.ResponseWriter, r *http.Request, params httprouter.Params, context routes.RequestContext) error {
+func (router UserRouter) SetMyPhoto(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	// Get url parameters and validate them
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {

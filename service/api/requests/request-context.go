@@ -4,7 +4,7 @@ middleware code in the api-context-wrapper.go (parent package).
 
 Each value here should be assumed valid only per request only, with some exceptions like the logger.
 */
-package routes
+package requests
 
 import (
 	"github.com/gofrs/uuid"
