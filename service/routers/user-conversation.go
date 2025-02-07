@@ -1,7 +1,7 @@
 package routers
 
 import (
-	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	apierrors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/parsers"
 	"github.com/ciottolomaggico/wasatext/service/api/requests"
 	"github.com/ciottolomaggico/wasatext/service/app/routes"
@@ -12,17 +12,17 @@ import (
 )
 
 type UserConversationRouter struct {
-	Router
+	router
 	Controller controllers.UserConversationController
 }
 
 func NewUserConversationRouter(routeFactory routes.RouteFactory, controller controllers.UserConversationController) ControllerRouter {
 	result := &UserConversationRouter{
-		NewBaseRouter(routeFactory),
+		newBaseRouter(routeFactory),
 		controller,
 	}
 	result.initializeRoutes()
-	return *result
+	return result
 }
 
 func (router *UserConversationRouter) initializeRoutes() {
@@ -42,7 +42,7 @@ func (router *UserConversationRouter) initializeRoutes() {
 	}
 }
 
-func (router UserConversationRouter) GetMyConversations(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *UserConversationRouter) GetMyConversations(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -55,7 +55,7 @@ func (router UserConversationRouter) GetMyConversations(w http.ResponseWriter, r
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	conversations, err := router.Controller.GetUserConversations(authedUserUUID, paginationParams)
@@ -66,7 +66,7 @@ func (router UserConversationRouter) GetMyConversations(w http.ResponseWriter, r
 	return views.SendJson(w, conversations)
 }
 
-func (router UserConversationRouter) GetConversation(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *UserConversationRouter) GetConversation(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -74,7 +74,7 @@ func (router UserConversationRouter) GetConversation(w http.ResponseWriter, r *h
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	conversation, err := router.Controller.GetUserConversation(authedUserUUID, urlParams.ConversationId)

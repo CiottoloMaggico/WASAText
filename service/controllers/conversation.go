@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	apierrors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/controllers/translators"
 	"github.com/ciottolomaggico/wasatext/service/models"
 	"github.com/ciottolomaggico/wasatext/service/views"
@@ -26,7 +26,7 @@ type ConversationControllerImpl struct {
 
 func (controller ConversationControllerImpl) IsParticipant(conversationId int64, userUUID string) (bool, error) {
 	if ok, err := controller.Model.IsParticipant(conversationId, userUUID); !ok {
-		return false, api_errors.Forbidden()
+		return false, apierrors.Forbidden()
 	} else if err != nil {
 		return false, err
 	}
@@ -64,7 +64,7 @@ func (controller ConversationControllerImpl) CreateGroup(groupName string, autho
 
 func (controller ConversationControllerImpl) LeaveGroup(groupId int64, requestIssuerUUID string) error {
 	if conv, err := controller.UserConversationController.GetUserConversation(requestIssuerUUID, groupId); conv.Type != "group" {
-		return api_errors.ResourceNotFound()
+		return apierrors.ResourceNotFound()
 	} else if err != nil {
 		return err
 	}
@@ -75,7 +75,7 @@ func (controller ConversationControllerImpl) LeaveGroup(groupId int64, requestIs
 
 func (controller ConversationControllerImpl) AddToGroup(groupId int64, requestIssuerUUID string, newParticipants []string) (views.UserConversationView, error) {
 	if conv, err := controller.UserConversationController.GetUserConversation(requestIssuerUUID, groupId); conv.Type != "group" {
-		return views.UserConversationView{}, api_errors.ResourceNotFound()
+		return views.UserConversationView{}, apierrors.ResourceNotFound()
 	} else if err != nil {
 		return views.UserConversationView{}, err
 	}
@@ -89,7 +89,7 @@ func (controller ConversationControllerImpl) AddToGroup(groupId int64, requestIs
 
 func (controller ConversationControllerImpl) ChangeGroupName(groupId int64, requestIssuerUUID string, newName string) (views.UserConversationView, error) {
 	if conv, err := controller.UserConversationController.GetUserConversation(requestIssuerUUID, groupId); conv.Type != "group" {
-		return views.UserConversationView{}, api_errors.ResourceNotFound()
+		return views.UserConversationView{}, apierrors.ResourceNotFound()
 	} else if err != nil {
 		return views.UserConversationView{}, err
 	}
@@ -103,7 +103,7 @@ func (controller ConversationControllerImpl) ChangeGroupName(groupId int64, requ
 
 func (controller ConversationControllerImpl) ChangeGroupPhoto(groupId int64, requestIssuerUUID string, photoExtension string, photoFile io.ReadSeeker) (views.UserConversationView, error) {
 	if conv, err := controller.UserConversationController.GetUserConversation(requestIssuerUUID, groupId); conv.Type != "group" {
-		return views.UserConversationView{}, api_errors.ResourceNotFound()
+		return views.UserConversationView{}, apierrors.ResourceNotFound()
 	} else if err != nil {
 		return views.UserConversationView{}, err
 	}

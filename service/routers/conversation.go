@@ -1,11 +1,11 @@
 package routers
 
 import (
-	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	apierrors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/parsers"
 	"github.com/ciottolomaggico/wasatext/service/api/requests"
 	"github.com/ciottolomaggico/wasatext/service/app/routes"
-	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
+	"github.com/ciottolomaggico/wasatext/service/controllers"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/julienschmidt/httprouter"
 	"io"
@@ -35,17 +35,17 @@ type AddParticipantsRequestBody struct {
 }
 
 type ConversationRouter struct {
-	Router
+	router
 	Controller controllers.ConversationController
 }
 
 func NewConversationRouter(routeFactory routes.RouteFactory, controller controllers.ConversationController) ControllerRouter {
 	result := &ConversationRouter{
-		NewBaseRouter(routeFactory),
+		newBaseRouter(routeFactory),
 		controller,
 	}
 	result.initializeRoutes()
-	return *result
+	return result
 }
 
 func (router *ConversationRouter) initializeRoutes() {
@@ -89,7 +89,7 @@ func (router *ConversationRouter) initializeRoutes() {
 	}
 }
 
-func (router ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -97,7 +97,7 @@ func (router ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Requ
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	requestBody := NewGroupRequestBody{}
@@ -126,7 +126,7 @@ func (router ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Requ
 	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) AddToGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *ConversationRouter) AddToGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -134,7 +134,7 @@ func (router ConversationRouter) AddToGroup(w http.ResponseWriter, r *http.Reque
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	requestBody := AddParticipantsRequestBody{}
@@ -150,7 +150,7 @@ func (router ConversationRouter) AddToGroup(w http.ResponseWriter, r *http.Reque
 	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) LeaveGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *ConversationRouter) LeaveGroup(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -158,7 +158,7 @@ func (router ConversationRouter) LeaveGroup(w http.ResponseWriter, r *http.Reque
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	if err := router.Controller.LeaveGroup(urlParams.ConversationId, authedUserUUID); err != nil {
@@ -169,7 +169,7 @@ func (router ConversationRouter) LeaveGroup(w http.ResponseWriter, r *http.Reque
 	return nil
 }
 
-func (router ConversationRouter) SetGroupName(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *ConversationRouter) SetGroupName(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -177,7 +177,7 @@ func (router ConversationRouter) SetGroupName(w http.ResponseWriter, r *http.Req
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	requestBody := ConversationNameRequestBody{}
@@ -193,7 +193,7 @@ func (router ConversationRouter) SetGroupName(w http.ResponseWriter, r *http.Req
 	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) SetGroupPhoto(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *ConversationRouter) SetGroupPhoto(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -201,7 +201,7 @@ func (router ConversationRouter) SetGroupPhoto(w http.ResponseWriter, r *http.Re
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	requestBody := GroupPhotoRequestBody{}
@@ -222,7 +222,7 @@ func (router ConversationRouter) SetGroupPhoto(w http.ResponseWriter, r *http.Re
 	return views.SendJson(w, conversation)
 }
 
-func (router ConversationRouter) CreateChat(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *ConversationRouter) CreateChat(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -230,7 +230,7 @@ func (router ConversationRouter) CreateChat(w http.ResponseWriter, r *http.Reque
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	requestBody := NewChatRequestBody{}

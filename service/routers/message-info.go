@@ -1,7 +1,7 @@
 package routers
 
 import (
-	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	apierrors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/parsers"
 	"github.com/ciottolomaggico/wasatext/service/api/requests"
 	"github.com/ciottolomaggico/wasatext/service/app/routes"
@@ -12,17 +12,17 @@ import (
 )
 
 type MessageInfoRouter struct {
-	Router
+	router
 	Controller controllers.MessageInfoController
 }
 
 func NewMessageInfoRouter(routeFactory routes.RouteFactory, controller controllers.MessageInfoController) ControllerRouter {
 	result := &MessageInfoRouter{
-		NewBaseRouter(routeFactory),
+		newBaseRouter(routeFactory),
 		controller,
 	}
 	result.initializeRoutes()
-	return *result
+	return result
 }
 
 func (router *MessageInfoRouter) initializeRoutes() {
@@ -48,7 +48,7 @@ func (router *MessageInfoRouter) initializeRoutes() {
 	}
 }
 
-func (router MessageInfoRouter) GetMessageComments(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *MessageInfoRouter) GetMessageComments(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -56,7 +56,7 @@ func (router MessageInfoRouter) GetMessageComments(w http.ResponseWriter, r *htt
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	comments, err := router.Controller.GetComments(urlParams.ConversationId, urlParams.MessageId, authedUserUUID)
@@ -67,7 +67,7 @@ func (router MessageInfoRouter) GetMessageComments(w http.ResponseWriter, r *htt
 	return views.SendJson(w, comments)
 }
 
-func (router MessageInfoRouter) SetMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *MessageInfoRouter) SetMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -75,7 +75,7 @@ func (router MessageInfoRouter) SetMessageComment(w http.ResponseWriter, r *http
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	requestBody := CommentRequestBody{}
@@ -91,7 +91,7 @@ func (router MessageInfoRouter) SetMessageComment(w http.ResponseWriter, r *http
 	return views.SendJson(w, comment)
 }
 
-func (router MessageInfoRouter) RemoveMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *MessageInfoRouter) RemoveMessageComment(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -99,7 +99,7 @@ func (router MessageInfoRouter) RemoveMessageComment(w http.ResponseWriter, r *h
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	if err := router.Controller.UncommentMessage(urlParams.ConversationId, urlParams.MessageId, authedUserUUID); err != nil {

@@ -5,34 +5,34 @@ import (
 	"net/http"
 )
 
-func (r *_router) Handler() http.Handler {
-	r.router.POST("/session", r.Handle("doLogin"))
-	r.router.GET("/users", r.Handle("getUsers"))
-	r.router.GET("/users/:user_uuid", r.Handle("getUser"))
-	r.router.PUT("/users/:user_uuid/username", r.Handle("setMyUserName"))
-	r.router.PUT("/users/:user_uuid/avatar", r.Handle("setMyPhoto"))
-	r.router.POST("/users/:user_uuid/chats", r.Handle("createChat"))
-	r.router.POST("/users/:user_uuid/groups", r.Handle("createGroup"))
-	r.router.PUT("/users/:user_uuid/groups/:group_id", r.Handle("addToGroup"))
-	r.router.DELETE("/users/:user_uuid/groups/:group_id", r.Handle("leaveGroup"))
-	r.router.PUT("/users/:user_uuid/groups/:group_id/name", r.Handle("setGroupName"))
-	r.router.PUT("/users/:user_uuid/groups/:group_id/photo", r.Handle("setGroupPhoto"))
-	r.router.GET("/users/:user_uuid/conversations", r.Handle("getMyConversations"))
-	r.router.PUT("/users/:user_uuid/conversations", r.Handle("setDelivered"))
-	r.router.GET("/users/:user_uuid/conversations/:conv_id", r.Handle("getConversation"))
-	r.router.POST("/users/:user_uuid/conversations/:conv_id/messages", r.Handle("sendMessage"))
-	r.router.PUT("/users/:user_uuid/conversations/:conv_id/messages", r.Handle("setSeen"))
-	r.router.GET("/users/:user_uuid/conversations/:conv_id/messages", r.Handle("getConversationMessages"))
-	r.router.GET("/users/:user_uuid/conversations/:conv_id/messages/:mess_id", r.Handle("messageDetail"))
-	r.router.DELETE("/users/:user_uuid/conversations/:conv_id/messages/:mess_id", r.Handle("deleteMessage"))
-	r.router.GET("/users/:user_uuid/conversations/:conv_id/messages/:mess_id/comments", r.Handle("getMessageComments"))
-	r.router.PUT("/users/:user_uuid/conversations/:conv_id/messages/:mess_id/comments", r.Handle("commentMessage"))
-	r.router.DELETE("/users/:user_uuid/conversations/:conv_id/messages/:mess_id/comments", r.Handle("uncommentMessage"))
-	r.router.POST("/users/:user_uuid/conversations/:conv_id/messages/:mess_id/forward", r.Handle("forwardMessage"))
+func (rt *_router) Handler() http.Handler {
+	rt.router.POST("/session", rt.Handle("doLogin"))
+	rt.router.GET("/users", rt.Handle("getUsers"))
+	rt.router.GET("/users/:user_uuid", rt.Handle("getUser"))
+	rt.router.PUT("/users/:user_uuid/username", rt.Handle("setMyUserName"))
+	rt.router.PUT("/users/:user_uuid/avatar", rt.Handle("setMyPhoto"))
+	rt.router.POST("/users/:user_uuid/chats", rt.Handle("createChat"))
+	rt.router.POST("/users/:user_uuid/groups", rt.Handle("createGroup"))
+	rt.router.PUT("/users/:user_uuid/groups/:group_id", rt.Handle("addToGroup"))
+	rt.router.DELETE("/users/:user_uuid/groups/:group_id", rt.Handle("leaveGroup"))
+	rt.router.PUT("/users/:user_uuid/groups/:group_id/name", rt.Handle("setGroupName"))
+	rt.router.PUT("/users/:user_uuid/groups/:group_id/photo", rt.Handle("setGroupPhoto"))
+	rt.router.GET("/users/:user_uuid/conversations", rt.Handle("getMyConversations"))
+	rt.router.PUT("/users/:user_uuid/conversations", rt.Handle("setDelivered"))
+	rt.router.GET("/users/:user_uuid/conversations/:conv_id", rt.Handle("getConversation"))
+	rt.router.POST("/users/:user_uuid/conversations/:conv_id/messages", rt.Handle("sendMessage"))
+	rt.router.PUT("/users/:user_uuid/conversations/:conv_id/messages", rt.Handle("setSeen"))
+	rt.router.GET("/users/:user_uuid/conversations/:conv_id/messages", rt.Handle("getConversationMessages"))
+	rt.router.GET("/users/:user_uuid/conversations/:conv_id/messages/:mess_id", rt.Handle("messageDetail"))
+	rt.router.DELETE("/users/:user_uuid/conversations/:conv_id/messages/:mess_id", rt.Handle("deleteMessage"))
+	rt.router.GET("/users/:user_uuid/conversations/:conv_id/messages/:mess_id/comments", rt.Handle("getMessageComments"))
+	rt.router.PUT("/users/:user_uuid/conversations/:conv_id/messages/:mess_id/comments", rt.Handle("commentMessage"))
+	rt.router.DELETE("/users/:user_uuid/conversations/:conv_id/messages/:mess_id/comments", rt.Handle("uncommentMessage"))
+	rt.router.POST("/users/:user_uuid/conversations/:conv_id/messages/:mess_id/forward", rt.Handle("forwardMessage"))
 
-	return r.router
+	return rt.router
 }
 
-func (r *_router) Handle(endpointId string) httprouter.Handle {
-	return r.wrap(r.app.GetEndpointHandler(endpointId))
+func (rt *_router) Handle(endpointId string) httprouter.Handle {
+	return rt.wrap(rt.app.GetEndpointHandler(endpointId))
 }

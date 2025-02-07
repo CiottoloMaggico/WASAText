@@ -1,7 +1,5 @@
 package routers
 
-const DefaultPageSize = 20
-
 type UserUrlParams struct {
 	UserUUID string `url:"user_uuid" validate:"required,uuid"`
 }

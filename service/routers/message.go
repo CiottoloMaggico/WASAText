@@ -1,11 +1,11 @@
 package routers
 
 import (
-	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	apierrors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/parsers"
 	"github.com/ciottolomaggico/wasatext/service/api/requests"
 	"github.com/ciottolomaggico/wasatext/service/app/routes"
-	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
+	"github.com/ciottolomaggico/wasatext/service/controllers"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/julienschmidt/httprouter"
 	"io"
@@ -29,17 +29,17 @@ type ForwardRequestBody struct {
 }
 
 type MessageRouter struct {
-	Router
+	router
 	Controller controllers.MessageController
 }
 
 func NewMessageRouter(routeFactory routes.RouteFactory, controller controllers.MessageController) ControllerRouter {
 	result := &MessageRouter{
-		NewBaseRouter(routeFactory),
+		newBaseRouter(routeFactory),
 		controller,
 	}
 	result.initializeRoutes()
-	return *result
+	return result
 }
 
 func (router *MessageRouter) initializeRoutes() {
@@ -89,7 +89,7 @@ func (router *MessageRouter) initializeRoutes() {
 	}
 }
 
-func (router MessageRouter) SendMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *MessageRouter) SendMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -97,7 +97,7 @@ func (router MessageRouter) SendMessage(w http.ResponseWriter, r *http.Request, 
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	requestBody := NewMessageRequestBody{}
@@ -127,7 +127,7 @@ func (router MessageRouter) SendMessage(w http.ResponseWriter, r *http.Request, 
 	return views.SendJson(w, message)
 }
 
-func (router MessageRouter) SetDelivered(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *MessageRouter) SetDelivered(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -140,7 +140,7 @@ func (router MessageRouter) SetDelivered(w http.ResponseWriter, r *http.Request,
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	conversations, err := router.Controller.SetAllMessageDelivered(authedUserUUID, paginationParams)
@@ -151,7 +151,7 @@ func (router MessageRouter) SetDelivered(w http.ResponseWriter, r *http.Request,
 	return views.SendJson(w, conversations)
 }
 
-func (router MessageRouter) SetSeen(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *MessageRouter) SetSeen(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -164,7 +164,7 @@ func (router MessageRouter) SetSeen(w http.ResponseWriter, r *http.Request, para
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	messages, err := router.Controller.SetConversationMessagesAsSeen(urlParams.ConversationId, authedUserUUID, paginationParams)
@@ -175,7 +175,7 @@ func (router MessageRouter) SetSeen(w http.ResponseWriter, r *http.Request, para
 	return views.SendJson(w, messages)
 }
 
-func (router MessageRouter) GetConversationMessages(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *MessageRouter) GetConversationMessages(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -188,7 +188,7 @@ func (router MessageRouter) GetConversationMessages(w http.ResponseWriter, r *ht
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	messages, err := router.Controller.GetConversationMessages(urlParams.ConversationId, authedUserUUID, paginationParams)
@@ -199,7 +199,7 @@ func (router MessageRouter) GetConversationMessages(w http.ResponseWriter, r *ht
 	return views.SendJson(w, messages)
 }
 
-func (router MessageRouter) GetConversationMessageDetail(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *MessageRouter) GetConversationMessageDetail(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -207,7 +207,7 @@ func (router MessageRouter) GetConversationMessageDetail(w http.ResponseWriter, 
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	message, err := router.Controller.GetConversationMessage(urlParams.ConversationId, urlParams.MessageId, authedUserUUID)
@@ -218,7 +218,7 @@ func (router MessageRouter) GetConversationMessageDetail(w http.ResponseWriter, 
 	return views.SendJson(w, message)
 }
 
-func (router MessageRouter) DeleteConversationMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *MessageRouter) DeleteConversationMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -226,7 +226,7 @@ func (router MessageRouter) DeleteConversationMessage(w http.ResponseWriter, r *
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	if err := router.Controller.DeleteMessage(urlParams.ConversationId, urlParams.MessageId, authedUserUUID); err != nil {
@@ -237,7 +237,7 @@ func (router MessageRouter) DeleteConversationMessage(w http.ResponseWriter, r *
 	return nil
 }
 
-func (router MessageRouter) ForwardMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *MessageRouter) ForwardMessage(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	urlParams := UserConversationMessageUrlParams{}
 	if err := parsers.ParseAndValidateUrlParams(params, &urlParams); err != nil {
 		return err
@@ -245,7 +245,7 @@ func (router MessageRouter) ForwardMessage(w http.ResponseWriter, r *http.Reques
 
 	authedUserUUID := *context.IssuerUUID
 	if authedUserUUID != urlParams.UserUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	requestBody := ForwardRequestBody{}

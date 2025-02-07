@@ -2,7 +2,7 @@ package views
 
 import (
 	"encoding/json"
-	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	apierrors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"net/http"
 )
 
@@ -16,7 +16,7 @@ func SendJson(w http.ResponseWriter, data interface{}) error {
 	return nil
 }
 
-func ThrowError(w http.ResponseWriter, err api_errors.ApiError) error {
+func ThrowError(w http.ResponseWriter, err apierrors.ApiError) error {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(err.Status)
 

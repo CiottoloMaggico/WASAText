@@ -7,9 +7,9 @@ import (
 )
 
 type Page struct {
-	Page         int     `json:"page"`
-	finalPage    int     `json:"-"`
-	CurrPage     string  `json:"-"`
+	Page         int `json:"page"`
+	finalPage    int
+	CurrPage     string
 	NextPage     *string `json:"nextPage"`
 	PreviousPage *string `json:"previousPage"`
 }

@@ -59,7 +59,8 @@ func validBaseFormula(formula string) bool {
 
 func FormulaIsValid(formula string) bool {
 	formula = strings.Trim(formula, " ")
-	subFormulas, currFormula := []string{}, ""
+	var subFormulas []string
+	currFormula := ""
 
 	for _, value := range formula {
 		if value == '(' {

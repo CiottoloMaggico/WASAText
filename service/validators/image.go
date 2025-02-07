@@ -1,7 +1,7 @@
 package validators
 
 import (
-	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	apierrors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/go-playground/validator/v10"
 	"io"
 	"mime"
@@ -17,7 +17,7 @@ var allowedMIMETypes = []string{
 func ImageContentValidator(fileSize int64, image multipart.File) (string, error) {
 	// Check file size
 	if fileSize < 1 || fileSize > 1<<30 {
-		return "", api_errors.UnprocessableContent(map[string]string{
+		return "", apierrors.UnprocessableContent(map[string]string{
 			"image": "image file size must be between 1 byte and 1 Gb",
 		})
 	}
@@ -35,7 +35,7 @@ func ImageContentValidator(fileSize int64, image multipart.File) (string, error)
 		}
 	}
 
-	return "", api_errors.UnprocessableContent(map[string]string{
+	return "", apierrors.UnprocessableContent(map[string]string{
 		"image": "invalid image type, it should be one of these types: jpeg, jpg, png, gif",
 	})
 
@@ -53,7 +53,7 @@ func ImageFilenameValidator(filename string, mimeType string) error {
 			return nil
 		}
 	}
-	return api_errors.UnprocessableContent(map[string]string{
+	return apierrors.UnprocessableContent(map[string]string{
 		"image": "invalid image extension",
 	})
 }

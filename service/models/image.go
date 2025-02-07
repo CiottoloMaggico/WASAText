@@ -1,7 +1,7 @@
 package models
 
 import (
-	database "github.com/ciottolomaggico/wasatext/service/database"
+	"github.com/ciottolomaggico/wasatext/service/database"
 	"github.com/ciottolomaggico/wasatext/service/storage"
 	"github.com/gofrs/uuid"
 	"image"
@@ -64,8 +64,8 @@ func (model ImageModelImpl) CreateImage(extension string, file io.ReadSeeker) (*
 		return nil, database.HandleDBError(err)
 	}
 
-	image := Image{}
-	if err := tx.QueryStructRow(&image, query, newUUID.String(), extension, width, height, path); err != nil {
+	img := Image{}
+	if err := tx.QueryStructRow(&img, query, newUUID.String(), extension, width, height, path); err != nil {
 		return nil, err
 	}
 
@@ -79,7 +79,7 @@ func (model ImageModelImpl) CreateImage(extension string, file io.ReadSeeker) (*
 	if err := tx.Commit(); err != nil {
 		return nil, database.HandleDBError(err)
 	}
-	return &image, nil
+	return &img, nil
 }
 
 func (model ImageModelImpl) DeleteImage(uuid string) (*Image, error) {
@@ -93,12 +93,12 @@ func (model ImageModelImpl) DeleteImage(uuid string) (*Image, error) {
 		return nil, database.HandleDBError(err)
 	}
 
-	image := Image{}
-	if err := tx.QueryStructRow(&image, query, uuid); err != nil {
+	img := Image{}
+	if err := tx.QueryStructRow(&img, query, uuid); err != nil {
 		return nil, err
 	}
 
-	if err := model.Storage.DeleteFile(image.Filename()); err != nil {
+	if err := model.Storage.DeleteFile(img.Filename()); err != nil {
 		if err := tx.Rollback(); err != nil {
 			return nil, database.HandleDBError(err)
 		}
@@ -108,7 +108,7 @@ func (model ImageModelImpl) DeleteImage(uuid string) (*Image, error) {
 	if err := tx.Commit(); err != nil {
 		return nil, database.HandleDBError(err)
 	}
-	return &image, nil
+	return &img, nil
 }
 
 func (model ImageModelImpl) GetImage(uuid string) (*Image, error) {
@@ -118,10 +118,10 @@ func (model ImageModelImpl) GetImage(uuid string) (*Image, error) {
 		WHERE uuid = ?;
 	`
 
-	image := Image{}
-	if err := model.Db.QueryStructRow(&image, query, uuid); err != nil {
+	img := Image{}
+	if err := model.Db.QueryStructRow(&img, query, uuid); err != nil {
 		return nil, err
 	}
 
-	return &image, nil
+	return &img, nil
 }

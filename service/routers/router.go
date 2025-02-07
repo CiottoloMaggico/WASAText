@@ -8,18 +8,18 @@ type ControllerRouter interface {
 	GetRoute(routeId string) routes.Route
 }
 
-type Router struct {
+type router struct {
 	routeFactory routes.RouteFactory
 	routes       map[string]routes.Route
 }
 
-func (r Router) GetRoute(routeId string) routes.Route {
+func (r *router) GetRoute(routeId string) routes.Route {
 	if route, ok := r.routes[routeId]; ok {
 		return route
 	}
 	return nil
 }
 
-func NewBaseRouter(routeFactory routes.RouteFactory) Router {
-	return Router{routeFactory, nil}
+func newBaseRouter(routeFactory routes.RouteFactory) router {
+	return router{routeFactory, nil}
 }

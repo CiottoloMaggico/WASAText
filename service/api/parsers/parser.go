@@ -3,7 +3,7 @@ package parsers
 import (
 	"encoding/json"
 	"errors"
-	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	apierrors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/validators"
 	"github.com/ciottolomaggico/wasatext/service/views/pagination"
 	"github.com/go-playground/validator/v10"
@@ -15,7 +15,7 @@ import (
 	"strconv"
 )
 
-const DEFAULT_PAGE_SIZE = 20
+const DefaultPageSize = 20
 
 func renderValidationErrors(errs validator.ValidationErrors) map[string]string {
 	res := make(map[string]string)
@@ -29,7 +29,7 @@ func ParseAndValidatePaginationParams(url *url.URL) (pagination.PaginationParams
 	query := url.Query()
 	res := pagination.PaginationParams{
 		Page:       1,
-		Size:       DEFAULT_PAGE_SIZE,
+		Size:       DefaultPageSize,
 		CurrentUrl: url.String(),
 		Filter:     query.Get("filter"),
 	}
@@ -37,7 +37,7 @@ func ParseAndValidatePaginationParams(url *url.URL) (pagination.PaginationParams
 	if page := query.Get("page"); page != "" {
 		tmpPage, err := strconv.Atoi(page)
 		if err != nil {
-			return pagination.PaginationParams{}, api_errors.InvalidUrlParameters()
+			return pagination.PaginationParams{}, apierrors.InvalidUrlParameters()
 		}
 		res.Page = tmpPage
 	}
@@ -45,7 +45,7 @@ func ParseAndValidatePaginationParams(url *url.URL) (pagination.PaginationParams
 	if size := query.Get("size"); size != "" {
 		tmpSize, err := strconv.Atoi(size)
 		if err != nil {
-			return pagination.PaginationParams{}, api_errors.InvalidUrlParameters()
+			return pagination.PaginationParams{}, apierrors.InvalidUrlParameters()
 		}
 		res.Size = tmpSize
 	}
@@ -54,7 +54,7 @@ func ParseAndValidatePaginationParams(url *url.URL) (pagination.PaginationParams
 		var validationErrs validator.ValidationErrors
 		if ok := errors.As(err, &validationErrs); ok {
 			return pagination.PaginationParams{},
-				api_errors.UnprocessableContent(renderValidationErrors(validationErrs))
+				apierrors.UnprocessableContent(renderValidationErrors(validationErrs))
 		}
 
 		return pagination.PaginationParams{}, err
@@ -88,7 +88,7 @@ func ParseUrlParams(ps httprouter.Params, res interface{}) error {
 		}
 
 		if err != nil {
-			return api_errors.InvalidUrlParameters()
+			return apierrors.InvalidUrlParameters()
 		}
 		fieldValue = reflect.ValueOf(result)
 		underlyingValue.Field(i).Set(fieldValue)
@@ -116,25 +116,25 @@ func ParseMultipartRequestBody(body *multipart.Form, res interface{}) error {
 			case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 				result, err := strconv.ParseInt(val[0], 10, 0)
 				if err != nil {
-					return api_errors.InvalidMultipartBody()
+					return apierrors.InvalidMultipartBody()
 				}
 				fieldValue = reflect.ValueOf(&result)
 			case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
 				result, err := strconv.ParseUint(val[0], 10, 0)
 				if err != nil {
-					return api_errors.InvalidMultipartBody()
+					return apierrors.InvalidMultipartBody()
 				}
 				fieldValue = reflect.ValueOf(&result)
 			case reflect.Float32, reflect.Float64:
 				result, err := strconv.ParseFloat(val[0], 64)
 				if err != nil {
-					return api_errors.InvalidMultipartBody()
+					return apierrors.InvalidMultipartBody()
 				}
 				fieldValue = reflect.ValueOf(&result)
 			case reflect.Bool:
 				result, err := strconv.ParseBool(val[0])
 				if err != nil {
-					return api_errors.InvalidMultipartBody()
+					return apierrors.InvalidMultipartBody()
 				}
 				fieldValue = reflect.ValueOf(&result)
 			default:
@@ -160,7 +160,7 @@ func ParseAndValidateUrlParams(ps httprouter.Params, res interface{}) error {
 	if err := validators.Validate.Struct(res); err != nil {
 		var validationErrs validator.ValidationErrors
 		if ok := errors.As(err, &validationErrs); ok {
-			return api_errors.UnprocessableContent(renderValidationErrors(validationErrs))
+			return apierrors.UnprocessableContent(renderValidationErrors(validationErrs))
 		}
 
 		return err
@@ -170,7 +170,7 @@ func ParseAndValidateUrlParams(ps httprouter.Params, res interface{}) error {
 
 func ParseAndValidateMultipartRequestBody(req *http.Request, res interface{}) error {
 	if err := req.ParseMultipartForm(0); err != nil {
-		return api_errors.InvalidMultipartBody()
+		return apierrors.InvalidMultipartBody()
 	}
 	body := req.MultipartForm
 	if err := ParseMultipartRequestBody(body, res); err != nil {
@@ -180,7 +180,7 @@ func ParseAndValidateMultipartRequestBody(req *http.Request, res interface{}) er
 	if err := validators.Validate.Struct(res); err != nil {
 		var validationErrs validator.ValidationErrors
 		if ok := errors.As(err, &validationErrs); ok {
-			return api_errors.UnprocessableContent(renderValidationErrors(validationErrs))
+			return apierrors.UnprocessableContent(renderValidationErrors(validationErrs))
 		}
 
 		return err
@@ -190,12 +190,12 @@ func ParseAndValidateMultipartRequestBody(req *http.Request, res interface{}) er
 
 func ParseAndValidateRequestBody(req *http.Request, res interface{}) error {
 	if err := json.NewDecoder(req.Body).Decode(res); err != nil {
-		return api_errors.InvalidJson()
+		return apierrors.InvalidJson()
 	}
 	if err := validators.Validate.Struct(res); err != nil {
 		var validationErrs validator.ValidationErrors
 		if ok := errors.As(err, &validationErrs); ok {
-			return api_errors.UnprocessableContent(renderValidationErrors(validationErrs))
+			return apierrors.UnprocessableContent(renderValidationErrors(validationErrs))
 		}
 
 		return err

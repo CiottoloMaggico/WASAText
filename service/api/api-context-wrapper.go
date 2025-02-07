@@ -2,7 +2,7 @@ package api
 
 import (
 	"errors"
-	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	apierrors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/requests"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/gofrs/uuid"
@@ -36,10 +36,10 @@ func (rt *_router) wrap(fn requests.Handler) httprouter.Handle {
 
 		// Call the next handler in chain (usually, the handler function for the path)
 		if err = fn(w, r, ps, ctx); err != nil {
-			var throwableError api_errors.ApiError
+			var throwableError apierrors.ApiError
 			if ok := errors.As(err, &throwableError); !ok {
 				rt.baseLogger.WithError(err).Error("An unexpected error occurred")
-				throwableError = api_errors.NewApiError(http.StatusInternalServerError, "Internal server error")
+				throwableError = apierrors.NewApiError(http.StatusInternalServerError, "Internal server error")
 			}
 
 			if err := views.ThrowError(w, throwableError); err != nil {

@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	apierrors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/filter"
 	"github.com/ciottolomaggico/wasatext/service/controllers/translators"
 	"github.com/ciottolomaggico/wasatext/service/database"
@@ -83,7 +83,7 @@ func (controller MessageControllerImpl) GetConversationMessages(conversationID i
 
 	filterQuery, err := controller.Filter.Evaluate(paginationPs.Filter)
 	if err != nil {
-		return pagination.PaginatedView{}, api_errors.InvalidUrlParameters()
+		return pagination.PaginatedView{}, apierrors.InvalidUrlParameters()
 	}
 	queryParameters := database.NewQueryParameters(paginationPs.Page, paginationPs.Size, filterQuery)
 
@@ -110,7 +110,7 @@ func (controller MessageControllerImpl) DeleteMessage(conversationID int64, mess
 	}
 
 	if message.Author.Uuid != requestIssuerUUID {
-		return api_errors.Forbidden()
+		return apierrors.Forbidden()
 	}
 
 	if err := controller.Model.DeleteMessage(message.Id); err != nil {

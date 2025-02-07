@@ -2,15 +2,15 @@ package translators
 
 import (
 	"errors"
-	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	apierrors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/database"
 	"net/http"
 )
 
-var errDescriptionMapping = map[string]api_errors.ApiError{
-	"message_author_must_be_a_participant":     api_errors.NewApiError(http.StatusUnprocessableEntity, "the author of the message must be a participant of the conversation"),
-	"replied_message_within_same_conversation": api_errors.NewApiError(http.StatusUnprocessableEntity, map[string]string{"repliedMessageId": "the replied message must belongs to the same conversation"}),
-	"group_participants_limit":                 api_errors.NewApiError(http.StatusConflict, "group participants limit reached, you can add at most 200 participants"),
+var errDescriptionMapping = map[string]apierrors.ApiError{
+	"message_author_must_be_a_participant":     apierrors.NewApiError(http.StatusUnprocessableEntity, "the author of the message must be a participant of the conversation"),
+	"replied_message_within_same_conversation": apierrors.NewApiError(http.StatusUnprocessableEntity, map[string]string{"repliedMessageId": "the replied message must belongs to the same conversation"}),
+	"group_participants_limit":                 apierrors.NewApiError(http.StatusConflict, "group participants limit reached, you can add at most 200 participants"),
 }
 
 func DBErrorToApiError(err error) error {
@@ -25,11 +25,11 @@ func DBErrorToApiError(err error) error {
 		}
 		return err
 	} else if errors.Is(DBError.ErrType, database.ErrUnique) {
-		return api_errors.NewApiError(http.StatusConflict, "this resource already exists")
+		return apierrors.NewApiError(http.StatusConflict, "this resource already exists")
 	} else if errors.Is(DBError.ErrType, database.ErrForeignKey) || errors.Is(DBError.ErrType, database.ErrCheck) {
-		return api_errors.NewApiError(http.StatusUnprocessableEntity, "")
+		return apierrors.NewApiError(http.StatusUnprocessableEntity, "")
 	} else if errors.Is(DBError.ErrType, database.ErrNoResult) {
-		return api_errors.NewApiError(http.StatusNotFound, "this resource does not exist")
+		return apierrors.NewApiError(http.StatusNotFound, "this resource does not exist")
 	}
 
 	return err

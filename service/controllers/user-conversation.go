@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	api_errors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
+	apierrors "github.com/ciottolomaggico/wasatext/service/api/api-errors"
 	"github.com/ciottolomaggico/wasatext/service/api/filter"
 	"github.com/ciottolomaggico/wasatext/service/controllers/translators"
 	"github.com/ciottolomaggico/wasatext/service/database"
@@ -24,7 +24,7 @@ type UserConversationControllerImpl struct {
 func (controller UserConversationControllerImpl) GetUserConversations(requestIssuerUUID string, paginationPs pagination.PaginationParams) (pagination.PaginatedView, error) {
 	filterQuery, err := controller.Filter.Evaluate(paginationPs.Filter)
 	if err != nil {
-		return pagination.PaginatedView{}, api_errors.InvalidUrlParameters()
+		return pagination.PaginatedView{}, apierrors.InvalidUrlParameters()
 	}
 
 	queryParameters := database.NewQueryParameters(paginationPs.Page, paginationPs.Size, filterQuery)

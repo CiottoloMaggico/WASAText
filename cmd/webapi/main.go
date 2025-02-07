@@ -29,7 +29,7 @@ import (
 	"fmt"
 	"github.com/ardanlabs/conf"
 	"github.com/ciottolomaggico/wasatext/service/api"
-	app "github.com/ciottolomaggico/wasatext/service/app"
+	"github.com/ciottolomaggico/wasatext/service/app"
 	"github.com/ciottolomaggico/wasatext/service/globaltime"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
@@ -91,7 +91,7 @@ func run() error {
 		logger.Debug("database stopping")
 		_ = dbconn.Close()
 	}()
-	app, err := app.New(dbconn, &cfg.MediaStorage.RootDir, logger)
+	application, err := app.New(dbconn, &cfg.MediaStorage.RootDir, logger)
 	if err != nil {
 		logger.WithError(err).Error("error creating the application")
 		return fmt.Errorf("creating application: %w", err)
@@ -114,7 +114,7 @@ func run() error {
 		Logger:          logger,
 		StaticFilesUrl:  cfg.MediaStorage.UrlPath,
 		StaticFilesPath: cfg.MediaStorage.RootDir,
-	}, app)
+	}, application)
 	if err != nil {
 		logger.WithError(err).Error("error creating the API server instance")
 		return fmt.Errorf("creating the API server instance: %w", err)

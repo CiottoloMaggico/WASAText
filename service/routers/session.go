@@ -4,24 +4,24 @@ import (
 	"github.com/ciottolomaggico/wasatext/service/api/parsers"
 	"github.com/ciottolomaggico/wasatext/service/api/requests"
 	"github.com/ciottolomaggico/wasatext/service/app/routes"
-	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
+	"github.com/ciottolomaggico/wasatext/service/controllers"
 	"github.com/ciottolomaggico/wasatext/service/views"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 )
 
 type SessionRouter struct {
-	Router
+	router
 	Controller controllers.SessionController
 }
 
 func NewSessionRouter(routeFactory routes.RouteFactory, controller controllers.SessionController) ControllerRouter {
 	result := &SessionRouter{
-		NewBaseRouter(routeFactory),
+		newBaseRouter(routeFactory),
 		controller,
 	}
 	result.initializeRoutes()
-	return *result
+	return result
 }
 
 func (router *SessionRouter) initializeRoutes() {
@@ -35,7 +35,7 @@ func (router *SessionRouter) initializeRoutes() {
 	}
 }
 
-func (router SessionRouter) DoLogin(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
+func (router *SessionRouter) DoLogin(w http.ResponseWriter, r *http.Request, params httprouter.Params, context requests.RequestContext) error {
 	requestBody := UsernameRequestBody{}
 	if err := parsers.ParseAndValidateRequestBody(r, &requestBody); err != nil {
 		return err

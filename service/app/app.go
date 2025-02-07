@@ -1,7 +1,6 @@
 package app
 
 import (
-	"errors"
 	"github.com/ciottolomaggico/wasatext/service/api/requests"
 	"github.com/ciottolomaggico/wasatext/service/database"
 	"github.com/ciottolomaggico/wasatext/service/routers"
@@ -26,15 +25,12 @@ type App struct {
 func New(rawDB *sqlx.DB, storageRootPath *string, logger *logrus.Logger) (Application, error) {
 	if logger == nil {
 		panic("logger cannot be nil")
-		return &App{}, errors.New("logger cannot be nil")
 	}
 	if rawDB == nil {
 		panic("database cannot be nil")
-		return &App{}, errors.New("database cannot be nil")
 	}
 	if storageRootPath == nil {
 		panic("storageRootPath cannot be nil")
-		return &App{}, errors.New("storageRootPath cannot be nil")
 	}
 
 	appDB, err := database.New(rawDB)

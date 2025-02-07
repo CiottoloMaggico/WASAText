@@ -1,7 +1,7 @@
 package app
 
 import (
-	controllers "github.com/ciottolomaggico/wasatext/service/controllers"
+	"github.com/ciottolomaggico/wasatext/service/controllers"
 	"github.com/ciottolomaggico/wasatext/service/controllers/filters"
 )
 
