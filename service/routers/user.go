@@ -147,7 +147,9 @@ func (router *UserRouter) SetMyPhoto(w http.ResponseWriter, r *http.Request, par
 	if err != nil {
 		return err
 	}
-	defer file.Close()
+	defer func() {
+		_ = file.Close()
+	}()
 
 	updatedUser, err := router.Controller.SetMyPhoto(authedUserUUID, filepath.Ext(requestBody.Photo.Filename), file)
 	if err != nil {

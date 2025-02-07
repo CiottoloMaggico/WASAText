@@ -89,12 +89,9 @@ func (db *appdbimpl) QueryStruct(dest interface{}, query string, args ...interfa
 	if err != nil {
 		return HandleDBError(err)
 	}
-	defer func(rows *sqlx.Rows) error {
-		if err := rows.Close(); err != nil {
-			return HandleDBError(err)
-		}
-		return nil
-	}(rows)
+	defer func() {
+		_ = rows.Close()
+	}()
 
 	destType = destType.Elem()
 	destValue := reflect.ValueOf(dest).Elem()

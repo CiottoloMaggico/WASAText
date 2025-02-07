@@ -67,7 +67,9 @@ func ValidateImage(fl validator.FieldLevel) bool {
 	if err != nil {
 		return false
 	}
-	defer file.Close()
+	defer func() {
+		_ = file.Close()
+	}()
 
 	mimeType, err := ImageContentValidator(fileHeader.Size, file)
 	if err != nil {

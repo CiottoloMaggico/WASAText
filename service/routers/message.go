@@ -112,7 +112,9 @@ func (router *MessageRouter) SendMessage(w http.ResponseWriter, r *http.Request,
 		if err != nil {
 			return err
 		}
-		defer file.Close()
+		defer func() {
+			_ = file.Close()
+		}()
 
 		fileReader = file
 		tmpExt := filepath.Ext(requestBody.Attachment.Filename)

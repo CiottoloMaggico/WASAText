@@ -112,7 +112,9 @@ func (router *ConversationRouter) CreateGroup(w http.ResponseWriter, r *http.Req
 		if err != nil {
 			return err
 		}
-		defer file.Close()
+		defer func() {
+			_ = file.Close()
+		}()
 		fileReader = file
 		tmpExt := filepath.Ext(requestBody.Photo.Filename)
 		fileExt = &tmpExt
@@ -212,7 +214,9 @@ func (router *ConversationRouter) SetGroupPhoto(w http.ResponseWriter, r *http.R
 	if err != nil {
 		return err
 	}
-	defer file.Close()
+	defer func() {
+		_ = file.Close()
+	}()
 
 	conversation, err := router.Controller.ChangeGroupPhoto(urlParams.ConversationId, authedUserUUID, filepath.Ext(requestBody.Photo.Filename), file)
 	if err != nil {
