@@ -15,11 +15,17 @@ const attachmentPreviewUrl = computed(() => {
 	return URL.createObjectURL(props.newMessage.attachment)
 })
 
+function sendMessage() {
+	emits('sendMessage')
+	clearAttachment()
+}
+
 function fileUploaded() {
 	props.newMessage.attachment = fileUploadElement.value.files.item(0)
 }
 
 function clearAttachment() {
+	fileUploadElement.value.value = null
 	props.newMessage.attachment = null
 }
 
@@ -62,7 +68,7 @@ function clearReplyTo() {
 				</div>
 			</div>
 		</div>
-		<form @submit.prevent="$emit('sendMessage')" class="send-message-form">
+		<form @submit.prevent="sendMessage" class="send-message-form">
 			<div class="input-file-box">
 				<label for="attachment-file">
 					<img class="input-file-icon" src="@/assets/images/plus.png" width="512" height="512"/>

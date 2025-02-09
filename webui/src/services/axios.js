@@ -14,6 +14,14 @@ export const api = axios.create({
 	timeout: 1000 * 5
 });
 
-api.defaults.headers.common['Authorization'] = 'Bearer ' + getAuthentication();
 
+api.interceptors.request.use(
+	config => {
+		config.headers["Authorization"] = `Bearer ${getAuthentication()}`;
+		return config;
+	},
+	error => {
+		return Promise.reject(error);
+	}
+)
 export default api

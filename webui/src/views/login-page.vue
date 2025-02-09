@@ -1,16 +1,15 @@
 <script setup>
 import {ref} from "vue"
-import {SessionService} from "../services/session";
-import router from "../router";
+import {useProfileStore} from "@/stores/profileStore";
+import router from "@/router";
 
+const profileStore = useProfileStore();
 const username = ref("")
 
 async function login() {
-	try {
-		const response = await SessionService.doLogin(username.value)
-		router.push("/")
-	} catch (error) {
-		console.error(error.toString())
+	let err = await profileStore.login(username.value)
+	if (!err) {
+		router.push({name: "homepage"})
 	}
 }
 
@@ -40,6 +39,8 @@ async function login() {
 	flex-flow: column nowrap;
 	justify-content: center;
 	align-items: center;
+	width: 100%;
+	height: 100%;
 }
 
 .login-box {

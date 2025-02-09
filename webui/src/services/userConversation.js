@@ -12,6 +12,17 @@ export const UserConversationService = Object.freeze({
 		}
 
 		return response
+	},
+
+	async getConversation(id) {
+		const authedUserUUID = getAuthentication()
+		const response = await api.get(`/users/${authedUserUUID}/conversations/${id}`)
+
+		if (response.status !== 200) {
+			throw new Error(response.statusText)
+		}
+
+		return response
 	}
 
 })

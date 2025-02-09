@@ -2,11 +2,6 @@
 </script>
 
 <template>
-<!--    <suspense>-->
-<!--        <keep-alive>-->
-<!--            <TheNavbar/>-->
-<!--        </keep-alive>-->
-<!--    </suspense>-->
     <router-view v-slot="{ Component }">
         <template v-if="Component">
                 <suspense timeout="0">
@@ -19,9 +14,4 @@
                 </suspense>
         </template>
     </router-view>
-<!--    <suspense>-->
-<!--        <keep-alive>-->
-<!--            <TheFooter/>-->
-<!--        </keep-alive>-->
-<!--    </suspense>-->
 </template>

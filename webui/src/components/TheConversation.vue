@@ -17,8 +17,7 @@ const props = defineProps({
 		<div class="conversation-card-body">
 			<div class="conversation-title-box">
 				<span class="conversation-title">{{ conversation.name }}</span>
-				<img v-if="!conversation.read" class="unread-dot" src="@/assets/images/icons8-green-dot-48.png"
-					 width="48" height="48"/>
+				<span v-if="!conversation.read" class="unread-dot"/>
 			</div>
 			<div class="conversation-latestMessage-box" v-if="conversation.latestMessage !== null">
 				<span class="checkmark-box" v-if="conversation.latestMessage.author.uuid === getAuthentication()">
@@ -49,7 +48,9 @@ const props = defineProps({
 	height: 5rem;
 	overflow: hidden;
 	width: 100%;
-	padding-left: 10px;
+	display: flex;
+	padding: 0 .5rem;
+	border-bottom: 1px solid #e4e4e4;
 }
 
 .conversation-card:hover{
@@ -79,7 +80,6 @@ const props = defineProps({
 
 .conversation-card-body {
 	align-items: center;
-	border-bottom: 1px solid rgba(128, 128, 128, 0.26);
 	display: flex;
 	flex-flow: column nowrap;
 	height: 100%;
@@ -105,8 +105,11 @@ const props = defineProps({
 }
 
 .unread-dot {
-	width: 1.5rem;
-	height: 1.5rem;
+	width: 1rem;
+	height: 1rem;
+	background-color: var(--PRIMARY-COLOR);
+	border-radius: 50%;
+	flex-shrink: 0;
 }
 
 .conversation-latestMessage-box {

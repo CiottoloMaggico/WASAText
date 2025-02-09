@@ -34,8 +34,8 @@ func New(db *sqlx.DB) (AppDatabase, error) {
 		return nil, errors.New("database is required when building a AppDatabase")
 	}
 
-	RunMigrations(db)
 	db.MustExec("PRAGMA foreign_keys = ON;")
+	RunMigrations(db)
 
 	return &appdbimpl{
 		db,

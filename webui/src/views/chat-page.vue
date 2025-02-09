@@ -1,30 +1,31 @@
 <script setup>
 import {ref, watch, watchEffect, useTemplateRef, nextTick, onMounted, reactive, computed} from "vue"
+import { useRoute } from "vue-router"
 import {MessageService} from "../services/message"
-import MessageComponent from "./MessageComponent.vue";
 import {getAuthentication} from "../services/session";
-import NewMessageBar from "./NewMessageBar.vue";
+import TheMessage from "../components/TheMessage.vue";
+import NewMessageBar from "../components/NewMessageBar.vue";
+import UserConversationService from "../services/userConversation";
 
-const props = defineProps({
-	conversation: Object,
-})
-
+const route = useRoute()
+const conversation = reactive({})
 const messages = ref([])
-const messageContainer = useTemplateRef("message-container")
 const newMessage = reactive({
 	content: null,
 	attachment: null,
 	repliedMessage: null,
 })
 
+const messageContainer = useTemplateRef("message-container")
+
 onMounted(() => {
 	scrollToBottom()
 })
 
 watchEffect(async (onCleanup) => {
-	if (props.conversation) {
-		await getMessages(props.conversation.id)
-
+	if (route.params.convId) {
+		await getConversation(route.params.convId)
+		await getMessages(route.params.convId)
 	}
 
 	onCleanup(() => {
@@ -38,6 +39,15 @@ watch([messages, () => newMessage.attachment], () => {
 	})
 })
 
+async function getConversation(conversationId) {
+	try {
+		const response = await UserConversationService.getConversation(conversationId)
+		Object.assign(conversation, response.data)
+	} catch (err) {
+		console.log(err.toString())
+	}
+}
+
 async function getMessages(conversationId) {
 	try {
 		const response = await MessageService.getMessages(conversationId)
@@ -49,22 +59,22 @@ async function getMessages(conversationId) {
 
 async function sendMessage() {
 	try {
-		const response = await MessageService.sendMessage(props.conversation.id, newMessage)
+		const response = await MessageService.sendMessage(conversation.id, newMessage)
 	} catch (err) {
 		console.log(err.toString())
 	} finally {
 		clearNewMessage()
-		await getMessages(props.conversation.id)
+		await getMessages(route.params.convId)
 	}
 }
 
 async function deleteMessage(message) {
 	try {
-		const response = await MessageService.deleteMessage(props.conversation.id, message.id)
+		const response = await MessageService.deleteMessage(conversation.id, message.id)
 	} catch (err) {
 		console.log(err.toString())
 	} finally {
-		await getMessages(props.conversation.id)
+		await getMessages(route.params.convId)
 	}
 }
 
@@ -96,12 +106,12 @@ function scrollToBottom() {
 			<div class="title">
 				{{ conversation.name }}
 			</div>
-			<div class="info-icon-box">
+			<router-link v-if="conversation.type === 'group'" class="info-icon-box" :to="{ name: 'conversationInfo', params: { convId: conversation.id } }">
 				<img class="info-icon" src="@/assets/images/information.png" width="512" height="512"/>
-			</div>
+			</router-link>
 		</div>
 		<div class="body" ref="message-container">
-			<message-component v-for="message in messages" :key="message.id" :message="message"
+			<the-message v-for="message in messages" :key="message.id" :message="message"
 							   :is-author="message.author.uuid == getAuthentication()" @reply="replyTo"
 							   @delete="deleteMessage"/>
 		</div>
@@ -118,7 +128,7 @@ function scrollToBottom() {
 	flex-flow: column nowrap;
 	height: 100%;
 	justify-content: space-between;
-	width: 80%;
+	width: 100%;
 	flex-grow: 0;
 }
 
@@ -149,6 +159,7 @@ function scrollToBottom() {
 .info-icon-box {
 	width: 2.5rem;
 	height: 2.5rem;
+	flex-shrink: 0;
 }
 
 .info-icon {

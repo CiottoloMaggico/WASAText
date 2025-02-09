@@ -1,4 +1,11 @@
-FROM ubuntu:latest
-LABEL authors="ciottolomaggico"
+FROM node:21-alpine3.19 AS vue-build-stage
+WORKDIR /app
+COPY webui/yarn.lock webui/package.json ./
+RUN yarn install
 
-ENTRYPOINT ["top", "-b"]
+COPY webui/ .
+RUN yarn run build-prod
+
+FROM nginx:stable
+
+COPY --from=vue-build-stage /app/dist/ /usr/share/nginx/html/

@@ -16,10 +16,6 @@ export const MessageService = Object.freeze({
 
 	async sendMessage(conversationId, message) {
 		let cleanedForm = Object.fromEntries(Object.entries(message).filter(([key, v]) => v != null))
-		if (message.repliedMessage) {
-			cleanedForm['repliedMessageId'] = cleanedForm['repliedMessageId']
-		}
-
 
 		const response = await api.post(
 			`/users/${this.authedUserUUID}/conversations/${conversationId}/messages`,
