@@ -1,4 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
+import {getAuthentication, isAuthed} from "@/services/session";
+import {useProfileStore} from "@/stores/profileStore";
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,10 +29,27 @@ const router = createRouter({
 		},
 		{
 			path: '/login',
-			name: "loginPage",
-			component: () => import("@/views/login-page.vue")
+			name: "login",
+			component: () => import("@/views/login-page.vue"),
+			beforeEnter: (to, from) => {
+				if (isAuthed()) {
+					return false
+				}
+			},
 		},
 	]
 })
+
+router.beforeEach(
+	async (to, from) => {
+		if (!isAuthed() && to.name !== 'login') {
+			return { name: "login" }
+		}
+		let profileStore = useProfileStore()
+		if (useProfileStore.getProfile == null) {
+			await profileStore.refreshProfile()
+		}
+	}
+)
 
 export default router

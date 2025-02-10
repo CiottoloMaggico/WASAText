@@ -8,12 +8,13 @@ import (
 )
 
 var sqlOperatorsMapping = map[string]string{
-	"eq": "=",
-	"ne": "!=",
-	"gt": ">",
-	"ge": ">=",
-	"lt": "<",
-	"le": "<=",
+	"eq":   "=",
+	"ne":   "!=",
+	"gt":   ">",
+	"ge":   ">=",
+	"lt":   "<",
+	"le":   "<=",
+	"like": "LIKE",
 }
 
 type SqlFilter struct {
@@ -97,6 +98,5 @@ func (f SqlFilter) Evaluate(formula string) (string, error) {
 		mappedOperand = fmt.Sprintf("%s %s %s", mappedField, mappedOp, explodedOperand[2])
 		result = strings.Replace(result, rawOperand, mappedOperand, -1)
 	}
-
 	return result, nil
 }

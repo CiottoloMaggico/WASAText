@@ -5,7 +5,7 @@ import UserConversationService from "@/services/userConversation";
 
 export const useProfileStore = defineStore("profileStore", {
 	state: () => ({
-		profile: {},
+		profile: null,
 		conversations: [],
 	}),
 	getters: {
@@ -17,8 +17,17 @@ export const useProfileStore = defineStore("profileStore", {
 		async login(username) {
 			try {
 				const response = await SessionService.doLogin(username)
-				Object.assign(this.profile, response.data)
-
+				this.profile = response.data
+				let err = await this.getConversations()
+			} catch (error) {
+				console.error(error.toString())
+				return error
+			}
+		},
+		async refreshProfile() {
+			try {
+				const response = await UserService.getProfile()
+				this.profile = response.data
 				let err = await this.getConversations()
 			} catch (error) {
 				console.error(error.toString())
@@ -28,7 +37,8 @@ export const useProfileStore = defineStore("profileStore", {
 		async changeUsername(newUsername) {
 			try {
 				const response = await UserService.setMyUsername(newUsername)
-				Object.assign(this.profile, response.data)
+				this.profile = response.data
+
 			} catch (error) {
 				console.error(error.toString())
 				return error
@@ -37,7 +47,8 @@ export const useProfileStore = defineStore("profileStore", {
 		async changeAvatar(newAvatar) {
 			try {
 				const response = await UserService.setMyPhoto(newAvatar)
-				Object.assign(this.profile, response.data)
+				this.profile = response.data
+
 			} catch (err) {
 				console.log(err.toString())
 				return error
@@ -46,7 +57,7 @@ export const useProfileStore = defineStore("profileStore", {
 		async getConversations() {
 			try {
 				const response = await UserConversationService.getConversations()
-				Object.assign(this.conversations, response.data.content)
+				this.conversations = response.data.content
 			} catch (err) {
 				console.log(err.toString())
 				return error

@@ -15,6 +15,13 @@ export function getAuthentication() {
 	return token
 }
 
+export function isAuthed() {
+	if (!getAuthentication()) {
+		return false
+	}
+	return true
+}
+
 
 export const SessionService = Object.freeze({
 	async doLogin(username){

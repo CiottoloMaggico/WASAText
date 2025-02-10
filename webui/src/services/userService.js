@@ -1,8 +1,9 @@
 import api from "./axios";
+import qs from "qs";
 import {getAuthentication} from "./session";
 
 export const UserService = Object.freeze({
-	async getProfile(){
+	async getProfile() {
 		const authedUserUUID = getAuthentication()
 		const response = await api.get(`/users/${authedUserUUID}`)
 
@@ -10,6 +11,21 @@ export const UserService = Object.freeze({
 			throw new Error(response.statusText)
 		}
 
+		return response
+	},
+	async getUsers(params) {
+		const response = await api.get(
+			"/users",
+			{
+				params: params,
+				paramsSerializer: (params) => {
+					return qs.stringify(params, {arrayFormat: "repeat"})
+				}
+			},
+		)
+		if (response.status !== 200) {
+			throw new Error(response.statusText)
+		}
 		return response
 	},
 	async setMyUsername(newUsername) {

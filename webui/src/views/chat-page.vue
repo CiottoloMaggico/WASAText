@@ -33,6 +33,11 @@ watchEffect(async (onCleanup) => {
 	})
 })
 
+watch(() => route.params.convId, async (newVal) => {
+	await getConversation(newVal)
+	await getMessages(newVal)
+})
+
 watch([messages, () => newMessage.attachment], () => {
 	nextTick(() => {
 		scrollToBottom()

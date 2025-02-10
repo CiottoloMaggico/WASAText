@@ -7,9 +7,9 @@ import (
 
 var (
 	operandRegex = regexp.MustCompile(
-		`[a-zA-Z_]+\s(?:eq|ne|gt|ge|lt|le)\s(?:'(.*?)'|-?\d+.\d+|-?\d+)|[a-zA-Z]+\s(?:eq|ne)\s(?:null|true|false)`,
+		`[a-zA-Z_]+\s(?:eq|ne|gt|ge|lt|le|like)\s(?:'(.*?)'|-?\d+.\d+|-?\d+)|[a-zA-Z]+\s(?:eq|ne)\s(?:null|true|false)`,
 	)
-	apiOperatorsRegex = regexp.MustCompile(`^(?:eq|ne|ge|gt|le|lt)$`)
+	apiOperatorsRegex = regexp.MustCompile(`^(?:eq|ne|ge|gt|le|lt|like)$`)
 	logicOperators    = []string{"and", "or", "not"}
 )
 

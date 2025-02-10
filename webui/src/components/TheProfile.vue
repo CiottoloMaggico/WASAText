@@ -70,12 +70,12 @@ function fileUploaded() {
 </script>
 
 <template>
-	<div class="detail-page" v-if="!loading">
-		<div class="page-header">
+	<div v-if="!loading" class="sidebar-content">
+		<div class="sidebar-header">
 			<h3 class="header-title">Profile</h3>
 		</div>
 
-		<div class="page-body">
+		<div class="sidebar-body">
 			<div
 				class="avatar-box flex-shrink-0"
 				data-bs-target="#image-modal"
@@ -158,30 +158,7 @@ function fileUploaded() {
 	flex-shrink: 0;
 }
 
-.detail-page {
-	display: flex;
-	flex-flow: column nowrap;
-	width: 100%;
-	height: 100%;
-}
-
-.page-header, .page-footer {
-	flex-shrink: 0;
-}
-
-.page-header {
-	display: flex;
-	flex-flow: column nowrap;
-	padding: 1rem;
-	gap: .5rem;
-}
-
-.header-title {
-	font-weight: bolder;
-	margin-bottom: 0;
-}
-
-.page-body {
+.sidebar-body {
 	display: flex;
 	flex-flow: column nowrap;
 	height: 100%;

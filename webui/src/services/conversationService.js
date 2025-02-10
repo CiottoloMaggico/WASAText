@@ -3,6 +3,52 @@ import api from "../services/axios";
 
 export const ConversationService = Object.freeze({
 
+	async createChat(recipientUuid) {
+		const authedUserUUID = getAuthentication()
+		const response = await api.post(
+			`/users/${authedUserUUID}/chats`,
+			{
+				recipient: recipientUuid,
+			}
+		)
+
+		if (response.status !== 200) {
+			throw new Error(response.statusText)
+		}
+
+		return response
+	},
+	async createGroup(newGroupData) {
+		const authedUserUUID = getAuthentication()
+		let groupData = Object.fromEntries(Object.entries(newGroupData).filter(([key, v]) => v != null && key !== 'participants'))
+		let participants = Object.fromEntries(Object.entries(newGroupData).filter(([key, v]) => key === 'participants'))
+		let response = await api.post(
+			`/users/${authedUserUUID}/groups`,
+			groupData,
+			{
+				headers: {"Content-Type": "multipart/form-data"},
+			}
+		)
+
+		if (response.status !== 200) {
+			throw new Error(response.statusText)
+		}
+		if (participants.participants.length === 0) {
+			return response
+		}
+
+		response = await api.put(
+			`/users/${authedUserUUID}/groups/${response.data.id}`,
+			participants,
+		)
+
+		if (response.status !== 200) {
+			throw new Error(response.statusText)
+		}
+
+		return response
+	},
+
 	async setGroupName(groupId, newName) {
 		const authedUserUUID = getAuthentication()
 		const response = await api.put(
