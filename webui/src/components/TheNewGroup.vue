@@ -33,7 +33,7 @@ async function createGroup() {
 		emits("switch", TheConversationList.__name)
 		router.push({name: "conversation", params: {convId: response.data.id}})
 	} catch (error) {
-		console.error(error.toString())
+		console.error(error)
 		return error
 	}
 }

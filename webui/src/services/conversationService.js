@@ -38,7 +38,10 @@ export const ConversationService = Object.freeze({
 			return response
 		}
 
-		response = this.addToGroup(response.data.id, participants.participants)
+		response = await api.put(
+			`/users/${authedUserUUID}/groups/${response.data.id}`,
+			participants,
+		)
 
 		if (response.status !== 200) {
 			throw new Error(response.statusText)
