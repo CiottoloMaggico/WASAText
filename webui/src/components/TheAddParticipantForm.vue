@@ -17,14 +17,13 @@ const searchQueryParams = computed(() => {
 
 await searchForUsers()
 
-watch(searchedUsername, async (newValue) => {
+watch(searchedUsername, async () => {
 	await searchForUsers()
 })
 
 async function searchForUsers() {
-	let params = searchQueryParams
 	try {
-		const response = await UserService.getUsers(params.value)
+		const response = await UserService.getUsers(searchQueryParams.value)
 		users.value = response.data.content
 	} catch (error) {
 		console.error(error.toString())
@@ -39,7 +38,6 @@ function selectParticipant(participantUuid) {
 		return
 	}
 	props.participants.push(participantUuid)
-	return
 }
 </script>
 

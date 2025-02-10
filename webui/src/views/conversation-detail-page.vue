@@ -60,7 +60,7 @@ async function getConversation(conversationId) {
 
 async function leaveGroup() {
 	try {
-		const response = await ConversationService.leaveGroup(conversation.id)
+		await ConversationService.leaveGroup(conversation.id)
 		router.push({name: "homepage"})
 	} catch (err) {
 		console.log(err.toString())

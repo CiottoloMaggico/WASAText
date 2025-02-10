@@ -47,7 +47,6 @@ const props = defineProps({
 	height: 100%;
 	overflow: hidden;
 	width: 100%;
-	display: flex;
 	padding: 0 .5rem;
 }
 

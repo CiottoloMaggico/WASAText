@@ -19,37 +19,12 @@ const newGroup = reactive({
 	participants: [],
 })
 
-const searchedUsername = ref("")
-const users = ref([])
-
-const searchQueryParams = computed(() => {
-	return {
-		filter: `username like '${searchedUsername.value}%' and uuid ne '${getAuthentication()}'`
-	}
-})
 const newImagePreviewUrl = computed(() => {
 	if (!newGroup.image) {
 		return "/src/assets/images/default_group_image.jpg"
 	}
 	return URL.createObjectURL(newGroup.image)
 })
-
-await searchForUsers()
-
-watch(searchedUsername, async (newValue) => {
-	await searchForUsers()
-})
-
-async function searchForUsers() {
-	let params = searchQueryParams
-	try {
-		const response = await UserService.getUsers(params.value)
-		users.value = response.data.content
-	} catch (error) {
-		console.error(error.toString())
-		return error
-	}
-}
 
 async function createGroup() {
 	try {
@@ -61,16 +36,6 @@ async function createGroup() {
 		console.error(error.toString())
 		return error
 	}
-}
-
-function selectParticipant(participantUuid) {
-	let index = newGroup.participants.indexOf(participantUuid)
-	if (index !== -1) {
-		newGroup.participants.splice(index, 1)
-		return
-	}
-	newGroup.participants.push(participantUuid)
-	return
 }
 
 function fileUploaded() {

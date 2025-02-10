@@ -21,7 +21,7 @@ function selectConversation(conversation) {
 		<div class="sidebar-body">
 			<router-link v-for="conversation in conversations" :key="conversation.id"
 						 :to="{name: 'conversation', params: {convId: conversation.id}}"
-						 :class="(conversation.id == activeConversation.id) ? 'selected' : ''" class="sidebar-item"
+						 :class="(conversation.id === activeConversation.id) ? 'selected' : ''" class="sidebar-item"
 						 @click="selectConversation(conversation)">
 				<the-conversation :conversation="conversation"/>
 			</router-link>
