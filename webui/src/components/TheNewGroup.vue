@@ -6,7 +6,7 @@ import ConversationService from "@/services/conversationService";
 import {useProfileStore} from "@/stores/profileStore";
 import TheConversationList from "@/components/TheConversationList.vue";
 import router from "@/router";
-import TheAddParticipantForm from "@/components/TheAddParticipantForm.vue";
+import AddParticipantForm from "@/components/AddParticipantForm.vue";
 
 const emits = defineEmits(["switch"])
 
@@ -72,7 +72,7 @@ function fileUploaded() {
 						required
 					/>
 				</div>
-				<TheAddParticipantForm :participants="newGroup.participants" :single-mode="false"/>
+				<AddParticipantForm :participants="newGroup.participants" :single-mode="false"/>
 			</div>
 			<div class="form-footer">
 				<button type="submit" class="btn btn-primary">Crea gruppo</button>

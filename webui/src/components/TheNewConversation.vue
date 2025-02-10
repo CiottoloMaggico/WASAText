@@ -3,7 +3,7 @@ import ConversationService from "@/services/conversationService";
 import router from "../router";
 import TheConversationList from "@/components/TheConversationList.vue";
 import TheNewGroup from "@/components/TheNewGroup.vue";
-import TheAddParticipantForm from "@/components/TheAddParticipantForm.vue";
+import AddParticipantForm from "@/components/AddParticipantForm.vue";
 import {useProfileStore} from "@/stores/profileStore";
 
 const emits = defineEmits(["switch"])
@@ -36,7 +36,7 @@ async function createChat(recipientUuid) {
 					<span class="sidebar-item-title">New group</span>
 				</div>
 			</div>
-			<TheAddParticipantForm :single-mode="true" @add-participant="createChat"/>
+			<AddParticipantForm :single-mode="true" @add-participant="createChat"/>
 		</div>
 	</div>
 </template>

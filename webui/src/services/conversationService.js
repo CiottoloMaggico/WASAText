@@ -22,6 +22,7 @@ export const ConversationService = Object.freeze({
 		const authedUserUUID = getAuthentication()
 		let groupData = Object.fromEntries(Object.entries(newGroupData).filter(([key, v]) => v != null && key !== 'participants'))
 		let participants = Object.fromEntries(Object.entries(newGroupData).filter(([key, v]) => key === 'participants'))
+
 		let response = await api.post(
 			`/users/${authedUserUUID}/groups`,
 			groupData,
@@ -37,10 +38,7 @@ export const ConversationService = Object.freeze({
 			return response
 		}
 
-		response = await api.put(
-			`/users/${authedUserUUID}/groups/${response.data.id}`,
-			participants,
-		)
+		response = this.addToGroup(response.data.id, participants.participants)
 
 		if (response.status !== 200) {
 			throw new Error(response.statusText)
@@ -48,7 +46,20 @@ export const ConversationService = Object.freeze({
 
 		return response
 	},
+	async addToGroup(groupId, participants) {
+		const authedUserUUID = getAuthentication()
+		const response = await api.put(
+			`/users/${authedUserUUID}/groups/${groupId}`,
+			{
+				participants: participants,
+			},
+		)
 
+		if (response.status !== 200) {
+			throw new Error(response.statusText)
+		}
+		return response
+	},
 	async setGroupName(groupId, newName) {
 		const authedUserUUID = getAuthentication()
 		const response = await api.put(

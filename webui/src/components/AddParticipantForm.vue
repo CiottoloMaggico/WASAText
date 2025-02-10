@@ -27,7 +27,6 @@ async function searchForUsers() {
 		users.value = response.data.content
 	} catch (error) {
 		console.error(error.toString())
-		return error
 	}
 }
 

@@ -5,6 +5,8 @@ import UserConversationService from "../services/userConversation";
 import ConversationService from "../services/conversationService";
 import {getApiUrl} from "../services/axios";
 import router from "../router";
+import AddParticipantForm from "@/components/AddParticipantForm.vue";
+import AddParticipantModal from "@/components/AddParticipantModal.vue";
 
 const route = useRoute()
 
@@ -107,7 +109,7 @@ async function changePhoto() {
 		console.log(err.toString())
 	}
 
-	newGroupImage.value = null
+	clearImageChange()
 	loading.value = false
 }
 
@@ -172,9 +174,16 @@ function initializePage() {
 				</form>
 			</div>
 
-
 			<div class="participants-list-box mb-4">
-				<label class="form-label fw-semibold">Participants</label>
+				<div class="d-flex justify-content-between px-2">
+					<label class="form-label fw-semibold">Participants</label>
+					<img data-bs-target="#participants-modal"
+						 data-bs-toggle="modal"
+						 alt="add participants"
+						 class="form-icon"
+						 src="@/assets/images/plus.svg"
+					/>
+				</div>
 				<div class="participants-list">
 					<ul class="list-group list-group-flush">
 						<li
@@ -189,15 +198,15 @@ function initializePage() {
 			</div>
 		</div>
 
-
 		<div class="page-footer d-flex justify-content-between flex-shrink-0">
 			<button class="btn btn-danger rounded-pill px-4" @click="leaveGroup">
 				Leave group
 			</button>
 		</div>
+	<add-participant-modal :conversation="conversation" :participants="conversation.participants" :single-mode="false"/>
+	</div>
 
-
-		<div
+	<div
 			class="modal fade"
 			ref="image-modal"
 			id="image-modal"
@@ -233,7 +242,6 @@ function initializePage() {
 				</div>
 			</div>
 		</div>
-	</div>
 </template>
 
 <style scoped>
