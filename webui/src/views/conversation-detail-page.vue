@@ -1,5 +1,5 @@
 <script setup>
-import {ref, watch, watchEffect, useTemplateRef, nextTick, onBeforeMount, reactive, computed} from "vue"
+import {computed, nextTick, onBeforeMount, reactive, ref, useTemplateRef, watchEffect} from "vue"
 import {useRoute} from "vue-router"
 import UserConversationService from "../services/userConversation";
 import ConversationService from "../services/conversationService";
@@ -7,21 +7,14 @@ import {getApiUrl} from "../services/axios";
 import router from "../router";
 
 const route = useRoute()
-const loading = ref(false);
 
-const newGroupName = ref("")
-const editName = ref(false);
+const newImageField = useTemplateRef("file-upload")
 const newNameField = useTemplateRef("group-name")
 
+const loading = ref(false);
+const newGroupName = ref("")
+const editName = ref(false);
 const newGroupImage = ref(null)
-const editImage = ref(false)
-const newImageField = useTemplateRef("file-upload")
-const newImagePreviewUrl = computed(() => {
-	if (!newGroupImage.value) {
-		return ""
-	}
-	return URL.createObjectURL(newGroupImage.value)
-})
 
 const conversation = reactive({
 	id: Number,
@@ -30,6 +23,13 @@ const conversation = reactive({
 	type: String,
 	read: Boolean,
 	participants: [],
+})
+
+const newImagePreviewUrl = computed(() => {
+	if (!newGroupImage.value) {
+		return getApiUrl(conversation.image.fullUrl)
+	}
+	return URL.createObjectURL(newGroupImage.value)
 })
 
 onBeforeMount(async () => {
@@ -107,17 +107,12 @@ async function changePhoto() {
 		console.log(err.toString())
 	}
 
-	editImage.value = false
 	newGroupImage.value = null
 	loading.value = false
 }
 
-function initChangePhoto() {
-	editImage.value = true
-}
 
 function clearImageChange() {
-	editImage.value = false
 	newGroupImage.value = null
 	newImageField.value.value = null
 }
@@ -144,12 +139,11 @@ function initializePage() {
 			<div class="mb-4 d-flex align-items-center gap-2">
 				<div
 					class="group-image-box flex-shrink-0"
-					@click="initChangePhoto"
 					data-bs-target="#image-modal"
 					data-bs-toggle="modal"
 				>
 					<img
-						:src="(!editImage || !newImagePreviewUrl) ? getApiUrl(conversation.image.fullUrl) : newImagePreviewUrl"
+						:src="newImagePreviewUrl"
 						:width="conversation.image.width"
 						:height="conversation.image.height"
 						alt="Gruppo"

@@ -4,12 +4,11 @@ import {getAuthentication} from "../services/session";
 
 const props = defineProps({
 	conversation: Object,
-	selected: Boolean,
 })
 </script>
 
 <template>
-	<div class="conversation-card" :class="{active: selected}">
+	<div class="conversation-card">
 		<picture class="conversation-image-box">
 			<img :src="getApiUrl(conversation.image.fullUrl)" :width="conversation.image.width"
 				 :height="conversation.image.height" class="conversation-image"/>
@@ -45,21 +44,11 @@ const props = defineProps({
 	align-items: center;
 	display: flex;
 	flex-flow: row nowrap;
-	height: 5rem;
+	height: 100%;
 	overflow: hidden;
 	width: 100%;
 	display: flex;
 	padding: 0 .5rem;
-	border-bottom: 1px solid #e4e4e4;
-}
-
-.conversation-card:hover{
-	cursor: pointer;
-	background: var(--SECONDARY-COLOR);
-}
-
-.active {
-	background-color: var(--SECONDARY-COLOR);
 }
 
 .conversation-image-box {
@@ -93,7 +82,6 @@ const props = defineProps({
 .conversation-title-box {
 	display: flex;
 	flex-flow: row nowrap;
-	flex-shrink: 0;
 	width: 100%;
 }
 

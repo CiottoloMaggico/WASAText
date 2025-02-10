@@ -1,6 +1,5 @@
 <script setup>
-import {ref, reactive} from "vue"
-import UserConversationService from "../services/userConversation"
+import {reactive} from "vue"
 import TheConversation from "./TheConversation.vue";
 import {storeToRefs} from "pinia";
 import {useProfileStore} from "@/stores/profileStore";
@@ -22,9 +21,9 @@ function selectConversation(conversation) {
 		<div class="sidebar-body">
 			<router-link v-for="conversation in conversations" :key="conversation.id"
 						 :to="{name: 'conversation', params: {convId: conversation.id}}"
+						 :class="(conversation.id == activeConversation.id) ? 'selected' : ''" class="sidebar-item"
 						 @click="selectConversation(conversation)">
-				<the-conversation :conversation="conversation"
-								  :selected="conversation.id == activeConversation.id"/>
+				<the-conversation :conversation="conversation"/>
 			</router-link>
 		</div>
 	</div>
@@ -32,9 +31,16 @@ function selectConversation(conversation) {
 
 <style scoped>
 .sidebar-body {
-	height: 100%;
-	overflow: auto;
-	scroll-behavior: smooth;
+	overflow-y: scroll !important;
+}
+
+.sidebar-item {
+	border-bottom: 1px solid #e4e4e4;
+}
+
+.selected {
+	border-bottom: none;
+	background: var(--SECONDARY-COLOR);
 }
 
 

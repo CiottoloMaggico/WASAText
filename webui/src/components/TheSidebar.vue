@@ -59,6 +59,58 @@ function switchComponent(componentName) {
 	height: 100%;
 }
 
+:deep(.sidebar-body) {
+	display: flex;
+	flex-flow: column nowrap;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	align-items: center;
+	max-height: 100%;
+}
+
+:deep(.sidebar-group) {
+	display: flex;
+	width: 100%;
+	flex-flow: column nowrap;
+	max-height: 100%;
+	overflow: hidden;
+}
+
+:deep(.sidebar-group-header) {
+	width: 100%;
+	padding: 1rem;
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+:deep(.sidebar-group-title) {
+	font-size: 1.3rem;
+	font-weight: 600;
+}
+
+:deep(.sidebar-item) {
+	display: flex;
+	flex-shrink: 0;
+	align-items: center;
+	width: 100%;
+	height: 5rem;
+}
+
+:deep(.selected), :deep(.sidebar-item:hover) {
+	background: var(--SECONDARY-COLOR);
+	border: none;
+}
+
+:deep(.sidebar-item:hover) {
+	cursor: pointer;
+}
+
+:deep(.sidebar-item-title) {
+	font-size: 1.2rem;
+	font-weight: 600;
+}
+
 .sidebar {
 	width: 30%;
 	height: 100%;

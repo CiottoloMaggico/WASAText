@@ -1,24 +1,23 @@
 <script setup>
-import {ref, watch, watchEffect, useTemplateRef, nextTick, onBeforeMount, reactive, computed} from "vue"
+import {computed, nextTick, ref, useTemplateRef} from "vue"
 import {getApiUrl} from "../services/axios";
 import {useProfileStore} from "@/stores/profileStore";
 import {storeToRefs} from 'pinia'
 
-const newNameField = useTemplateRef("profile-username")
-const newImageField = useTemplateRef("file-upload")
-
 const profileStore = useProfileStore()
 const { profile } = storeToRefs(profileStore)
+
+const newNameField = useTemplateRef("profile-username")
+const newImageField = useTemplateRef("file-upload")
 
 const loading = ref(false)
 const editUsername = ref(false)
 const newUsername = ref(profile.value.username)
 const newProfileImage = ref(null)
-const editImage = ref(false)
 
 const newImagePreviewUrl = computed(() => {
 	if (!newProfileImage.value) {
-		return ""
+		return getApiUrl(profile.value.photo.fullUrl)
 	}
 	return URL.createObjectURL(newProfileImage.value)
 })
@@ -48,17 +47,11 @@ async function changePhoto() {
 	loading.value = true
 	await profileStore.changeAvatar(newProfileImage.value)
 
-	editImage.value = false
 	newProfileImage.value = null
 	loading.value = false
 }
 
-function initChangePhoto() {
-	editImage.value = true
-}
-
 function clearImageChange() {
-	editImage.value = false
 	newProfileImage.value = null
 	newImageField.value.value = null
 }
@@ -80,10 +73,9 @@ function fileUploaded() {
 				class="avatar-box flex-shrink-0"
 				data-bs-target="#image-modal"
 				data-bs-toggle="modal"
-				@click="initChangePhoto"
 			>
 				<img
-					:src="(!editImage || !newImagePreviewUrl) ? getApiUrl(profile.photo.fullUrl) : newImagePreviewUrl"
+					:src="newImagePreviewUrl"
 					:width="profile.photo.width"
 					:height="profile.photo.height"
 					class="avatar me-3"

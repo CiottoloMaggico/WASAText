@@ -1,11 +1,12 @@
 <script setup>
-import {ref, watch, watchEffect, useTemplateRef, nextTick, onBeforeMount, reactive, computed} from "vue"
+import {computed, reactive, ref, useTemplateRef, watch} from "vue"
 import UserService from "@/services/userService";
 import {getAuthentication} from "@/services/session";
 import ConversationService from "@/services/conversationService";
 import {useProfileStore} from "@/stores/profileStore";
 import TheConversationList from "@/components/TheConversationList.vue";
 import router from "@/router";
+import TheAddParticipantForm from "@/components/TheAddParticipantForm.vue";
 
 const emits = defineEmits(["switch"])
 
@@ -99,33 +100,14 @@ function fileUploaded() {
 					<input
 						v-model="newGroup.name"
 						ref="profile-username"
-						class="profile-username-input d-inline mb-1"
+						class="text-input d-inline mb-1"
 						minlength="3"
 						maxlength="16"
 						placeholder="Group name"
 						required
 					/>
 				</div>
-
-				<div class="sidebar-group h-100">
-					<div class="sidebar-group-header">
-				<span class="sidebar-group-title">
-					Search user
-				</span>
-						<input v-model="searchedUsername" class="search-bar" placeholder="Search"/>
-					</div>
-					<div class="users-container">
-						<div v-if="users.length !== 0" v-for="user in users" :key="user.uuid"
-							 class="sidebar-item user-item"
-							 :class="(newGroup.participants.includes(user.uuid)) ? 'selected' : ''"
-							 @click="selectParticipant(user.uuid)">
-							<span class="username">{{ user.username }}</span>
-						</div>
-						<div v-else class="sidebar-item">
-							<span class="sidebar-item-title">No users found</span>
-						</div>
-					</div>
-				</div>
+				<TheAddParticipantForm :participants="newGroup.participants" :single-mode="false"/>
 			</div>
 			<div class="form-footer">
 				<button type="submit" class="btn btn-primary">Crea gruppo</button>
@@ -135,10 +117,6 @@ function fileUploaded() {
 </template>
 
 <style scoped>
-.selected {
-	background: var(--SECONDARY-COLOR);
-	border: none !important;
-}
 
 .form-icon {
 	width: 1.5rem;
@@ -155,15 +133,6 @@ function fileUploaded() {
 	overflow: hidden;
 }
 
-.sidebar-body {
-	display: flex;
-	flex-flow: column nowrap;
-	height: 100%;
-	overflow: hidden;
-	align-items: center;
-	gap: 1rem;
-}
-
 .profile-username-box {
 	display: flex;
 	flex-flow: row nowrap;
@@ -175,7 +144,7 @@ function fileUploaded() {
 	flex-shrink: 0;
 }
 
-.profile-username-input {
+.text-input {
 	font-size: 2rem;
 	color: #000;
 	width: 100%;
@@ -187,24 +156,10 @@ function fileUploaded() {
 	overflow: hidden;
 }
 
-.profile-username-input:focus {
+.text-input:focus {
 	box-shadow: none;
 	border: none;
 	outline: none;
-}
-
-.avatar-box {
-	position: relative;
-	width: 250px;
-	height: 250px;
-}
-
-.avatar-box:hover {
-	filter: brightness(.8);
-
-	.image-edit {
-		display: block;
-	}
 }
 
 .image-edit {
@@ -214,81 +169,25 @@ function fileUploaded() {
 	left: calc(50% - 7px);
 }
 
+.avatar-box {
+	position: relative;
+	width: 250px;
+	height: 250px;
+
+	&:hover {
+		filter: brightness(.8);
+
+		.image-edit {
+			display: block;
+		}
+	}
+}
+
 .avatar {
 	width: 100%;
 	height: 100%;
 	border-radius: 50%;
 	object-fit: cover;
-}
-
-.sidebar-group {
-	display: flex;
-	width: 100%;
-	flex-shrink: 0;
-	flex-flow: column nowrap;
-	border-bottom: 1px solid #aaaaaa;
-	max-height: 100%;
-}
-
-.sidebar-group-header {
-	width: 100%;
-	padding: 1rem;
-	display: flex;
-	flex-flow: column nowrap;
-	gap: 1rem;
-	border-top: 1px solid #aaaaaa;
-	border-bottom: 1px solid #aaaaaa;
-}
-
-.search-bar {
-	height: 2.5rem;
-	width: 100%;
-	border: 1px solid #aaaaaa;
-	background: #e4e4e4;
-	border-radius: 1rem;
-	padding: 0 .5rem;
-}
-
-.sidebar-group-title {
-	font-size: 1.3rem;
-	font-weight: 600;
-}
-
-.sidebar-item {
-	padding: 0 1rem;
-	display: flex;
-	flex-shrink: 0;
-	align-items: center;
-	width: 100%;
-	height: 5rem;
-	border-bottom: 1px solid #e4e4e4;
-}
-
-.sidebar-item:hover {
-	background: var(--SECONDARY-COLOR);
-	border: none;
-	cursor: pointer;
-}
-
-.sidebar-item-title {
-	font-size: 1.2rem;
-	font-weight: 600;
-}
-
-.users-container {
-	overflow-y: scroll;
-	overflow-x: hidden;
-	height: 100%;
-	width: 100%;
-}
-
-.user-item {
-	height: 3rem;
-}
-
-.username {
-	font-size: 1rem;
-	font-weight: 500;
 }
 
 .form-footer {
