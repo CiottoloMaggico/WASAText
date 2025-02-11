@@ -20,6 +20,15 @@ export const MessageService = Object.freeze({
 
 		return response
 	},
+	async getMessage(conversationId, messageId) {
+		const response = await api.get(`/users/${getAuthentication()}/conversations/${conversationId}/messages/${messageId}`)
+
+		if (response.status !== 200) {
+			throw new Error(response.statusText)
+		}
+
+		return response
+	},
 	async sendMessage(conversation, newMessage) {
 		let cleanedForm = Object.fromEntries(Object.entries(newMessage).filter(([key, v]) => v != null && key !== "repliedMessage"))
 

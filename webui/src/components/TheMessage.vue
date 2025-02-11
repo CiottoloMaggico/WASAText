@@ -1,12 +1,11 @@
 <script setup>
 import {getApiUrl} from "../services/axios";
-import {computed, ref, useTemplateRef} from "vue";
+import {computed, onBeforeMount, reactive, ref, useTemplateRef} from "vue";
 import EmojiPicker from 'vue3-emoji-picker'
 import 'vue3-emoji-picker/css'
 import MessageService from "@/services/messageService";
 import ShowCommentsModal from "@/components/ShowCommentsModal.vue";
 import ForwardingModal from "@/components/ForwardingModal.vue";
-import {isAuthed} from "@/services/sessionService";
 
 const props = defineProps({
 	message: Object,
@@ -20,10 +19,19 @@ const showEmojiPicker = ref(false)
 const showCommentsModal = ref(false)
 const showForwardModal = ref(false)
 
+
+const repliedMessage = reactive({})
+
 const sendAt = computed(() => {
 	return new Date(props.message.sendAt).toLocaleString([], {dateStyle: 'short', timeStyle: 'short'})
 })
 
+onBeforeMount(async () => {
+	if (!props.message.repliedMessageId) {
+		return
+	}
+	await getRepliedMessage()
+})
 
 async function setComment(emoji) {
 	try {
@@ -42,6 +50,15 @@ async function deleteMessage() {
 		console.log(err.toString())
 	} finally {
 		emits("update")
+	}
+}
+
+async function getRepliedMessage() {
+	try {
+		const response = await MessageService.getMessage(props.message.conversationId, props.message.repliedMessageId)
+		Object.assign(repliedMessage, response.data)
+	} catch (err) {
+		console.log(err.toString())
 	}
 }
 
@@ -86,6 +103,23 @@ function emojiPickerPosition() {
 			<div class="message-side" :class="{'author-message-side' : isAuthor}">
 				<div class="message">
 					<div class="body">
+						<div v-if="repliedMessage.id" class="replied-message-box">
+							<div class="replied-message-content">
+								<div class="replied-message-author">
+									{{ repliedMessage.author.username }}
+								</div>
+								<div class="replied-message-text-box">
+									<span v-if="repliedMessage.content"
+										  class="replied-message-text">
+										{{ repliedMessage.content }}
+									</span>
+								</div>
+							</div>
+							<span v-if="repliedMessage.attachment" class="replied-message-image-box">
+									<img class="replied-message-image"
+										 :src="getApiUrl(repliedMessage.attachment.fullUrl)"/>
+								</span>
+						</div>
 						<div class="content">
 							<div v-if="message.attachment !== null" class="message-image-box"
 								 :class="{'mb-2' : message.content !== null}">
@@ -97,24 +131,27 @@ function emojiPickerPosition() {
 						</span>
 						</div>
 						<div class="info-box">
-						<span class="send-at">
-							{{ sendAt }}
-						</span>
+							<span class="send-at">
+								{{ sendAt }}
+							</span>
 							<span class="checkmark-box" v-if="isAuthor">
 							<img v-if="message.status === 'delivered'" class="checkmark"
 								 src="@/assets/images/Checkmark.png" width="512" height="512"/>
 							<img v-else-if="message.status === 'seen'" class="checkmark"
 								 src="@/assets/images/seen.png" width="512" height="512"/>
-						</span>
+							</span>
 						</div>
 					</div>
 				</div>
-				<span class="comment-btn" v-click-outside="closeEmojiPicker">
-						<img class="svg-icon" ref="emoji-picker-toggle" src="@/assets/images/emoji.svg"
+				<span class="comment-btn" ref="emoji-picker-toggle" v-click-outside="closeEmojiPicker">
+						<img class="svg-icon" src="@/assets/images/emoji.svg"
 							 alt="add comment to the message"
 							 @click="showEmojiPicker = !showEmojiPicker"/>
-						<emoji-picker v-show="showEmojiPicker" :class="emojiPickerPosition()" class="emoji-picker"
-									  :native="true" @select="setComment"/>
+						<div class="emoji-picker" :class="emojiPickerPosition()">
+							<emoji-picker v-show="showEmojiPicker" class="position-fixed"
+										  :native="true" @select="setComment"/>
+
+						</div>
 				</span>
 			</div>
 			<div class="options-box">
@@ -213,13 +250,7 @@ function emojiPickerPosition() {
 	flex-flow: row nowrap;
 	height: 100%;
 	width: 100%;
-}
-
-.message {
-	display: flex;
-	flex-flow: column nowrap;
-	padding: 5px;
-	max-width: 60%;
+	justify-content: space-between;
 }
 
 .message-side {
@@ -228,11 +259,19 @@ function emojiPickerPosition() {
 	height: 100%;
 	flex-flow: row nowrap;
 	justify-content: start;
+	overflow: hidden;
 }
 
 .author-message-side {
 	justify-content: end;
 	flex-direction: row-reverse;
+}
+
+.message {
+	display: flex;
+	flex-flow: column nowrap;
+	padding: 5px;
+	max-width: 60%;
 }
 
 .header {
@@ -275,6 +314,7 @@ function emojiPickerPosition() {
 	min-height: 2rem;
 	padding: .7rem;
 	width: fit-content;
+	max-width: 100%;
 }
 
 .content {
@@ -286,7 +326,7 @@ function emojiPickerPosition() {
 }
 
 .message-image-box {
-	max-width: 336px;
+	max-width: 100%;
 	overflow: hidden;
 	background-color: #fff;
 	border-radius: 4px;
@@ -302,6 +342,7 @@ function emojiPickerPosition() {
 	align-items: center;
 	width: 100%;
 	justify-content: space-between;
+	gap: 10px;
 }
 
 .send-at {
@@ -316,6 +357,68 @@ function emojiPickerPosition() {
 .checkmark {
 	width: 100%;
 	height: 100%;
+}
+
+.replied-message-box {
+	width: 100%;
+	height: 4rem;
+	background-color: #aaa;
+	border-radius: 5px;
+	padding: 5px;
+	margin-bottom: 5px;
+	max-width: 100%;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
+	gap: 10px;
+	overflow: hidden;
+}
+
+.replied-message-content {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: space-between;
+	width: 100%;
+	overflow: hidden;
+	height: 100%;
+	flex-grow: 0;
+}
+
+.replied-message-author {
+	font-size: .9rem;
+	flex-shrink: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+
+.replied-message-text-box {
+	width: 100%;
+	height: 100%;
+	padding: 5px 0;
+}
+
+.replied-message-text {
+	width: 100%;
+	font-size: .8rem;
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.replied-message-image-box {
+	width: 3rem;
+	height: 3rem;
+	flex-shrink: 0;
+}
+
+.replied-message-image {
+	width: 100%;
+	height: 100%;
+	border-radius: 5px;
+	object-fit: cover;
 }
 
 </style>

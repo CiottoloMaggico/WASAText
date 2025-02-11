@@ -182,6 +182,7 @@ function clearAll() {
 	height: 100%;
 	justify-content: center;
 	align-items: start;
+	overflow: hidden;
 }
 
 .replied-message-author {
@@ -211,6 +212,8 @@ function clearAll() {
 .replied-message-image {
 	width: 100%;
 	height: 100%;
+	object-fit: cover;
+	border-radius: 5px;
 }
 
 .attachment-preview-box {

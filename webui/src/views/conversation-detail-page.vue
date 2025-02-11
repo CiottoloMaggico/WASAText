@@ -131,12 +131,10 @@ function initializePage() {
 }
 
 function updateActiveConversation() {
-	if (conversation.latestMessage) {
-		activeConversation.value.latestMessage = conversation.latestMessage
-	}
 	activeConversation.value.name = conversation.name
 	activeConversation.value.image = conversation.image
 	activeConversation.value.read = conversation.read
+	activeConversation.value.latestMessage = conversation.latestMessage
 }
 </script>
 

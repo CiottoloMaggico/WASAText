@@ -6,7 +6,7 @@ import TheSidebar from "../components/TheSidebar.vue";
 	<main>
 		<the-sidebar/>
 
-		<router-view/>
+		<router-view class="overflow-hidden"/>
 	</main>
 </template>
 

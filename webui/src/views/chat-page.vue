@@ -1,5 +1,5 @@
 <script setup>
-import {nextTick, reactive, ref, useTemplateRef, watch, watchEffect} from "vue"
+import {nextTick, ref, useTemplateRef, watch, watchEffect} from "vue"
 import {MessageService} from "../services/messageService"
 import {getAuthentication} from "../services/sessionService";
 import TheMessage from "../components/TheMessage.vue";
@@ -58,14 +58,18 @@ function updateActiveConversation() {
 		return
 	}
 	let latestMessage = messages.value[0]
-	activeConversation.value.latestMessage.id = latestMessage.id
-	activeConversation.value.latestMessage.author.uuid = latestMessage.author.uuid
-	activeConversation.value.latestMessage.author.username = latestMessage.author.username
-	activeConversation.value.latestMessage.author.photo = latestMessage.author.photo.uuid
-	activeConversation.value.latestMessage.sendAt = latestMessage.sendAt
-	activeConversation.value.latestMessage.status = latestMessage.status
-	activeConversation.value.latestMessage.content = latestMessage.content
-	activeConversation.value.latestMessage.attachment = latestMessage.attachment
+	activeConversation.value.latestMessage = {
+		id: latestMessage.id,
+		author: {
+			uuid: latestMessage.author.uuid,
+			username: latestMessage.author.username,
+			photo: latestMessage.author.photo.uuid
+		},
+		sendAt: latestMessage.sendAt,
+		status: latestMessage.status,
+		content: latestMessage.content,
+		attachment: latestMessage.attachment,
+	}
 }
 
 </script>
