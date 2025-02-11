@@ -1,14 +1,15 @@
 <script setup>
 import {computed, nextTick, onBeforeMount, reactive, ref, useTemplateRef, watchEffect} from "vue"
-import {useRoute} from "vue-router"
 import UserConversationService from "../services/userConversationService";
 import ConversationService from "../services/conversationService";
 import {getApiUrl} from "../services/axios";
 import router from "../router";
-import AddParticipantForm from "@/components/AddParticipantForm.vue";
 import AddParticipantModal from "@/components/AddParticipantModal.vue";
+import {useProfileStore} from "@/stores/profileStore";
+import {storeToRefs} from "pinia";
 
-const route = useRoute()
+const profileStore = useProfileStore()
+const {activeConversation} = storeToRefs(profileStore);
 
 const newImageField = useTemplateRef("file-upload")
 const newNameField = useTemplateRef("group-name")
@@ -34,25 +35,20 @@ const newImagePreviewUrl = computed(() => {
 	return URL.createObjectURL(newGroupImage.value)
 })
 
-onBeforeMount(async () => {
-	await getConversation(route.params.convId)
-})
-
 watchEffect(async (onCleanup) => {
-	if (route.params.convId) {
-		await getConversation(route.params.convId)
-	}
+	await getConversation()
 
 	onCleanup(() => {
 		initializePage()
 	})
 })
 
-async function getConversation(conversationId) {
+async function getConversation() {
 	loading.value = true
 	try {
-		const response = await UserConversationService.getConversation(conversationId)
+		const response = await UserConversationService.getConversation(activeConversation.value.id)
 		Object.assign(conversation, response.data)
+		updateActiveConversation()
 		newGroupName.value = conversation.name
 	} catch (err) {
 		console.log(err.toString())
@@ -63,9 +59,11 @@ async function getConversation(conversationId) {
 async function leaveGroup() {
 	try {
 		await ConversationService.leaveGroup(conversation)
-		await router.push({name: "homepage"})
 	} catch (err) {
 		console.log(err.toString())
+	} finally {
+		router.push({name: "homepage"})
+		await profileStore.refreshProfile()
 	}
 }
 
@@ -74,6 +72,7 @@ async function changeName() {
 	try {
 		const response = await ConversationService.setGroupName(conversation, newGroupName.value)
 		Object.assign(conversation, response.data)
+		updateActiveConversation()
 	} catch (err) {
 		console.log(err.toString())
 	}
@@ -105,6 +104,7 @@ async function changePhoto() {
 	try {
 		const response = await ConversationService.setGroupPhoto(conversation, newGroupImage.value)
 		Object.assign(conversation, response.data)
+		updateActiveConversation()
 	} catch (err) {
 		console.log(err.toString())
 	}
@@ -128,6 +128,13 @@ function initializePage() {
 	Object.assign(conversation, {})
 	clearImageChange()
 	clearNameChange()
+}
+
+function updateActiveConversation() {
+	activeConversation.value.name = conversation.name
+	activeConversation.value.image = conversation.image
+	activeConversation.value.latestMessage = conversation.latestMessage
+	activeConversation.value.read = conversation.read
 }
 </script>
 

@@ -7,6 +7,7 @@ import router from "@/router";
 
 const props = defineProps(["message", "show"])
 const emits = defineEmits(["close"]);
+
 const conversations = ref([])
 
 const {message, show} = toRefs(props)

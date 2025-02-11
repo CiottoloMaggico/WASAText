@@ -6,6 +6,7 @@ import 'vue3-emoji-picker/css'
 import MessageService from "@/services/messageService";
 import ShowCommentsModal from "@/components/ShowCommentsModal.vue";
 import ForwardingModal from "@/components/ForwardingModal.vue";
+import {isAuthed} from "@/services/sessionService";
 
 const props = defineProps({
 	message: Object,
@@ -58,73 +59,79 @@ function emojiPickerPosition() {
 	let halfContainerHeight = height / 2
 	let toggleY = emojiPickerToggle.value.getBoundingClientRect().y
 
+	let direction = 'high-picker'
 	if (toggleY < y + halfContainerHeight) {
-		return 'low-picker'
-	} else {
-		return 'high-picker'
+		direction = 'low-picker'
 	}
+
+	if (props.isAuthor) {
+		return direction + ' author-picker'
+	}
+	return direction
 }
 </script>
 
 <template>
-	<div class="message-row" :class="{'author-message-row': isAuthor}">
-		<div class="message-box" :class="{'author-message-box': isAuthor}">
-			<span class="comment-btn" v-click-outside="closeEmojiPicker">
-					<img class="svg-icon" ref="emoji-picker-toggle" src="@/assets/images/emoji.svg"
-						 alt="add comment to the message"
-						 @click="showEmojiPicker = !showEmojiPicker"/>
-					<emoji-picker v-show="showEmojiPicker" :class="emojiPickerPosition()" class="emoji-picker"
-								  :native="true" @select="setComment"/>
-			</span>
-			<div class="message">
-				<div v-if="!isAuthor" class="header">
-					<div class="sender-avatar-box">
-						<img class="sender-avatar" :src="getApiUrl(message.author.photo.fullUrl)"
-							 :width="message.author.photo.width" :height="message.author.photo.height"/>
-					</div>
-					<div class="sender-name-box">
-						<span class="sender-name">{{ message.author.username }}</span>
-					</div>
-				</div>
-				<div class="body">
-					<div class="content">
-						<div v-if="message.attachment !== null" class="message-image-box"
-							 :class="{'mb-2' : message.content !== null}">
-							<img class="message-image" :src="getApiUrl(message.attachment.fullUrl)"
-								 :width="message.attachment.fullUrl.width" :height="message.attachment.fullUrl.height"/>
-						</div>
-						<span v-if="message.content !== null" class="message-text">
-						{{ message.content }}
-					</span>
-					</div>
-					<div class="info-box">
-					<span class="send-at">
-						{{ sendAt }}
-					</span>
-						<span class="checkmark-box" v-if="isAuthor">
-						<img v-if="message.status === 'delivered'" class="checkmark"
-							 src="@/assets/images/Checkmark.png" width="512" height="512"/>
-						<img v-else-if="message.status === 'seen'" class="checkmark"
-							 src="@/assets/images/seen.png" width="512" height="512"/>
-					</span>
-					</div>
-				</div>
+	<div class="message-row">
+		<div v-if="!isAuthor" class="header">
+			<div class="sender-avatar-box">
+				<img class="sender-avatar" :src="getApiUrl(message.author.photo.fullUrl)"
+					 :width="message.author.photo.width" :height="message.author.photo.height"/>
+			</div>
+			<div class="sender-name-box">
+				<span class="sender-name">{{ message.author.username }}</span>
 			</div>
 		</div>
-		<div class="options-box">
-			<div class="option" :data-bs-target="`#comments-modal-${message.id}`" data-bs-toggle="modal"
-				 @click="showCommentsModal = true">
-				<img class="option-icon" src="@/assets/images/emoji.svg" alt=""/>
+		<div class="message-box" :class="{'author-message-box': isAuthor}">
+			<div class="message-side" :class="{'author-message-side' : isAuthor}">
+				<div class="message">
+					<div class="body">
+						<div class="content">
+							<div v-if="message.attachment !== null" class="message-image-box"
+								 :class="{'mb-2' : message.content !== null}">
+								<img class="message-image" :src="getApiUrl(message.attachment.fullUrl)"
+									 :width="message.attachment.fullUrl.width" :height="message.attachment.fullUrl.height"/>
+							</div>
+							<span v-if="message.content !== null" class="message-text">
+							{{ message.content }}
+						</span>
+						</div>
+						<div class="info-box">
+						<span class="send-at">
+							{{ sendAt }}
+						</span>
+							<span class="checkmark-box" v-if="isAuthor">
+							<img v-if="message.status === 'delivered'" class="checkmark"
+								 src="@/assets/images/Checkmark.png" width="512" height="512"/>
+							<img v-else-if="message.status === 'seen'" class="checkmark"
+								 src="@/assets/images/seen.png" width="512" height="512"/>
+						</span>
+						</div>
+					</div>
+				</div>
+				<span class="comment-btn" v-click-outside="closeEmojiPicker">
+						<img class="svg-icon" ref="emoji-picker-toggle" src="@/assets/images/emoji.svg"
+							 alt="add comment to the message"
+							 @click="showEmojiPicker = !showEmojiPicker"/>
+						<emoji-picker v-show="showEmojiPicker" :class="emojiPickerPosition()" class="emoji-picker"
+									  :native="true" @select="setComment"/>
+				</span>
 			</div>
-			<div class="option" @click="$emit('wantReply', message)">
-				<img class="option-icon" src="@/assets/images/reply.png" alt=""/>
-			</div>
-			<div class="option" @click="deleteMessage">
-				<img class="option-icon" src="@/assets/images/bin.png" alt=""/>
-			</div>
-			<div class="option" :data-bs-target="`#forward-modal-${message.id}`" data-bs-toggle="modal"
-				 @click="showForwardModal = true">
-				<img class="option-icon" src="@/assets/images/forward.png" alt=""/>
+			<div class="options-box">
+				<div class="option" :data-bs-target="`#comments-modal-${message.id}`" data-bs-toggle="modal"
+					 @click="showCommentsModal = true">
+					<img class="option-icon" src="@/assets/images/emoji.svg" alt=""/>
+				</div>
+				<div class="option" @click="$emit('wantReply', message)">
+					<img class="option-icon" src="@/assets/images/reply.png" alt=""/>
+				</div>
+				<div class="option" @click="deleteMessage">
+					<img class="option-icon" src="@/assets/images/bin.png" alt=""/>
+				</div>
+				<div class="option" :data-bs-target="`#forward-modal-${message.id}`" data-bs-toggle="modal"
+					 @click="showForwardModal = true">
+					<img class="option-icon" src="@/assets/images/forward.png" alt=""/>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -148,7 +155,7 @@ function emojiPickerPosition() {
 
 .emoji-picker {
 	position: absolute;
-	left: -280px;
+	left: 0;
 }
 
 .low-picker {
@@ -159,20 +166,19 @@ function emojiPickerPosition() {
 	top: -320px;
 }
 
-
-.author-message-row {
-	flex-direction: row-reverse !important;
+.author-picker {
+	left: -280px
 }
 
 .author-message-box {
 	justify-content: end;
+	flex-direction: row-reverse !important;
 }
 
 .message-row {
 	flex-shrink: 0;
 	display: flex;
-	flex-flow: row nowrap;
-	align-items: center;
+	flex-flow: column nowrap;
 	width: 100%;
 	min-height: 1rem;
 	margin-bottom: 10px;
@@ -189,8 +195,8 @@ function emojiPickerPosition() {
 }
 
 .option {
-	width: 2.5rem;
-	height: 2.5rem;
+	width: 1.5rem;
+	height: 1.5rem;
 	outline: 1px solid black;
 	border-radius: 50%;
 	cursor: pointer;
@@ -202,9 +208,9 @@ function emojiPickerPosition() {
 	scale: 0.8
 }
 
-
 .message-box {
 	display: flex;
+	flex-flow: row nowrap;
 	height: 100%;
 	width: 100%;
 }
@@ -214,6 +220,19 @@ function emojiPickerPosition() {
 	flex-flow: column nowrap;
 	padding: 5px;
 	max-width: 60%;
+}
+
+.message-side {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	flex-flow: row nowrap;
+	justify-content: start;
+}
+
+.author-message-side {
+	justify-content: end;
+	flex-direction: row-reverse;
 }
 
 .header {

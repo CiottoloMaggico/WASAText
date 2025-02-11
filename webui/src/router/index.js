@@ -31,9 +31,9 @@ const router = createRouter({
 			path: '/login',
 			name: "login",
 			component: () => import("@/views/login-page.vue"),
-			beforeEnter: (to, from) => {
+			beforeEnter: () => {
 				if (isAuthed()) {
-					return false
+					return {name: "homepage"}
 				}
 			},
 		},
@@ -46,7 +46,7 @@ router.beforeEach(
 			return { name: "login" }
 		}
 		let profileStore = useProfileStore()
-		if (useProfileStore.getProfile == null) {
+		if (profileStore.getProfile == null) {
 			await profileStore.refreshProfile()
 		}
 	}

@@ -35,6 +35,7 @@ async function getMessages() {
 	try {
         const response = await MessageService.setSeen(activeConversation.value)
 		messages.value = response.data.content
+		updateActiveConversation()
 	} catch (err) {
 		console.log(err.toString())
 	}
@@ -50,6 +51,18 @@ function scrollToBottom() {
 
 function updateReply(message) {
 	newMessageReplyTo.value = message
+}
+
+function updateActiveConversation() {
+	let latestMessage = messages.value[0]
+	activeConversation.value.latestMessage.id = latestMessage.id
+	activeConversation.value.latestMessage.author.uuid = latestMessage.author.uuid
+	activeConversation.value.latestMessage.author.username = latestMessage.author.username
+	activeConversation.value.latestMessage.author.photo = latestMessage.author.photo.uuid
+	activeConversation.value.latestMessage.sendAt = latestMessage.sendAt
+	activeConversation.value.latestMessage.status = latestMessage.status
+	activeConversation.value.latestMessage.content = latestMessage.content
+	activeConversation.value.latestMessage.attachment = latestMessage.attachment
 }
 
 </script>
