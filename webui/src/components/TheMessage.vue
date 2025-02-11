@@ -5,6 +5,7 @@ import EmojiPicker from 'vue3-emoji-picker'
 import 'vue3-emoji-picker/css'
 import MessageService from "@/services/message";
 import ShowCommentsModal from "@/components/ShowCommentsModal.vue";
+import ForwardingModal from "@/components/ForwardingModal.vue";
 
 const props = defineProps({
 	message: Object,
@@ -15,6 +16,7 @@ const emits = defineEmits(["reply", "delete", "forward"])
 
 const showEmojiPicker = ref(false)
 const showCommentsModal = ref(false)
+const showForwardModal = ref(false)
 
 const sendAt = computed(() => {
 	return new Date(props.message.sendAt).toLocaleString([], {dateStyle: 'short', timeStyle: 'short'})
@@ -36,10 +38,6 @@ function replyTo() {
 
 function deleteMessage() {
 	emits("delete", props.message)
-}
-
-function forward() {
-	emits("forward", props.message)
 }
 
 function closeEmojiPicker() {
@@ -104,11 +102,12 @@ function closeEmojiPicker() {
 				<img class="option-icon" src="@/assets/images/bin.png" alt=""/>
 			</div>
 			<div class="option" @click="forward">
-				<img class="option-icon" src="@/assets/images/forward.png" alt=""/>
+				<img class="option-icon" src="@/assets/images/forward.png" alt="" :data-bs-target="`#forward-modal-${message.id}`" data-bs-toggle="modal" @click="showForwardModal = true"/>
 			</div>
 		</div>
 	</div>
 	<show-comments-modal :message="message" :show="showCommentsModal" @close="showCommentsModal = false"/>
+	<forwarding-modal :message="message" :show="showForwardModal" @close="showForwardModal = false"/>
 </template>
 
 <style scoped>

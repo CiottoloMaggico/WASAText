@@ -16,9 +16,11 @@ export const useProfileStore = defineStore("profileStore", {
 	actions: {
 		async login(username) {
 			try {
-				const response = await SessionService.doLogin(username)
+				let response = await SessionService.doLogin(username)
 				this.profile = response.data
-				let err = await this.getConversations()
+
+				response = await UserConversationService.setDelivered()
+				this.conversations = response.data.content
 			} catch (error) {
 				console.error(error.toString())
 				return error
@@ -26,9 +28,11 @@ export const useProfileStore = defineStore("profileStore", {
 		},
 		async refreshProfile() {
 			try {
-				const response = await UserService.getProfile()
+				let response = await UserService.getProfile()
 				this.profile = response.data
-				let err = await this.getConversations()
+
+				response = await UserConversationService.setDelivered()
+				this.conversations = response.data.content
 			} catch (error) {
 				console.error(error.toString())
 				return error
@@ -56,7 +60,7 @@ export const useProfileStore = defineStore("profileStore", {
 		},
 		async getConversations() {
 			try {
-				const response = await UserConversationService.getConversations()
+				const response = await UserConversationService.getConversations({})
 				this.conversations = response.data.content
 			} catch (err) {
 				console.log(err.toString())

@@ -76,6 +76,20 @@ export const MessageService = Object.freeze({
 		}
 
 		return response
+	},
+	async forwardMessage(message, destination) {
+		const response = await api.post(
+			`/users/${this.authedUserUUID}/conversations/${message.conversationId}/messages/${message.id}/forward`,
+			{
+				destConversationId : destination.id,
+			}
+		)
+
+		if (response.status !== 200) {
+			throw new Error(response.statusText)
+		}
+
+		return response
 	}
 
 })

@@ -1,12 +1,11 @@
 <script setup>
-import {ref, watch, watchEffect, useTemplateRef, nextTick, onMounted, reactive, computed} from "vue"
-import { useRoute } from "vue-router"
+import {nextTick, onMounted, reactive, ref, useTemplateRef, watch, watchEffect} from "vue"
+import {useRoute} from "vue-router"
 import {MessageService} from "../services/message"
 import {getAuthentication} from "../services/session";
 import TheMessage from "../components/TheMessage.vue";
 import NewMessageBar from "../components/NewMessageBar.vue";
 import UserConversationService from "../services/userConversation";
-import ShowCommentsModal from "@/components/ShowCommentsModal.vue";
 
 const route = useRoute()
 
@@ -35,7 +34,7 @@ watchEffect(async (onCleanup) => {
 	})
 })
 
-watch(() => route.params.convId, async (newVal) => {
+watch(() => {return route.params.convId}, async (newVal) => {
 	await getConversation(newVal)
 	await getMessages(newVal)
 })
