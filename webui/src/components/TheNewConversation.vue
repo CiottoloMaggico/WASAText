@@ -10,12 +10,12 @@ const emits = defineEmits(["switch"])
 
 const profileStore = useProfileStore()
 
-async function createChat(recipientUuid) {
+async function createChat(recipient) {
 	try {
-		const response = await ConversationService.createChat(recipientUuid)
+		const response = await ConversationService.createChat(recipient)
 		await profileStore.getConversations()
+		await router.push({name: "conversation", params: {convId: response.data.id}})
 		emits("switch", TheConversationList.__name)
-		router.push({name: "conversation", params: {convId: response.data.id}})
 	} catch (error) {
 		// TODO: redirect to the existing conversation
 		console.error(error.toString())

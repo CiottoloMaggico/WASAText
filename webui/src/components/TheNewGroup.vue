@@ -1,7 +1,7 @@
 <script setup>
 import {computed, reactive, ref, useTemplateRef, watch} from "vue"
 import UserService from "@/services/userService";
-import {getAuthentication} from "@/services/session";
+import {getAuthentication} from "@/services/sessionService";
 import ConversationService from "@/services/conversationService";
 import {useProfileStore} from "@/stores/profileStore";
 import TheConversationList from "@/components/TheConversationList.vue";

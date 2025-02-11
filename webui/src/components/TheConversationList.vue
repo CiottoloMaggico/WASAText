@@ -1,16 +1,15 @@
 <script setup>
-import {reactive} from "vue"
-import TheConversation from "./TheConversation.vue";
 import {storeToRefs} from "pinia";
 import {useProfileStore} from "@/stores/profileStore";
+import TheConversation from "@/components/TheConversation.vue";
 
 const profileStore = useProfileStore()
-const {conversations} = storeToRefs(profileStore);
-const activeConversation = reactive({})
+const {conversations, activeConversation} = storeToRefs(profileStore);
 
-function selectConversation(conversation) {
-	Object.assign(activeConversation, conversation)
+function isSelected(conversation) {
+	return (activeConversation.value && conversation.id == activeConversation.value.id)
 }
+
 </script>
 
 <template>
@@ -21,8 +20,8 @@ function selectConversation(conversation) {
 		<div class="sidebar-body">
 			<router-link v-for="conversation in conversations" :key="conversation.id"
 						 :to="{name: 'conversation', params: {convId: conversation.id}}"
-						 :class="(conversation.id === activeConversation.id) ? 'selected' : ''" class="sidebar-item"
-						 @click="selectConversation(conversation)">
+						 :class="{'selected' : isSelected(conversation)}"
+						 class="sidebar-item">
 				<the-conversation :conversation="conversation"/>
 			</router-link>
 		</div>

@@ -1,6 +1,6 @@
 <script setup>
 import {computed, ref, watch} from "vue"
-import {getAuthentication} from "@/services/session";
+import {getAuthentication} from "@/services/sessionService";
 import UserService from "@/services/userService";
 
 const props = defineProps(["participants", "singleMode"])
@@ -52,7 +52,7 @@ function selectParticipant(participantUuid) {
 			<div v-for="user in users" v-if="users.length !== 0" :key="user.uuid"
 				 :class="(!singleMode && participants.includes(user.uuid)) ? 'selected' : ''"
 				 class="sidebar-item user-item"
-				 @click="(!singleMode) ? selectParticipant(user.uuid) : $emit('addParticipant', user.uuid)">
+				 @click="(!singleMode) ? selectParticipant(user.uuid) : $emit('addParticipant', user)">
 				<span class="username">{{ user.username }}</span>
 			</div>
 			<div v-else class="sidebar-item">

@@ -1,14 +1,24 @@
 import {defineStore} from "pinia"
-import SessionService from "@/services/session";
+import SessionService from "@/services/sessionService";
 import UserService from "@/services/userService";
-import UserConversationService from "@/services/userConversation";
+import UserConversationService from "@/services/userConversationService";
+import {useRoute} from "vue-router";
 
 export const useProfileStore = defineStore("profileStore", {
 	state: () => ({
+		route: useRoute(),
 		profile: null,
 		conversations: [],
 	}),
 	getters: {
+		activeConversation: (state) => {
+			let conversation = state.conversations.find((conversation) => conversation.id == state.route.params.convId)
+			if (!state.route.params.convId || !conversation) {
+				return null
+			}
+
+			return conversation
+		},
 		getProfile: (state) => {
 			return state.profile
 		},
@@ -66,6 +76,6 @@ export const useProfileStore = defineStore("profileStore", {
 				console.log(err.toString())
 				return error
 			}
-		}
+		},
 	}
 })

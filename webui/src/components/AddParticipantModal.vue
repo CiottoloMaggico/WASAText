@@ -1,6 +1,6 @@
 <script setup>
 import {computed, ref, watch} from "vue"
-import {getAuthentication} from "@/services/session";
+import {getAuthentication} from "@/services/sessionService";
 import UserService from "@/services/userService";
 import ConversationService from "@/services/conversationService";
 
@@ -28,7 +28,7 @@ watch(searchedUsername, async () => {
 
 async function addParticipants() {
 	try {
-		const response = await ConversationService.addToGroup(props.conversation.id, addedUsers.value)
+		const response = await ConversationService.addToGroup(props.conversation, addedUsers.value)
 		Object.assign(props.conversation, response.data)
 		clearSelections()
 	} catch (error) {

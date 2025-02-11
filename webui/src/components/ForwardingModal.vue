@@ -1,8 +1,8 @@
 <script setup>
 import {ref, toRefs, watch} from "vue"
-import MessageService from "@/services/message";
+import MessageService from "@/services/messageService";
 import {getApiUrl} from "@/services/axios";
-import UserConversationService from "@/services/userConversation";
+import UserConversationService from "@/services/userConversationService";
 import router from "@/router";
 
 const props = defineProps(["message", "show"])
@@ -41,7 +41,6 @@ async function forwardMessage(destConversation) {
 function closeModal() {
 	emits("close")
 }
-
 </script>
 
 <template>

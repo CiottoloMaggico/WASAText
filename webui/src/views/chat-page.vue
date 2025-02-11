@@ -1,32 +1,23 @@
 <script setup>
-import {nextTick, onMounted, reactive, ref, useTemplateRef, watch, watchEffect} from "vue"
-import {useRoute} from "vue-router"
-import {MessageService} from "../services/message"
-import {getAuthentication} from "../services/session";
+import {nextTick, reactive, ref, useTemplateRef, watch, watchEffect} from "vue"
+import {MessageService} from "../services/messageService"
+import {getAuthentication} from "../services/sessionService";
 import TheMessage from "../components/TheMessage.vue";
 import NewMessageBar from "../components/NewMessageBar.vue";
-import UserConversationService from "../services/userConversation";
+import {useProfileStore} from "@/stores/profileStore";
+import {storeToRefs} from "pinia";
 
-const route = useRoute()
-
-const messages = ref([])
-const conversation = reactive({})
-const newMessage = reactive({
-	content: null,
-	attachment: null,
-	repliedMessage: null,
-})
+const profileStore = useProfileStore()
+const {activeConversation} = storeToRefs(profileStore);
 
 const messageContainer = useTemplateRef("message-container")
 
-onMounted(() => {
-	scrollToBottom()
-})
+const newMessageReplyTo = ref(null)
+const messages = ref([])
 
 watchEffect(async (onCleanup) => {
-	if (route.params.convId) {
-		await getConversation(route.params.convId)
-		await getMessages(route.params.convId)
+    if (activeConversation.value) {
+        await getMessages()
 	}
 
 	onCleanup(() => {
@@ -34,95 +25,54 @@ watchEffect(async (onCleanup) => {
 	})
 })
 
-watch(() => {return route.params.convId}, async (newVal) => {
-	await getConversation(newVal)
-	await getMessages(newVal)
-})
-
-watch([messages, () => newMessage.attachment], () => {
+watch(messages, () => {
 	nextTick(() => {
 		scrollToBottom()
 	})
 })
 
-async function getConversation(conversationId) {
+async function getMessages() {
 	try {
-		const response = await UserConversationService.getConversation(conversationId)
-		Object.assign(conversation, response.data)
-	} catch (err) {
-		console.log(err.toString())
-	}
-}
-
-async function getMessages(conversationId) {
-	try {
-		const response = await MessageService.getMessages(conversationId)
+        const response = await MessageService.setSeen(activeConversation.value)
 		messages.value = response.data.content
 	} catch (err) {
 		console.log(err.toString())
 	}
 }
 
-async function sendMessage() {
-	try {
-		const response = await MessageService.sendMessage(conversation.id, newMessage)
-	} catch (err) {
-		console.log(err.toString())
-	} finally {
-		clearNewMessage()
-		await getMessages(route.params.convId)
-	}
-}
-
-async function deleteMessage(message) {
-	try {
-		const response = await MessageService.deleteMessage(conversation.id, message.id)
-	} catch (err) {
-		console.log(err.toString())
-	} finally {
-		await getMessages(route.params.convId)
-	}
-}
-
-function replyTo(message) {
-	newMessage.repliedMessage = message
-}
-
 function initializePage() {
 	messages.value = []
-	clearNewMessage()
-}
-
-function clearNewMessage() {
-	Object.assign(newMessage, {
-		content: null,
-		attachment: null,
-		repliedMessage: null,
-	})
 }
 
 function scrollToBottom() {
 	messageContainer.value.scrollTo({behavior: "instant", top: messageContainer.value.scrollHeight})
 }
+
+function updateReply(message) {
+	newMessageReplyTo.value = message
+}
+
 </script>
 
 <template>
 	<div class="chat-component">
 		<div class="header">
 			<div class="title">
-				{{ conversation.name }}
+                {{ activeConversation.name }}
 			</div>
-			<router-link v-if="conversation.type === 'group'" class="info-icon-box" :to="{ name: 'conversationInfo', params: { convId: conversation.id } }">
+            <router-link v-if="activeConversation.type === 'group'" class="info-icon-box"
+                         :to="{ name: 'conversationInfo', params: { convId: activeConversation.id } }">
 				<img class="info-icon" src="@/assets/images/information.png" width="512" height="512"/>
 			</router-link>
 		</div>
 		<div class="body" ref="message-container">
 			<the-message v-for="message in messages" :key="message.id" :message="message"
-							   :is-author="message.author.uuid === getAuthentication()" @reply="replyTo"
-							   @delete="deleteMessage"/>
+                         :is-author="message.author.uuid === getAuthentication()"
+						 :message-container="messageContainer"
+                         @update="getMessages" @want-reply="updateReply"/>
 		</div>
 		<div class="footer">
-			<new-message-bar :new-message="newMessage" @sendMessage="sendMessage"/>
+            <new-message-bar @update="getMessages" @clear-reply="newMessageReplyTo = null" :conversation="activeConversation" :want-reply="newMessageReplyTo"/>
 		</div>
 	</div>
 </template>
@@ -178,7 +128,8 @@ function scrollToBottom() {
 	height: 100%;
 	overflow-y: scroll;
 	overflow-x: hidden;
-	padding-top: 2rem;
+    display: flex;
+    flex-flow: column-reverse nowrap;
 }
 
 .footer {

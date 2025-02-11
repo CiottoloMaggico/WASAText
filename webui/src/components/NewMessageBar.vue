@@ -1,46 +1,83 @@
 <script setup>
-import {reactive, computed, useTemplateRef} from "vue"
+import {computed, reactive, useTemplateRef, watch} from "vue"
 import {getApiUrl} from "../services/axios";
-import {getAuthentication} from "../services/session";
+import {getAuthentication} from "../services/sessionService";
+import MessageService from "@/services/messageService";
 
-const props = defineProps(["newMessage"])
-const emits = defineEmits(["sendMessage"])
+const props = defineProps(["conversation", "wantReply"])
+const emits = defineEmits(["update", "clearReply"])
 
 const fileUploadElement = useTemplateRef("file-upload")
 
-const attachmentPreviewUrl = computed(() => {
-	if (!props.newMessage.attachment) {
-		return ""
-	}
-	return URL.createObjectURL(props.newMessage.attachment)
+const newMessage = reactive({
+	content: null,
+	attachment: null,
+	repliedMessage: props.wantReply,
 })
 
-function sendMessage() {
-	emits('sendMessage')
-	clearAttachment()
+const attachmentPreviewUrl = computed(() => {
+	if (!newMessage.attachment) {
+		return ""
+	}
+	return URL.createObjectURL(newMessage.attachment)
+})
+const previewEnabled = computed(() => {
+	return newMessage.repliedMessage || newMessage.attachment
+})
+
+watch(() => props.wantReply, (newReply) => {
+	if (newReply) {
+		newMessage.repliedMessage = newReply
+	}
+})
+
+watch(() => props.conversation.id, () => {
+	clearAll()
+})
+
+async function sendMessage() {
+	try {
+		await MessageService.sendMessage(props.conversation, newMessage)
+	} catch (err) {
+		console.log(err.toString())
+	} finally {
+		emits('update')
+		clearAll()
+	}
 }
 
 function fileUploaded() {
-	props.newMessage.attachment = fileUploadElement.value.files.item(0)
+	newMessage.attachment = fileUploadElement.value.files.item(0)
 }
 
 function clearAttachment() {
 	fileUploadElement.value.value = null
-	props.newMessage.attachment = null
+	newMessage.attachment = null
 }
 
 function clearReplyTo() {
-	props.newMessage.repliedMessage = null
+	newMessage.repliedMessage = null
+	emits("clearReply", null)
+}
+
+function clearAll() {
+	Object.assign(newMessage, {
+		content: null,
+		attachment: null,
+		repliedMessage: null,
+	})
+	fileUploadElement.value.value = null
+	emits("clearReply", null)
 }
 </script>
 
 <template>
-	<div class="new-message-bar" :class="{'preview-enabled' : newMessage.attachment || newMessage.repliedMessage}">
-		<div v-if="newMessage.attachment || newMessage.repliedMessage" class="message-attachment-row">
+	<div class="new-message-bar" :class="{'preview-enabled' : previewEnabled}">
+		<div v-if="previewEnabled" class="message-attachment-row">
 			<div v-if="newMessage.attachment" class="attachment-preview-box">
-						<span class="cancel-attachment" @click="clearAttachment">
-							<img class="cancel-icon" src="@/assets/images/cancel.png" width="30" height="30"/>
-						</span>
+				<span class="cancel-attachment" @click="clearAttachment">
+					<img class="cancel-icon" src="@/assets/images/cancel.png" width="30" height="30"/>
+				</span>
 				<img class="attachment-preview" :src="attachmentPreviewUrl"/>
 			</div>
 			<div v-if="newMessage.repliedMessage" class="replied-message-box">

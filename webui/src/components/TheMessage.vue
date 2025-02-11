@@ -1,19 +1,20 @@
 <script setup>
 import {getApiUrl} from "../services/axios";
-import {computed, ref} from "vue";
+import {computed, ref, useTemplateRef} from "vue";
 import EmojiPicker from 'vue3-emoji-picker'
 import 'vue3-emoji-picker/css'
-import MessageService from "@/services/message";
+import MessageService from "@/services/messageService";
 import ShowCommentsModal from "@/components/ShowCommentsModal.vue";
 import ForwardingModal from "@/components/ForwardingModal.vue";
 
 const props = defineProps({
 	message: Object,
 	isAuthor: Boolean,
+	messageContainer: Object
 })
+const emits = defineEmits(["update", "wantReply"])
 
-const emits = defineEmits(["reply", "delete", "forward"])
-
+const emojiPickerToggle = useTemplateRef("emoji-picker-toggle");
 const showEmojiPicker = ref(false)
 const showCommentsModal = ref(false)
 const showForwardModal = ref(false)
@@ -22,22 +23,25 @@ const sendAt = computed(() => {
 	return new Date(props.message.sendAt).toLocaleString([], {dateStyle: 'short', timeStyle: 'short'})
 })
 
+
 async function setComment(emoji) {
 	try {
-		const response = await MessageService.commentMessage(props.message.conversationId, props.message.id, emoji.i)
+		await MessageService.commentMessage(props.message, emoji.i)
 	} catch (e) {
 		console.error(e.toString())
+	} finally {
+		closeEmojiPicker()
 	}
-	closeEmojiPicker()
 }
 
-
-function replyTo() {
-	emits("reply", props.message)
-}
-
-function deleteMessage() {
-	emits("delete", props.message)
+async function deleteMessage() {
+	try {
+		await MessageService.deleteMessage(props.message)
+	} catch (err) {
+		console.log(err.toString())
+	} finally {
+		emits("update")
+	}
 }
 
 function closeEmojiPicker() {
@@ -46,15 +50,31 @@ function closeEmojiPicker() {
 	}
 }
 
+function emojiPickerPosition() {
+	if (!emojiPickerToggle.value) {
+		return
+	}
+	let {height, y} = props.messageContainer.getBoundingClientRect()
+	let halfContainerHeight = height / 2
+	let toggleY = emojiPickerToggle.value.getBoundingClientRect().y
+
+	if (toggleY < y + halfContainerHeight) {
+		return 'low-picker'
+	} else {
+		return 'high-picker'
+	}
+}
 </script>
 
 <template>
 	<div class="message-row" :class="{'author-message-row': isAuthor}">
 		<div class="message-box" :class="{'author-message-box': isAuthor}">
 			<span class="comment-btn" v-click-outside="closeEmojiPicker">
-					<img class="svg-icon" src="@/assets/images/emoji.svg" alt="add comment to the message"
+					<img class="svg-icon" ref="emoji-picker-toggle" src="@/assets/images/emoji.svg"
+						 alt="add comment to the message"
 						 @click="showEmojiPicker = !showEmojiPicker"/>
-					<emoji-picker v-show="showEmojiPicker" class="emoji-picker" :native="true" @select="setComment"/>
+					<emoji-picker v-show="showEmojiPicker" :class="emojiPickerPosition()" class="emoji-picker"
+								  :native="true" @select="setComment"/>
 			</span>
 			<div class="message">
 				<div v-if="!isAuthor" class="header">
@@ -92,17 +112,19 @@ function closeEmojiPicker() {
 			</div>
 		</div>
 		<div class="options-box">
-			<div class="option">
-				<img class="option-icon" src="@/assets/images/emoji.svg" alt="" :data-bs-target="`#comments-modal-${message.id}`" data-bs-toggle="modal" @click="showCommentsModal = true"/>
+			<div class="option" :data-bs-target="`#comments-modal-${message.id}`" data-bs-toggle="modal"
+				 @click="showCommentsModal = true">
+				<img class="option-icon" src="@/assets/images/emoji.svg" alt=""/>
 			</div>
-			<div class="option" @click="replyTo">
+			<div class="option" @click="$emit('wantReply', message)">
 				<img class="option-icon" src="@/assets/images/reply.png" alt=""/>
 			</div>
 			<div class="option" @click="deleteMessage">
 				<img class="option-icon" src="@/assets/images/bin.png" alt=""/>
 			</div>
-			<div class="option" @click="forward">
-				<img class="option-icon" src="@/assets/images/forward.png" alt="" :data-bs-target="`#forward-modal-${message.id}`" data-bs-toggle="modal" @click="showForwardModal = true"/>
+			<div class="option" :data-bs-target="`#forward-modal-${message.id}`" data-bs-toggle="modal"
+				 @click="showForwardModal = true">
+				<img class="option-icon" src="@/assets/images/forward.png" alt=""/>
 			</div>
 		</div>
 	</div>
@@ -129,6 +151,14 @@ function closeEmojiPicker() {
 	left: -280px;
 }
 
+.low-picker {
+	top: 0;
+}
+
+.high-picker {
+	top: -320px;
+}
+
 
 .author-message-row {
 	flex-direction: row-reverse !important;
@@ -139,6 +169,7 @@ function closeEmojiPicker() {
 }
 
 .message-row {
+	flex-shrink: 0;
 	display: flex;
 	flex-flow: row nowrap;
 	align-items: center;

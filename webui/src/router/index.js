@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import {isAuthed} from "@/services/session";
+import {isAuthed} from "@/services/sessionService";
 import {useProfileStore} from "@/stores/profileStore";
 
 const router = createRouter({

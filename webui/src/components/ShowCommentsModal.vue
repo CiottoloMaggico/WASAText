@@ -1,8 +1,8 @@
 <script setup>
 import {toRefs, ref, watch} from "vue"
-import MessageService from "@/services/message";
+import MessageService from "@/services/messageService";
 import {getApiUrl} from "@/services/axios";
-import {getAuthentication} from "@/services/session";
+import {getAuthentication} from "@/services/sessionService";
 
 const props = defineProps(["message", "show"])
 const emits = defineEmits(["close"]);
@@ -18,7 +18,7 @@ watch(show, async (newVal, oldVal) => {
 
 async function getComments() {
 	try {
-		const response = await MessageService.getComments(message.value.conversationId, message.value.id)
+		const response = await MessageService.getComments(message.value)
 		comments.value = response.data
 	} catch (e) {
 		console.error(e)
@@ -27,7 +27,7 @@ async function getComments() {
 
 async function deleteComment() {
 	try {
-		await MessageService.uncommentMessage(message.value.conversationId, message.value.id)
+		await MessageService.uncommentMessage(message.value)
 		await getComments()
 	} catch (e) {
 		console.error(e)

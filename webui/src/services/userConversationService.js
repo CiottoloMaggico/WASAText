@@ -1,12 +1,11 @@
-import {getAuthentication} from "./session";
+import {getAuthentication} from "./sessionService";
 import api from "../services/axios";
 import qs from "qs";
 
 export const UserConversationService = Object.freeze({
 	async setDelivered() {
-		const authedUserUUID = getAuthentication()
 		const response = await api.put(
-			`/users/${authedUserUUID}/conversations`
+			`/users/${getAuthentication()}/conversations`
 		)
 
 		if (response.status !== 200) {
@@ -16,9 +15,8 @@ export const UserConversationService = Object.freeze({
 		return response
 	},
 	async getConversations(params) {
-		const authedUserUUID = getAuthentication()
 		const response = await api.get(
-			`/users/${authedUserUUID}/conversations`,
+			`/users/${getAuthentication()}/conversations`,
 			{
 				params: params,
 				paramsSerializer: (params) => {
@@ -33,9 +31,8 @@ export const UserConversationService = Object.freeze({
 
 		return response
 	},
-	async getConversation(id) {
-		const authedUserUUID = getAuthentication()
-		const response = await api.get(`/users/${authedUserUUID}/conversations/${id}`)
+	async getConversation(conversationId) {
+		const response = await api.get(`/users/${getAuthentication()}/conversations/${conversationId}`)
 
 		if (response.status !== 200) {
 			throw new Error(response.statusText)
@@ -43,7 +40,6 @@ export const UserConversationService = Object.freeze({
 
 		return response
 	}
-
 })
 
 export default UserConversationService

@@ -1,7 +1,7 @@
 <script setup>
 import {computed, nextTick, onBeforeMount, reactive, ref, useTemplateRef, watchEffect} from "vue"
 import {useRoute} from "vue-router"
-import UserConversationService from "../services/userConversation";
+import UserConversationService from "../services/userConversationService";
 import ConversationService from "../services/conversationService";
 import {getApiUrl} from "../services/axios";
 import router from "../router";
@@ -62,8 +62,8 @@ async function getConversation(conversationId) {
 
 async function leaveGroup() {
 	try {
-		await ConversationService.leaveGroup(conversation.id)
-		router.push({name: "homepage"})
+		await ConversationService.leaveGroup(conversation)
+		await router.push({name: "homepage"})
 	} catch (err) {
 		console.log(err.toString())
 	}
@@ -72,7 +72,7 @@ async function leaveGroup() {
 async function changeName() {
 	loading.value = true
 	try {
-		const response = await ConversationService.setGroupName(conversation.id, newGroupName.value)
+		const response = await ConversationService.setGroupName(conversation, newGroupName.value)
 		Object.assign(conversation, response.data)
 	} catch (err) {
 		console.log(err.toString())
@@ -103,7 +103,7 @@ async function changePhoto() {
 
 	loading.value = true
 	try {
-		const response = await ConversationService.setGroupPhoto(conversation.id, newGroupImage.value)
+		const response = await ConversationService.setGroupPhoto(conversation, newGroupImage.value)
 		Object.assign(conversation, response.data)
 	} catch (err) {
 		console.log(err.toString())

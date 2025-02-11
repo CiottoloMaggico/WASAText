@@ -9,7 +9,7 @@ const username = ref("")
 async function login() {
 	let err = await profileStore.login(username.value)
 	if (!err) {
-		router.push({name: "homepage"})
+		await router.push({name: "homepage"})
 	}
 }
 

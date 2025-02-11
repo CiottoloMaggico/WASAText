@@ -1,5 +1,5 @@
 import axios from "axios";
-import {getAuthentication} from "./session";
+import {getAuthentication} from "./sessionService";
 
 
 export function getApiUrl(path) {

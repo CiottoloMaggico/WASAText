@@ -1,11 +1,10 @@
 import api from "./axios";
 import qs from "qs";
-import {getAuthentication} from "./session";
+import {getAuthentication} from "./sessionService";
 
 export const UserService = Object.freeze({
 	async getProfile() {
-		const authedUserUUID = getAuthentication()
-		const response = await api.get(`/users/${authedUserUUID}`)
+		const response = await api.get(`/users/${getAuthentication()}`)
 
 		if (response.status !== 200) {
 			throw new Error(response.statusText)
@@ -29,9 +28,8 @@ export const UserService = Object.freeze({
 		return response
 	},
 	async setMyUsername(newUsername) {
-		const authedUserUUID = getAuthentication()
 		const response = await api.put(
-			`/users/${authedUserUUID}/username`,
+			`/users/${getAuthentication()}/username`,
 			{
 				username: newUsername,
 			}
@@ -44,9 +42,8 @@ export const UserService = Object.freeze({
 		return response
 	},
 	async setMyPhoto(newPhoto) {
-		const authedUserUUID = getAuthentication()
 		const response = await api.put(
-			`/users/${authedUserUUID}/avatar`,
+			`/users/${getAuthentication()}/avatar`,
 			{
 				photo: newPhoto,
 			},

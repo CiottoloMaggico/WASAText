@@ -27,11 +27,10 @@ export const SessionService = Object.freeze({
 	async doLogin(username){
 		const response = await api.post("/session", {username: username})
 
-		if (response.status >= 200 && response.status < 300) {
-			setAuthentication(response.data.uuid)
-		} else {
+		if (response.status !== 200) {
 			throw new Error(response.statusText)
 		}
+		setAuthentication(response.data.uuid)
 
 		return response
 	}

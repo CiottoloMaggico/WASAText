@@ -1,6 +1,6 @@
 <script setup>
 import {getApiUrl} from "../services/axios";
-import {getAuthentication} from "../services/session";
+import {getAuthentication} from "../services/sessionService";
 
 const props = defineProps({
 	conversation: Object,
