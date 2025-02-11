@@ -54,6 +54,9 @@ function updateReply(message) {
 }
 
 function updateActiveConversation() {
+	if (messages.value.length === 0) {
+		return
+	}
 	let latestMessage = messages.value[0]
 	activeConversation.value.latestMessage.id = latestMessage.id
 	activeConversation.value.latestMessage.author.uuid = latestMessage.author.uuid

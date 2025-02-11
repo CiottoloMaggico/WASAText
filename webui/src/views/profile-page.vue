@@ -20,7 +20,9 @@ const newImagePreviewUrl = computed(() => {
 	return URL.createObjectURL(newProfileImage.value)
 })
 
-await getUserProfile()
+onBeforeMount(async () => {
+	await getUserProfile()
+})
 
 async function getUserProfile() {
 	loading.value = true

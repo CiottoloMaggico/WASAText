@@ -1,5 +1,5 @@
 <script setup>
-import {computed, ref, watch} from "vue"
+import {computed, ref, watch, onBeforeMount} from "vue"
 import {getAuthentication} from "@/services/sessionService";
 import UserService from "@/services/userService";
 import ConversationService from "@/services/conversationService";
@@ -20,7 +20,9 @@ const searchQueryParams = computed(() => {
 	}
 })
 
-await searchForUsers()
+onBeforeMount(async () => {
+	await searchForUsers()
+})
 
 watch(searchedUsername, async () => {
 	await searchForUsers()

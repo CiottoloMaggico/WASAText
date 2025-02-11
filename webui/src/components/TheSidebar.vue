@@ -112,12 +112,13 @@ function switchComponent(componentName) {
 }
 
 .sidebar {
-	width: 30%;
+	width: 35%;
 	height: 100%;
 	display: flex;
 	flex-flow: row nowrap;
 	border-right: 1px gray solid;
 	flex-shrink: 0;
+	overflow: hidden;
 }
 
 .actions-bar, .actions-group {

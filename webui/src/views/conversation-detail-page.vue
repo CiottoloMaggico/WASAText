@@ -131,9 +131,11 @@ function initializePage() {
 }
 
 function updateActiveConversation() {
+	if (conversation.latestMessage) {
+		activeConversation.value.latestMessage = conversation.latestMessage
+	}
 	activeConversation.value.name = conversation.name
 	activeConversation.value.image = conversation.image
-	activeConversation.value.latestMessage = conversation.latestMessage
 	activeConversation.value.read = conversation.read
 }
 </script>
@@ -265,6 +267,7 @@ function updateActiveConversation() {
 	flex-flow: column nowrap;
 	width: 100%;
 	height: 100%;
+	flex-grow: 0;
 }
 
 .page-header, .page-footer {

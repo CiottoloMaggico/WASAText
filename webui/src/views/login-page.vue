@@ -57,7 +57,7 @@ async function login() {
 	justify-content: center;
 	height: 100%;
 	width: 100%;
-	padding-left: 5%
+	padding-left: 5%;
 }
 
 .login-box-title {
@@ -67,6 +67,6 @@ async function login() {
 
 .input-label {
 	font-weight: bold;
-	color: #fff
+	color: #fff;
 }
 </style>

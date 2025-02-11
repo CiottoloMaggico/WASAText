@@ -167,7 +167,7 @@ function emojiPickerPosition() {
 }
 
 .author-picker {
-	left: -280px
+	left: -280px;
 }
 
 .author-message-box {
@@ -205,7 +205,7 @@ function emojiPickerPosition() {
 .option-icon {
 	width: 100%;
 	height: 100%;
-	scale: 0.8
+	scale: 0.8;
 }
 
 .message-box {

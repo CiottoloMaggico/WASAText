@@ -27,7 +27,7 @@ const props = defineProps({
 				</span>
 				<div class="latestMessage-content-box">
 					<span class="latestMessage-content-author">
-						{{ conversation.latestMessage.author.username }}:&nbsp
+						{{ conversation.latestMessage.author.username }}:&nbsp;
 					</span>
 						<span v-if="conversation.latestMessage.content !== null"
 							  class="latestMessage-content-text">{{ conversation.latestMessage.content }}</span>
