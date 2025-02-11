@@ -93,8 +93,6 @@ CREATE TABLE IF NOT EXISTS Message
 	CHECK ((length(content) >= 1 AND length(content) <= 4096) OR content IS NULL)
 );
 
-
-
 CREATE TABLE IF NOT EXISTS User_Message
 (
 	message integer NOT NULL,
@@ -106,8 +104,6 @@ CREATE TABLE IF NOT EXISTS User_Message
 	FOREIGN KEY (user) REFERENCES User (uuid) ON DELETE CASCADE,
 	FOREIGN KEY (status) REFERENCES MessageStatus (id)
 );
-
-
 
 CREATE VIEW IF NOT EXISTS ViewUsers AS
 SELECT User.uuid  user_uuid,
@@ -123,19 +119,19 @@ FROM User,
 WHERE User.photo = Image.uuid;
 
 CREATE VIEW IF NOT EXISTS ViewMessages AS
-SELECT m.id           message_id,
-	   m.conversation message_conversation,
-	   m.sendAt       message_sendAt,
-	   m.deliveredAt  message_deliveredAt,
-	   m.seenAt       message_seenAt,
-	   m.replyTo      message_replyTo,
-	   m.content      message_content,
-	   i.uuid         attachment_uuid,
-	   i.extension    attachment_extension,
-	   i.width        attachment_width,
-	   i.height       attachment_height,
-	   i.fullUrl      attachment_fullUrl,
-	   i.uploadedAt   attachment_uploadedAt,
+SELECT m.id               message_id,
+	   m.conversation     message_conversation,
+	   m.sendAt           message_sendAt,
+	   m.deliveredAt      message_deliveredAt,
+	   m.seenAt           message_seenAt,
+	   m.replyTo          message_replyTo,
+	   m.content          message_content,
+	   i.uuid             attachment_uuid,
+	   i.extension        attachment_extension,
+	   i.width            attachment_width,
+	   i.height           attachment_height,
+	   i.fullUrl          attachment_fullUrl,
+	   i.uploadedAt       attachment_uploadedAt,
 	   u.*
 FROM Message m,
 	 ViewUsers u
@@ -145,7 +141,7 @@ WHERE m.author = u.user_uuid;
 CREATE VIEW IF NOT EXISTS ViewLatestMessages AS
 SELECT m.id           message_id,
 	   m.conversation message_conversation,
-	   MAX(m.sendAt)       message_sendAt,
+	   MAX(m.sendAt)  message_sendAt,
 	   m.deliveredAt  message_deliveredAt,
 	   m.seenAt       message_seenAt,
 	   m.replyTo      message_replyTo,
