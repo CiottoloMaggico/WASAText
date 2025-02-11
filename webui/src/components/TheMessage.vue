@@ -1,6 +1,10 @@
 <script setup>
 import {getApiUrl} from "../services/axios";
-import {ref} from "vue";
+import {computed, ref} from "vue";
+import EmojiPicker from 'vue3-emoji-picker'
+import 'vue3-emoji-picker/css'
+import MessageService from "@/services/message";
+import ShowCommentsModal from "@/components/ShowCommentsModal.vue";
 
 const props = defineProps({
 	message: Object,
@@ -9,7 +13,21 @@ const props = defineProps({
 
 const emits = defineEmits(["reply", "delete", "forward"])
 
-const sendAt = ref(new Date(props.message.sendAt))
+const showEmojiPicker = ref(false)
+const showCommentsModal = ref(false)
+
+const sendAt = computed(() => {
+	return new Date(props.message.sendAt).toLocaleString([], {dateStyle: 'short', timeStyle: 'short'})
+})
+
+async function setComment(emoji) {
+	try {
+		const response = await MessageService.commentMessage(props.message.conversationId, props.message.id, emoji.i)
+	} catch (e) {
+		console.error(e.toString())
+	}
+	closeEmojiPicker()
+}
 
 
 function replyTo() {
@@ -24,11 +42,22 @@ function forward() {
 	emits("forward", props.message)
 }
 
+function closeEmojiPicker() {
+	if (showEmojiPicker.value) {
+		showEmojiPicker.value = false
+	}
+}
+
 </script>
 
 <template>
 	<div class="message-row" :class="{'author-message-row': isAuthor}">
 		<div class="message-box" :class="{'author-message-box': isAuthor}">
+			<span class="comment-btn" v-click-outside="closeEmojiPicker">
+					<img class="svg-icon" src="@/assets/images/emoji.svg" alt="add comment to the message"
+						 @click="showEmojiPicker = !showEmojiPicker"/>
+					<emoji-picker v-show="showEmojiPicker" class="emoji-picker" :native="true" @select="setComment"/>
+			</span>
 			<div class="message">
 				<div v-if="!isAuthor" class="header">
 					<div class="sender-avatar-box">
@@ -52,7 +81,7 @@ function forward() {
 					</div>
 					<div class="info-box">
 					<span class="send-at">
-						{{ sendAt.toLocaleString([], {dateStyle: 'short', timeStyle: 'short'}) }}
+						{{ sendAt }}
 					</span>
 						<span class="checkmark-box" v-if="isAuthor">
 						<img v-if="message.status === 'delivered'" class="checkmark"
@@ -65,6 +94,9 @@ function forward() {
 			</div>
 		</div>
 		<div class="options-box">
+			<div class="option">
+				<img class="option-icon" src="@/assets/images/emoji.svg" alt="" :data-bs-target="`#comments-modal-${message.id}`" data-bs-toggle="modal" @click="showCommentsModal = true"/>
+			</div>
 			<div class="option" @click="replyTo">
 				<img class="option-icon" src="@/assets/images/reply.png" alt=""/>
 			</div>
@@ -76,9 +108,29 @@ function forward() {
 			</div>
 		</div>
 	</div>
+	<show-comments-modal :message="message" :show="showCommentsModal" @close="showCommentsModal = false"/>
 </template>
 
 <style scoped>
+.svg-icon {
+	width: 100%;
+	height: 100%;
+}
+
+.comment-btn {
+	position: relative;
+	width: 1.5rem;
+	height: 1.5rem;
+	align-self: center;
+	margin-right: 5px;
+}
+
+.emoji-picker {
+	position: absolute;
+	left: -280px;
+}
+
+
 .author-message-row {
 	flex-direction: row-reverse !important;
 }

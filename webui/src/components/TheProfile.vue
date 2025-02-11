@@ -206,7 +206,7 @@ function fileUploaded() {
 .image-edit {
 	display: none;
 	position: absolute;
-	top: calc(50% - 11.5px);
+	top: calc(50% - 11px);
 	left: calc(50% - 7px);
 }
 

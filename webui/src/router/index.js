@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import {getAuthentication, isAuthed} from "@/services/session";
+import {isAuthed} from "@/services/session";
 import {useProfileStore} from "@/stores/profileStore";
 
 const router = createRouter({
@@ -24,7 +24,7 @@ const router = createRouter({
 					path: "conversations/:convId",
 					name: "conversationInfo",
 					component: () => import("@/views/conversation-detail-page.vue"),
-				}
+				},
 			]
 		},
 		{

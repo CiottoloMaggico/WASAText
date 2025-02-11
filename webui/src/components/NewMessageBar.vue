@@ -189,7 +189,7 @@ function clearReplyTo() {
 	height: 100%;
 	width: 100%;
 	border-radius: var(--MAIN-BORDER-RADIUS);
-	border: .5px solid black;
+	border: 1px solid black;
 	object-fit: cover;
 }
 

@@ -40,7 +40,44 @@ export const MessageService = Object.freeze({
 		}
 
 		return response
+	},
+
+	async getComments(conversationId, messageId) {
+		const response = await api.get(
+			`/users/${this.authedUserUUID}/conversations/${conversationId}/messages/${messageId}/comments`,
+		)
+
+		if (response.status !== 200) {
+			throw new Error(response.statusText)
+		}
+
+		return response
+
+	},
+	async commentMessage(conversationId, messageId, comment) {
+		const response = await api.put(
+			`/users/${this.authedUserUUID}/conversations/${conversationId}/messages/${messageId}/comments`,
+			{comment: comment}
+		)
+
+		if (response.status !== 200) {
+			throw new Error(response.statusText)
+		}
+
+		return response
+	},
+	async uncommentMessage(conversationId, messageId) {
+		const response = await api.delete(
+			`/users/${this.authedUserUUID}/conversations/${conversationId}/messages/${messageId}/comments`,
+		)
+
+		if (response.status !== 204) {
+			throw new Error(response.statusText)
+		}
+
+		return response
 	}
+
 })
 
 export default MessageService

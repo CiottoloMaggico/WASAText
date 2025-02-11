@@ -131,7 +131,7 @@ func (model UserConversationModelImpl) GetUserConversations(userUUID string, par
 		query += fmt.Sprintf(" WHERE (%s)", filter)
 	}
 
-	query += " ORDER BY um.status ASC LIMIT ? OFFSET ?;"
+	query += " ORDER BY message_sendAt DESC, uc.userConversation_id DESC LIMIT ? OFFSET ?;"
 
 	userConversations := make([]UserConversation, 0, parameters.Limit)
 	if err := model.Db.QueryStruct(

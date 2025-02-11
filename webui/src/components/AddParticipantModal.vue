@@ -88,7 +88,7 @@ function clearSelections() {
 								<span class="user-username">{{ user.username }}</span>
 							</div>
 							<div v-else class="user-item"
-								 :class="(!singleMode && addedUsers.includes(user.uuid)) ? 'selected' : ''"
+								 :class="{'selected' : (!singleMode && addedUsers.includes(user.uuid))}"
 								 @click="(!singleMode) ? selectParticipant(user.uuid) : $emit('addParticipant', user.uuid)"
 							>
 								<span class="user-username">{{ user.username }}</span>
@@ -122,7 +122,7 @@ function clearSelections() {
 	flex-flow: column nowrap;
 	height: 400px;
 	width: 500px;
-	padding: 0px;
+	padding: 0;
 	overflow: hidden;
 }
 

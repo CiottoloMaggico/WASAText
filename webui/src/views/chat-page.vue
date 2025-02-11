@@ -6,10 +6,12 @@ import {getAuthentication} from "../services/session";
 import TheMessage from "../components/TheMessage.vue";
 import NewMessageBar from "../components/NewMessageBar.vue";
 import UserConversationService from "../services/userConversation";
+import ShowCommentsModal from "@/components/ShowCommentsModal.vue";
 
 const route = useRoute()
-const conversation = reactive({})
+
 const messages = ref([])
+const conversation = reactive({})
 const newMessage = reactive({
 	content: null,
 	attachment: null,
@@ -117,7 +119,7 @@ function scrollToBottom() {
 		</div>
 		<div class="body" ref="message-container">
 			<the-message v-for="message in messages" :key="message.id" :message="message"
-							   :is-author="message.author.uuid == getAuthentication()" @reply="replyTo"
+							   :is-author="message.author.uuid === getAuthentication()" @reply="replyTo"
 							   @delete="deleteMessage"/>
 		</div>
 		<div class="footer">
