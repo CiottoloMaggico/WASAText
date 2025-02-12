@@ -11,7 +11,8 @@ export function getApiUrl(path) {
 
 export const api = axios.create({
 	baseURL: __API_URL__,
-	timeout: 1000 * 5
+	timeout: 1000 * 5,
+	validateStatus: (_) => true,
 });
 
 

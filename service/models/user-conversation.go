@@ -121,7 +121,6 @@ func (model UserConversationModelImpl) GetUserConversation(userUUID string, conv
 		return nil, err
 	}
 	return &userConversation, nil
-
 }
 
 func (model UserConversationModelImpl) GetUserConversations(userUUID string, parameters database.QueryParameters) ([]UserConversation, error) {

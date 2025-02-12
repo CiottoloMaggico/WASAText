@@ -71,7 +71,18 @@ BEGIN
 	UPDATE Message SET deliveredAt = current_timestamp WHERE id = new.message;
 END;
 
-
+CREATE TRIGGER IF NOT EXISTS chat_uniqueness
+	BEFORE INSERT
+	ON Chat
+	WHEN
+		EXISTS(
+			SELECT c.*
+			FROM Chat c
+			WHERE c.user1 = new.user2 AND c.user2 = new.user1
+		)
+BEGIN
+	SELECT RAISE(ABORT, 'TRIGGER: chat_uniqueness');
+END;
 
 CREATE TRIGGER IF NOT EXISTS set_message_status_to_seen
 	AFTER UPDATE OF status

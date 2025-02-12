@@ -4,23 +4,19 @@ import router from "../router";
 import TheConversationList from "@/components/TheConversationList.vue";
 import TheNewGroup from "@/components/TheNewGroup.vue";
 import AddParticipantForm from "@/components/AddParticipantForm.vue";
-import {useProfileStore} from "@/stores/profileStore";
 
 const emits = defineEmits(["switch"])
 
-const profileStore = useProfileStore()
-
 async function createChat(recipient) {
+	let chat
 	try {
-		const response = await ConversationService.createChat(recipient)
-		await profileStore.getConversations()
-		await router.push({name: "conversation", params: {convId: response.data.id}})
-		emits("switch", TheConversationList.__name)
+		chat = await ConversationService.createChat(recipient)
 	} catch (error) {
-		// TODO: redirect to the existing conversation
-		console.error(error.toString())
+		console.error(error)
 		return error
 	}
+	await router.push({name: "conversation", params: {convId: chat.id}})
+	emits("switch", TheConversationList.__name)
 }
 
 </script>

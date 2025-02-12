@@ -1,16 +1,12 @@
 <script setup>
-import {computed, reactive, ref, useTemplateRef, watch} from "vue"
-import UserService from "@/services/userService";
-import {getAuthentication} from "@/services/sessionService";
+import {computed, reactive, useTemplateRef} from "vue"
 import ConversationService from "@/services/conversationService";
-import {useProfileStore} from "@/stores/profileStore";
 import TheConversationList from "@/components/TheConversationList.vue";
 import router from "@/router";
 import AddParticipantForm from "@/components/AddParticipantForm.vue";
 
-const emits = defineEmits(["switch"])
+const emits = defineEmits(["switch", "raise"])
 
-const profileStore = useProfileStore()
 const newImageField = useTemplateRef("file-upload")
 
 const newGroup = reactive({
@@ -27,15 +23,16 @@ const newImagePreviewUrl = computed(() => {
 })
 
 async function createGroup() {
+	let group
 	try {
-		const response = await ConversationService.createGroup(newGroup)
-		await profileStore.getConversations()
-		emits("switch", TheConversationList.__name)
-		router.push({name: "conversation", params: {convId: response.data.id}})
+		group = await ConversationService.createGroup(newGroup)
 	} catch (error) {
-		console.error(error)
-		return error
+		if (!(error.status && error.status === 201)) return error
+		group = error.created
+		emits("raise", new Error(error.message))
 	}
+	emits("switch", TheConversationList.__name)
+	await router.push({name: "conversation", params: {convId: group.id}})
 }
 
 function fileUploaded() {

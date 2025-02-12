@@ -4,11 +4,10 @@ import {MessageService} from "../services/messageService"
 import {getAuthentication} from "../services/sessionService";
 import TheMessage from "../components/TheMessage.vue";
 import NewMessageBar from "../components/NewMessageBar.vue";
-import {useProfileStore} from "@/stores/profileStore";
 import {storeToRefs} from "pinia";
+import {useConversationsStore} from "@/stores/conversationsStore";
 
-const profileStore = useProfileStore()
-const {activeConversation} = storeToRefs(profileStore);
+const {activeConversation} = storeToRefs(useConversationsStore());
 
 const messageContainer = useTemplateRef("message-container")
 
@@ -33,11 +32,11 @@ watch(messages, () => {
 
 async function getMessages() {
 	try {
-        const response = await MessageService.setSeen(activeConversation.value)
-		messages.value = response.data.content
-		updateActiveConversation()
+        const data = await MessageService.setSeen(activeConversation.value)
+		activeConversation.value.read = true
+		messages.value = data.content
 	} catch (err) {
-		console.log(err.toString())
+		console.error(err)
 	}
 }
 
@@ -52,26 +51,6 @@ function scrollToBottom() {
 function updateReply(message) {
 	newMessageReplyTo.value = message
 }
-
-function updateActiveConversation() {
-	if (messages.value.length === 0) {
-		return
-	}
-	let latestMessage = messages.value[0]
-	activeConversation.value.latestMessage = {
-		id: latestMessage.id,
-		author: {
-			uuid: latestMessage.author.uuid,
-			username: latestMessage.author.username,
-			photo: latestMessage.author.photo.uuid
-		},
-		sendAt: latestMessage.sendAt,
-		status: latestMessage.status,
-		content: latestMessage.content,
-		attachment: latestMessage.attachment,
-	}
-}
-
 </script>
 
 <template>

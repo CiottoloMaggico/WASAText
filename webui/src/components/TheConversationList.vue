@@ -1,10 +1,9 @@
 <script setup>
-import {storeToRefs} from "pinia";
-import {useProfileStore} from "@/stores/profileStore";
 import TheConversation from "@/components/TheConversation.vue";
+import {useConversationsStore} from "@/stores/conversationsStore";
+import {storeToRefs} from "pinia";
 
-const profileStore = useProfileStore()
-const {conversations, activeConversation} = storeToRefs(profileStore);
+const {conversations, activeConversation} = storeToRefs(useConversationsStore())
 
 function isSelected(conversation) {
 	return (activeConversation.value && conversation.id == activeConversation.value.id)

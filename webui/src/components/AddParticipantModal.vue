@@ -4,15 +4,12 @@ import {getAuthentication} from "@/services/sessionService";
 import UserService from "@/services/userService";
 import ConversationService from "@/services/conversationService";
 
-const props = defineProps(["conversation", "participants", "singleMode"])
+const props = defineProps(["conversation", "singleMode"])
+const emits = defineEmits(["addedParticipants", "addParticipant"]);
 
 const searchedUsername = ref("")
 const users = ref([])
 const addedUsers = ref([])
-
-const currentParticipants = computed(() => {
-	return props.participants.map((user) => user.uuid)
-})
 
 const searchQueryParams = computed(() => {
 	return {
@@ -30,30 +27,30 @@ watch(searchedUsername, async () => {
 
 async function addParticipants() {
 	try {
-		const response = await ConversationService.addToGroup(props.conversation, addedUsers.value)
-		Object.assign(props.conversation, response.data)
-		clearSelections()
+		await ConversationService.addToGroup(props.conversation, addedUsers.value.map((p) => p.uuid))
+		emits("addedParticipants", addedUsers.value)
 	} catch (error) {
 		console.error(error.toString())
 	}
+	clearSelections()
 }
 
 async function searchForUsers() {
 	try {
-		const response = await UserService.getUsers(searchQueryParams.value)
-		users.value = response.data.content
+		const data = await UserService.getUsers(searchQueryParams.value)
+		users.value = data.content
 	} catch (error) {
 		console.error(error.toString())
 	}
 }
 
-function selectParticipant(participantUuid) {
-	let index = addedUsers.value.indexOf(participantUuid)
+function selectParticipant(participant) {
+	let index = addedUsers.value.findIndex((p) => p.uuid === participant.uuid)
 	if (index !== -1) {
 		addedUsers.value.splice(index, 1)
 		return
 	}
-	addedUsers.value.push(participantUuid)
+	addedUsers.value.push(participant)
 }
 
 function clearSelections() {
@@ -84,14 +81,14 @@ function clearSelections() {
 					</div>
 					<div class="user-list">
 						<template v-for="user in users" :key="user.uuid">
-							<div v-if="currentParticipants.includes(user.uuid)"
+							<div v-if="conversation.participants.findIndex((p) => p.uuid === user.uuid) !== -1"
 								 class="user-item selected pe-none"
 							>
 								<span class="user-username">{{ user.username }}</span>
 							</div>
 							<div v-else class="user-item"
-								 :class="{'selected' : (!singleMode && addedUsers.includes(user.uuid))}"
-								 @click="(!singleMode) ? selectParticipant(user.uuid) : $emit('addParticipant', user.uuid)"
+								 :class="{'selected' : (!singleMode && addedUsers.findIndex((p) => p.uuid === user.uuid) !== -1)}"
+								 @click="(!singleMode) ? selectParticipant(user) : $emit('addParticipant', user.uuid)"
 							>
 								<span class="user-username">{{ user.username }}</span>
 							</div>
@@ -102,7 +99,7 @@ function clearSelections() {
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal" @click="clearSelections">Close
 					</button>
-					<button type="submit" class="btn btn-primary rounded-pill" data-bs-dismiss="modal"
+					<button v-if="!singleMode" type="submit" class="btn btn-primary rounded-pill" data-bs-dismiss="modal"
 							:disabled="addedUsers.length === 0" @click="addParticipants">
 						Add participants
 					</button>

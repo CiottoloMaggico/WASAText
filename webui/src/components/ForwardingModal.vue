@@ -2,8 +2,8 @@
 import {ref, toRefs, watch} from "vue"
 import MessageService from "@/services/messageService";
 import {getApiUrl} from "@/services/axios";
-import UserConversationService from "@/services/userConversationService";
 import router from "@/router";
+import ConversationService from "@/services/conversationService";
 
 const props = defineProps(["message", "show"])
 const emits = defineEmits(["close"]);
@@ -20,10 +20,10 @@ watch(show, async (newVal, oldVal) => {
 
 async function getConversations() {
 	try {
-		const response = await UserConversationService.getConversations(
+		const data = await ConversationService.getConversations(
 			{filter: `id ne ${message.value.conversationId}`}
 		)
-		conversations.value = response.data.content
+		conversations.value = data.content
 	} catch (e) {
 		console.error(e)
 	}

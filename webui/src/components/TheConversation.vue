@@ -18,7 +18,7 @@ const props = defineProps({
 				<span class="conversation-title">{{ conversation.name }}</span>
 				<span v-if="!conversation.read" class="unread-dot"/>
 			</div>
-			<div class="conversation-latestMessage-box" v-if="conversation.latestMessage !== null">
+			<div class="conversation-latestMessage-box" v-if="conversation.latestMessage">
 				<span class="checkmark-box" v-if="conversation.latestMessage.author.uuid === getAuthentication()">
 					<img v-if="conversation.latestMessage.status === 'delivered'" class="checkmark"
 						 src="@/assets/images/Checkmark.png" width="512" height="512"/>

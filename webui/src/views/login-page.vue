@@ -1,16 +1,19 @@
 <script setup>
 import {ref} from "vue"
-import {useProfileStore} from "@/stores/profileStore";
 import router from "@/router";
+import SessionService from "@/services/sessionService";
 
-const profileStore = useProfileStore();
 const username = ref("")
 
 async function login() {
-	let err = await profileStore.login(username.value)
-	if (!err) {
-		await router.push({name: "homepage"})
+	try {
+		await SessionService.doLogin(username.value)
+	} catch (error) {
+		console.error(error)
+		return
 	}
+
+	await router.push({name: "homepage"})
 }
 
 </script>

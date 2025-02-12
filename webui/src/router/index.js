@@ -1,31 +1,37 @@
-import {createRouter, createWebHistory} from 'vue-router'
-import {isAuthed} from "@/services/sessionService";
+import {createRouter, createWebHashHistory} from 'vue-router'
+import {isAuthed, SessionService} from "@/services/sessionService";
 import {useProfileStore} from "@/stores/profileStore";
+import {useConversationsStore} from "@/stores/conversationsStore";
+import ConversationService from "@/services/conversationService";
 
 const router = createRouter({
-	history: createWebHistory(import.meta.env.BASE_URL),
+	history: createWebHashHistory(import.meta.env.BASE_URL),
 	routes: [
 		{
 			path: '/',
 			name: "homepage",
 			component: () => import('@/views/home-page.vue'),
+			beforeEnter: async () => {
+				if (!isAuthed()) return {name: "login"}
+				let profileStore = useProfileStore()
+				if (!profileStore.getProfile) await SessionService.refresh()
+			},
 			children: [
-				{
-					path: "/profile",
-					name: "profile",
-					component: () => import("@/views/profile-page.vue"),
-				},
 				{
 					path: "/conversations/:convId",
 					name: "conversation",
 					component: () => import("@/views/chat-page.vue"),
+					beforeEnter: async (to) => {
+						let conversationStore = useConversationsStore()
+						if (!conversationStore.activeConversation) await ConversationService.getConversation(to.params.convId)
+					}
  				},
 				{
-					path: "conversations/:convId",
+					path: "conversations/:convId/detail",
 					name: "conversationInfo",
 					component: () => import("@/views/conversation-detail-page.vue"),
 				},
-			]
+			],
 		},
 		{
 			path: '/login',
@@ -39,17 +45,5 @@ const router = createRouter({
 		},
 	]
 })
-
-router.beforeEach(
-	async (to, from) => {
-		if (!isAuthed() && to.name !== 'login') {
-			return { name: "login" }
-		}
-		let profileStore = useProfileStore()
-		if (profileStore.getProfile == null) {
-			await profileStore.refreshProfile()
-		}
-	}
-)
 
 export default router

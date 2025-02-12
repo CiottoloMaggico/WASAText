@@ -47,7 +47,7 @@ async function deleteMessage() {
 	try {
 		await MessageService.deleteMessage(props.message)
 	} catch (err) {
-		console.log(err.toString())
+		console.error(err.toString())
 	} finally {
 		emits("update")
 	}
@@ -55,10 +55,10 @@ async function deleteMessage() {
 
 async function getRepliedMessage() {
 	try {
-		const response = await MessageService.getMessage(props.message.conversationId, props.message.repliedMessageId)
-		Object.assign(repliedMessage, response.data)
+		const data = await MessageService.getMessage(props.message.conversationId, props.message.repliedMessageId)
+		Object.assign(repliedMessage, data)
 	} catch (err) {
-		console.log(err.toString())
+		console.error(err.toString())
 	}
 }
 
@@ -193,6 +193,7 @@ function emojiPickerPosition() {
 .emoji-picker {
 	position: absolute;
 	left: 0;
+	z-index: 1;
 }
 
 .low-picker {

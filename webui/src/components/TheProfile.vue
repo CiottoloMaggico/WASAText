@@ -3,9 +3,11 @@ import {computed, nextTick, ref, useTemplateRef} from "vue"
 import {getApiUrl} from "../services/axios";
 import {useProfileStore} from "@/stores/profileStore";
 import {storeToRefs} from 'pinia'
+import UserService from "@/services/userService";
 
-const profileStore = useProfileStore()
-const { profile } = storeToRefs(profileStore)
+const { profile } = storeToRefs(useProfileStore())
+
+const emits = defineEmits(["raise"])
 
 const newNameField = useTemplateRef("profile-username")
 const newImageField = useTemplateRef("file-upload")
@@ -24,9 +26,27 @@ const newImagePreviewUrl = computed(() => {
 
 async function changeUsername() {
 	loading.value = true
-	await profileStore.changeUsername(newUsername.value)
+
+	try {
+		await UserService.setMyUsername(newUsername.value)
+	} catch (error) {
+		emits("raise", error)
+	}
 
 	clearUsernameChange()
+	loading.value = false
+}
+
+async function changePhoto() {
+	loading.value = true
+
+	try {
+		await UserService.setMyPhoto(newProfileImage.value)
+	} catch (error) {
+		console.log(error)
+	}
+
+	newProfileImage.value = null
 	loading.value = false
 }
 
@@ -43,13 +63,6 @@ function clearUsernameChange() {
 	editUsername.value = false
 }
 
-async function changePhoto() {
-	loading.value = true
-	await profileStore.changeAvatar(newProfileImage.value)
-
-	newProfileImage.value = null
-	loading.value = false
-}
 
 function clearImageChange() {
 	newProfileImage.value = null

@@ -1,15 +1,14 @@
 <script setup>
-import {computed, nextTick, onBeforeMount, reactive, ref, useTemplateRef, watchEffect} from "vue"
-import UserConversationService from "../services/userConversationService";
+import {computed, nextTick, reactive, ref, useTemplateRef, watchEffect} from "vue"
 import ConversationService from "../services/conversationService";
 import {getApiUrl} from "../services/axios";
 import router from "../router";
 import AddParticipantModal from "@/components/AddParticipantModal.vue";
-import {useProfileStore} from "@/stores/profileStore";
 import {storeToRefs} from "pinia";
+import {useConversationsStore} from "@/stores/conversationsStore";
+import conversationService from "../services/conversationService";
 
-const profileStore = useProfileStore()
-const {activeConversation} = storeToRefs(profileStore);
+const {activeConversation} = storeToRefs(useConversationsStore());
 
 const newImageField = useTemplateRef("file-upload")
 const newNameField = useTemplateRef("group-name")
@@ -36,7 +35,7 @@ const newImagePreviewUrl = computed(() => {
 })
 
 watchEffect(async (onCleanup) => {
-	await getConversation()
+	if (activeConversation.value) await getConversation()
 
 	onCleanup(() => {
 		initializePage()
@@ -45,14 +44,15 @@ watchEffect(async (onCleanup) => {
 
 async function getConversation() {
 	loading.value = true
+
 	try {
-		const response = await UserConversationService.getConversation(activeConversation.value.id)
-		Object.assign(conversation, response.data)
-		updateActiveConversation()
+		const data = await ConversationService.getConversation(activeConversation.value.id)
+		Object.assign(conversation, data)
 		newGroupName.value = conversation.name
 	} catch (err) {
 		console.log(err.toString())
 	}
+
 	loading.value = false
 }
 
@@ -61,24 +61,41 @@ async function leaveGroup() {
 		await ConversationService.leaveGroup(conversation)
 	} catch (err) {
 		console.log(err.toString())
-	} finally {
-		router.push({name: "homepage"})
-		await profileStore.refreshProfile()
+		return
 	}
+	await router.push({name: "homepage"})
 }
 
 async function changeName() {
 	loading.value = true
+
 	try {
-		const response = await ConversationService.setGroupName(conversation, newGroupName.value)
-		Object.assign(conversation, response.data)
-		updateActiveConversation()
+		const data = await ConversationService.setGroupName(conversation, newGroupName.value)
+		Object.assign(conversation, data)
 	} catch (err) {
 		console.log(err.toString())
 	}
 
 	clearNameChange()
 	loading.value = false
+}
+
+async function changePhoto() {
+	loading.value = true
+
+	try {
+		const data = await ConversationService.setGroupPhoto(conversation, newGroupImage.value)
+		Object.assign(conversation, data)
+	} catch (err) {
+		console.log(err.toString())
+	}
+
+	clearImageChange()
+	loading.value = false
+}
+
+function updateParticipants(addedParticipants) {
+	conversation.participants = conversation.participants.concat(addedParticipants)
 }
 
 function initNameChange() {
@@ -94,33 +111,9 @@ function clearNameChange() {
 	newGroupName.value = conversation.name
 }
 
-async function changePhoto() {
-	if (!newGroupImage.value) {
-		loading.value = false
-		return
-	}
-
-	loading.value = true
-	try {
-		const response = await ConversationService.setGroupPhoto(conversation, newGroupImage.value)
-		Object.assign(conversation, response.data)
-		updateActiveConversation()
-	} catch (err) {
-		console.log(err.toString())
-	}
-
-	clearImageChange()
-	loading.value = false
-}
-
-
 function clearImageChange() {
 	newGroupImage.value = null
 	newImageField.value.value = null
-}
-
-function fileUploaded() {
-	newGroupImage.value = newImageField.value.files.item(0)
 }
 
 function initializePage() {
@@ -130,11 +123,8 @@ function initializePage() {
 	clearNameChange()
 }
 
-function updateActiveConversation() {
-	activeConversation.value.name = conversation.name
-	activeConversation.value.image = conversation.image
-	activeConversation.value.read = conversation.read
-	activeConversation.value.latestMessage = conversation.latestMessage
+function fileUploaded() {
+	newGroupImage.value = newImageField.value.files.item(0)
 }
 </script>
 
@@ -210,7 +200,7 @@ function updateActiveConversation() {
 				Leave group
 			</button>
 		</div>
-	<add-participant-modal :conversation="conversation" :participants="conversation.participants" :single-mode="false"/>
+	<add-participant-modal :conversation="conversation" :single-mode="false" @added-participants="updateParticipants"/>
 	</div>
 
 	<div

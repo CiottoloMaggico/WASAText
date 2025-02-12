@@ -46,10 +46,6 @@ async function sendMessage() {
 	}
 }
 
-function fileUploaded() {
-	newMessage.attachment = fileUploadElement.value.files.item(0)
-}
-
 function clearAttachment() {
 	fileUploadElement.value.value = null
 	newMessage.attachment = null
@@ -68,6 +64,10 @@ function clearAll() {
 	})
 	fileUploadElement.value.value = null
 	emits("clearReply", null)
+}
+
+function fileUploaded() {
+	newMessage.attachment = fileUploadElement.value.files.item(0)
 }
 </script>
 

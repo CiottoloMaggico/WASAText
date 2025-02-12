@@ -25,8 +25,8 @@ watch(searchedUsername, async () => {
 
 async function searchForUsers() {
 	try {
-		const response = await UserService.getUsers(searchQueryParams.value)
-		users.value = response.data.content
+		const data = await UserService.getUsers(searchQueryParams.value)
+		users.value = data.content
 	} catch (error) {
 		console.error(error.toString())
 	}

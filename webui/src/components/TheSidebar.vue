@@ -6,34 +6,64 @@ import TheNewConversation from "@/components/TheNewConversation.vue";
 import TheProfile from "@/components/TheProfile.vue";
 import {storeToRefs} from "pinia";
 import {useProfileStore} from "@/stores/profileStore";
+import TheError from "@/components/TheError.vue";
+import SessionService from "@/services/sessionService";
+import router from "@/router";
+import ConversationService from "@/services/conversationService";
 
-const profileStore = useProfileStore()
-const {profile} = storeToRefs(profileStore)
+const {profile} = storeToRefs(useProfileStore())
 
+const error = ref(null)
 const component = ref(TheConversationList.__name)
 
 function switchComponent(componentName) {
 	component.value = componentName
 }
+
+function handleError(componentError) {
+	error.value = componentError
+}
+
+function closeError() {
+	error.value = null
+}
+
+function logout() {
+	SessionService.logout()
+	router.replace({name: "login"})
+}
+
+async function refreshData() {
+	await ConversationService.refresh()
+}
 </script>
 
 <template>
+	<the-error :error="error" v-click-outside="closeError"/>
 	<div class="sidebar">
 		<div class="actions-bar">
 			<div class="actions-group">
 				<div class="action-box" @click="switchComponent(TheConversationList.__name)">
-					<img class="" src="@/assets/images/chat.svg"/>
+					<img src="@/assets/images/chat.svg"/>
 				</div>
 				<div class="action-box" @click="switchComponent(TheNewConversation.__name)">
-					<img class="" src="@/assets/images/add-chat.svg"/>
+					<img src="@/assets/images/add-chat.svg"/>
+				</div>
+				<div class="action-box" @click="refreshData">
+					<img src="@/assets/images/reload.svg"/>
 				</div>
 			</div>
-			<div class="action-box avatar-box" @click="switchComponent(TheProfile.__name)">
-				<img class="avatar" :src="getApiUrl(profile.photo.fullUrl)"/>
+			<div class="actions-group pb-0 gap-0">
+				<div class="action-box">
+					<img src="@/assets/images/logout.svg" @click="logout"/>
+				</div>
+				<div class="action-box avatar-box" @click="switchComponent(TheProfile.__name)">
+					<img class="avatar" :src="getApiUrl(profile.photo.fullUrl)"/>
+				</div>
 			</div>
 		</div>
 
-		<component :is="component" @switch="switchComponent"/>
+		<component :is="component" @switch="switchComponent" @raise="handleError"/>
 	</div>
 </template>
 

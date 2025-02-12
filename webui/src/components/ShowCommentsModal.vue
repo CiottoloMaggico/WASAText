@@ -18,8 +18,8 @@ watch(show, async (newVal, oldVal) => {
 
 async function getComments() {
 	try {
-		const response = await MessageService.getComments(message.value)
-		comments.value = response.data
+		const data = await MessageService.getComments(message.value)
+		comments.value = data
 	} catch (e) {
 		console.error(e)
 	}
