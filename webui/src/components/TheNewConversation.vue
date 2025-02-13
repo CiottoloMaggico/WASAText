@@ -32,7 +32,7 @@ async function createChat(recipient) {
 					<span class="sidebar-item-title">New group</span>
 				</div>
 			</div>
-			<AddParticipantForm :single-mode="true" @add-participant="createChat"/>
+			<AddParticipantForm :participants="[]" :single-mode="true" @add-participant="createChat"/>
 		</div>
 	</div>
 </template>

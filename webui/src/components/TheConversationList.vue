@@ -6,7 +6,7 @@ import {storeToRefs} from "pinia";
 const {conversations, activeConversation} = storeToRefs(useConversationsStore())
 
 function isSelected(conversation) {
-	return (activeConversation.value && conversation.id == activeConversation.value.id)
+	return (activeConversation.value && conversation.id === activeConversation.value.id)
 }
 
 </script>

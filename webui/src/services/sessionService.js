@@ -2,6 +2,8 @@ import api from "./axios";
 import ConversationService from "@/services/conversationService";
 import UserService from "@/services/userService";
 import {useProfileStore} from "@/stores/profileStore";
+import {useConversationsStore} from "@/stores/conversationsStore";
+import router from "@/router";
 
 const API_AUTHENTICATION_KEY = "auth-key"
 
@@ -27,8 +29,11 @@ export function isAuthed() {
 
 
 export const SessionService = Object.freeze({
-	get store() {
+	get profileStore() {
 		return useProfileStore()
+	},
+	get conversationsStore() {
+		return useConversationsStore()
 	},
 	async refresh() {
 		await UserService.refresh()
@@ -41,12 +46,15 @@ export const SessionService = Object.freeze({
 			throw new Error(response.statusText)
 		}
 		setAuthentication(response.data.uuid)
-		this.store.update(response.data)
+		this.profileStore.update(response.data)
 		await ConversationService.refresh()
 		return response.data
 	},
-	logout() {
+	async logout() {
 		setAuthentication(null)
+		await router.replace({name: "login"})
+		this.profileStore.flush()
+		this.conversationsStore.flush()
 	}
 })
 

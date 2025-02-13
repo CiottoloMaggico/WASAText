@@ -12,7 +12,9 @@ export const ConversationService = Object.freeze({
 	},
 	async refresh() {
 		let activeConversation = this.store.activeConversation
-		await this.setDelivered()
+		let {content} = await this.setDelivered()
+		if (activeConversation && !content.find(c => c.id === activeConversation.id)) {content.push(activeConversation)}
+		this.store.updateConversations(content)
 		if (activeConversation) await MessageService.setSeen(activeConversation)
 	},
 	async createChat(recipient) {
@@ -157,7 +159,7 @@ export const ConversationService = Object.freeze({
 			throw new Error(response.statusText)
 		}
 
-		this.store.updateConversations(response.data.content)
+
 		return response.data
 	},
 	async getConversation(conversationId) {

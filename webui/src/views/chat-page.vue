@@ -33,7 +33,6 @@ watch(messages, () => {
 async function getMessages() {
 	try {
         const data = await MessageService.setSeen(activeConversation.value)
-		activeConversation.value.read = true
 		messages.value = data.content
 	} catch (err) {
 		console.error(err)

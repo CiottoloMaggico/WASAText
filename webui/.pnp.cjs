@@ -27,8 +27,10 @@ const RAW_RUNTIME_STATE =
       [null, {\
         "packageLocation": "./",\
         "packageDependencies": [\
+          ["@eslint/js", "npm:9.20.0"],\
           ["@vitejs/plugin-vue", "virtual:1cba25b1f60f949a90be2c2cb29a6b4f9366aa091092950a3b449fa4cd4ec226263ceb0fd872c141b131285e267474987d80305279a07ec18ceb71fbdeb753ac#npm:3.2.0"],\
           ["axios", "npm:0.28.0"],\
+          ["globals", "npm:15.15.0"],\
           ["pinia", "virtual:1cba25b1f60f949a90be2c2cb29a6b4f9366aa091092950a3b449fa4cd4ec226263ceb0fd872c141b131285e267474987d80305279a07ec18ceb71fbdeb753ac#npm:2.3.1"],\
           ["qs", "npm:6.14.0"],\
           ["vite", "virtual:1cba25b1f60f949a90be2c2cb29a6b4f9366aa091092950a3b449fa4cd4ec226263ceb0fd872c141b131285e267474987d80305279a07ec18ceb71fbdeb753ac#npm:3.2.11"],\
@@ -92,6 +94,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/unplugged/@esbuild-linux-loong64-npm-0.15.18-7e5f29c057/node_modules/@esbuild/linux-loong64/",\
         "packageDependencies": [\
           ["@esbuild/linux-loong64", "npm:0.15.18"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@eslint/js", [\
+      ["npm:9.20.0", {\
+        "packageLocation": "./.yarn/cache/@eslint-js-npm-9.20.0-86701063ff-2304cd7257.zip/node_modules/@eslint/js/",\
+        "packageDependencies": [\
+          ["@eslint/js", "npm:9.20.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -1012,6 +1023,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["globals", [\
+      ["npm:15.15.0", {\
+        "packageLocation": "./.yarn/cache/globals-npm-15.15.0-5ddcb6c553-7f561c87b2.zip/node_modules/globals/",\
+        "packageDependencies": [\
+          ["globals", "npm:15.15.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["gopd", [\
       ["npm:1.2.0", {\
         "packageLocation": "./.yarn/cache/gopd-npm-1.2.0-df89ffa78e-94e296d69f.zip/node_modules/gopd/",\
@@ -1809,8 +1829,10 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["teapot", "workspace:."],\
+          ["@eslint/js", "npm:9.20.0"],\
           ["@vitejs/plugin-vue", "virtual:1cba25b1f60f949a90be2c2cb29a6b4f9366aa091092950a3b449fa4cd4ec226263ceb0fd872c141b131285e267474987d80305279a07ec18ceb71fbdeb753ac#npm:3.2.0"],\
           ["axios", "npm:0.28.0"],\
+          ["globals", "npm:15.15.0"],\
           ["pinia", "virtual:1cba25b1f60f949a90be2c2cb29a6b4f9366aa091092950a3b449fa4cd4ec226263ceb0fd872c141b131285e267474987d80305279a07ec18ceb71fbdeb753ac#npm:2.3.1"],\
           ["qs", "npm:6.14.0"],\
           ["vite", "virtual:1cba25b1f60f949a90be2c2cb29a6b4f9366aa091092950a3b449fa4cd4ec226263ceb0fd872c141b131285e267474987d80305279a07ec18ceb71fbdeb753ac#npm:3.2.11"],\

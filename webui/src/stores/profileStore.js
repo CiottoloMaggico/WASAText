@@ -12,6 +12,9 @@ export const useProfileStore = defineStore("profileStore", {
 	actions: {
 		update(newProfile) {
 			this.profile = {...newProfile}
-		}
+		},
+		flush() {
+			this.profile = null
+		},
 	}
 })

@@ -36,6 +36,10 @@ watch(() => props.conversation.id, () => {
 })
 
 async function sendMessage() {
+	if (!newMessage.content && !newMessage.attachment) {
+		return
+	}
+
 	try {
 		await MessageService.sendMessage(props.conversation, newMessage)
 	} catch (err) {
@@ -115,7 +119,7 @@ function fileUploaded() {
 			</div>
 			<div class="text-input-box">
 				<input id="messagetext" name="messagetext" type="text" class="form-control"
-					   placeholder="write a message" v-model="newMessage.content">
+					   placeholder="write a message" v-model="newMessage.content" >
 			</div>
 
 			<div class="submit-button-box">

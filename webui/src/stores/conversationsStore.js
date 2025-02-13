@@ -8,7 +8,7 @@ export const useConversationsStore = defineStore("conversationsStore", {
 	}),
 	getters: {
  		activeConversation: (state) => {
-			let conversation = state.conversations.find((conversation) => conversation.id == state.route.params.convId)
+			let conversation = state.conversations.find((conversation) => conversation.id === state.route.params.convId)
 			if (!state.route.params.convId || !conversation) {
 				return null
 			}
@@ -17,16 +17,19 @@ export const useConversationsStore = defineStore("conversationsStore", {
 		},
 		getStoredConversation: (state) => {
 			return (conversationId) => {
-				return state.conversations.find((conversation) => conversationId == conversation.id)
+				return state.conversations.find((conversation) => conversationId === conversation.id)
 			}
 		},
 		getChatByRecipient: (state) => {
-			return (recipient) => {return state.conversations.find((conversation) => conversation.name == recipient.username && conversation.type === 'chat')}
+			return (recipient) => {return state.conversations.find((conversation) => conversation.name === recipient.username && conversation.type === 'chat')}
 		},
 	},
 	actions: {
+		flush() {
+			this.conversations = []
+		},
 		updateConversation(newConversation) {
-			let oldConversation = this.conversations.find((c) => c.id == newConversation.id)
+			let oldConversation = this.conversations.find((c) => c.id === newConversation.id)
 			if (!oldConversation) {
 				this.conversations.push(newConversation)
 				return
@@ -40,7 +43,7 @@ export const useConversationsStore = defineStore("conversationsStore", {
 			this.conversations.splice(this.conversations.findIndex((c) => c.id === conversationToRemove.id), 1)
 		},
 		updateLatestMessage(conversation, newMessage) {
-			let oldConversation = this.conversations.find((c) => c.id == conversation.id)
+			let oldConversation = this.conversations.find((c) => c.id === conversation.id)
 			if (!oldConversation.latestMessage) {
 				oldConversation.latestMessage = newMessage
 				return

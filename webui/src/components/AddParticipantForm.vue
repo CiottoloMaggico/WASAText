@@ -4,10 +4,11 @@ import {getAuthentication} from "@/services/sessionService";
 import UserService from "@/services/userService";
 
 const props = defineProps(["participants", "singleMode"])
-const emits = defineEmits(["addParticipant"])
+const emits = defineEmits(["addedParticipants", "addParticipant"]);
 
 const searchedUsername = ref("")
 const users = ref([])
+const addedUsers = ref([])
 
 const searchQueryParams = computed(() => {
 	return {
@@ -32,13 +33,14 @@ async function searchForUsers() {
 	}
 }
 
-function selectParticipant(participantUuid) {
-	let index = props.participants.indexOf(participantUuid)
+function selectParticipant(participant) {
+	let index = addedUsers.value.findIndex((p) => p.uuid === participant.uuid)
 	if (index !== -1) {
-		props.participants.splice(index, 1)
-		return
+		addedUsers.value.splice(index, 1)
+	} else {
+		addedUsers.value.push(participant)
 	}
-	props.participants.push(participantUuid)
+	emits("addedParticipants", addedUsers)
 }
 </script>
 
@@ -51,12 +53,17 @@ function selectParticipant(participantUuid) {
 			<input v-model="searchedUsername" class="search-bar" placeholder="Search"/>
 		</div>
 		<div class="users-container">
-			<div v-for="user in users" v-if="users.length !== 0" :key="user.uuid"
-				 :class="(!singleMode && participants.includes(user.uuid)) ? 'selected' : ''"
-				 class="sidebar-item user-item"
-				 @click="(!singleMode) ? selectParticipant(user.uuid) : $emit('addParticipant', user)">
-				<span class="username">{{ user.username }}</span>
-			</div>
+			<template v-for="user in users" v-if="users.length !== 0" :key="user.uuid">
+				<div v-if="participants.findIndex((p) => p.uuid === user.uuid) !== -1"
+					 class="sidebar-item user-item selected pe-none">
+					<span class="username">{{ user.username }}</span>
+				</div>
+				<div v-else :class="{'selected' : (!singleMode && addedUsers.findIndex((p) => p.uuid === user.uuid) !== -1)}"
+					 class="sidebar-item user-item"
+					 @click="(!singleMode) ? selectParticipant(user) : $emit('addParticipant', user)">
+					<span class="username">{{ user.username }}</span>
+				</div>
+			</template>
 			<div v-else class="sidebar-item">
 				<span class="sidebar-item-title">No users found</span>
 			</div>

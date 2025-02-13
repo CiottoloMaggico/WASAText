@@ -24,6 +24,7 @@ const newImagePreviewUrl = computed(() => {
 
 async function createGroup() {
 	let group
+	newGroup.participants = newGroup.participants.map((p) => p.uuid)
 	try {
 		group = await ConversationService.createGroup(newGroup)
 	} catch (error) {
@@ -37,6 +38,10 @@ async function createGroup() {
 
 function fileUploaded() {
 	newGroup.image = newImageField.value.files.item(0)
+}
+
+function updateNewGroupParticipants(addedUsers) {
+	newGroup.participants = addedUsers
 }
 
 </script>
@@ -69,7 +74,7 @@ function fileUploaded() {
 						required
 					/>
 				</div>
-				<AddParticipantForm :participants="newGroup.participants" :single-mode="false"/>
+				<AddParticipantForm :participants="[]" :single-mode="false" @added-participants="updateNewGroupParticipants"/>
 			</div>
 			<div class="form-footer">
 				<button type="submit" class="btn btn-primary">Crea gruppo</button>

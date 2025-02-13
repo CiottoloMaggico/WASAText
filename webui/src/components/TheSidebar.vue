@@ -10,7 +10,10 @@ import TheError from "@/components/TheError.vue";
 import SessionService from "@/services/sessionService";
 import router from "@/router";
 import ConversationService from "@/services/conversationService";
+import {useConversationsStore} from "@/stores/conversationsStore";
 
+const profileStore = useProfileStore()
+const conversationsStore = useConversationsStore()
 const {profile} = storeToRefs(useProfileStore())
 
 const error = ref(null)
@@ -28,9 +31,8 @@ function closeError() {
 	error.value = null
 }
 
-function logout() {
-	SessionService.logout()
-	router.replace({name: "login"})
+async function logout() {
+	await SessionService.logout()
 }
 
 async function refreshData() {
