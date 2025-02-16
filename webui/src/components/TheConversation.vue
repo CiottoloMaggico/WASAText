@@ -1,10 +1,13 @@
 <script setup>
 import {getApiUrl} from "../services/axios";
 import {getAuthentication} from "../services/sessionService";
+import {computed} from "vue";
 
 const props = defineProps({
 	conversation: Object,
 })
+
+const latestMessage = computed(() => props.conversation.latestMessage)
 </script>
 
 <template>
@@ -18,11 +21,11 @@ const props = defineProps({
 				<span class="conversation-title">{{ conversation.name }}</span>
 				<span v-if="!conversation.read" class="unread-dot"/>
 			</div>
-			<div class="conversation-latestMessage-box" v-if="conversation.latestMessage">
-				<span class="checkmark-box" v-if="conversation.latestMessage.author.uuid === getAuthentication()">
-					<img v-if="conversation.latestMessage.status === 'delivered'" class="checkmark"
+			<div class="conversation-latestMessage-box" v-if="latestMessage">
+				<span class="checkmark-box" v-if="latestMessage.author.uuid === getAuthentication()">
+					<img v-if="latestMessage.status === 'delivered'" class="checkmark"
 						 src="@/assets/images/Checkmark.png" width="512" height="512"/>
-					<img v-else-if="conversation.latestMessage.status === 'seen'" class="checkmark"
+					<img v-else-if="latestMessage.status === 'seen'" class="checkmark"
 						 src="@/assets/images/seen.png" width="512" height="512"/>
 				</span>
 				<div class="latestMessage-content-box">

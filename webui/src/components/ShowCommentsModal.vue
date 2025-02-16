@@ -4,34 +4,11 @@ import MessageService from "@/services/messageService";
 import {getApiUrl} from "@/services/axios";
 import {getAuthentication} from "@/services/sessionService";
 
-const props = defineProps(["message", "show"])
-const emits = defineEmits(["close"]);
-const comments = ref([])
-
-const {message, show} = toRefs(props)
-
-watch(show, async (newVal, oldVal) => {
-	if (!oldVal && newVal) {
-		await getComments()
-	}
-})
-
-async function getComments() {
-	try {
-		const data = await MessageService.getComments(message.value)
-		comments.value = data
-	} catch (e) {
-		console.error(e)
-	}
-}
+const props = defineProps(["message", "comments"])
+const emits = defineEmits(["close", "deleteComment"]);
 
 async function deleteComment() {
-	try {
-		await MessageService.uncommentMessage(message.value)
-		await getComments()
-	} catch (e) {
-		console.error(e)
-	}
+	emits("deleteComment");
 }
 
 function closeModal() {

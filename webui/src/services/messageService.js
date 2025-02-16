@@ -15,6 +15,7 @@ export const MessageService = Object.freeze({
 		if (response.status !== 200) {
 			throw new Error(response.statusText)
 		}
+
 		if (response.data.content[0]) {
 			conversation.read = true
 			this.store.updateConversation(conversation)

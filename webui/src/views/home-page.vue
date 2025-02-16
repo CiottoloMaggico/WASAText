@@ -12,6 +12,7 @@ import TheSidebar from "../components/TheSidebar.vue";
 
 <style scoped>
 main {
+	position:relative;
 	display: flex;
 	flex-flow: row nowrap;
 }

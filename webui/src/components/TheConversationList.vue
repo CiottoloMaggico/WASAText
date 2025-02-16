@@ -34,6 +34,7 @@ function isSelected(conversation) {
 
 .sidebar-item {
 	border-bottom: 1px solid #e4e4e4;
+	width: 100%;
 }
 
 .selected {

@@ -1,6 +1,6 @@
 <script setup>
 import {getApiUrl} from "../services/axios";
-import {computed, onBeforeMount, reactive, ref, useTemplateRef} from "vue";
+import {watch, computed, onBeforeMount, reactive, ref, useTemplateRef} from "vue";
 import EmojiPicker from 'vue3-emoji-picker'
 import 'vue3-emoji-picker/css'
 import MessageService from "@/services/messageService";
@@ -14,10 +14,15 @@ const props = defineProps({
 })
 const emits = defineEmits(["update", "wantReply"])
 
-const emojiPickerToggle = useTemplateRef("emoji-picker-toggle");
+const emojiPickerToggle = useTemplateRef("emoji-picker-toggle")
+const emojiPickerCoords = ref({
+	top: '0',
+	left: '0',
+})
 const showEmojiPicker = ref(false)
 const showCommentsModal = ref(false)
 const showForwardModal = ref(false)
+const comments = ref([])
 
 
 const repliedMessage = reactive({})
@@ -27,21 +32,19 @@ const sendAt = computed(() => {
 })
 
 onBeforeMount(async () => {
+	await getComments()
 	if (!props.message.repliedMessageId) {
 		return
 	}
 	await getRepliedMessage()
 })
 
-async function setComment(emoji) {
-	try {
-		await MessageService.commentMessage(props.message, emoji.i)
-	} catch (e) {
-		console.error(e.toString())
-	} finally {
-		closeEmojiPicker()
+watch(showCommentsModal, async (newVal, oldVal) => {
+	if (!oldVal && newVal) {
+		await getComments()
 	}
-}
+})
+
 
 async function deleteMessage() {
 	try {
@@ -62,6 +65,37 @@ async function getRepliedMessage() {
 	}
 }
 
+async function getComments() {
+	try {
+		const data = await MessageService.getComments(props.message)
+		comments.value = data
+	} catch (e) {
+		console.error(e)
+	}
+}
+
+async function setComment(emoji) {
+	try {
+		await MessageService.commentMessage(props.message, emoji.i)
+		await getComments()
+	} catch (e) {
+		console.error(e.toString())
+	} finally {
+		closeEmojiPicker()
+	}
+}
+
+
+async function deleteComment() {
+	try {
+		await MessageService.uncommentMessage(props.message)
+		await getComments()
+	} catch (e) {
+		console.error(e)
+	}
+}
+
+
 function closeEmojiPicker() {
 	if (showEmojiPicker.value) {
 		showEmojiPicker.value = false
@@ -74,17 +108,21 @@ function emojiPickerPosition() {
 	}
 	let {height, y} = props.messageContainer.getBoundingClientRect()
 	let halfContainerHeight = height / 2
-	let toggleY = emojiPickerToggle.value.getBoundingClientRect().y
+	let emojiPickerParent = emojiPickerToggle.value.getBoundingClientRect()
+	let toggleY = emojiPickerParent.y
+	let top = emojiPickerParent.top + 24, left = emojiPickerParent.left + 24
 
-	let direction = 'high-picker'
-	if (toggleY < y + halfContainerHeight) {
-		direction = 'low-picker'
+	if (toggleY > y + halfContainerHeight) {
+		top = emojiPickerParent.top - 320
 	}
 
 	if (props.isAuthor) {
-		return direction + ' author-picker'
+		left = emojiPickerParent.left - 280
 	}
-	return direction
+
+	emojiPickerCoords.value.top = `${top}px`
+	emojiPickerCoords.value.left = `${left}px`
+	showEmojiPicker.value = !showEmojiPicker.value
 }
 </script>
 
@@ -99,9 +137,9 @@ function emojiPickerPosition() {
 				<span class="sender-name">{{ message.author.username }}</span>
 			</div>
 		</div>
-		<div class="message-box" :class="{'author-message-box': isAuthor}">
-			<div class="message-side" :class="{'author-message-side' : isAuthor}">
-				<div class="message">
+		<div class="message-box" :class="{'flex-row-reverse': isAuthor}">
+			<div class="message-side" :class="{'align-items-end' : isAuthor}">
+				<div class="message" :class="{'flex-row-reverse': isAuthor}">
 					<div class="body">
 						<div v-if="repliedMessage.id" class="replied-message-box">
 							<div class="replied-message-content">
@@ -142,23 +180,27 @@ function emojiPickerPosition() {
 							</span>
 						</div>
 					</div>
-				</div>
-				<span class="comment-btn" ref="emoji-picker-toggle" v-click-outside="closeEmojiPicker">
+					<span class="comment-btn" ref="emoji-picker-toggle" v-click-outside="closeEmojiPicker">
 						<img class="svg-icon" src="@/assets/images/emoji.svg"
 							 alt="add comment to the message"
-							 @click="showEmojiPicker = !showEmojiPicker"/>
-						<div class="emoji-picker" :class="emojiPickerPosition()">
-							<emoji-picker v-show="showEmojiPicker" class="position-fixed"
+							 @click="emojiPickerPosition()"/>
+						<div class="emoji-picker">
+							<emoji-picker v-show="showEmojiPicker"
 										  :native="true" @select="setComment"/>
 
 						</div>
 				</span>
+				</div>
+				<div v-if="comments.length !== 0" class="reactions-container" :data-bs-target="`#comments-modal-${message.id}`" data-bs-toggle="modal"
+					 @click="showCommentsModal = true">
+						<span class="reaction" v-for="i in Math.min(3, comments.length)">
+							<span>
+								{{comments[i-1].content}}
+							</span>
+						</span>
+				</div>
 			</div>
 			<div class="options-box">
-				<div class="option" :data-bs-target="`#comments-modal-${message.id}`" data-bs-toggle="modal"
-					 @click="showCommentsModal = true">
-					<img class="option-icon" src="@/assets/images/emoji.svg" alt=""/>
-				</div>
 				<div class="option" @click="$emit('wantReply', message)">
 					<img class="option-icon" src="@/assets/images/reply.png" alt=""/>
 				</div>
@@ -172,7 +214,7 @@ function emojiPickerPosition() {
 			</div>
 		</div>
 	</div>
-	<show-comments-modal :message="message" :show="showCommentsModal" @close="showCommentsModal = false"/>
+	<show-comments-modal :message="message" :comments="comments" @close="showCommentsModal = false" @delete-comment="deleteComment"/>
 	<forwarding-modal :message="message" :show="showForwardModal" @close="showForwardModal = false"/>
 </template>
 
@@ -182,34 +224,44 @@ function emojiPickerPosition() {
 	height: 100%;
 }
 
-.comment-btn {
+.reactions-container {
+	top: -6px;
 	position: relative;
+	display: flex;
+	flex-flow: row nowrap;
+	overflow: hidden;
+	background-color: var(--PRIMARY-COLOR);
+	border-radius: 1rem;
+	width: fit-content;
+	border: 1px solid #3d6e53;
+	padding: 1px;
+}
+
+.reaction {
+	width: 1.5rem;
+	height: 1.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
+}
+
+.comment-btn {
 	width: 1.5rem;
 	height: 1.5rem;
 	align-self: center;
 	margin-right: 5px;
+	flex-shrink: 0;
 }
 
 .emoji-picker {
-	position: absolute;
-	left: 0;
+	position: fixed;
+	top: v-bind('emojiPickerCoords.top');
+	left: v-bind('emojiPickerCoords.left');
 	z-index: 1;
 }
 
-.low-picker {
-	top: 0;
-}
-
-.high-picker {
-	top: -320px;
-}
-
-.author-picker {
-	left: -280px;
-}
-
-.author-message-box {
-	justify-content: end;
+.author-message {
 	flex-direction: row-reverse !important;
 }
 
@@ -256,11 +308,12 @@ function emojiPickerPosition() {
 
 .message-side {
 	display: flex;
-	width: 100%;
 	height: 100%;
-	flex-flow: row nowrap;
+	flex-flow: column nowrap;
 	justify-content: start;
 	overflow: hidden;
+	padding: 5px;
+	max-width: 60%;
 }
 
 .author-message-side {
@@ -270,9 +323,10 @@ function emojiPickerPosition() {
 
 .message {
 	display: flex;
-	flex-flow: column nowrap;
-	padding: 5px;
-	max-width: 60%;
+	flex-flow: row nowrap;
+	flex-shrink: 0;
+	gap: 1rem;
+	width: 100%;
 }
 
 .header {
@@ -316,6 +370,7 @@ function emojiPickerPosition() {
 	padding: .7rem;
 	width: fit-content;
 	max-width: 100%;
+	overflow: hidden;
 }
 
 .content {
@@ -323,7 +378,11 @@ function emojiPickerPosition() {
 }
 
 .message-text {
+	word-break: break-all;
+	overflow: hidden;
+	display: inline-block;
 	font-size: 1.2rem;
+	width: 100%;
 }
 
 .message-image-box {

@@ -46,10 +46,12 @@ export const useConversationsStore = defineStore("conversationsStore", {
 			let oldConversation = this.conversations.find((c) => c.id == conversation.id)
 			if (!oldConversation.latestMessage) {
 				oldConversation.latestMessage = newMessage
-				return
 			}
-
-			oldConversation.latestMessage = {...newMessage}
+			else if (!newMessage) {
+				oldConversation.latestMessage = null
+			} else {
+				oldConversation.latestMessage = {...newMessage}
+			}
 		},
 	}
 })

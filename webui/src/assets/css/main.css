@@ -32,7 +32,6 @@ body {
 }
 
 main {
-	position: relative;
 	height: calc(100vh - 50px);
 	overflow: hidden;
 }
