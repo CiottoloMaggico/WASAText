@@ -70,14 +70,15 @@ func (model MessageInfoModelImpl) GetMessageInfo(user string, message int64) (*M
 
 func (model MessageInfoModelImpl) SetComment(user string, message int64, comment string) (*MessageInfo, error) {
 	query := `
-		UPDATE User_Message
-		SET comment = ?
-		WHERE user = ? AND message = ?
+		INSERT INTO User_Message (message, user, status, comment)
+		VALUES (?, ?, 3, ?)
+		ON CONFLICT (message, user)
+		DO UPDATE SET comment = excluded.comment
 		RETURNING message messageInfo_message, user messageInfo_user, status messageInfo_status, comment messageInfo_comment;
 	`
 
 	messageInfo := MessageInfo{}
-	if err := model.Db.QueryStructRow(&messageInfo, query, comment, user, message); err != nil {
+	if err := model.Db.QueryStructRow(&messageInfo, query, message, user, comment); err != nil {
 		return nil, err
 	}
 	return &messageInfo, nil

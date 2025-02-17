@@ -12,8 +12,6 @@ import router from "@/router";
 import ConversationService from "@/services/conversationService";
 import {useConversationsStore} from "@/stores/conversationsStore";
 
-const profileStore = useProfileStore()
-const conversationsStore = useConversationsStore()
 const {profile} = storeToRefs(useProfileStore())
 
 const error = ref(null)

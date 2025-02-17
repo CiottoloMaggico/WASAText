@@ -1,5 +1,5 @@
 <script setup>
-import {nextTick, ref, useTemplateRef, watch, watchEffect, reactive} from "vue"
+import {nextTick, reactive, ref, useTemplateRef, watchEffect, watch} from "vue"
 import {MessageService} from "../services/messageService"
 import {getAuthentication} from "../services/sessionService";
 import TheMessage from "../components/TheMessage.vue";

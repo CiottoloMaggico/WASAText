@@ -11,7 +11,6 @@ export const ConversationService = Object.freeze({
 		return getAuthentication()
 	},
 	async refresh() {
-		await router.replace({name: "homepage"})
 		const data = await this.setDelivered()
 		this.store.update(data)
 	},

@@ -17,7 +17,6 @@ RUN mkdir ./bin
 COPY cmd ./cmd
 COPY service ./service
 
-
 RUN CGO_ENABLED=1 go build -o ./bin/webapi ./cmd/webapi
 
 FROM golang:1.23-alpine AS go-run-stage

@@ -38,6 +38,7 @@ export const SessionService = Object.freeze({
 	async refresh() {
 		await UserService.refresh()
 		await ConversationService.refresh()
+		await router.replace({name: "homepage"})
 	},
 	async doLogin(username){
 		const response = await api.post("/session", {username: username})

@@ -204,7 +204,7 @@ function emojiPickerPosition() {
 				<div class="option" @click="$emit('wantReply', message)">
 					<img class="option-icon" src="@/assets/images/reply.png" alt=""/>
 				</div>
-				<div class="option" @click="deleteMessage">
+				<div v-if="isAuthor" class="option" @click="deleteMessage">
 					<img class="option-icon" src="@/assets/images/bin.png" alt=""/>
 				</div>
 				<div class="option" :data-bs-target="`#forward-modal-${message.id}`" data-bs-toggle="modal"
@@ -235,6 +235,10 @@ function emojiPickerPosition() {
 	width: fit-content;
 	border: 1px solid #3d6e53;
 	padding: 1px;
+}
+
+.reactions-container:hover{
+	cursor: pointer;
 }
 
 .reaction {
