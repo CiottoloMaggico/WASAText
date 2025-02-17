@@ -8,6 +8,7 @@ import (
 
 type Page struct {
 	Page         int `json:"page"`
+	Cursor       int `json:"cursor"`
 	finalPage    int
 	CurrPage     string
 	NextPage     *string `json:"nextPage"`
@@ -26,6 +27,7 @@ func (p Page) pageUrl(pageNum int) string {
 	pageUrl, _ := url.Parse(p.CurrPage)
 	reqQuery := pageUrl.Query()
 	reqQuery.Set("page", strconv.Itoa(pageNum))
+	reqQuery.Set("cursor", strconv.Itoa(p.Cursor))
 	pageUrl.RawQuery = reqQuery.Encode()
 	return pageUrl.RequestURI()
 }
@@ -44,16 +46,18 @@ func (p Page) PreviousPageUrl() (string, error) {
 	return p.pageUrl(p.Page - 1), nil
 }
 
-func MakePage(page int, pageSize int, totalEntries int, currentUrl string) Page {
-	finalPage, remainingEntries := totalEntries/pageSize, totalEntries%pageSize
+func MakePage(ps PaginationParams, totalEntries int) Page {
+	finalPage, remainingEntries := totalEntries/ps.Size, totalEntries%ps.Size
 	if remainingEntries != 0 {
 		finalPage++
 	}
+
 	res := Page{
-		Page:         page,
+		Page:         ps.Page,
 		finalPage:    finalPage,
+		Cursor:       int(ps.Cursor),
 		NextPage:     nil,
-		CurrPage:     currentUrl,
+		CurrPage:     ps.CurrentUrl,
 		PreviousPage: nil,
 	}
 	if res.HasNext() {

@@ -23,6 +23,6 @@ func newPaginatedView(page Paginator, content interface{}) (PaginatedView, error
 }
 
 func ToPaginatedView(ps PaginationParams, totalEntries int, content interface{}) (PaginatedView, error) {
-	page := MakePage(ps.Page, ps.Size, totalEntries, ps.CurrentUrl)
+	page := MakePage(ps, totalEntries)
 	return newPaginatedView(page, content)
 }

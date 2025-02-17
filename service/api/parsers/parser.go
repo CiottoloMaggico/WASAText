@@ -30,6 +30,7 @@ func ParseAndValidatePaginationParams(url *url.URL) (pagination.PaginationParams
 	res := pagination.PaginationParams{
 		Page:       1,
 		Size:       DefaultPageSize,
+		Cursor:     -1,
 		CurrentUrl: url.String(),
 		Filter:     query.Get("filter"),
 	}
@@ -48,6 +49,14 @@ func ParseAndValidatePaginationParams(url *url.URL) (pagination.PaginationParams
 			return pagination.PaginationParams{}, apierrors.InvalidUrlParameters()
 		}
 		res.Size = tmpSize
+	}
+
+	if cursor := query.Get("cursor"); cursor != "" {
+		tmpCursor, err := strconv.Atoi(cursor)
+		if err != nil {
+			return pagination.PaginationParams{}, apierrors.InvalidUrlParameters()
+		}
+		res.Cursor = int64(tmpCursor)
 	}
 
 	if err := validators.Validate.Struct(res); err != nil {

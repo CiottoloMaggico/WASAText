@@ -4,6 +4,7 @@ import {useRoute} from "vue-router";
 export const useConversationsStore = defineStore("conversationsStore", {
 	state: () => ({
 		route: useRoute(),
+		pagination: {},
 		conversations: [],
 	}),
 	getters: {
@@ -15,18 +16,24 @@ export const useConversationsStore = defineStore("conversationsStore", {
 
 			return conversation
 		},
-		getStoredConversation: (state) => {
-			return (conversationId) => {
-				return state.conversations.find((conversation) => conversationId == conversation.id)
-			}
-		},
 		getChatByRecipient: (state) => {
 			return (recipient) => {return state.conversations.find((conversation) => conversation.name == recipient.username && conversation.type === 'chat')}
 		},
+		hasNext : (state) => {
+			 return state.pagination.nextPage != null
+		}
 	},
 	actions: {
 		flush() {
 			this.conversations = []
+		},
+		update(data) {
+			this.pagination = data.page
+			this.conversations = data.content
+		},
+		addPage(data) {
+			Object.assign(this.pagination, data.page)
+			this.conversations = this.conversations.concat(data.content)
 		},
 		updateConversation(newConversation) {
 			let oldConversation = this.conversations.find((c) => c.id == newConversation.id)
@@ -35,9 +42,6 @@ export const useConversationsStore = defineStore("conversationsStore", {
 				return
 			}
 			Object.assign(oldConversation, newConversation)
-		},
-		updateConversations(conversations) {
-			this.conversations = conversations
 		},
 		removeConversation(conversationToRemove) {
 			this.conversations.splice(this.conversations.findIndex((c) => c.id == conversationToRemove.id), 1)

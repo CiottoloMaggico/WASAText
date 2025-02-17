@@ -11,6 +11,7 @@ type Paginator interface {
 type PaginationParams struct {
 	Page       int    `validate:"min=1"`
 	Size       int    `validate:"min=1,max=20"`
+	Cursor     int64  `validate:"min=-1"`
 	CurrentUrl string `validate:"required"`
 	Filter     string `validate:"omitempty,formula"`
 }

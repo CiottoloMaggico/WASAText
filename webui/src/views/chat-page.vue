@@ -1,5 +1,5 @@
 <script setup>
-import {nextTick, ref, useTemplateRef, watch, watchEffect} from "vue"
+import {nextTick, ref, useTemplateRef, watch, watchEffect, reactive} from "vue"
 import {MessageService} from "../services/messageService"
 import {getAuthentication} from "../services/sessionService";
 import TheMessage from "../components/TheMessage.vue";
@@ -12,6 +12,7 @@ const {activeConversation} = storeToRefs(useConversationsStore());
 const messageContainer = useTemplateRef("message-container")
 
 const newMessageReplyTo = ref(null)
+const pagination = reactive({})
 const messages = ref([])
 
 watchEffect(async (onCleanup) => {
@@ -33,7 +34,24 @@ watch(messages, () => {
 async function getMessages() {
 	try {
         const data = await MessageService.setSeen(activeConversation.value)
+		Object.assign(pagination, data.page)
 		messages.value = data.content
+	} catch (err) {
+		console.error(err)
+	}
+}
+
+async function loadNextPage() {
+	try {
+		const data = await MessageService.getMessages(
+			activeConversation.value,
+			{
+				page: pagination.page+1,
+				cursor: pagination.cursor,
+			}
+		)
+		Object.assign(pagination, data.page)
+		messages.value = messages.value.concat(data.content)
 	} catch (err) {
 		console.error(err)
 	}
@@ -68,6 +86,9 @@ function updateReply(message) {
                          :is-author="message.author.uuid === getAuthentication()"
 						 :message-container="messageContainer"
                          @update="getMessages" @want-reply="updateReply"/>
+			<div v-if="pagination.nextPage" class="load-more-box">
+				<div class="btn btn-outline-primary" @click="loadNextPage">Load more</div>
+			</div>
 		</div>
 		<div class="footer">
             <new-message-bar @update="getMessages" @clear-reply="newMessageReplyTo = null" :conversation="activeConversation" :want-reply="newMessageReplyTo"/>
@@ -128,6 +149,16 @@ function updateReply(message) {
 	overflow-x: hidden;
     display: flex;
     flex-flow: column-reverse nowrap;
+	padding-top: 1rem;
+}
+
+.load-more-box {
+	display: flex;
+	width: 100%;
+	height: 5rem;
+	justify-content: center;
+	align-items: center;
+	flex-shrink: 0;
 }
 
 .footer {

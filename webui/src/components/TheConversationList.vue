@@ -2,13 +2,21 @@
 import TheConversation from "@/components/TheConversation.vue";
 import {useConversationsStore} from "@/stores/conversationsStore";
 import {storeToRefs} from "pinia";
+import ConversationService from "@/services/conversationService";
 
-const {conversations, activeConversation} = storeToRefs(useConversationsStore())
+const {conversations, activeConversation, hasNext} = storeToRefs(useConversationsStore())
 
 function isSelected(conversation) {
 	return (activeConversation.value && conversation.id === activeConversation.value.id)
 }
 
+async function loadNextPage() {
+	try {
+		await ConversationService.getNextPage()
+	} catch (e) {
+		console.error(e.toString())
+	}
+}
 </script>
 
 <template>
@@ -23,6 +31,9 @@ function isSelected(conversation) {
 						 class="sidebar-item">
 				<the-conversation :conversation="conversation"/>
 			</router-link>
+			<div v-if="hasNext" class="sidebar-item load-more-box">
+				<div class="btn btn-outline-primary" @click="loadNextPage">Load more</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -40,6 +51,10 @@ function isSelected(conversation) {
 .selected {
 	border-bottom: none;
 	background: var(--SECONDARY-COLOR);
+}
+
+.load-more-box {
+	padding: 0 .5rem;
 }
 
 

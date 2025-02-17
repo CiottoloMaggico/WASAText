@@ -22,26 +22,27 @@ type UserConversationControllerImpl struct {
 }
 
 func (controller UserConversationControllerImpl) GetUserConversations(requestIssuerUUID string, paginationPs pagination.PaginationParams) (pagination.PaginatedView, error) {
-	filterQuery, err := controller.Filter.Evaluate(paginationPs.Filter)
+	queryParameters, err := database.NewQueryParameters(paginationPs, controller.Filter)
 	if err != nil {
 		return pagination.PaginatedView{}, apierrors.InvalidUrlParameters()
 	}
 
-	queryParameters := database.NewQueryParameters(paginationPs.Page, paginationPs.Size, filterQuery)
-	conversationsCount, err := controller.Model.Count(requestIssuerUUID, queryParameters)
+	conversationsCount, cursor, err := controller.Model.Count(requestIssuerUUID, queryParameters)
 	if err != nil {
 		return pagination.PaginatedView{}, err
 	}
 
-	conversations := make([]models.UserConversation, 0)
+	queryParameters.Cursor = cursor
+	var conversations []models.UserConversation
 	if conversationsCount > 0 {
-		conversations, err = controller.Model.GetUserConversations(requestIssuerUUID, queryParameters)
+		conversations, cursor, err = controller.Model.GetUserConversations(requestIssuerUUID, queryParameters)
 
 		if err != nil {
 			return pagination.PaginatedView{}, err
 		}
 	}
 
+	paginationPs.Cursor = cursor
 	return pagination.ToPaginatedView(paginationPs, conversationsCount, translators.UserConversationListToSummaryView(conversations))
 }
 

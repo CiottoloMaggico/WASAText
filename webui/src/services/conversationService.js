@@ -1,7 +1,7 @@
 import {getAuthentication} from "./sessionService";
 import api from "../services/axios";
 import {useConversationsStore} from "@/stores/conversationsStore";
-import MessageService from "@/services/messageService";
+import router from "@/router";
 
 export const ConversationService = Object.freeze({
 	get store() {
@@ -11,11 +11,9 @@ export const ConversationService = Object.freeze({
 		return getAuthentication()
 	},
 	async refresh() {
-		let activeConversation = this.store.activeConversation
-		let {content} = await this.setDelivered()
-		if (activeConversation && !content.find(c => c.id === activeConversation.id)) {content.push(activeConversation)}
-		this.store.updateConversations(content)
-		if (activeConversation) await MessageService.setSeen(activeConversation)
+		await router.replace({name: "homepage"})
+		const data = await this.setDelivered()
+		this.store.update(data)
 	},
 	async createChat(recipient) {
 		const response = await api.post(
@@ -150,6 +148,21 @@ export const ConversationService = Object.freeze({
 
 		return response.data
 	},
+	async getNextPage() {
+		let nextPage = this.store.pagination.nextPage
+		if (!nextPage) return
+
+		const response = await api.get(
+			nextPage,
+		)
+
+		if (response.status !== 200) {
+			throw new Error(response.statusText)
+		}
+
+		this.store.addPage(response.data)
+		return response.data
+	},
 	async setDelivered() {
 		const response = await api.put(
 			`/users/${this.authedUserUUID}/conversations`
@@ -158,7 +171,6 @@ export const ConversationService = Object.freeze({
 		if (response.status !== 200) {
 			throw new Error(response.statusText)
 		}
-
 
 		return response.data
 	},

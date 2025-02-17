@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS User
 
 CREATE TABLE IF NOT EXISTS Conversation
 (
-	id INTEGER PRIMARY KEY
+	id INTEGER PRIMARY KEY AUTOINCREMENT
 );
 
 CREATE TABLE IF NOT EXISTS User_Conversation
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS GroupConversation
 
 CREATE TABLE IF NOT EXISTS Message
 (
-	id           INTEGER PRIMARY KEY,
+	id           INTEGER PRIMARY KEY AUTOINCREMENT,
 	conversation integer  NOT NULL,
 	author       varchar  NOT NULL,
 	sendAt       datetime NOT NULL DEFAULT current_timestamp,
