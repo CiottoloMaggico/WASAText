@@ -75,19 +75,17 @@ func (controller UserControllerImpl) GetUserByUsername(username string) (views.U
 }
 
 func (controller UserControllerImpl) GetUsers(paginationPs pagination.PaginationParams) (pagination.PaginatedView, error) {
-	filterQuery, err := controller.Filter.Evaluate(paginationPs.Filter)
+	queryParameters, err := database.NewQueryParameters(paginationPs, controller.Filter)
 	if err != nil {
 		return pagination.PaginatedView{}, apierrors.InvalidUrlParameters()
 	}
-
-	queryParameters := database.NewQueryParameters(paginationPs.Page, paginationPs.Size, filterQuery)
 
 	usersCount, err := controller.Model.Count(queryParameters)
 	if err != nil {
 		return pagination.PaginatedView{}, err
 	}
 
-	users := make([]models.UserWithImage, 0)
+	var users []models.UserWithImage
 	if usersCount > 0 {
 		users, err = controller.Model.GetUsersWithImage(queryParameters)
 		if err != nil {

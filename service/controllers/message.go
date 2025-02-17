@@ -81,25 +81,25 @@ func (controller MessageControllerImpl) GetConversationMessages(conversationID i
 		return pagination.PaginatedView{}, err
 	}
 
-	filterQuery, err := controller.Filter.Evaluate(paginationPs.Filter)
+	queryParameters, err := database.NewQueryParameters(paginationPs, controller.Filter)
 	if err != nil {
 		return pagination.PaginatedView{}, apierrors.InvalidUrlParameters()
 	}
-	queryParameters := database.NewQueryParameters(paginationPs.Page, paginationPs.Size, filterQuery)
 
-	messagesCount, err := controller.Model.Count(conversationID, queryParameters)
+	messagesCount, cursor, err := controller.Model.Count(conversationID, queryParameters)
 	if err != nil {
 		return pagination.PaginatedView{}, err
 	}
 
-	messages := make([]models.MessageWithAuthorAndAttachment, 0)
+	var messages []models.MessageWithAuthorAndAttachment
 	if messagesCount > 0 {
-		messages, err = controller.Model.GetConversationMessages(conversationID, queryParameters)
+		messages, cursor, err = controller.Model.GetConversationMessages(conversationID, queryParameters)
 		if err != nil {
 			return pagination.PaginatedView{}, err
 		}
 	}
 
+	paginationPs.Cursor = cursor
 	return pagination.ToPaginatedView(paginationPs, messagesCount, translators.MessageWithAuthorAndAttachmentListToView(messages))
 }
 

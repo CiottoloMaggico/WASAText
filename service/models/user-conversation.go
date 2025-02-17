@@ -105,12 +105,24 @@ type UserConversation struct {
 
 type UserConversationModel interface {
 	GetUserConversation(userUUID string, conversationId int64) (*UserConversation, error)
-	GetUserConversations(userUUID string, parameters database.QueryParameters) ([]UserConversation, error)
-	Count(userUUID string, parameters database.QueryParameters) (int, error)
+	GetUserConversations(userUUID string, parameters database.QueryParameters) ([]UserConversation, int64, error)
+	Count(userUUID string, parameters database.QueryParameters) (int, int64, error)
 }
 
 type UserConversationModelImpl struct {
 	Db database.AppDatabase
+}
+
+func (model UserConversationModelImpl) getCursor() (int64, error) {
+	var cursor int64
+	query := `
+		SELECT ifnull(MAX(id), 0) FROM Conversation;
+	`
+
+	if err := model.Db.QueryRow(query).Scan(&cursor); err != nil {
+		return -1, err
+	}
+	return cursor, nil
 }
 
 func (model UserConversationModelImpl) GetUserConversation(userUUID string, conversationId int64) (*UserConversation, error) {
@@ -123,13 +135,20 @@ func (model UserConversationModelImpl) GetUserConversation(userUUID string, conv
 	return &userConversation, nil
 }
 
-func (model UserConversationModelImpl) GetUserConversations(userUUID string, parameters database.QueryParameters) ([]UserConversation, error) {
-	query := qGetUserConversations
-
-	if filter := parameters.Filter; filter != "" {
-		query += fmt.Sprintf(" WHERE (%s)", filter)
+func (model UserConversationModelImpl) GetUserConversations(userUUID string, parameters database.QueryParameters) ([]UserConversation, int64, error) {
+	cursor := parameters.Cursor
+	if cursor == -1 {
+		tmpCursor, err := model.getCursor()
+		if err != nil {
+			return nil, -1, err
+		}
+		cursor = tmpCursor
 	}
 
+	query := fmt.Sprintf("%s WHERE userConversation_id <= %d", qGetUserConversations, cursor)
+	if filter := parameters.Filter; filter != "" {
+		query += fmt.Sprintf(" AND (%s)", filter)
+	}
 	query += " ORDER BY message_sendAt DESC, uc.userConversation_id DESC LIMIT ? OFFSET ?;"
 
 	userConversations := make([]UserConversation, 0, parameters.Limit)
@@ -138,23 +157,31 @@ func (model UserConversationModelImpl) GetUserConversations(userUUID string, par
 		userUUID, userUUID, userUUID,
 		parameters.Limit, parameters.Offset,
 	); err != nil {
-		return nil, err
+		return nil, -1, err
 	}
-	return userConversations, nil
+
+	return userConversations, cursor, nil
 }
 
-func (model UserConversationModelImpl) Count(userUUID string, parameters database.QueryParameters) (int, error) {
+func (model UserConversationModelImpl) Count(userUUID string, parameters database.QueryParameters) (int, int64, error) {
 	var count int
-	query := qGetUserConversations
-
-	if filter := parameters.Filter; filter != "" {
-		query += fmt.Sprintf(" WHERE (%s)", filter)
+	cursor := parameters.Cursor
+	if cursor == -1 {
+		tmpCursor, err := model.getCursor()
+		if err != nil {
+			return 0, -1, err
+		}
+		cursor = tmpCursor
 	}
 
-	query = fmt.Sprintf(`SELECT COUNT(*) FROM (%s);`, query)
+	query := fmt.Sprintf("SELECT COUNT(*) FROM (%s) WHERE userConversation_id <= %d", qGetUserConversations, cursor)
+	if filter := parameters.Filter; filter != "" {
+		query += fmt.Sprintf(" AND (%s)", filter)
+	}
+	query += ";"
 
 	if err := model.Db.QueryRow(query, userUUID, userUUID, userUUID).Scan(&count); err != nil {
-		return 0, err
+		return 0, -1, err
 	}
-	return count, nil
+	return count, cursor, nil
 }

@@ -27,7 +27,7 @@ func (controller MessageInfoControllerImpl) GetComments(conversationId int64, me
 		return nil, err
 	}
 
-	comments := make([]models.MessageInfoWithUser, 0)
+	var comments []models.MessageInfoWithUser
 	if commentsCount > 0 {
 		comments, err = controller.Model.GetMessageComments(messageId)
 		if err != nil {

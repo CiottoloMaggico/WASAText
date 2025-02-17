@@ -69,10 +69,10 @@ type MessageModel interface {
 	) (*Message, error)
 	DeleteMessage(id int64) error
 	GetConversationMessage(messageId int64, conversationId int64) (*MessageWithAuthorAndAttachment, error)
-	GetConversationMessages(conversationId int64, parameters database.QueryParameters) ([]MessageWithAuthorAndAttachment, error)
+	GetConversationMessages(conversationId int64, parameters database.QueryParameters) ([]MessageWithAuthorAndAttachment, int64, error)
 	SetMessagesAsDelivered(user string) error
 	SetConversationMessagesAsSeen(conversationId int64, user string) error
-	Count(conversationId int64, parameters database.QueryParameters) (int, error)
+	Count(conversationId int64, parameters database.QueryParameters) (int, int64, error)
 }
 
 type MessageModelImpl struct {
@@ -105,6 +105,16 @@ func (m MessageWithAuthorAndAttachment) GetStatus() string {
 	}
 
 	return res
+}
+
+func (model MessageModelImpl) getCursor() (int64, error) {
+	var cursor int64
+	query := `SELECT ifnull(MAX(id), 0) FROM Message;`
+
+	if err := model.Db.QueryRow(query).Scan(&cursor); err != nil {
+		return -1, err
+	}
+	return cursor, nil
 }
 
 func (model MessageModelImpl) CreateMessage(
@@ -152,21 +162,28 @@ func (model MessageModelImpl) GetConversationMessage(messageId int64, conversati
 	return &message, nil
 }
 
-func (model MessageModelImpl) GetConversationMessages(conversationId int64, parameters database.QueryParameters) ([]MessageWithAuthorAndAttachment, error) {
-	query := `SELECT * FROM ViewMessages WHERE message_conversation = ?`
+func (model MessageModelImpl) GetConversationMessages(conversationId int64, parameters database.QueryParameters) ([]MessageWithAuthorAndAttachment, int64, error) {
+	cursor := parameters.Cursor
+	if cursor == -1 {
+		tmpCursor, err := model.getCursor()
+		if err != nil {
+			return nil, -1, err
+		}
+		cursor = tmpCursor
+	}
 
+	query := fmt.Sprintf(`SELECT * FROM ViewMessages WHERE message_conversation = ? AND message_id <= %d`, cursor)
 	if filter := parameters.Filter; filter != "" {
 		query += fmt.Sprintf(" AND (%s)", filter)
 	}
-
 	query += " ORDER BY message_sendAt DESC LIMIT ? OFFSET ?;"
 
 	messages := make([]MessageWithAuthorAndAttachment, 0, parameters.Limit)
 	if err := model.Db.QueryStruct(&messages, query, conversationId, parameters.Limit, parameters.Offset); err != nil {
-		return nil, err
+		return nil, -1, err
 	}
 
-	return messages, nil
+	return messages, cursor, nil
 }
 
 func (model MessageModelImpl) SetMessagesAsDelivered(user string) error {
@@ -191,18 +208,25 @@ func (model MessageModelImpl) SetConversationMessagesAsSeen(conversationId int64
 	return nil
 }
 
-func (model MessageModelImpl) Count(conversationId int64, parameters database.QueryParameters) (int, error) {
+func (model MessageModelImpl) Count(conversationId int64, parameters database.QueryParameters) (int, int64, error) {
 	var count int
-	query := `SELECT COUNT(*) FROM ViewMessages WHERE message_conversation = ?`
+	cursor := parameters.Cursor
+	if cursor == -1 {
+		tmpCursor, err := model.getCursor()
+		if err != nil {
+			return 0, -1, err
+		}
+		cursor = tmpCursor
+	}
 
+	query := fmt.Sprintf(`SELECT COUNT(*) FROM ViewMessages WHERE message_conversation = ? AND message_id <= %d`, cursor)
 	if filter := parameters.Filter; filter != "" {
 		query += fmt.Sprintf(" AND (%s)", filter)
 	}
-
 	query += ";"
 
 	if err := model.Db.QueryRow(query, conversationId).Scan(&count); err != nil {
-		return 0, err
+		return 0, -1, err
 	}
-	return count, nil
+	return count, cursor, nil
 }
