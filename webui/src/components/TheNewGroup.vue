@@ -17,7 +17,7 @@ const newGroup = reactive({
 
 const newImagePreviewUrl = computed(() => {
 	if (!newGroup.image) {
-		return "/src/assets/images/default_group_image.jpg"
+		return new URL("../assets/images/default_group_image.jpg", import.meta.url).href
 	}
 	return URL.createObjectURL(newGroup.image)
 })

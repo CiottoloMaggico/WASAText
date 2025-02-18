@@ -1,0 +1,21 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.backend
+    image: wasatext_backend
+    container_name: wasatext_backend
+    ports:
+      - 3000:3000
+
+  frontend:
+    container_name: wasatext_frontend
+    restart: always
+    build:
+      context: .
+      dockerfile: ./Dockerfile.frontend
+    image: wasatext_frontend
+    depends_on:
+      - backend
+    ports:
+      - 80:80

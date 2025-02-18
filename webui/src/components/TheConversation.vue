@@ -34,7 +34,7 @@ const latestMessage = computed(() => props.conversation.latestMessage)
 					</span>
 						<span v-if="conversation.latestMessage.content !== null"
 							  class="latestMessage-content-text">{{ conversation.latestMessage.content }}</span>
-						<span v-if="conversation.latestMessage.attachment !== null"
+						<span v-else
 							  class="latestMessage-content-text">image</span>
 				</div>
 			</div>
